@@ -12,19 +12,18 @@ export class RandomRolls implements IRandomRolls {
     this.description = description;
   }
 
-  roll(): string[] {
+  roll(): { description: string; result: string }[] {
     const diceRoll = Math.floor(Math.random() * this.diceType) + 1;
 
-    const result: string[] = [];
+    let result: { description: string; result: string }[] = [];
 
     for (let i = 0; i < this.rolls.length; i++) {
       const roll = this.rolls[i];
       if (roll.rollChance.includes(diceRoll)) {
-        result.push(this.description);
-        result.push(roll.result);
+        result.push({ description: this.description, result: roll.result });
         if (roll.followupRolls) {
           roll.followupRolls.forEach((rolls) => {
-            result.concat(rolls.roll());
+            result = result.concat(rolls.roll());
           });
         }
         break;

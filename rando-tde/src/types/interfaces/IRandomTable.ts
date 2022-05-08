@@ -1,3 +1,3 @@
 export interface IRandomTable {
-  roll(): string[];
+  roll(): { description: string; result: string }[];
 }

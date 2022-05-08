@@ -1,3 +1,4 @@
+import { Dice } from "./Dice";
 import type { IRandomRoll } from "./interfaces/IRandomRoll";
 import type { IRandomRolls } from "./interfaces/IRandomRolls";
 import type { IRandomTable } from "./interfaces/IRandomTable";
@@ -9,27 +10,48 @@ export class NpcLootTable implements IRandomTable {
     const npcMoneyRollArray: IRandomRoll[] = [
       {
         rollChance: [1, 2, 3, 4, 5],
-        result: "4W6 Kreuzer, 2W6 Heller",
+        result: Dice.roll(4, 6) + " Kreuzer, " + Dice.roll(2, 6) + " Heller",
         followupRolls: null,
       },
       {
         rollChance: [6, 7, 8],
-        result: "2W6 Kreuzer, 2W6 Heller, 1W3 Silbertaler",
+        result:
+          Dice.roll(2, 6) +
+          " Kreuzer, " +
+          Dice.roll(2, 6) +
+          " Heller, " +
+          Dice.roll(1, 3) +
+          " Silbertaler",
         followupRolls: null,
       },
       {
         rollChance: [9, 10, 11, 12, 13],
-        result: "1W6 Kreuzer, 1W6 Heller, 1W6 Silbertaler, 1W3 Dukaten",
+        result:
+          Dice.roll(1, 6) +
+          " Kreuzer, " +
+          Dice.roll(1, 6) +
+          " Heller, " +
+          Dice.roll(1, 6) +
+          " Silbertaler, " +
+          Dice.roll(1, 3) +
+          " Dukaten",
         followupRolls: null,
       },
       {
         rollChance: [14, 15, 16, 17],
-        result: "1W6 Heller, 2W6 Silbertaler, 1W6 Dukaten",
+        result:
+          Dice.roll(1, 6) +
+          " Heller, " +
+          Dice.roll(2, 6) +
+          " Silbertaler, " +
+          Dice.roll(1, 6) +
+          " Dukaten",
         followupRolls: null,
       },
       {
         rollChance: [18, 19, 20],
-        result: "2W6 Silbertaler, 2W6 Dukaten",
+        result:
+          Dice.roll(2, 6) + " Silbertaler, " + Dice.roll(2, 6) + " Dukaten",
         followupRolls: null,
       },
     ];
@@ -46,7 +68,10 @@ export class NpcLootTable implements IRandomTable {
       { rollChance: [5], result: "Liebesbrief", followupRolls: null },
       {
         rollChance: [6],
-        result: "Schuldschein der Nordlandbank (2W20+10 Dukaten)",
+        result:
+          "Schuldschein der Nordlandbank (" +
+          (Dice.roll(2, 20) + 10) +
+          " Dukaten)",
         followupRolls: null,
       },
       {
@@ -89,7 +114,7 @@ export class NpcLootTable implements IRandomTable {
       { rollChance: [9], result: "Zauberkreide", followupRolls: null },
       {
         rollChance: [10],
-        result: "Kästchen mit 1W6 Borbarad-Moskitos",
+        result: "Kästchen mit " + Dice.roll(1, 6) + " Borbarad-Moskitos",
         followupRolls: null,
       },
       { rollChance: [11], result: "1 Portion Ilmenblatt", followupRolls: null },
@@ -105,7 +130,11 @@ export class NpcLootTable implements IRandomTable {
       },
       { rollChance: [14], result: "kurzer Magierstab", followupRolls: null },
       { rollChance: [15], result: "Heiltrank (QSW4)", followupRolls: null },
-      { rollChance: [16], result: "1W6 Juwelen", followupRolls: null },
+      {
+        rollChance: [16],
+        result: Dice.roll(1, 6) + " Juwelen",
+        followupRolls: null,
+      },
       { rollChance: [17], result: "1 Anwendung Donf", followupRolls: null },
       { rollChance: [18], result: "Zaubertrank (QS 4)", followupRolls: null },
       { rollChance: [19], result: "magisches Artefakt", followupRolls: null },
@@ -176,7 +205,8 @@ export class NpcLootTable implements IRandomTable {
       npcRollArray
     );
   }
-  roll(): string[] {
-    return this.npcRolls.roll();
+  roll(): { description: string; result: string }[] {
+    const rollResult = this.npcRolls.roll();
+    return rollResult;
   }
 }
