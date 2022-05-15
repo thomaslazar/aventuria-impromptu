@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>NSC Beute</h2>
+    <h2>Beute: NSC</h2>
     <NpcLootTable />
   </div>
 </template>

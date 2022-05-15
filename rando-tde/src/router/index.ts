@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue"
+import AboutView from "../views/AboutView.vue";
 import NpcLootView from "@/views/NpcLootView.vue";
+import TreasureLootView from "@/views/TreasureLootView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: "/npcloot",
       name: "npcloot",
       component: NpcLootView,
+    },
+    {
+      path: "/treasureloot",
+      name: "treasureloot",
+      component: TreasureLootView,
     },
   ],
 });

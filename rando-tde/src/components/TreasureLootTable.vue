@@ -10,15 +10,15 @@
 </template>
 
 <script setup lang="ts">
-import { NpcLootTable } from "@/types/tables/NpcLootTable";
+import { TreasureLootTable } from "@/types/tables/TreasureLootTable";
 import { ref } from "vue";
 
-const npcLootTable = new NpcLootTable();
+const treasureLootTable = new TreasureLootTable();
 
-const table = ref({ value: npcLootTable.roll() });
+const table = ref({ value: treasureLootTable.roll() });
 
 const reroll = () => {
-  table.value = ref(npcLootTable.roll());
+  table.value = ref(treasureLootTable.roll());
 };
 </script>
 

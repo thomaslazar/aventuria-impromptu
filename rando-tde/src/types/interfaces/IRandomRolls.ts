@@ -1,8 +1,8 @@
 import type { IRandomRoll } from "./IRandomRoll";
 
 export interface IRandomRolls {
-  description: string;
+  description: string | null;
   diceType: number;
   rolls: IRandomRoll[];
-  roll(): { description: string; result: string }[];
+  roll(): { description: string | null; result: string }[];
 }
