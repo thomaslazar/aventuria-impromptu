@@ -7,6 +7,7 @@ import { RouterLink, RouterView } from "vue-router";
     <div class="wrapper">
       <nav>
         <RouterLink to="/" class="btn btn-primary">Home</RouterLink>
+        <RouterLink to="/tavern" class="btn btn-primary">Gaststube/Taverne</RouterLink>
         <RouterLink to="/npcloot" class="btn btn-primary">Beute: NSC</RouterLink>
         <RouterLink to="/treasureloot" class="btn btn-primary">Beute: Schatz</RouterLink>
         <RouterLink to="/about" class="btn btn-primary">About</RouterLink>

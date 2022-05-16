@@ -4,5 +4,5 @@ export interface IRandomRolls {
   description: string | null;
   diceType: number;
   rolls: IRandomRoll[];
-  roll(): { description: string | null; result: string }[];
+  roll(): { description: string | null; result: string|null }[];
 }

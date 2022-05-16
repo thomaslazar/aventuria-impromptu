@@ -1,3 +1,4 @@
+import { Dice } from "../Dice";
 import type { IRandomRoll } from "../interfaces/IRandomRoll";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
 
@@ -12,10 +13,11 @@ export class RandomRolls implements IRandomRolls {
     this.description = description;
   }
 
-  roll(): { description: string | null; result: string }[] {
-    const diceRoll = Math.floor(Math.random() * this.diceType) + 1;
+  roll(): { description: string | null; result: string|null }[] {
+    const diceRoll = Dice.roll(1, this.diceType);
+    console.log(diceRoll);
 
-    let result: { description: string | null; result: string }[] = [];
+    let result: { description: string | null; result: string|null }[] = [];
 
     for (let i = 0; i < this.rolls.length; i++) {
       const roll = this.rolls[i];

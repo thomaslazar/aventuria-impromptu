@@ -104,7 +104,7 @@ export class TreasureLootTable implements IRandomTable {
 
     this.treasureRolls = new RandomRolls("Zusammenstellung des Schatzes", 20, treasureRollArray);
   }
-  roll(): { description: string | null; result: string }[] {
+  roll(): { description: string | null; result: string|null }[] {
     const rollResult = this.treasureRolls.roll();
     return rollResult;
   }

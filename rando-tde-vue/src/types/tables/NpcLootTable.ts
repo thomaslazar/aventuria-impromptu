@@ -76,7 +76,7 @@ export class NpcLootTable implements IRandomTable {
 
     this.npcRolls = new RandomRolls("Zusammenstellung des Schatzes", 20, npcRollArray);
   }
-  roll(): { description: string | null; result: string }[] {
+  roll(): { description: string | null; result: string|null }[] {
     const rollResult = this.npcRolls.roll();
     return rollResult;
   }
