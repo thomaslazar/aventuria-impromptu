@@ -131,3 +131,7 @@ out
 
 # mac
 .DS_Store
+
+# do not check in codex auth data
+.codex/auth.json
+.codex/*
