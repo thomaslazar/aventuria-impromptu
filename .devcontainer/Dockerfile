@@ -13,3 +13,6 @@ RUN apt-get update \
     && rm -f /tmp/gk.deb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Codex CLI globally for the container.
+RUN npm install -g @openai/codex@latest

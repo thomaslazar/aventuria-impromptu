@@ -27,5 +27,8 @@
       ]
     }
   },
-  "remoteUser": "node"
+  "remoteUser": "node",
+  "containerEnv": {
+    "CODEX_HOME": "${containerWorkspaceFolder}/.codex"
+  }
 }
