@@ -1,4 +1,3 @@
-import { Dice } from "../Dice";
 import type { IRandomRoll } from "../interfaces/IRandomRoll";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
 import type { IRandomTable } from "../interfaces/IRandomTable";
@@ -16,7 +15,11 @@ export class TavernTable implements IRandomTable {
       { rollChance: [6], result: "Reichshof", followupRolls: null },
     ];
 
-    const tavernProperNameSpecial1Rolls = new RandomRolls(null, 6, tavernProperNameSpecial1Array);
+    const tavernProperNameSpecial1Rolls = new RandomRolls(
+      null,
+      6,
+      tavernProperNameSpecial1Array,
+    );
 
     const tavernProperNameSpecial2Array: IRandomRoll[] = [
       { rollChance: [1], result: "Valpostube", followupRolls: null },
@@ -27,7 +30,11 @@ export class TavernTable implements IRandomTable {
       { rollChance: [6], result: "Zum Anker", followupRolls: null },
     ];
 
-    const tavernProperNameSpecial2Rolls = new RandomRolls(null, 6, tavernProperNameSpecial2Array);
+    const tavernProperNameSpecial2Rolls = new RandomRolls(
+      null,
+      6,
+      tavernProperNameSpecial2Array,
+    );
 
     const tavernProperNameArray: IRandomRoll[] = [
       { rollChance: [1], result: "Einhorn", followupRolls: null },
@@ -52,39 +59,123 @@ export class TavernTable implements IRandomTable {
       { rollChance: [20], result: "Trommel", followupRolls: null },
     ];
 
-    const tavernProperNameRolls = new RandomRolls(null, 20, tavernProperNameArray);
+    const tavernProperNameRolls = new RandomRolls(
+      null,
+      20,
+      tavernProperNameArray,
+    );
 
     const tavernNamePrefixArray: IRandomRoll[] = [
-      { rollChance: [1], result: "Zum/ Zur goldenen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [2], result: "Zum/ Zur almadinenen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [3], result: "Zum/ Zur tanzenden", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [4], result: "Zum/ Zur lachenden", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [5], result: "Zum/ Zur betrunkenen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [6], result: "Zum/ Zur fröhlichen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [7], result: "Zum/ Zur glücklichen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [8], result: "Zum/ Zur springenden", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [9], result: "Zum/ Zur schwarzen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [10], result: "Zum/ Zur weißen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [11], result: "Zum/ Zur tänzelnden", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [12], result: "Zum/ Zur einsamen", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [13], result: "Des Kaisers", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [14], result: "Die zwei <Nachfolgendes im Plural>", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [15], result: "Die drei <Nachfolgendes im Plural>", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [16], result: "Die vier <Nachfolgendes im Plural>", followupRolls: [tavernProperNameRolls] },
-      { rollChance: [17, 18], result: null, followupRolls: [tavernProperNameSpecial1Rolls] },
-      { rollChance: [19, 20], result: null, followupRolls: [tavernProperNameSpecial2Rolls] },
+      {
+        rollChance: [1],
+        result: "Zum/ Zur goldenen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [2],
+        result: "Zum/ Zur almadinenen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [3],
+        result: "Zum/ Zur tanzenden",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [4],
+        result: "Zum/ Zur lachenden",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [5],
+        result: "Zum/ Zur betrunkenen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [6],
+        result: "Zum/ Zur fröhlichen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [7],
+        result: "Zum/ Zur glücklichen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [8],
+        result: "Zum/ Zur springenden",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [9],
+        result: "Zum/ Zur schwarzen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [10],
+        result: "Zum/ Zur weißen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [11],
+        result: "Zum/ Zur tänzelnden",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [12],
+        result: "Zum/ Zur einsamen",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [13],
+        result: "Des Kaisers",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [14],
+        result: "Die zwei <Nachfolgendes im Plural>",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [15],
+        result: "Die drei <Nachfolgendes im Plural>",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [16],
+        result: "Die vier <Nachfolgendes im Plural>",
+        followupRolls: [tavernProperNameRolls],
+      },
+      {
+        rollChance: [17, 18],
+        result: null,
+        followupRolls: [tavernProperNameSpecial1Rolls],
+      },
+      {
+        rollChance: [19, 20],
+        result: null,
+        followupRolls: [tavernProperNameSpecial2Rolls],
+      },
     ];
 
-    const tavernNamePrefixRolls = new RandomRolls("Name", 20, tavernNamePrefixArray);
+    const tavernNamePrefixRolls = new RandomRolls(
+      "Name",
+      20,
+      tavernNamePrefixArray,
+    );
 
+    const travernRollArray: IRandomRoll[] = [
+      { rollChance: [1], result: null, followupRolls: [tavernNamePrefixRolls] },
+    ];
 
-
-    const travernRollArray: IRandomRoll[] = [{ rollChance: [1], result: null, followupRolls: [tavernNamePrefixRolls] }];
-
-    this.tavernRolls = new RandomRolls("Gaststube/Taverne", 1, travernRollArray);
+    this.tavernRolls = new RandomRolls(
+      "Gaststube/Taverne",
+      1,
+      travernRollArray,
+    );
   }
 
-  roll(): { description: string | null; result: string|null }[] {
+  roll(): { description: string | null; result: string | null }[] {
     const rollResult = this.tavernRolls.roll();
     return rollResult;
   }

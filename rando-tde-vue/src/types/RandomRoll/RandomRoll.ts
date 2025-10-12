@@ -9,7 +9,7 @@ export class RandomRoll implements IRandomRoll {
   constructor(
     rollChance: number[],
     result: string,
-    followupRolls: IRandomRolls[] | null = null
+    followupRolls: IRandomRolls[] | null = null,
   ) {
     this.rollChance = rollChance;
     this.result = result;
