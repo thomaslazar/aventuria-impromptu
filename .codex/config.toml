@@ -1,0 +1,3 @@
+[mcp_servers.gitkraken]
+command = "gk"
+args = ["mcp"]

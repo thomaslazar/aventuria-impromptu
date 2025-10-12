@@ -1,16 +1,15 @@
-# See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.231.6/containers/typescript-node/.devcontainer/base.Dockerfile
+ARG VARIANT="20-bullseye"
+FROM mcr.microsoft.com/devcontainers/typescript-node:1-${VARIANT}
 
-# [Choice] Node.js version (use -bullseye variants on local arm64/Apple Silicon): 16, 14, 12, 16-bullseye, 14-bullseye, 12-bullseye, 16-buster, 14-buster, 12-buster
-ARG VARIANT="16-bullseye"
-FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
+# Ensure modern package managers (pnpm/yarn) are available globally.
+RUN corepack enable
 
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
-
-# [Optional] Uncomment if you want to install an additional version of node using nvm
-# ARG EXTRA_NODE_VERSION=10
-# RUN su node -c "source /usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
-
-# [Optional] Uncomment if you want to install more global node packages
-RUN su node -c "yarn global add @vue/cli"
+# Install GitKraken CLI so the MCP server is available in the container.
+ARG GK_VERSION="3.1.40"
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl ca-certificates \
+    && curl -fsSL -o /tmp/gk.deb "https://github.com/gitkraken/gk-cli/releases/download/v${GK_VERSION}/gk_${GK_VERSION}_linux_amd64.deb" \
+    && apt-get install -y /tmp/gk.deb \
+    && rm -f /tmp/gk.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
