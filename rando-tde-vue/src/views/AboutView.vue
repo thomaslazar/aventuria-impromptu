@@ -13,7 +13,7 @@ const builtAtDisplay = computed(() => {
 
 <template>
   <section class="container py-4">
-    <h1 class="mb-3">Über diese Anwendung</h1>
+    <h1 class="mb-3">About</h1>
     <p class="text-body-secondary">
       Diese Anwendung erzeugt Zufallstabellen für Das Schwarze Auge.
     </p>
