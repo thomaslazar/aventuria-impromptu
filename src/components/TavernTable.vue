@@ -1,34 +1,38 @@
-<template>
-  <div>
-    <div>
-      <button @click="reroll()" class="btn btn-secondary">
-        Neu auswürfeln
-      </button>
-    </div>
-    <span
-      v-for="result in table.value"
-      :key="result.description != null ? result.description : undefined"
-    >
-      <div v-if="result.description" />
-      <span class="fw-bold" v-if="result.description"
-        >{{ result.description }}:
-      </span>
-      <span v-if="result.result">{{ result.result }}&nbsp;</span>
-    </span>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { TavernTable } from "@/types/tables/TavernTable";
 import { ref } from "vue";
 
 const tavernTable = new TavernTable();
 
-const table = ref({ value: tavernTable.roll() });
+const results = ref(tavernTable.roll());
 
 const reroll = () => {
-  table.value = ref(tavernTable.roll());
+  results.value = tavernTable.roll();
 };
 </script>
 
-<style scoped></style>
+<template>
+  <section class="codex-card codex-card--table">
+    <div
+      class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
+    >
+      <h3 class="codex-card-title mb-0">Aktuelle Auslage</h3>
+      <button type="button" class="codex-button" @click="reroll">
+        Neu auswürfeln
+      </button>
+    </div>
+
+    <ul class="codex-table-results">
+      <li
+        v-for="(result, index) in results"
+        :key="index"
+        class="codex-table-result"
+      >
+        <span v-if="result.description" class="codex-table-label">
+          {{ result.description }}
+        </span>
+        <span class="codex-table-value">{{ result.result }}</span>
+      </li>
+    </ul>
+  </section>
+</template>

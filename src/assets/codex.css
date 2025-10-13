@@ -1,0 +1,428 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Lato:wght@400;500;700&display=swap");
+
+:root {
+  --codex-background: #101528;
+  --codex-background-alt: #1c2138;
+  --codex-surface: rgba(241, 233, 210, 0.94);
+  --codex-surface-muted: rgba(241, 233, 210, 0.82);
+  --codex-surface-dark: rgba(20, 26, 46, 0.88);
+  --codex-border: rgba(197, 143, 45, 0.4);
+  --codex-border-strong: rgba(197, 143, 45, 0.85);
+  --codex-accent: #c58f2d;
+  --codex-accent-dark: #8f6520;
+  --codex-text: #f8f5ec;
+  --codex-text-muted: #d3ccba;
+  --codex-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
+  --codex-radius: 18px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: var(--codex-text);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(197, 143, 45, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 0%, rgba(59, 92, 162, 0.3), transparent 55%),
+    radial-gradient(circle at 10% 100%, rgba(104, 54, 128, 0.32), transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(197, 143, 45, 0.18), transparent 60%),
+    var(--codex-background);
+  background-attachment: fixed;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--codex-accent);
+}
+
+.codex-app {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.codex-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2.5rem 0 1.25rem;
+}
+
+.codex-brand {
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.85rem, 2.4vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--codex-text);
+  text-transform: uppercase;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+.codex-tagline {
+  margin: 0;
+  max-width: 38rem;
+  color: var(--codex-text-muted);
+  font-size: 1rem;
+}
+
+.codex-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 0 2rem;
+}
+
+.codex-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--codex-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  transition: all 160ms ease;
+  border: 1px solid transparent;
+}
+
+.codex-nav-link:hover,
+.codex-nav-link:focus-visible {
+  color: var(--codex-text);
+  border-color: rgba(197, 143, 45, 0.5);
+  background: rgba(197, 143, 45, 0.12);
+}
+
+.codex-nav-link.is-active {
+  color: var(--codex-text);
+  border-color: var(--codex-border-strong);
+  background: linear-gradient(
+    135deg,
+    rgba(197, 143, 45, 0.35),
+    rgba(197, 143, 45, 0.15)
+  );
+  box-shadow: 0 6px 18px rgba(197, 143, 45, 0.2);
+}
+
+.codex-main {
+  flex: 1;
+  width: 100%;
+  padding: 0 0 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.codex-main > * {
+  width: 100%;
+}
+
+.codex-footer {
+  padding: 2rem 0 3rem;
+  font-size: 0.85rem;
+  color: rgba(248, 245, 236, 0.6);
+  text-align: center;
+}
+
+.codex-card {
+  background: var(--codex-surface);
+  color: #2f2412;
+  border-radius: var(--codex-radius);
+  border: 1px solid var(--codex-border);
+  box-shadow: var(--codex-shadow);
+  padding: clamp(1.5rem, 2.5vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.codex-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.07),
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.codex-card > *:last-child {
+  margin-bottom: 0;
+}
+
+.codex-card--surface {
+  background: var(--codex-surface-muted);
+}
+
+.codex-card--table {
+  background: rgba(241, 233, 210, 0.92);
+}
+
+.codex-card-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.codex-hero {
+  display: grid;
+  gap: 1.5rem;
+  background: linear-gradient(
+      135deg,
+      rgba(197, 143, 45, 0.25),
+      rgba(197, 143, 45, 0)
+    ),
+    rgba(241, 233, 210, 0.92);
+  color: #251b0b;
+}
+
+.codex-hero-title {
+  font-family: "Cinzel", serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+.codex-hero-text {
+  margin: 0 0 1.5rem;
+  font-size: 1.05rem;
+  color: #473722;
+  max-width: 42rem;
+}
+
+.codex-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.codex-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--codex-border-strong);
+  background: linear-gradient(
+    135deg,
+    rgba(197, 143, 45, 0.95),
+    rgba(173, 116, 28, 0.9)
+  );
+  color: #251b0b;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  transition: transform 160ms ease, box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.codex-button:hover,
+.codex-button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(197, 143, 45, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(197, 143, 45, 1),
+    rgba(173, 116, 28, 0.95)
+  );
+}
+
+.codex-button--ghost {
+  background: transparent;
+  color: var(--codex-accent);
+  border-color: rgba(197, 143, 45, 0.65);
+}
+
+.codex-button--ghost:hover,
+.codex-button--ghost:focus-visible {
+  background: rgba(197, 143, 45, 0.12);
+  color: #251b0b;
+}
+
+.codex-link {
+  font-weight: 600;
+  color: var(--codex-accent-dark);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.codex-link:hover,
+.codex-link:focus-visible {
+  color: #251b0b;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.codex-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.75rem;
+}
+
+.codex-home {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.codex-section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.codex-section-header {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.codex-section-title {
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.codex-section-intro {
+  margin: 0;
+  color: var(--codex-text-muted);
+}
+
+.codex-table-results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.codex-table-result {
+  padding: 0.85rem 1rem;
+  border-left: 3px solid rgba(197, 143, 45, 0.65);
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.codex-table-label {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #5e420d;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.codex-table-value {
+  display: block;
+  color: #2f2412;
+  font-weight: 500;
+}
+
+.codex-build-meta {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 14px;
+  background: rgba(16, 21, 40, 0.9);
+  color: var(--codex-text-muted);
+  border: 1px solid rgba(197, 143, 45, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.codex-meta-grid {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.codex-meta-item {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.codex-meta-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 236, 0.55);
+}
+
+.codex-meta-value {
+  font-family: "Cinzel", serif;
+  font-size: 1.05rem;
+  color: var(--codex-text);
+}
+
+.codex-meta-muted {
+  font-family: "Lato", sans-serif;
+  font-size: 0.85rem;
+  color: rgba(248, 245, 236, 0.65);
+}
+
+.codex-scroll {
+  background: linear-gradient(
+      0deg,
+      rgba(197, 143, 45, 0.06) 15%,
+      transparent 60%
+    ),
+    var(--codex-surface-muted);
+  border-radius: var(--codex-radius);
+  border: 1px solid rgba(197, 143, 45, 0.25);
+  padding: 1.5rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .codex-header {
+    padding-top: 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .codex-nav {
+    justify-content: center;
+  }
+
+  .codex-tagline {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .codex-card {
+    padding: 1.25rem;
+  }
+
+  .codex-table-result {
+    padding: 0.75rem 0.85rem;
+  }
+}

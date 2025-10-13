@@ -1,27 +1,58 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView, useRoute } from "vue-router";
+
+const route = useRoute();
+const title = "Rando TDE Codex";
+const currentYear = new Date().getFullYear();
+
+const navigationItems = [
+  { to: "/", label: "Start", exact: true },
+  { to: "/tavern", label: "Taverne" },
+  { to: "/npcloot", label: "Beute: NSC" },
+  { to: "/treasureloot", label: "Beute: Schatz" },
+  { to: "/about", label: "About" },
+];
+
+const isActive = (to: string, exact?: boolean) => {
+  if (exact) {
+    return route.path === to;
+  }
+  return route.path.startsWith(to);
+};
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/" class="btn btn-primary">Home</RouterLink>
-        <RouterLink to="/tavern" class="btn btn-primary"
-          >Gaststube/Taverne</RouterLink
-        >
-        <RouterLink to="/npcloot" class="btn btn-primary"
-          >Beute: NSC</RouterLink
-        >
-        <RouterLink to="/treasureloot" class="btn btn-primary"
-          >Beute: Schatz</RouterLink
-        >
-        <RouterLink to="/about" class="btn btn-primary">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <div class="codex-app">
+    <header class="codex-header container-xl">
+      <RouterLink :to="{ path: '/' }" class="codex-brand">
+        {{ title }}
+      </RouterLink>
+      <p class="codex-tagline">
+        Werkzeuge, Tabellen und Inspirationen für Aventuriens Spielleitung.
+      </p>
+    </header>
 
-  <RouterView />
+    <nav class="codex-nav container-xl" aria-label="Hauptnavigation">
+      <RouterLink
+        v-for="item in navigationItems"
+        :key="item.to"
+        :to="item.to"
+        class="codex-nav-link"
+        :class="{ 'is-active': isActive(item.to, item.exact) }"
+      >
+        {{ item.label }}
+      </RouterLink>
+    </nav>
+
+    <main class="codex-main">
+      <div class="container-xl">
+        <RouterView />
+      </div>
+    </main>
+
+    <footer class="codex-footer">
+      © {{ currentYear }} Aventurischer Codex. Inspiriert von
+      <span class="fw-semibold">Das Schwarze Auge</span>.
+    </footer>
+  </div>
 </template>
-
-<style></style>
