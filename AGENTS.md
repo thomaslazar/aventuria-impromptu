@@ -1,6 +1,6 @@
 # AGENT PLAYBOOK
 
-This document is your fast-start checklist for working on **rando-tde-vue**, a Vue 3 application that generates tabletop RPG random tables. Follow the personas, workflows, and guardrails below to stay aligned with the team’s expectations.
+This document is your fast-start checklist for working on **rando-tde**, a Vue 3 application that generates tabletop RPG random tables. Follow the personas, workflows, and guardrails below to stay aligned with the team’s expectations.
 
 ---
 
@@ -22,7 +22,7 @@ This document is your fast-start checklist for working on **rando-tde-vue**, a V
 | Framework      | Vue 3.5.x, Vue Router 4.5.x                                                |
 | Tooling        | Vite 7, Vitest 3, TypeScript 5.9, ESLint 9 flat config, Prettier 3         |
 | UI Library     | Bootstrap 5.3 (canonical Sass bundle via npm)                              |
-| Build Output   | `dist/` is checked in; coordinate before changing this convention          |
+| Build Output   | `npm run build` emits to `dist/`; artifacts are published via CI only      |
 | Types Config   | `@vue/tsconfig` strict defaults (`moduleResolution: bundler`, `noEmit`)    |
 | Testing        | Vitest configured via `npm run test:unit` (passes even if no tests exist)  |
 
@@ -33,22 +33,21 @@ This document is your fast-start checklist for working on **rando-tde-vue**, a V
 ## 3. Repository Layout
 
 ```
-rando-tde-vue/
-  src/
-    components/        # Vue SFCs with Bootstrap-driven UI
-    views/             # Router views
-    router/            # Vue Router setup
-    types/             # Domain models and random table data
-    assets/            # Static assets, images
+/
+  src/                 # Vue SFCs, router views, domain logic
   public/              # Static files served as-is
-  dist/                # Production build (tracked)
+  dist/                # Production build (not committed)
   eslint.config.mjs    # ESLint flat config (ESM)
   vite.config.ts       # Vite + Vitest configuration
   tsconfig.*.json      # TS project references (app, vitest, vite config)
   package.json         # Scripts + dependency manifest
+  .codex/              # Codex CLI automation (leave untouched)
+  .devcontainer/       # Dev container definition
+  .github/             # GitHub workflows
+  .vscode/             # Shared editor settings
 ```
 
-The workspace root `/workspaces/rando-tde` may contain additional automation (e.g., `.codex/`). Leave it untouched unless you have explicit instructions.
+The repository root is now the application root; avoid moving `.codex/`, `.devcontainer/`, or `.github/` unless automation changes require it.
 
 ---
 
@@ -150,7 +149,7 @@ Always execute lint → typecheck → test → build before marking work complet
   - `@types/node`
   - `@tsconfig/nodeXX`
   - Document the change in this playbook.
-- `dist/` is committed. If you move to CI-based deploys, update `.gitignore`, adjust scripts, and document in the README + this file.
+- GitHub Pages workflow publishes from `dist/`; the directory stays untracked locally.
 - Static assets (icons, images) live under `public/` or inlined via Vite. Keep filenames stable to avoid broken references in `index.html`.
 
 ---
@@ -169,7 +168,7 @@ Always execute lint → typecheck → test → build before marking work complet
 ## 12. Risk Watchlist
 
 - **Strict TS**: Many tables rely on optional follow-up rolls. Always guard arrays before spreading to avoid TS18048 errors.
-- **Tracked `dist/`**: Builds produce hashed filenames. Ensure you stage deletes for old assets to avoid stale references.
+- **Ignored `dist/`**: Local builds leave artifacts on disk; avoid relying on their presence in version control.
 - **Base Path**: Forgetting `/rando-tde/` breaks static hosting. Verify `npm run build` output still references correct asset URLs.
 - **ESLint Flags**: Flat config rejects legacy CLI flags. Update npm scripts instead of passing unsupported options.
 

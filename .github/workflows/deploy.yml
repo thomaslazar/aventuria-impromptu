@@ -9,10 +9,6 @@ on:
 permissions:
   contents: write
 
-defaults:
-  run:
-    working-directory: rando-tde-vue
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -27,7 +23,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: rando-tde-vue/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -39,4 +35,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: rando-tde-vue/dist
+          folder: dist
