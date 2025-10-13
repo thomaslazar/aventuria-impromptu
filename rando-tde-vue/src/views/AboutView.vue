@@ -13,20 +13,20 @@ const builtAtDisplay = computed(() => {
 
 <template>
   <section class="container py-4">
-    <h1 class="mb-3">About</h1>
+    <h1 class="mb-3">Über diese Anwendung</h1>
     <p class="text-body-secondary">
-      This project generates random tables for The Dark Eye adventures.
+      Diese Anwendung erzeugt Zufallstabellen für Das Schwarze Auge.
     </p>
 
     <div class="border rounded-3 p-3 bg-body-tertiary">
-      <h2 class="h5 mb-2">Build information</h2>
+      <h2 class="h5 mb-2">Build-Informationen</h2>
       <dl class="row mb-0 small">
         <dt class="col-sm-4">Version</dt>
         <dd class="col-sm-8 mb-0">
           <span class="fw-semibold">{{ buildInfo.version }}</span>
           <span class="text-body-secondary">({{ buildInfo.gitSha }})</span>
         </dd>
-        <dt class="col-sm-4 mt-2">Built at</dt>
+        <dt class="col-sm-4 mt-2">Erstellt am</dt>
         <dd class="col-sm-8 mt-2 mb-0 text-body-secondary">
           {{ builtAtDisplay }}
         </dd>

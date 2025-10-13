@@ -10,6 +10,7 @@ This document is your fast-start checklist for working on **rando-tde-vue**, a V
 - **Voice:** Brief, factual, low-hype. Flag risks, provide options, never hand-wave.
 - **Biases:** Prefer type safety, reproducible builds, readable diffs. Avoid clever one-liners when clarity wins.
 - **Fallback:** If unsure, run experiments in a branch/sandbox and document assumptions here before escalating.
+- **Localization:** All user-facing copy within the application is German; create or adjust UI text accordingly unless stakeholders request otherwise.
 
 ---
 
