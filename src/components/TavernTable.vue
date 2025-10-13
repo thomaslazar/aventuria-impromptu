@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TavernTable } from "@/types/tables/TavernTable";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const tavernTable = new TavernTable();
 
@@ -9,6 +9,27 @@ const results = ref(tavernTable.roll());
 const reroll = () => {
   results.value = tavernTable.roll();
 };
+
+const tavernName = computed(() =>
+  results.value
+    .filter(
+      (entry) =>
+        entry.result &&
+        (entry.description === "Name" || entry.description === null),
+    )
+    .map((entry) => entry.result)
+    .join(" "),
+);
+
+const additionalDetails = computed(() =>
+  results.value.filter(
+    (entry) =>
+      entry.result &&
+      entry.description &&
+      entry.description !== "Gaststube/Taverne" &&
+      entry.description !== "Name",
+  ),
+);
 </script>
 
 <template>
@@ -22,13 +43,20 @@ const reroll = () => {
       </button>
     </div>
 
-    <ul class="codex-table-results">
+    <div class="codex-scroll mb-3">
+      <span class="codex-table-label d-inline-block mb-1">
+        Name der Gaststube
+      </span>
+      <span class="codex-table-value">{{ tavernName }}</span>
+    </div>
+
+    <ul v-if="additionalDetails.length" class="codex-table-results">
       <li
-        v-for="(result, index) in results"
+        v-for="(result, index) in additionalDetails"
         :key="index"
         class="codex-table-result"
       >
-        <span v-if="result.description" class="codex-table-label">
+        <span class="codex-table-label">
           {{ result.description }}
         </span>
         <span class="codex-table-value">{{ result.result }}</span>
