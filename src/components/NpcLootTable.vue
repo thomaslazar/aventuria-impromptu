@@ -1,34 +1,38 @@
-<template>
-  <div>
-    <div>
-      <button @click="reroll()" class="btn btn-secondary">
-        Neu auswürfeln
-      </button>
-    </div>
-    <span
-      v-for="result in table.value"
-      :key="result.description != null ? result.description : undefined"
-    >
-      <div v-if="result.description" />
-      <span class="fw-bold" v-if="result.description"
-        >{{ result.description }}:
-      </span>
-      <span>{{ result.result }}&nbsp;</span>
-    </span>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { NpcLootTable } from "@/types/tables/NpcLootTable";
 import { ref } from "vue";
 
 const npcLootTable = new NpcLootTable();
 
-const table = ref({ value: npcLootTable.roll() });
+const results = ref(npcLootTable.roll());
 
 const reroll = () => {
-  table.value = ref(npcLootTable.roll());
+  results.value = npcLootTable.roll();
 };
 </script>
 
-<style scoped></style>
+<template>
+  <section class="codex-card codex-card--table">
+    <div
+      class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
+    >
+      <h3 class="codex-card-title mb-0">Aktuelle Fundstücke</h3>
+      <button type="button" class="codex-button" @click="reroll">
+        Neu auswürfeln
+      </button>
+    </div>
+
+    <ul class="codex-table-results">
+      <li
+        v-for="(result, index) in results"
+        :key="index"
+        class="codex-table-result"
+      >
+        <span v-if="result.description" class="codex-table-label">
+          {{ result.description }}
+        </span>
+        <span class="codex-table-value">{{ result.result }}</span>
+      </li>
+    </ul>
+  </section>
+</template>
