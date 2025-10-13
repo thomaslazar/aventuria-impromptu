@@ -220,6 +220,39 @@ export class TreasureLootTable implements IRandomTable {
   }
 
   roll(): RollOutcome[] {
-    return this.treasureRolls.roll();
+    const outcomes = this.treasureRolls.roll();
+    const combined: RollOutcome[] = [];
+
+    for (let index = 0; index < outcomes.length; index++) {
+      const entry = outcomes[index]!;
+
+      if (entry.description === "Schmuck") {
+        const materialParts: string[] = [];
+        let cursor = index + 1;
+
+        while (
+          cursor < outcomes.length &&
+          outcomes[cursor]?.description === null
+        ) {
+          const detail = outcomes[cursor];
+          if (detail?.result) {
+            materialParts.push(detail.result);
+          }
+          cursor += 1;
+        }
+
+        const formattedResult = materialParts.length
+          ? `${entry.result} (${materialParts.join(", ")})`
+          : entry.result;
+
+        combined.push({ ...entry, result: formattedResult });
+        index = cursor - 1;
+        continue;
+      }
+
+      combined.push(entry);
+    }
+
+    return combined;
   }
 }

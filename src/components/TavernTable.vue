@@ -75,12 +75,12 @@ const additionalDetails = computed(() =>
       </button>
     </div>
 
-    <div class="codex-scroll mb-3">
-      <span class="codex-table-label d-inline-block mb-1">
-        Name der Gaststube
-      </span>
-      <span class="codex-table-value">{{ tavernName }}</span>
-    </div>
+    <ul class="codex-table-results mb-3">
+      <li class="codex-table-result">
+        <span class="codex-table-label">Name der Gaststube</span>
+        <span class="codex-table-value">{{ tavernName }}</span>
+      </li>
+    </ul>
 
     <ul v-if="additionalDetails.length" class="codex-table-results">
       <li

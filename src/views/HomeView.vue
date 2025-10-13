@@ -51,7 +51,7 @@ const features = [
       <article
         v-for="feature in features"
         :key="feature.to"
-        class="codex-card codex-card--surface"
+        class="codex-card codex-card--table"
       >
         <h2 class="codex-card-title">{{ feature.title }}</h2>
         <p>{{ feature.description }}</p>

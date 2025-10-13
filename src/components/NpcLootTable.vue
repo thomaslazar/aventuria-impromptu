@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { RollOutcome } from "@/types/RandomRoll/RandomRolls";
 import { NpcLootTable } from "@/types/tables/NpcLootTable";
 import { ref } from "vue";
 
 const npcLootTable = new NpcLootTable();
 
-const results = ref(npcLootTable.roll());
+const results = ref<RollOutcome[]>(npcLootTable.roll());
 
 const reroll = () => {
   results.value = npcLootTable.roll();

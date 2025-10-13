@@ -13,8 +13,14 @@ const builtAtDisplay = computed(() => {
 
 <template>
   <section class="codex-section">
-    <article class="codex-card codex-card--surface">
+    <header class="codex-section-header">
       <h1 class="codex-section-title">About</h1>
+      <p class="codex-section-intro">
+        Hintergründe zur Aventuria-Toolbox und der aktuellen Build-Version.
+      </p>
+    </header>
+
+    <article class="codex-card codex-card--table">
       <p>
         Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen
         in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und

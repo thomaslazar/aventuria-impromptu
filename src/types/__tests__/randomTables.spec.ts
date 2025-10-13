@@ -98,10 +98,12 @@ describe("TavernTable", () => {
 
     expect(nameEntry).toEqual({
       description: "Name",
+      meta: { articleStrategy: "zum-zur" },
       result: "Zum/ Zur goldenen",
     });
     expect(detailEntry).toEqual({
       description: null,
+      meta: { gender: "neuter" },
       result: "Einhorn",
     });
   });
@@ -117,9 +119,7 @@ describe("TreasureLootTable", () => {
     const main = results[0]!;
     const coins = results[1]!;
     const jewellery = results[2]!;
-    const material = results[3]!;
-    const specialMaterial = results[4]!;
-    const gems = results[5]!;
+    const gems = results[3]!;
 
     expect(main).toEqual({
       description: "Zusammenstellung des Schatzes",
@@ -131,15 +131,7 @@ describe("TreasureLootTable", () => {
     });
     expect(jewellery).toEqual({
       description: "Schmuck",
-      result: "Amulett",
-    });
-    expect(material).toEqual({
-      description: null,
-      result: "besonderes Metall",
-    });
-    expect(specialMaterial).toEqual({
-      description: null,
-      result: "Mindorium",
+      result: "Amulett (besonderes Metall, Mindorium)",
     });
     expect(gems).toEqual({
       description: "Edelsteine",

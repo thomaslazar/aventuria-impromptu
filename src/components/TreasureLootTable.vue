@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { RollOutcome } from "@/types/RandomRoll/RandomRolls";
 import { TreasureLootTable } from "@/types/tables/TreasureLootTable";
 import { ref } from "vue";
 
 const treasureLootTable = new TreasureLootTable();
 
-const results = ref(treasureLootTable.roll());
+const results = ref<RollOutcome[]>(treasureLootTable.roll());
 
 const reroll = () => {
   results.value = treasureLootTable.roll();
