@@ -1,6 +1,6 @@
 # AGENT PLAYBOOK
 
-This document is your fast-start checklist for working on **rando-tde**, a Vue 3 application that generates tabletop RPG random tables. Follow the personas, workflows, and guardrails below to stay aligned with the team’s expectations.
+This document is your fast-start checklist for working on **Aventuria Impromptu**, a Vue 3 application that generates tabletop RPG random tables. Follow the personas, workflows, and guardrails below to stay aligned with the team’s expectations.
 
 ---
 
@@ -74,7 +74,7 @@ The repository root is now the application root; avoid moving `.codex/`, `.devco
 
 | Command              | Purpose                                                             |
 | -------------------- | ------------------------------------------------------------------- |
-| `npm run dev`        | Vite dev server (default 5173, base path `/rando-tde/`).            |
+| `npm run dev`        | Vite dev server (default 5173, honours `BASE_PATH` in .env).        |
 | `npm run lint`       | ESLint flat config with `--fix`.                                    |
 | `npm run typecheck`  | `vue-tsc` against `tsconfig.vitest.json`.                           |
 | `npm run test:unit`  | Vitest run mode with `--passWithNoTests`.                           |
@@ -139,7 +139,7 @@ Always execute lint → typecheck → test → build before marking work complet
 
 - **Vite Config**
   - Contains `test` block for Vitest. Adjust environment coverage here instead of a separate `vitest.config.ts`.
-  - `base: "/rando-tde/"` supports GitHub Pages style deploys. Get sign-off before editing.
+- `base` derives from the `BASE_PATH` environment variable (defaults to `/`) to support GitHub Pages deploys. Coordinate before changing this convention.
 
 ---
 
@@ -169,7 +169,7 @@ Always execute lint → typecheck → test → build before marking work complet
 
 - **Strict TS**: Many tables rely on optional follow-up rolls. Always guard arrays before spreading to avoid TS18048 errors.
 - **Ignored `dist/`**: Local builds leave artifacts on disk; avoid relying on their presence in version control.
-- **Base Path**: Forgetting `/rando-tde/` breaks static hosting. Verify `npm run build` output still references correct asset URLs.
+- **Base Path**: Ensure `BASE_PATH` is set when deploying to subfolders (e.g. GitHub Pages). Verify `npm run build` output references the expected asset URLs.
 - **ESLint Flags**: Flat config rejects legacy CLI flags. Update npm scripts instead of passing unsupported options.
 
 ---

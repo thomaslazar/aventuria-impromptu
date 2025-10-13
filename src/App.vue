@@ -2,7 +2,7 @@
 import { RouterLink, RouterView, useRoute } from "vue-router";
 
 const route = useRoute();
-const title = "Rando TDE Codex";
+const title = "Aventuria Impromptu";
 const currentYear = new Date().getFullYear();
 
 const navigationItems = [
@@ -51,7 +51,7 @@ const isActive = (to: string, exact?: boolean) => {
     </main>
 
     <footer class="codex-footer">
-      © {{ currentYear }} Aventurischer Codex. Inspiriert von
+      © {{ currentYear }} Aventuria Impromptu. Inspiriert von
       <span class="fw-semibold">Das Schwarze Auge</span>.
     </footer>
   </div>

@@ -1,6 +1,7 @@
-# rando-tde
+# Aventuria Impromptu
 
-This template should help get you started developing with Vue 3 in Vite.
+Werkzeugkasten für Spielleitungen in Aventurien. Erzeugt Zufallsinhalte für
+Das Schwarze Auge mit Vue 3 und Vite.
 
 ## Recommended IDE Setup
 

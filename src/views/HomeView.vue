@@ -32,8 +32,9 @@ const features = [
       <div>
         <h1 class="codex-hero-title">Dein Aventurischer Werkstattkoffer</h1>
         <p class="codex-hero-text">
-          Rando TDE hilft dir, Begegnungen, Fundstücke und Tavernen aus dem
-          Ärmel zu schütteln. Bleib im Spielfluss – ganz ohne Tabellen wälzen.
+          Aventuria Impromptu hilft dir, Begegnungen, Fundstücke und Tavernen
+          aus dem Ärmel zu schütteln. Bleib im Spielfluss – ganz ohne Tabellen
+          wälzen.
         </p>
       </div>
       <div class="codex-hero-actions">

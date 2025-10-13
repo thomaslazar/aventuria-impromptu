@@ -16,8 +16,8 @@ const builtAtDisplay = computed(() => {
     <article class="codex-card codex-card--surface">
       <h1 class="codex-section-title">About</h1>
       <p>
-        Rando TDE ist ein schlanker Werkzeugkasten für Spielleitungen in
-        Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und
+        Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen
+        in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und
         liefern dir stimmige Ergebnisse für improvisierte Szenen.
       </p>
       <p>

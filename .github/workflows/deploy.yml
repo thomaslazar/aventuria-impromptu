@@ -12,6 +12,8 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      BASE_PATH: "/${{ github.event.repository.name }}/"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
