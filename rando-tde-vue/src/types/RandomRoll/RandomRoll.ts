@@ -1,14 +1,14 @@
-import type { IRandomRoll } from "../interfaces/IRandomRoll";
+import type { IRandomRoll, RollResult } from "../interfaces/IRandomRoll";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
 
 export class RandomRoll implements IRandomRoll {
   rollChance: number[];
-  result: string;
+  result: RollResult;
   followupRolls: IRandomRolls[] | null = null;
 
   constructor(
     rollChance: number[],
-    result: string,
+    result: RollResult,
     followupRolls: IRandomRolls[] | null = null,
   ) {
     this.rollChance = rollChance;

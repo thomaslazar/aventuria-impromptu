@@ -15,13 +15,17 @@ export class RandomRolls implements IRandomRolls {
 
   roll(): { description: string | null; result: string | null }[] {
     const diceRoll = Dice.roll(1, this.diceType);
-    console.log(diceRoll);
 
     const result: { description: string | null; result: string | null }[] = [];
 
     for (const roll of this.rolls) {
       if (roll.rollChance.includes(diceRoll)) {
-        result.push({ description: this.description, result: roll.result });
+        const resolvedResult =
+          typeof roll.result === "function" ? roll.result() : roll.result;
+        result.push({
+          description: this.description,
+          result: resolvedResult,
+        });
         if (roll.followupRolls) {
           for (const followup of roll.followupRolls) {
             result.push(...followup.roll());
