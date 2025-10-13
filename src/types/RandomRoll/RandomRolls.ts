@@ -1,5 +1,11 @@
 import { Dice } from "../Dice";
-import type { IRandomRoll } from "../interfaces/IRandomRoll";
+import type { IRandomRoll, RollMeta } from "../interfaces/IRandomRoll";
+
+export interface RollOutcome {
+  description: string | null;
+  result: string | null;
+  meta?: RollMeta;
+}
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
 
 export class RandomRolls implements IRandomRolls {
@@ -13,10 +19,10 @@ export class RandomRolls implements IRandomRolls {
     this.description = description;
   }
 
-  roll(): { description: string | null; result: string | null }[] {
+  roll(): RollOutcome[] {
     const diceRoll = Dice.roll(1, this.diceType);
 
-    const result: { description: string | null; result: string | null }[] = [];
+    const result: RollOutcome[] = [];
 
     for (const roll of this.rolls) {
       if (roll.rollChance.includes(diceRoll)) {
@@ -25,6 +31,7 @@ export class RandomRolls implements IRandomRolls {
         result.push({
           description: this.description,
           result: resolvedResult,
+          meta: roll.meta,
         });
         if (roll.followupRolls) {
           for (const followup of roll.followupRolls) {

@@ -1,25 +1,57 @@
 <script setup lang="ts">
+import type { RollOutcome } from "@/types/RandomRoll/RandomRolls";
 import { TavernTable } from "@/types/tables/TavernTable";
 import { computed, ref } from "vue";
 
 const tavernTable = new TavernTable();
 
-const results = ref(tavernTable.roll());
+const results = ref<RollOutcome[]>(tavernTable.roll());
 
 const reroll = () => {
   results.value = tavernTable.roll();
 };
 
-const tavernName = computed(() =>
-  results.value
-    .filter(
-      (entry) =>
-        entry.result &&
-        (entry.description === "Name" || entry.description === null),
-    )
-    .map((entry) => entry.result)
-    .join(" "),
-);
+const tavernName = computed(() => {
+  const nameEntries = results.value.filter(
+    (entry) =>
+      entry.result &&
+      (entry.description === "Name" || entry.description === null),
+  );
+
+  if (!nameEntries.length) {
+    return "";
+  }
+
+  const parts: string[] = [];
+
+  nameEntries.forEach((entry, index) => {
+    let text = entry.result ?? "";
+    if (!text) {
+      return;
+    }
+
+    if (entry.meta?.articleStrategy === "zum-zur") {
+      const nextWithGender = nameEntries
+        .slice(index + 1)
+        .find((candidate) => candidate.meta?.gender);
+
+      const gender = nextWithGender?.meta?.gender;
+      let article = "Zum";
+
+      if (gender === "feminine") {
+        article = "Zur";
+      } else if (gender === "plural") {
+        article = "Zu den";
+      }
+
+      text = text.replace("Zum/ Zur", article);
+    }
+
+    parts.push(text.trim());
+  });
+
+  return parts.join(" ").replace(/\s+/g, " ").trim();
+});
 
 const additionalDetails = computed(() =>
   results.value.filter(

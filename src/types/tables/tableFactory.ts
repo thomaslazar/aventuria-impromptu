@@ -1,5 +1,5 @@
 import { RandomRolls } from "../RandomRoll/RandomRolls";
-import type { IRandomRoll } from "../interfaces/IRandomRoll";
+import type { IRandomRoll, RollMeta } from "../interfaces/IRandomRoll";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
 import type { RollResult } from "../interfaces/IRandomRoll";
 
@@ -9,6 +9,7 @@ export interface TableEntryConfig {
   range: string;
   result?: RollResultFactory;
   follow?: string[];
+  meta?: RollMeta;
 }
 
 export interface TableConfig {
@@ -39,6 +40,7 @@ export function buildTable(
     const rolls: IRandomRoll[] = table.entries.map((entry) => ({
       rollChance: expandRange(entry.range),
       result: entry.result ?? null,
+      meta: entry.meta,
       followupRolls: entry.follow?.map((childKey) => build(childKey)) ?? null,
     }));
 

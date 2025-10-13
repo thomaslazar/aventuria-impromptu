@@ -1,5 +1,6 @@
 import type { IRandomTable } from "../interfaces/IRandomTable";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
+import type { RollOutcome } from "../RandomRoll/RandomRolls";
 import { buildTable, type TableConfigMap } from "./tableFactory";
 import {
   formatRolledList,
@@ -163,7 +164,7 @@ export class NpcLootTable implements IRandomTable {
     this.npcRolls = buildTable(NPC_LOOT_CONFIG, "main");
   }
 
-  roll(): { description: string | null; result: string | null }[] {
+  roll(): RollOutcome[] {
     return this.npcRolls.roll();
   }
 }

@@ -1,5 +1,6 @@
 import type { IRandomTable } from "../interfaces/IRandomTable";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
+import type { RollOutcome } from "../RandomRoll/RandomRolls";
 import { buildTable, type TableConfigMap } from "./tableFactory";
 import {
   formatKaratItem,
@@ -218,7 +219,7 @@ export class TreasureLootTable implements IRandomTable {
     this.treasureRolls = buildTable(TREASURE_CONFIG, "main");
   }
 
-  roll(): { description: string | null; result: string | null }[] {
+  roll(): RollOutcome[] {
     return this.treasureRolls.roll();
   }
 }
