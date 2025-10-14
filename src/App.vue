@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink, RouterView, useRoute } from "vue-router";
+import { SUPPORTED_LOCALES } from "@/i18n/localizedText";
 
 const route = useRoute();
 const currentYear = new Date().getFullYear();
@@ -15,10 +16,10 @@ const navigationItems = [
   { to: "/about", labelKey: "nav.about" },
 ];
 
-const languageOptions = [
-  { code: "de", labelKey: "language.de" },
-  { code: "en", labelKey: "language.en" },
-];
+const languageOptions = SUPPORTED_LOCALES.map((code) => ({
+  code,
+  labelKey: `language.${code}`,
+}));
 
 const currentLocale = computed({
   get: () => locale.value,
@@ -64,7 +65,7 @@ const isActive = (to: string, exact?: boolean) => {
       </div>
     </header>
 
-    <nav class="codex-nav container-xl" aria-label="Hauptnavigation">
+    <nav class="codex-nav container-xl" :aria-label="t('nav.ariaLabel')">
       <RouterLink
         v-for="item in navigationItems"
         :key="item.to"

@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "Aventuria Impromptu",
+    "browserTitle": "Aventuria Impromptu – Aventurische Zufallstabellen",
     "tagline": "Werkzeuge, Tabellen und Inspirationen für Aventuriens Spielleitung.",
     "footer": {
       "copy": "© {year} Aventuria Impromptu. Inspiriert von {world}.",
@@ -17,7 +18,8 @@
     "tavern": "Taverne",
     "npcLoot": "Beute: NSC",
     "treasureLoot": "Beute: Schatz",
-    "about": "About"
+    "about": "Über das Projekt",
+    "ariaLabel": "Hauptnavigation"
   },
   "buttons": {
     "reroll": "Neu auswürfeln",
@@ -61,7 +63,7 @@
       "intro": "Für verlassene Tempel, geheime Lagerhäuser oder frisch geplünderte Karawanen – hier entstehen Schätze mit aventurischem Flair."
     },
     "about": {
-      "title": "About",
+      "title": "Über das Projekt",
       "intro": "Hintergründe zur Aventuria-Toolbox und der aktuellen Build-Version.",
       "body": {
         "paragraph1": "Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und liefern dir stimmige Ergebnisse für improvisierte Szenen.",

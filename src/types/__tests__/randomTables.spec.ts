@@ -5,7 +5,10 @@ import { Dice } from "@/types/Dice";
 import { NpcLootTable } from "@/types/tables/NpcLootTable";
 import { TavernTable } from "@/types/tables/TavernTable";
 import { TreasureLootTable } from "@/types/tables/TreasureLootTable";
-import { __testUtils as tableFactoryTestUtils } from "@/types/tables/tableFactory";
+import {
+  buildTable,
+  __testUtils as tableFactoryTestUtils,
+} from "@/types/tables/tableFactory";
 import { getFallbackText } from "@/i18n/localizedText";
 import type { RollOutcome } from "@/types/interfaces/IRandomRolls";
 
@@ -29,6 +32,38 @@ describe("tableFactory helpers", () => {
     expect(tableFactoryTestUtils.expandRange("1-3,5,7-8")).toEqual([
       1, 2, 3, 5, 7, 8,
     ]);
+  });
+});
+
+describe("tableFactory coverage validation", () => {
+  it("throws when the die faces are not fully covered", () => {
+    expect(() =>
+      buildTable(
+        {
+          root: {
+            description: null,
+            die: 6,
+            entries: [{ range: "1-2" }, { range: "4-6" }],
+          },
+        },
+        "root",
+      ),
+    ).toThrow(/missing ranges/i);
+  });
+
+  it("throws when ranges overlap", () => {
+    expect(() =>
+      buildTable(
+        {
+          root: {
+            description: null,
+            die: 4,
+            entries: [{ range: "1-2" }, { range: "2-4" }],
+          },
+        },
+        "root",
+      ),
+    ).toThrow(/duplicate roll face/i);
   });
 });
 

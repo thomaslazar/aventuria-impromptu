@@ -41,6 +41,7 @@ export function buildTable(
     }
 
     const rolls: IRandomRoll[] = table.entries.map((entry) => {
+      const rollChance = expandRange(entry.range);
       const baseMeta = entry.meta ?? {};
       const resolvedMeta: RollMeta | undefined = {
         ...baseMeta,
@@ -49,12 +50,14 @@ export function buildTable(
       };
 
       return {
-        rollChance: expandRange(entry.range),
+        rollChance,
         result: entry.result ?? null,
         meta: resolvedMeta,
         followupRolls: entry.follow?.map((childKey) => build(childKey)) ?? null,
       };
     });
+
+    ensureFullCoverage(rolls, table.die, key);
 
     const randomRolls = new RandomRolls(
       key,
@@ -97,6 +100,51 @@ function expandRange(rangeExpression: string): number[] {
 
     return values;
   });
+}
+
+function ensureFullCoverage(
+  rolls: IRandomRoll[],
+  dieSize: number,
+  tableKey: string,
+) {
+  if (dieSize < 1) {
+    throw new Error(
+      `Invalid die size "${dieSize}" configured for table "${tableKey}"`,
+    );
+  }
+
+  const coverage = new Map<number, true>();
+
+  for (const roll of rolls) {
+    for (const face of roll.rollChance) {
+      if (face < 1 || face > dieSize) {
+        throw new Error(
+          `Roll face "${face}" from table "${tableKey}" exceeds configured die size "${dieSize}"`,
+        );
+      }
+
+      if (coverage.has(face)) {
+        throw new Error(
+          `Duplicate roll face "${face}" detected in table "${tableKey}"`,
+        );
+      }
+
+      coverage.set(face, true);
+    }
+  }
+
+  const missing: number[] = [];
+  for (let face = 1; face <= dieSize; face++) {
+    if (!coverage.has(face)) {
+      missing.push(face);
+    }
+  }
+
+  if (missing.length > 0) {
+    throw new Error(
+      `Table "${tableKey}" is missing ranges for die faces: ${missing.join(", ")}`,
+    );
+  }
 }
 
 export const __testUtils = {
