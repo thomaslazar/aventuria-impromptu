@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "Aventuria Impromptu",
+    "browserTitle": "Aventuria Impromptu – Aventurian Random Tables",
     "tagline": "Tools, tables, and inspiration for Aventuria game masters.",
     "footer": {
       "copy": "© {year} Aventuria Impromptu. Inspired by {world}.",
@@ -17,7 +18,8 @@
     "tavern": "Tavern",
     "npcLoot": "Loot: NPC",
     "treasureLoot": "Loot: Treasure",
-    "about": "About"
+    "about": "About",
+    "ariaLabel": "Primary navigation"
   },
   "buttons": {
     "reroll": "Roll Again",
