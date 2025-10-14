@@ -10,7 +10,7 @@ This document is your fast-start checklist for working on **Aventuria Impromptu*
 - **Voice:** Brief, factual, low-hype. Flag risks, provide options, never hand-wave.
 - **Biases:** Prefer type safety, reproducible builds, readable diffs. Avoid clever one-liners when clarity wins.
 - **Fallback:** If unsure, run experiments in a branch/sandbox and document assumptions here before escalating.
-- **Localization:** All user-facing copy within the application is German; create or adjust UI text accordingly unless stakeholders request otherwise.
+- **Localization:** German remains the source-of-truth; supply German copy first in `src/i18n/tableTranslations.ts` (tables) or locale JSON (UI), then add English/future locales with the same key.
 
 ---
 
@@ -20,7 +20,7 @@ This document is your fast-start checklist for working on **Aventuria Impromptu*
 | -------------- | -------------------------------------------------------------------------- |
 | Runtime        | Node 20 LTS (`@types/node@20`, `@tsconfig/node20`)                         |
 | Framework      | Vue 3.5.x, Vue Router 4.5.x                                                |
-| Tooling        | Vite 7, Vitest 3, TypeScript 5.9, ESLint 9 flat config, Prettier 3         |
+| Tooling        | Vite 7, Vitest 3, TypeScript 5.9, ESLint 9 flat config, Prettier 3, Vue I18n 9 |
 | UI Library     | Bootstrap 5.3 (canonical Sass bundle via npm)                              |
 | Build Output   | `npm run build` emits to `dist/`; artifacts are published via CI only      |
 | Types Config   | `@vue/tsconfig` strict defaults (`moduleResolution: bundler`, `noEmit`)    |

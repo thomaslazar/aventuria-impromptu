@@ -6,6 +6,8 @@ import { NpcLootTable } from "@/types/tables/NpcLootTable";
 import { TavernTable } from "@/types/tables/TavernTable";
 import { TreasureLootTable } from "@/types/tables/TreasureLootTable";
 import { __testUtils as tableFactoryTestUtils } from "@/types/tables/tableFactory";
+import { getFallbackText } from "@/i18n/localizedText";
+import type { RollOutcome } from "@/types/interfaces/IRandomRolls";
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -34,7 +36,7 @@ describe("RandomRolls", () => {
   it("evaluates functional results lazily", () => {
     let counter = 0;
 
-    const rolls = new RandomRolls("Test", 1, [
+    const rolls = new RandomRolls("test-table", "Test", 1, [
       {
         rollChance: [1],
         result: () => `Value-${++counter}`,
@@ -52,6 +54,11 @@ describe("RandomRolls", () => {
   });
 });
 
+const toPlain = (outcome: RollOutcome) => ({
+  description: getFallbackText(outcome.description),
+  result: getFallbackText(outcome.result),
+});
+
 describe("NpcLootTable", () => {
   it("chains follow-up tables and evaluates dynamic strings", () => {
     const diceSpy = mockDiceSequence([20, 18, 7, 8, 6, 15, 10, 4]);
@@ -67,19 +74,19 @@ describe("NpcLootTable", () => {
     const personal = results[2]!;
     const special = results[3]!;
 
-    expect(main).toEqual({
+    expect(toPlain(main)).toEqual({
       description: "Zusammenstellung des Schatzes",
       result: "Geld, persönlicher und besonderer Gegenstand",
     });
-    expect(money).toEqual({
+    expect(toPlain(money)).toEqual({
       description: "Geld",
       result: "7 Silbertaler, 8 Dukaten",
     });
-    expect(personal).toEqual({
+    expect(toPlain(personal)).toEqual({
       description: "Persönliche Gegenstände",
       result: "Schuldschein der Nordlandbank (25 Dukaten)",
     });
-    expect(special).toEqual({
+    expect(toPlain(special)).toEqual({
       description: "Besondere Gegenstände",
       result: "Kästchen mit 4 Borbarad-Moskitos",
     });
@@ -96,16 +103,16 @@ describe("TavernTable", () => {
     const nameEntry = results[1]!;
     const detailEntry = results[2]!;
 
-    expect(nameEntry).toEqual({
+    expect(toPlain(nameEntry)).toEqual({
       description: "Name",
-      meta: { articleStrategy: "zum-zur" },
       result: "Zum/ Zur goldenen",
     });
-    expect(detailEntry).toEqual({
+    expect(nameEntry.meta?.articleStrategy).toBe("zum-zur");
+    expect(toPlain(detailEntry)).toEqual({
       description: null,
-      meta: { gender: "neuter" },
       result: "Einhorn",
     });
+    expect(detailEntry.meta?.gender).toBe("neuter");
   });
 });
 
@@ -121,19 +128,19 @@ describe("TreasureLootTable", () => {
     const jewellery = results[2]!;
     const gems = results[3]!;
 
-    expect(main).toEqual({
+    expect(toPlain(main)).toEqual({
       description: "Zusammenstellung des Schatzes",
       result: "Münzen, Schmuck und Edelsteine",
     });
-    expect(coins).toEqual({
+    expect(toPlain(coins)).toEqual({
       description: "Münzen",
       result: "30 Silbertaler, 35 Dukaten",
     });
-    expect(jewellery).toEqual({
+    expect(toPlain(jewellery)).toEqual({
       description: "Schmuck",
       result: "Amulett (besonderes Metall, Mindorium)",
     });
-    expect(gems).toEqual({
+    expect(toPlain(gems)).toEqual({
       description: "Edelsteine",
       result: "Diamant (9 Karat)",
     });

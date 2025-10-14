@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import type { RollOutcome } from "@/types/RandomRoll/RandomRolls";
+import type { LocalizedText } from "@/i18n/localizedText";
+import { resolveLocalizedText } from "@/i18n/localizedText";
+import type { RollOutcome } from "@/types/interfaces/IRandomRolls";
 import { TavernTable } from "@/types/tables/TavernTable";
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 const tavernTable = new TavernTable();
+const { t, locale } = useI18n();
 
 const results = ref<RollOutcome[]>(tavernTable.roll());
 
@@ -11,11 +15,21 @@ const reroll = () => {
   results.value = tavernTable.roll();
 };
 
+const translate = (value: LocalizedText | null | undefined): string => {
+  return (
+    resolveLocalizedText(value ?? null, {
+      t,
+      locale: locale.value,
+    }) ?? ""
+  );
+};
+
 const tavernName = computed(() => {
   const nameEntries = results.value.filter(
     (entry) =>
       entry.result &&
-      (entry.description === "Name" || entry.description === null),
+      (entry.meta?.category === "name-prefix" ||
+        entry.meta?.category === "name-noun"),
   );
 
   if (!nameEntries.length) {
@@ -25,12 +39,12 @@ const tavernName = computed(() => {
   const parts: string[] = [];
 
   nameEntries.forEach((entry, index) => {
-    let text = entry.result ?? "";
+    let text = translate(entry.result ?? null);
     if (!text) {
       return;
     }
 
-    if (entry.meta?.articleStrategy === "zum-zur") {
+    if (entry.meta?.articleStrategy === "zum-zur" && locale.value === "de") {
       const nextWithGender = nameEntries
         .slice(index + 1)
         .find((candidate) => candidate.meta?.gender);
@@ -57,9 +71,9 @@ const additionalDetails = computed(() =>
   results.value.filter(
     (entry) =>
       entry.result &&
-      entry.description &&
-      entry.description !== "Gaststube/Taverne" &&
-      entry.description !== "Name",
+      entry.meta?.category !== "name-prefix" &&
+      entry.meta?.category !== "name-noun" &&
+      entry.meta?.tableKey !== "tavern",
   ),
 );
 </script>
@@ -69,15 +83,19 @@ const additionalDetails = computed(() =>
     <div
       class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
     >
-      <h3 class="codex-card-title mb-0">Aktuelle Auslage</h3>
+      <h3 class="codex-card-title mb-0">
+        {{ t("tables.tavern.currentSpread") }}
+      </h3>
       <button type="button" class="codex-button" @click="reroll">
-        Neu auswürfeln
+        {{ t("buttons.reroll") }}
       </button>
     </div>
 
     <ul class="codex-table-results mb-3">
       <li class="codex-table-result">
-        <span class="codex-table-label">Name der Gaststube</span>
+        <span class="codex-table-label">
+          {{ t("tables.tavern.nameLabel") }}
+        </span>
         <span class="codex-table-value">{{ tavernName }}</span>
       </li>
     </ul>
@@ -89,9 +107,11 @@ const additionalDetails = computed(() =>
         class="codex-table-result"
       >
         <span class="codex-table-label">
-          {{ result.description }}
+          {{ translate(result.description ?? null) }}
         </span>
-        <span class="codex-table-value">{{ result.result }}</span>
+        <span class="codex-table-value">
+          {{ translate(result.result ?? null) }}
+        </span>
       </li>
     </ul>
   </section>

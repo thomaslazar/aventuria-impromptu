@@ -1,0 +1,90 @@
+{
+  "app": {
+    "title": "Aventuria Impromptu",
+    "tagline": "Werkzeuge, Tabellen und Inspirationen für Aventuriens Spielleitung.",
+    "footer": {
+      "copy": "© {year} Aventuria Impromptu. Inspiriert von {world}.",
+      "world": "Das Schwarze Auge"
+    }
+  },
+  "language": {
+    "label": "Sprache",
+    "de": "Deutsch",
+    "en": "Englisch"
+  },
+  "nav": {
+    "home": "Start",
+    "tavern": "Taverne",
+    "npcLoot": "Beute: NSC",
+    "treasureLoot": "Beute: Schatz",
+    "about": "About"
+  },
+  "buttons": {
+    "reroll": "Neu auswürfeln",
+    "heroPrimary": "Jetzt würfeln",
+    "heroSecondary": "Projektinfos"
+  },
+  "home": {
+    "hero": {
+      "title": "Dein Aventurischer Werkstattkoffer",
+      "intro": "Aventuria Impromptu hilft dir, Begegnungen, Fundstücke und Tavernen aus dem Ärmel zu schütteln. Bleib im Spielfluss – ganz ohne Tabellen wälzen."
+    },
+    "features": {
+      "tavern": {
+        "title": "Gaststuben auf Zuruf",
+        "description": "Fülle jede Taverne mit Leben: improvisierte Barkeeper, raue Gäste und Gerüchte für spontane Spielabende.",
+        "cta": "Zu den Tavernenwürfen"
+      },
+      "npcLoot": {
+        "title": "Beute für NSC",
+        "description": "Schnelles Loot für gefasste Räuber, besiegte Schergen oder neugierige Streuner – jederzeit Aventurien-konform.",
+        "cta": "NSC-Beute generieren"
+      },
+      "treasureLoot": {
+        "title": "Schatzkisten & Verstecke",
+        "description": "Geheime Lagerhäuser, Drachenhorte oder verfallene Tempel – würfle passende Schätze samt Flair.",
+        "cta": "Schätze entdecken"
+      }
+    }
+  },
+  "views": {
+    "tavern": {
+      "title": "Gaststube & Taverne",
+      "intro": "Fülle jede Aventurische Schankstube mit Leben: Würfle Begegnungen, Besonderheiten und Gerüchte für spontane Szenen am Spieltisch."
+    },
+    "npcLoot": {
+      "title": "Beute: Nichtspielerfiguren",
+      "intro": "Spontane Taschenkontrollen oder Raubzüge? Hol dir passende Fundstücke für Stadtgardisten, Pilger oder zwielichtige Gestalten."
+    },
+    "treasureLoot": {
+      "title": "Beute: Schatzkiste",
+      "intro": "Für verlassene Tempel, geheime Lagerhäuser oder frisch geplünderte Karawanen – hier entstehen Schätze mit aventurischem Flair."
+    },
+    "about": {
+      "title": "About",
+      "intro": "Hintergründe zur Aventuria-Toolbox und der aktuellen Build-Version.",
+      "body": {
+        "paragraph1": "Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und liefern dir stimmige Ergebnisse für improvisierte Szenen.",
+        "paragraph2": "Die Anwendung ist bewusst leichtgewichtig gehalten: keine Server-Abhängigkeiten, nur Vue 3, Vite und ein Hauch Bootstrap."
+      }
+    }
+  },
+  "tables": {
+    "tavern": {
+      "currentSpread": "Aktuelle Auslage",
+      "nameLabel": "Name der Gaststube"
+    },
+    "npcLoot": {
+      "currentSpread": "Aktuelle Fundstücke"
+    },
+    "treasureLoot": {
+      "currentSpread": "Schätze im Versteck"
+    }
+  },
+  "build": {
+    "informationTitle": "Build-Informationen",
+    "versionLabel": "Version",
+    "builtAtLabel": "Erstellt am",
+    "commitLabel": "Commit {sha}"
+  }
+}

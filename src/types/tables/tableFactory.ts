@@ -1,19 +1,22 @@
+import type { LocalizedText } from "@/i18n/localizedText";
 import { RandomRolls } from "../RandomRoll/RandomRolls";
-import type { IRandomRoll, RollMeta } from "../interfaces/IRandomRoll";
+import type {
+  IRandomRoll,
+  RollMeta,
+  RollResult,
+} from "../interfaces/IRandomRoll";
 import type { IRandomRolls } from "../interfaces/IRandomRolls";
-import type { RollResult } from "../interfaces/IRandomRoll";
-
-export type RollResultFactory = RollResult | undefined;
 
 export interface TableEntryConfig {
   range: string;
-  result?: RollResultFactory;
+  id?: string;
+  result?: RollResult;
   follow?: string[];
   meta?: RollMeta;
 }
 
 export interface TableConfig {
-  description: string | null;
+  description: LocalizedText | null;
   die: number;
   entries: TableEntryConfig[];
 }
@@ -37,14 +40,28 @@ export function buildTable(
       throw new Error(`Unknown table config key "${key}"`);
     }
 
-    const rolls: IRandomRoll[] = table.entries.map((entry) => ({
-      rollChance: expandRange(entry.range),
-      result: entry.result ?? null,
-      meta: entry.meta,
-      followupRolls: entry.follow?.map((childKey) => build(childKey)) ?? null,
-    }));
+    const rolls: IRandomRoll[] = table.entries.map((entry) => {
+      const baseMeta = entry.meta ?? {};
+      const resolvedMeta: RollMeta | undefined = {
+        ...baseMeta,
+        tableKey: baseMeta.tableKey ?? key,
+        ...(entry.id ? { entryId: entry.id } : {}),
+      };
 
-    const randomRolls = new RandomRolls(table.description, table.die, rolls);
+      return {
+        rollChance: expandRange(entry.range),
+        result: entry.result ?? null,
+        meta: resolvedMeta,
+        followupRolls: entry.follow?.map((childKey) => build(childKey)) ?? null,
+      };
+    });
+
+    const randomRolls = new RandomRolls(
+      key,
+      table.description,
+      table.die,
+      rolls,
+    );
     cache.set(key, randomRolls);
     return randomRolls;
   };

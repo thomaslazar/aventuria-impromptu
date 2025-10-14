@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 const buildInfo = __APP_BUILD_INFO__;
+const { t } = useI18n();
 
 const builtAtDisplay = computed(() => {
   const builtAt = new Date(buildInfo.builtAt);
@@ -14,33 +16,32 @@ const builtAtDisplay = computed(() => {
 <template>
   <section class="codex-section">
     <header class="codex-section-header">
-      <h1 class="codex-section-title">About</h1>
-      <p class="codex-section-intro">
-        Hintergründe zur Aventuria-Toolbox und der aktuellen Build-Version.
-      </p>
+      <h1 class="codex-section-title">{{ t("views.about.title") }}</h1>
+      <p class="codex-section-intro">{{ t("views.about.intro") }}</p>
     </header>
 
     <article class="codex-card codex-card--table">
-      <p>
-        Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen
-        in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und
-        liefern dir stimmige Ergebnisse für improvisierte Szenen.
-      </p>
-      <p>
-        Die Anwendung ist bewusst leichtgewichtig gehalten: keine
-        Server-Abhängigkeiten, nur Vue&nbsp;3, Vite und ein Hauch Bootstrap.
-      </p>
+      <p>{{ t("views.about.body.paragraph1") }}</p>
+      <p>{{ t("views.about.body.paragraph2") }}</p>
 
       <div class="codex-build-meta">
-        <h2 class="codex-card-title mb-3">Build-Informationen</h2>
+        <h2 class="codex-card-title mb-3">
+          {{ t("build.informationTitle") }}
+        </h2>
         <div class="codex-meta-grid">
           <div class="codex-meta-item">
-            <span class="codex-meta-label">Version</span>
+            <span class="codex-meta-label">
+              {{ t("build.versionLabel") }}
+            </span>
             <span class="codex-meta-value">{{ buildInfo.version }}</span>
-            <span class="codex-meta-muted">Commit {{ buildInfo.gitSha }}</span>
+            <span class="codex-meta-muted">
+              {{ t("build.commitLabel", { sha: buildInfo.gitSha }) }}
+            </span>
           </div>
           <div class="codex-meta-item">
-            <span class="codex-meta-label">Erstellt am</span>
+            <span class="codex-meta-label">
+              {{ t("build.builtAtLabel") }}
+            </span>
             <span class="codex-meta-value">{{ builtAtDisplay }}</span>
           </div>
         </div>

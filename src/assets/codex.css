@@ -80,6 +80,18 @@ a:focus-visible {
   font-size: 1rem;
 }
 
+.codex-language-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-end;
+}
+
+.codex-language-select {
+  width: auto;
+  min-width: 8rem;
+}
+
 .codex-nav {
   display: flex;
   align-items: center;

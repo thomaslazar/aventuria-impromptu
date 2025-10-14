@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import TreasureLootTable from "../components/TreasureLootTable.vue";
+
+const { t } = useI18n();
 </script>
 
 <template>
   <section class="codex-section">
     <header class="codex-section-header">
-      <h1 class="codex-section-title">Beute: Schatzkiste</h1>
+      <h1 class="codex-section-title">
+        {{ t("views.treasureLoot.title") }}
+      </h1>
       <p class="codex-section-intro">
-        Für verlassene Tempel, geheime Lagerhäuser oder frisch geplünderte
-        Karawanen – hier entstehen Schätze mit aventurischem Flair.
+        {{ t("views.treasureLoot.intro") }}
       </p>
     </header>
 

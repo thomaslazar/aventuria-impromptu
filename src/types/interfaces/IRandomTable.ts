@@ -1,3 +1,5 @@
+import type { RollOutcome } from "./IRandomRolls";
+
 export interface IRandomTable {
-  roll(): { description: string | null; result: string | null }[];
+  roll(): RollOutcome[];
 }
