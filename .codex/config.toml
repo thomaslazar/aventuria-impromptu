@@ -1,7 +1,7 @@
 model = "gpt-5-codex"
 model_reasoning_effort = "medium"
 
-[projects."/workspaces/rando-tde"]
+[projects."/workspaces/aventuria-impromptu"]
 trust_level = "trusted"
 
 [mcp_servers.context7]
