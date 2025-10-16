@@ -10,7 +10,7 @@ This document is your fast-start checklist for working on **Aventuria Impromptu*
 - **Voice:** Brief, factual, low-hype. Flag risks, provide options, never hand-wave.
 - **Biases:** Prefer type safety, reproducible builds, readable diffs. Avoid clever one-liners when clarity wins.
 - **Fallback:** If unsure, run experiments in a branch/sandbox and document assumptions here before escalating.
-- **Localization:** German remains the source-of-truth; supply German copy first in `src/i18n/tableTranslations.ts` (tables) or locale JSON (UI), then add English/future locales with the same key.
+- **Working language:** Keep all repository docs, specs, and agent notes in English. When editing app copy, add the German default text in `src/i18n/tableTranslations.ts` or locale JSONs, then extend to other locales as needed.
 
 ---
 
@@ -202,6 +202,16 @@ Replace the content with specifics when communicating with the team.
 - Vitest Docs: https://vitest.dev/guide/
 - ESLint Flat Config Guide: https://eslint.org/docs/latest/use/configure/configuration-files-new
 - TypeScript 5.9 Release Notes: https://devblogs.microsoft.com/typescript/
+
+---
+
+## 15. Agent Workspaces
+
+- `agents/project-planning`: Intake → run → publish flow for turning specs into Scrum stories and plans. Start with the README in that directory for naming conventions, templates, and publishing guidance.
+- `agents/product-owner`: Product management checklists for preparing specs and shepherding backlog items.
+- `agents/scrum-master`: Ceremony guidance, metrics, and escalation practices that keep delivery smooth.
+- `agents/qa`: Quality assurance workflows for translating acceptance criteria into reliable coverage.
+- `agents/developer`: Engineering expectations covering coding standards, collaboration, and release support.
 
 ---
 
