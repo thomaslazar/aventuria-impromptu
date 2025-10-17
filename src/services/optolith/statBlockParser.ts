@@ -78,6 +78,10 @@ const SECTION_NORMALIZATION_MAP: Record<
   vorteilenachteile: "advantages-disadvantages",
 };
 
+const TYPO_CORRECTIONS: Record<string, string> = {
+  sinesschärfe: "Sinnesschärfe",
+};
+
 export function parseStatBlock(raw: string): ParseResult {
   const warnings: ParserWarning[] = [];
   const normalizedSource = normalizeInput(raw);
@@ -202,9 +206,14 @@ export function parseStatBlock(raw: string): ParseResult {
           appendCombinedAdvantagesDisadvantages(sectionBuckets, content);
         }
         break;
-      case "specialAbilities":
-        appendList(sectionBuckets.specialAbilities, content);
+      case "specialAbilities": {
+        const { primary, trailing } = splitTrailingSection(content, "Talente:");
+        appendList(sectionBuckets.specialAbilities, primary);
+        if (trailing) {
+          appendTalentList(sectionBuckets.talents, trailing);
+        }
         break;
+      }
       case "combatSpecialAbilities":
         appendList(sectionBuckets.combatSpecialAbilities, content);
         break;
@@ -246,7 +255,6 @@ export function parseStatBlock(raw: string): ParseResult {
     "advantages",
     "disadvantages",
     "specialAbilities",
-    "languages",
     "talents",
   ] as const) {
     if (!seenSections.has(requiredSection)) {
@@ -562,7 +570,7 @@ function splitList(content: string): string[] {
   if (current.trim()) {
     results.push(current.trim());
   }
-  return results;
+  return results.map((value) => mergeSplitWords(value));
 }
 
 function appendCombinedAdvantagesDisadvantages(
@@ -573,14 +581,17 @@ function appendCombinedAdvantagesDisadvantages(
   content: string,
 ): void {
   for (const entry of splitList(content)) {
-    const classification = classifyAdvantageDisadvantage(entry);
-    if (classification === "disadvantage") {
-      buckets.disadvantages.push(entry);
-    } else if (classification === "advantage") {
-      buckets.advantages.push(entry);
-    } else {
-      buckets.advantages.push(entry);
-      buckets.disadvantages.push(entry);
+    const parts = splitOnSlash(entry);
+    for (const part of parts) {
+      const classification = classifyAdvantageDisadvantage(part);
+      if (classification === "disadvantage") {
+        buckets.disadvantages.push(part);
+      } else if (classification === "advantage") {
+        buckets.advantages.push(part);
+      } else {
+        buckets.advantages.push(part);
+        buckets.disadvantages.push(part);
+      }
     }
   }
 }
@@ -600,6 +611,7 @@ function classifyAdvantageDisadvantage(
     "vorurteil",
     "schulden",
     "angst",
+    "zauberanfällig",
   ];
   if (disadvantageKeywords.some((keyword) => value.includes(keyword))) {
     return "disadvantage";
@@ -610,6 +622,8 @@ function classifyAdvantageDisadvantage(
     "gutaussehend",
     "vorteil",
     "resistenz",
+    "richtungssinn",
+    "entfernungssinn",
   ];
   if (advantageKeywords.some((keyword) => value.includes(keyword))) {
     return "advantage";
@@ -619,6 +633,10 @@ function classifyAdvantageDisadvantage(
 
 function sanitizeList(values: string[]): string[] {
   return values
+    .map((value) => normalizeWhitespace(value))
+    .map((value) => mergeSplitWords(value))
+    .map((value) => stripCitations(value))
+    .map((value) => normalizeTypos(value))
     .map((value) => normalizeWhitespace(value))
     .map((value) => (value.endsWith(".") ? value.slice(0, -1) : value))
     .filter((value) => value.length > 0)
@@ -635,6 +653,75 @@ function sanitizeList(values: string[]): string[] {
 
 function normalizeWhitespace(value: string): string {
   return value.replace(/\s+/g, " ").trim();
+}
+
+function mergeSplitWords(value: string): string {
+  return value.replace(/([A-Za-zÄÖÜäöüß])-\s+([A-Za-zÄÖÜäöüß])/g, "$1$2");
+}
+
+function stripCitations(value: string): string {
+  let result = value
+    .replace(/([IVX]+)\s*AKO\d+/gi, "$1")
+    .replace(/([IVX]+)AKO\d+/gi, "$1");
+  result = result.replace(/AKO\d+/gi, "");
+  result = result.replace(/\s{2,}/g, " ");
+  return result.trim();
+}
+
+function normalizeTypos(value: string): string {
+  let normalized = value;
+  for (const [typo, correction] of Object.entries(TYPO_CORRECTIONS)) {
+    const regex = new RegExp(`\\b${typo}\\b`, "gi");
+    normalized = normalized.replace(regex, correction);
+  }
+  return normalized;
+}
+
+function splitOnSlash(value: string): string[] {
+  const result: string[] = [];
+  let buffer = "";
+  let depth = 0;
+  for (const char of value) {
+    if (char === "(") {
+      depth += 1;
+    } else if (char === ")") {
+      depth = Math.max(depth - 1, 0);
+    }
+
+    if (char === "/" && depth === 0) {
+      if (buffer.trim()) {
+        result.push(buffer.trim());
+      }
+      buffer = "";
+      continue;
+    }
+    buffer += char;
+  }
+  if (buffer.trim()) {
+    result.push(buffer.trim());
+  }
+  return result;
+}
+
+function splitTrailingSection(
+  content: string,
+  marker: string,
+): { primary: string; trailing?: string } {
+  const lowerContent = content.toLowerCase();
+  const lowerMarker = marker.toLowerCase();
+  const index = lowerContent.indexOf(lowerMarker);
+  if (index === -1) {
+    return { primary: content };
+  }
+  const primary = content
+    .slice(0, index)
+    .trim()
+    .replace(/[;,]+$/, "");
+  const trailing = content.slice(index + marker.length).trim();
+  return {
+    primary: primary.length > 0 ? primary : "",
+    trailing: trailing.length > 0 ? trailing : undefined,
+  };
 }
 
 function parseTalentRatings(
@@ -654,7 +741,7 @@ function parseTalentRatings(
       });
       continue;
     }
-    const namePart = match[1];
+    const namePart = mergeSplitWords(match[1] ?? "");
     const valuePart = match[2];
     if (!namePart || !valuePart) {
       warnings.push({
@@ -664,7 +751,7 @@ function parseTalentRatings(
       });
       continue;
     }
-    const name = namePart.replace(/\*+$/, "").trim();
+    const name = normalizeTypos(namePart.replace(/\*+$/, "").trim());
     const value = Number.parseInt(valuePart, 10);
     if (Number.isNaN(value)) {
       warnings.push({
@@ -697,7 +784,7 @@ function parseRatedEntries(
       });
       continue;
     }
-    const namePart = match[1];
+    const namePart = mergeSplitWords(match[1] ?? "");
     const suffixPart = match[2];
     if (!namePart || !suffixPart) {
       warnings.push({

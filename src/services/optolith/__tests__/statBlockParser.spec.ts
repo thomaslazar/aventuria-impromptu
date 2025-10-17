@@ -39,6 +39,42 @@ describe("parseStatBlock", () => {
     ).toBe("ranged");
   });
 
+  it("normalizes wrapped talents for Gerion sample", async () => {
+    const raw = await loadSample("gerion-mtoto");
+    const result = parseStatBlock(raw);
+
+    const faehrtensuchen = result.model.talents.find(
+      (talent) => talent.name === "Fährtensuchen",
+    );
+    expect(faehrtensuchen?.value).toBe(8);
+
+    const koerperbeherrschung = result.model.talents.find(
+      (talent) => talent.name === "Körperbeherrschung",
+    );
+    expect(koerperbeherrschung?.value).toBe(5);
+
+    expect(
+      result.warnings.filter((warning) => warning.section === "languages"),
+    ).toHaveLength(0);
+  });
+
+  it("splits combined advantages/disadvantages and strips citations", async () => {
+    const raw = await loadSample("nepi-luhan");
+    const result = parseStatBlock(raw);
+
+    expect(result.model.advantages).toContain("Richtungssinn");
+    expect(result.model.disadvantages).toContain(
+      "Schlechte Eigenschaft (Aberglaube)",
+    );
+
+    const distanceAbility = result.model.combatSpecialAbilities.find((entry) =>
+      entry.startsWith("Auf Distanz halten I"),
+    );
+    expect(distanceAbility).toBeDefined();
+    expect(distanceAbility).toContain("Tauchspeer");
+    expect(distanceAbility).not.toMatch(/AKO/i);
+  });
+
   it("captures liturgies and handles explicit none markers", async () => {
     const raw = await loadSample("schamane");
     const result = parseStatBlock(raw);
@@ -52,5 +88,15 @@ describe("parseStatBlock", () => {
       (warning) => warning.section === "advantages",
     );
     expect(armorWarning).toBeUndefined();
+  });
+
+  it("normalizes common typos in talents", async () => {
+    const raw = await loadSample("stammeskriegerin-napewanha");
+    const result = parseStatBlock(raw);
+
+    const senseTalent = result.model.talents.find(
+      (talent) => talent.name === "Sinnesschärfe",
+    );
+    expect(senseTalent?.value).toBe(8);
   });
 });

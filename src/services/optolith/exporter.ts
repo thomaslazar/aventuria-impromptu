@@ -206,6 +206,7 @@ function buildActivatable(
     match?: { id: string };
     selectOption?: { id: number };
     level?: number;
+    rawOption?: string;
   }) => {
     if (!reference.match) {
       return;
@@ -213,6 +214,14 @@ function buildActivatable(
     const instance: Record<string, unknown> = {};
     if (reference.selectOption) {
       instance.sid = reference.selectOption.id;
+    }
+    if (reference.rawOption && reference.rawOption.trim()) {
+      instance.options = [
+        {
+          type: "Custom",
+          value: reference.rawOption.trim(),
+        },
+      ];
     }
     if (reference.level) {
       instance.tier = reference.level;
@@ -232,6 +241,14 @@ function buildActivatable(
     const instance: Record<string, unknown> = {};
     if (language.option) {
       instance.sid = language.option.optionId;
+    }
+    if (!language.option && language.rawOption?.trim()) {
+      instance.options = [
+        {
+          type: "Custom",
+          value: language.rawOption.trim(),
+        },
+      ];
     }
     if (language.level) {
       instance.tier = language.level;

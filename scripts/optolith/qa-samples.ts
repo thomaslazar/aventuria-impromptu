@@ -40,7 +40,11 @@ async function main(): Promise<void> {
     try {
       const parsed = parseStatBlock(sample.text);
       const resolved = resolveStatBlock(parsed.model, lookups);
-      const exported = exportToOptolithCharacter({ dataset: lookups, parsed, resolved });
+      const exported = exportToOptolithCharacter({
+        dataset: lookups,
+        parsed,
+        resolved,
+      });
 
       reports.push({
         sample,
@@ -75,7 +79,9 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
   ) as OptolithDataset["manifest"];
 
   const readSection = async (key: string) => {
-    const section = manifest.sections.find((candidate) => candidate.key === key);
+    const section = manifest.sections.find(
+      (candidate) => candidate.key === key,
+    );
     if (!section) {
       throw new Error(`Missing manifest section ${key}`);
     }
@@ -135,14 +141,24 @@ async function writeReport(
     lines.push(`## ${sample.name}`);
     lines.push("");
     lines.push("### Parser Warnings");
-    lines.push(result.parserWarnings.length > 0 ? formatWarnings(result.parserWarnings) : "- None");
+    lines.push(
+      result.parserWarnings.length > 0
+        ? formatWarnings(result.parserWarnings)
+        : "- None",
+    );
     lines.push("");
 
     lines.push("### Resolver Warnings");
-    lines.push(result.resolverWarnings.length > 0 ? formatResolverWarnings(result.resolverWarnings) : "- None");
+    lines.push(
+      result.resolverWarnings.length > 0
+        ? formatResolverWarnings(result.resolverWarnings)
+        : "- None",
+    );
     lines.push("");
 
-    const unresolvedEntries = Object.entries(result.unresolved).filter(([, items]) => items.length > 0);
+    const unresolvedEntries = Object.entries(result.unresolved).filter(
+      ([, items]) => items.length > 0,
+    );
     lines.push("### Unresolved References");
     if (unresolvedEntries.length > 0) {
       for (const [section, entries] of unresolvedEntries) {
@@ -154,7 +170,11 @@ async function writeReport(
     lines.push("");
 
     lines.push("### Exporter Warnings");
-    lines.push(result.exported.warnings.length > 0 ? result.exported.warnings.map((warning) => `- ${warning}`).join("\n") : "- None");
+    lines.push(
+      result.exported.warnings.length > 0
+        ? result.exported.warnings.map((warning) => `- ${warning}`).join("\n")
+        : "- None",
+    );
     lines.push("");
   }
 
@@ -162,12 +182,20 @@ async function writeReport(
   await fs.writeFile(REPORT_PATH, `${lines.join("\n")}\n`, "utf8");
 }
 
-function formatWarnings(warnings: ConversionResultPayload["parserWarnings"]): string {
-  return warnings.map((warning) => `- ${warning.section ?? "general"}: ${warning.message}`).join("\n");
+function formatWarnings(
+  warnings: ConversionResultPayload["parserWarnings"],
+): string {
+  return warnings
+    .map((warning) => `- ${warning.section ?? "general"}: ${warning.message}`)
+    .join("\n");
 }
 
-function formatResolverWarnings(warnings: ConversionResultPayload["resolverWarnings"]): string {
-  return warnings.map((warning) => `- ${warning.section}: ${warning.message}`).join("\n");
+function formatResolverWarnings(
+  warnings: ConversionResultPayload["resolverWarnings"],
+): string {
+  return warnings
+    .map((warning) => `- ${warning.section}: ${warning.message}`)
+    .join("\n");
 }
 
 main().catch((error) => {

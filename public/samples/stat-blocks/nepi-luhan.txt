@@ -1,0 +1,30 @@
+Nepi-Luhan
+MU 12 KL 11 IN 15 CH 12
+FF 14 GE 14 KO 11 KK 11
+LeP 27 AsP – KaP – INI 13+1W6
+AW 8 SK 1 ZK 1 GS 8
+Waffenlos: AT 11 PA 7 TP 1W6 RW kurz
+Tauchspeer: AT 13 PA 8 TP 1W6+4 RW lang
+Blasrohr: FK 14 LZ 2 TP 1W3+1(+Gift*) RW 2/10/15
+RS/BE: 0/0
+Vorteile/Nachteile: Giftresistenz I, Gutaussehend I,
+Hitzeresistenz, Richtungssinn / Schlechte Eigenschaft
+(Aberglaube), Zauberanfällig I
+Sonderfertigkeiten: Jäger, Geländekunde (Dschungel-
+kundig), Meister der Improvisation, Sammler, Seile
+herstellenAKO110, Wettervorhersage
+Sprachen: Garethi II, Mohisch III
+Kampfsonderfertigkeiten: Auf Distanz halten IAKO151
+(Tauchspeer), Finte I (Waffenlos, Tauchspeer), Präzi-
+ser Schuss/Wurf I (Blasrohr), Verbessertes Auswei-
+chen I
+Talente: Boote & Schiffe 10, Fährtensuchen 8, Fischen
+& Angeln 10, Heilkunde Gift 6, Körperbeherrschung
+7, Orientierung 9, Pflanzenkunde 8, Schwimmen 7,
+Selbstbeherrschung 3, Sinnesschärfe 8, Tierkunde 8,
+Verbergen 7, Wildnisleben 10, Willenskraft 2
+Kampfverhalten: Nepi-Luhan geht Kämpfen lieber aus
+dem Weg und flieht, wenn er bedroht wird.
+Schmerz +1 bei: 20 LeP, 14 LeP, 7 LeP, 5 LeP oder weniger
+*) Nepi-Luhan verfügt noch über 4 Anwendungen des
+Giftes Wurara (siehe Regelwerk Seite 342).

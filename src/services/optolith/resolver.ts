@@ -16,6 +16,7 @@ export interface ResolvedReference {
     readonly name: string;
   };
   readonly level?: number;
+  readonly rawOption?: string;
 }
 
 export interface ResolvedLanguage extends ResolvedReference {
@@ -170,17 +171,13 @@ function resolveSection(
       registerUnresolved(section, value, context);
     }
     let selectOption: { id: number; name: string } | undefined;
+    let rawOption: string | undefined;
     if (match && parsed.option && hasSelectOptions(match)) {
       const option = findSelectOption(match, parsed.option);
       if (option) {
         selectOption = option;
       } else {
-        context.warnings.push({
-          type: "unresolved-option",
-          section,
-          value,
-          message: `Auswahl "${parsed.option}" konnte für ${match.name} nicht gefunden werden.`,
-        });
+        rawOption = parsed.option;
       }
     }
     return {
@@ -189,6 +186,7 @@ function resolveSection(
       match,
       selectOption,
       level: leveled.level ?? undefined,
+      rawOption,
     };
   });
 }
@@ -244,6 +242,7 @@ function resolveLanguages(
       return {
         source: value,
         normalizedSource: normalized,
+        rawOption: parsed.baseName,
       };
     }
 

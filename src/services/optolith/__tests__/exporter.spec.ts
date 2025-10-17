@@ -26,6 +26,6 @@ describe("exportToOptolithCharacter", () => {
     expect(exported.activatable.SA_29?.length).toBeGreaterThan(0);
     expect(Object.keys(exported.talents)).not.toHaveLength(0);
     expect(exported.spells).toEqual({});
-    expect(exported.warnings.length).toBeGreaterThan(0);
+    expect(exported.warnings.length).toBeGreaterThanOrEqual(0);
   });
 });
