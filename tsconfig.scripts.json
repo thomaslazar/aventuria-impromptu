@@ -1,0 +1,19 @@
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist/scripts",
+    "module": "Node16",
+    "declaration": false,
+    "noEmitOnError": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["scripts/**/*.ts", "src/types/**/*.ts", "src/services/optolith/**/*.ts", "src/utils/optolith/**/*.ts"],
+  "exclude": ["src/services/optolith/__tests__/**"]
+}

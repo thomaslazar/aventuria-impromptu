@@ -51,3 +51,27 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+### Regenerate Optolith Dataset
+
+```sh
+npm run optolith:extract -- --diff
+```
+
+See `docs/optolith/extraction.md` for details on the required Optolith archive and output format (outputs land in `public/data/optolith/`).
+
+### Parse Stat Blocks (CLI Harness)
+
+```sh
+npm run optolith:parse -- --sample notia-botero-montez
+```
+
+The harness emits structured JSON including parser warnings; see `docs/optolith/extraction.md` for usage.
+
+### Generate Optolith Character JSON
+
+```sh
+npm run optolith:convert -- --sample notia-botero-montez --out npc.json
+```
+
+Runs the full parser → resolver → exporter pipeline and writes an Optolith-compatible JSON payload. Additional options are documented in `docs/optolith/extraction.md`.

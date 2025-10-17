@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatorVersion": "optolith-extractor@0.2.0",
+  "generatedAt": "2025-10-16T17:50:01.472Z",
+  "sourceChecksum": "fd579cb49dc9dd86fcdbefb2fede48ff2878b1c03c6f57eac7bb5c598f551651",
+  "sourceFileName": "optolith-data.zip",
+  "sourceModifiedAt": "2025-10-14T18:51:33.300Z",
+  "locale": "de-DE",
+  "sections": [
+    {
+      "key": "combatTechniques",
+      "label": "Combat Techniques",
+      "file": "combatTechniques.json",
+      "entryCount": 21,
+      "description": "Includes base data and localized labels for all combat techniques."
+    },
+    {
+      "key": "skills",
+      "label": "Talents & Skills",
+      "file": "skills.json",
+      "entryCount": 59,
+      "description": "Comprehensive skill catalogue with check attributes and applications."
+    },
+    {
+      "key": "advantages",
+      "label": "Advantages",
+      "file": "advantages.json",
+      "entryCount": 135,
+      "description": "All advantages with localized rules text and prerequisites."
+    },
+    {
+      "key": "disadvantages",
+      "label": "Disadvantages",
+      "file": "disadvantages.json",
+      "entryCount": 83,
+      "description": "All disadvantages with localized rules text and prerequisites."
+    },
+    {
+      "key": "specialAbilities",
+      "label": "Special Abilities",
+      "file": "specialAbilities.json",
+      "entryCount": 1437,
+      "description": "Sonderfertigkeiten including leveled and selectable options (languages, scripts, blessings)."
+    },
+    {
+      "key": "spells",
+      "label": "Spells",
+      "file": "spells.json",
+      "entryCount": 330,
+      "description": "Magical spells with effect text, tradition metadata, and select options."
+    },
+    {
+      "key": "liturgies",
+      "label": "Liturgical Chants",
+      "file": "liturgies.json",
+      "entryCount": 227,
+      "description": "Liturgies and blessings handled by the karma ruleset."
+    },
+    {
+      "key": "blessings",
+      "label": "Blessings",
+      "file": "blessings.json",
+      "entryCount": 12,
+      "description": "Standalone blessings and miracle effects."
+    },
+    {
+      "key": "equipment",
+      "label": "Equipment",
+      "file": "equipment.json",
+      "entryCount": 875,
+      "description": "Gear catalogue covering mundane equipment templates."
+    }
+  ]
+}

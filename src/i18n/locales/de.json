@@ -18,6 +18,7 @@
     "tavern": "Taverne",
     "npcLoot": "Beute: NSC",
     "treasureLoot": "Beute: Schatz",
+    "optolithConverter": "Optolith Konverter",
     "about": "Über das Projekt",
     "ariaLabel": "Hauptnavigation"
   },
@@ -61,6 +62,10 @@
     "treasureLoot": {
       "title": "Beute: Schatzkiste",
       "intro": "Für verlassene Tempel, geheime Lagerhäuser oder frisch geplünderte Karawanen – hier entstehen Schätze mit aventurischem Flair."
+    },
+    "optolithConverter": {
+      "title": "Optolith Konverter",
+      "intro": "Konvertiere DSA5-Statblöcke direkt im Browser in importfertige Optolith-Daten."
     },
     "about": {
       "title": "Über das Projekt",

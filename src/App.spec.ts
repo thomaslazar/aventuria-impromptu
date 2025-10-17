@@ -15,6 +15,7 @@ const createTestRouter = () =>
       { path: "/tavern", component: { template: "<div />" } },
       { path: "/npcloot", component: { template: "<div />" } },
       { path: "/treasureloot", component: { template: "<div />" } },
+      { path: "/tools/optolith-converter", component: { template: "<div />" } },
     ],
   });
 

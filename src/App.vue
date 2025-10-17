@@ -13,6 +13,7 @@ const navigationItems = [
   { to: "/tavern", labelKey: "nav.tavern" },
   { to: "/npcloot", labelKey: "nav.npcLoot" },
   { to: "/treasureloot", labelKey: "nav.treasureLoot" },
+  { to: "/tools/optolith-converter", labelKey: "nav.optolithConverter" },
   { to: "/about", labelKey: "nav.about" },
 ];
 

@@ -1,0 +1,15 @@
+Schamane
+MU 13 KL 12 IN 15 CH 13
+FF 11 GE 13 KO 12 KK 13
+LeP 30 AsP - KaP 38 INI 13+1W6
+AW 7 SK 2 ZK 1 GS 8
+Waffenlos: AT 10 PA 6 TP 1W6 RW kurz
+Knochenkeule: AT 12 PA 6 TP 1W6+3 RW mittel
+RS/BE: 0/0
+Vorteile: keine
+Nachteile: keine
+Sonderfertigkeiten: Verteidigungshaltung (Waffenlos, Knochenkeule)
+Talente: Klettern 3, Körperbeherrschung 6, Schwimmen 7, Selbstbeherrschung 7, Sinnesschärfe 8, Verbergen 5, Willenskraft 7
+Liturgien: Hauch des Elements 7
+Kampfverhalten: Die Schamanen unterstützen die Stammeskrieger mittels Liturgien und wechseln in die Verteidigungshaltung, wenn sie bedroht werden.
+Schmerz +1 bei: 23 LeP, 15 LeP, 8 LeP, 5 LeP oder weniger

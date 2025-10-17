@@ -18,6 +18,7 @@
     "tavern": "Tavern",
     "npcLoot": "Loot: NPC",
     "treasureLoot": "Loot: Treasure",
+    "optolithConverter": "Optolith Converter",
     "about": "About",
     "ariaLabel": "Primary navigation"
   },
@@ -61,6 +62,10 @@
     "treasureLoot": {
       "title": "Loot: Treasure Chest",
       "intro": "Abandoned temples, secret depots, or freshly plundered caravans—craft treasures with Aventurian flair."
+    },
+    "optolithConverter": {
+      "title": "Optolith Converter",
+      "intro": "Convert German DSA5 stat blocks into Optolith NPC JSON directly in your browser."
     },
     "about": {
       "title": "About",

@@ -4,6 +4,7 @@ import AboutView from "../views/AboutView.vue";
 import TavernView from "@/views/TavernView.vue";
 import NpcLootView from "@/views/NpcLootView.vue";
 import TreasureLootView from "@/views/TreasureLootView.vue";
+const OptolithConverterView = () => import("@/views/OptolithConverterView.vue");
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: "/treasureloot",
       name: "treasureloot",
       component: TreasureLootView,
+    },
+    {
+      path: "/tools/optolith-converter",
+      name: "optolith-converter",
+      component: OptolithConverterView,
     },
   ],
 });
