@@ -1,0 +1,14 @@
+Gerion Mtoto
+MU 12 KL 12 IN 14 CH 10
+FF 13 GE 14 KO 13 KK 12
+LeP 33 AsP - KaP - INI 13+1W3
+AW 8 SK 1 ZK 1 GS 8
+Waffenlos: AT 12 PA 7 TP 1W6 RW kurz
+Haumesser: AT 13 PA 6 TP 1W6+3 RW mittel
+Wurfspeer: FK 13 LZ 2 TP 2W6+2 RW 5/25/40
+RS/BE: 0/0
+Vorteile/Nachteile: Schlechte Eigenschaft (Neugier)
+Sonderfertigkeiten: Finte I (Waffenlos, Haumesser), Geländekunde (Dschungelkundig), Ortskenntnis (Östliches Altoum), Verbessertes Ausweichen I
+Talente: Fährtensuchen 8, Fesseln 8, Klettern 7, Körperbeherrschung 5, Kraftakt 5, Menschenkenntnis 6, Orientierung 10, Schwimmen 4, Selbstbeherrschung 6, Sinnesschärfe 8, Überreden 6, Verbergen 7, Wildnisleben 9, Willenskraft 2
+Kampfverhalten: Gerion setzt auf Beweglichkeit und nutzt das Gelände zu seinem Vorteil.
+Schmerz +1 bei: 25 LeP, 17 LeP, 8 LeP, 5 LeP oder weniger

@@ -1,0 +1,17 @@
+Notia Botero-Montez
+MU 14 KL 15 IN 14 CH 15
+FF 14 GE 16 KO 12 KK 12
+LeP 32 AsP - KaP - INI 14+1W6
+AW 8 SK 2 ZK 1 GS 7
+Rapier: AT 18 PA 10 TP 1W6+5 RW mittel
+Entdeckerpeitsche: AT 16 PA - TP 1W6 RW lang
+RS/BE: 1/0 (schwere Kleidung)
+Aktionen: 1
+Vorteile: Fuchssinn, Gutaussehend II, Zäher Hund
+Nachteile: Schlechte Eigenschaft (Neugier), Verpflichtungen II (Universität von Al’Anfa)
+Sonderfertigkeiten: Kartographie, Schriftstellerei (Fachpublikationen)
+Sprachen: Garethi, Bosparano III, Mohisch II, Tulamidya III
+Kampfsonderfertigkeiten: Entwaffnen (Rapier, Entdeckerpeitsche), Finte I (Rapier, Entdeckerpeitsche), Einhändiger Kampf (Rapier), Verteidigungshaltung (Rapier), Zu Fall bringen (Entdeckerpeitsche)
+Talente: Betören 10, Etikette 7, Fesseln 7, Geographie 10, Geschichtswissen 12, Körperbeherrschung 13, Sagen & Legenden 11, Sinnesschärfe 12, Sternkunde 10, Tanzen 10, Wildnisleben 10, Willenskraft 8
+Kampfverhalten: Notia nimmt gegnerische Angriffe ernst und versucht, Distanz zu halten.
+Schmerz +1 bei: 20 LeP, 14 LeP, 7 LeP, 5 LeP oder weniger
