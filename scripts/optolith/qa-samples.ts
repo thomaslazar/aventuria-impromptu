@@ -13,10 +13,24 @@ const SAMPLE_MD = path.resolve(
   process.cwd(),
   "agents/project-planning/intake/specs/examples/dsa5-optolith-sample-stat-blocks.md",
 );
-const REPORT_PATH = path.resolve(
+const DEFAULT_RUN_DIR = path.resolve(
   process.cwd(),
-  "docs/optolith/qa/sample-analysis-20251016.md",
+  "agents/project-planning/runs/20251016-dsa5-optolith-converter",
 );
+
+function resolveReportPath(): string {
+  const override = process.env.OPTOLITH_QA_REPORT_PATH;
+  if (override) {
+    return path.resolve(process.cwd(), override);
+  }
+  const timestamp = new Date()
+    .toISOString()
+    .replace(/[:.]/g, "-")
+    .replace("T", "-")
+    .slice(0, 19);
+  const fileName = `sample-analysis-${timestamp}.md`;
+  return path.join(DEFAULT_RUN_DIR, fileName);
+}
 
 interface SampleBlock {
   readonly name: string;
@@ -32,6 +46,7 @@ async function main(): Promise<void> {
   const manifest = await loadDataset(DATASET_DIR);
   const lookups = createDatasetLookups(manifest);
   const samples = await loadSamples(SAMPLE_MD);
+  const reportPath = resolveReportPath();
 
   const reports: SampleReport[] = [];
   const failures: Array<{ sample: SampleBlock; error: string }> = [];
@@ -65,8 +80,8 @@ async function main(): Promise<void> {
     }
   }
 
-  await writeReport(reports, failures);
-  console.log(`QA report written to ${REPORT_PATH}`);
+  await writeReport(reports, failures, reportPath);
+  console.log(`QA report written to ${reportPath}`);
   if (failures.length > 0) {
     console.error(`Encountered ${failures.length} conversion errors.`);
     process.exitCode = 1;
@@ -123,6 +138,7 @@ async function loadSamples(filePath: string): Promise<SampleBlock[]> {
 async function writeReport(
   reports: SampleReport[],
   failures: Array<{ sample: SampleBlock; error: string }>,
+  reportPath: string,
 ): Promise<void> {
   const lines: string[] = [];
   lines.push("# Optolith Sample QA — 2025-10-16");
@@ -178,8 +194,8 @@ async function writeReport(
     lines.push("");
   }
 
-  await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
-  await fs.writeFile(REPORT_PATH, `${lines.join("\n")}\n`, "utf8");
+  await fs.mkdir(path.dirname(reportPath), { recursive: true });
+  await fs.writeFile(reportPath, `${lines.join("\n")}\n`, "utf8");
 }
 
 function formatWarnings(

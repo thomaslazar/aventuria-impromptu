@@ -663,7 +663,7 @@ function stripCitations(value: string): string {
   let result = value
     .replace(/([IVX]+)\s*AKO\d+/gi, "$1")
     .replace(/([IVX]+)AKO\d+/gi, "$1");
-  result = result.replace(/AKO\d+/gi, "");
+  result = result.replace(/AKO[IVX\d]+/gi, "");
   result = result.replace(/\s{2,}/g, " ");
   return result.trim();
 }
