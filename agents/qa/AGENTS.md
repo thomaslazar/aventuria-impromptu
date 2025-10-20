@@ -8,6 +8,7 @@
 - Review each story in `agents/project-planning/outputs/backlog/` and extract test cases into your suite.
 - Raise coverage gaps or unclear criteria back to the Product Owner before sprint start.
 - Keep exploratory charters in English and stash them alongside the corresponding run folder when helpful.
+- Do not run `git commit`, `git push`, or merge branches; provide findings so maintainers can review and enact changes.
 
 ## Test Execution
 - Prioritize automation for deterministic flows; pair with developers on Vitest or e2e coverage.

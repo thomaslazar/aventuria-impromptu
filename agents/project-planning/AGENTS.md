@@ -29,6 +29,7 @@
 - Specs and run notes stay in English; product copy changes are handled through app localization files.
 - Use the templates in `agents/project-planning/templates/` to keep story and plan structure consistent.
 - When templates evolve, document the rationale in the most recent run summary and notify the product owner so future intake stays aligned.
+- Do not execute `git commit`, `git push`, or merges; surface required repository updates so a maintainer can apply them after review.
 
 ## Cadence
 - Align with product owners ahead of backlog grooming to validate priorities.

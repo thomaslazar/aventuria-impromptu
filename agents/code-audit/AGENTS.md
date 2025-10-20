@@ -31,6 +31,8 @@ Keep this table aligned with `AGENTS.md` so audit conclusions reference the corr
 
 ## 3. Audit Workflow
 
+> Source control guardrail: auditors do **not** run `git commit`, `git push`, or merge branches. Deliver findings so maintainers can review and apply any resulting changes.
+
 1. **Repository Recon**
    - Map directory ownership (`src/`, `public/`, tooling configs). Identify stale or orphaned files (unused assets, outdated configs).
    - Verify `.codex/`, `.devcontainer/`, `.github/` remain untouched unless automation changes justify otherwise.
@@ -115,4 +117,3 @@ Note any commands skipped (and why) so the audit log remains transparent.
 - TypeScript 5.9 Notes: https://devblogs.microsoft.com/typescript/
 
 Keep this audit playbook updated as architecture, tooling, or policies evolve. A well-scoped audit produces actionable insights and a clear remediation roadmap for the engineering team.
-

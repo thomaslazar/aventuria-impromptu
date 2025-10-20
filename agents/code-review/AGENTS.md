@@ -31,6 +31,8 @@ Update this table when dependencies move so reviewer expectations stay current.
 
 ## 3. Review Workflow
 
+> Source control guardrail: reviewers do **not** run `git commit`, `git push`, or merge branches. Provide feedback and approvals so maintainers can apply the reviewed changes.
+
 1. **Scope the PR**
    - Read the description. Confirm change intent, affected areas (`src/types/tables/`, Vue SFCs, tooling, etc.).
    - Identify risk zones: optional follow-up rolls, localization updates, build config.
@@ -109,4 +111,3 @@ If everything clears, approve; otherwise summarize outstanding items and request
 - TypeScript 5.9 Notes: https://devblogs.microsoft.com/typescript/
 
 Keep this reviewer playbook in sync with the engineering one. When new risks surface, update both documents so future reviewers stay effective from the first glance.
-

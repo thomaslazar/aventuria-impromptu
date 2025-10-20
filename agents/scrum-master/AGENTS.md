@@ -8,6 +8,7 @@
 - Facilitate planning using published plans in `agents/project-planning/outputs/plans/`.
 - Keep the sprint backlog current; cross-link story filenames when updating tracking tools.
 - Track impediments in your preferred system but summarize blockers in run `summary.md` files when they affect scope.
+- Do not execute `git commit`, `git push`, or merges; coordinate with maintainers so reviewed updates are applied on your behalf.
 
 ## Ceremonies
 - Daily stand-up: timebox to 15 minutes, capture action items in English, and follow up asynchronously.

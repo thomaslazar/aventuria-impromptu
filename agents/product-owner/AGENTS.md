@@ -14,6 +14,7 @@
 - Join agent runs by reviewing files under `agents/project-planning/runs/` and confirming assumptions.
 - Approve or adjust generated stories prior to publishing them into the backlog outputs.
 - Highlight business deadlines in run summaries so the Scrum Master can slot work into the right sprint.
+- Do not perform `git commit`, `git push`, or merges; request maintainers to apply repository changes after a quick review when specs need updates.
 
 ## Definition of Ready
 - Business value explained in one paragraph.

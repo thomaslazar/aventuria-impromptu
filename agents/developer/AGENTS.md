@@ -8,6 +8,7 @@
 - Start from the stories in `agents/project-planning/outputs/backlog/`; confirm scope before coding.
 - Use feature branches with conventional commits. Keep diffs readable and scoped to a single concern.
 - Run `npm run lint`, `npm run typecheck`, `npm run test:unit`, and `npm run build` before pushing.
+- Do not run `git commit`, `git push`, or merge branches yourself; flag your ready work so a maintainer can review and land it.
 
 ## Collaboration
 - Join backlog refinement to surface technical constraints early.
