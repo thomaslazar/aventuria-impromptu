@@ -1,26 +1,47 @@
 <template>
   <div class="container py-4">
-    <h1 class="mb-3">Optolith Converter</h1>
-    <p class="text-muted">
-      Paste a single German DSA5 stat block to generate an Optolith-compatible
-      JSON. The converter runs locally – no data leaves your browser.
+    <h1 class="mb-3">{{ t("views.optolithConverter.title") }}</h1>
+    <p class="text-muted mb-3">
+      {{ t("views.optolithConverter.intro") }}
     </p>
+    <div class="alert alert-info mb-4" role="note">
+      {{ t("views.optolithConverter.languageNote") }}
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h2 class="h5">{{ t("views.optolithConverter.usage.title") }}</h2>
+        <ol class="mb-0 ps-3">
+          <li>{{ t("views.optolithConverter.usage.steps.paste") }}</li>
+          <li>{{ t("views.optolithConverter.usage.steps.convert") }}</li>
+          <li>{{ t("views.optolithConverter.usage.steps.review") }}</li>
+          <li>{{ t("views.optolithConverter.usage.steps.download") }}</li>
+        </ol>
+      </div>
+    </div>
 
     <div class="mb-3">
-      <label for="stat-block-input" class="form-label">Stat block</label>
+      <label for="stat-block-input" class="form-label">
+        {{ t("views.optolithConverter.input.label") }}
+      </label>
       <textarea
         id="stat-block-input"
         v-model="input"
         class="form-control"
         :class="{ 'is-invalid': inputTooLong }"
         rows="14"
-        placeholder="Paste the stat block here"
+        :placeholder="t('views.optolithConverter.input.placeholder')"
       ></textarea>
       <div class="form-text">
-        Maximum length {{ MAX_LENGTH }} characters. Current: {{ input.length }}.
+        {{
+          t("views.optolithConverter.input.help", {
+            max: MAX_LENGTH,
+            current: input.length,
+          })
+        }}
       </div>
       <div v-if="inputTooLong" class="invalid-feedback">
-        The stat block exceeds the supported length.
+        {{ t("views.optolithConverter.input.tooLong") }}
       </div>
     </div>
 
@@ -31,7 +52,7 @@
         :disabled="disableConvert"
         @click="convert"
       >
-        Convert Stat Block
+        {{ t("views.optolithConverter.buttons.convert") }}
       </button>
       <button
         type="button"
@@ -39,43 +60,20 @@
         @click="reset"
         :disabled="status === 'loading'"
       >
-        Reset
+        {{ t("views.optolithConverter.buttons.reset") }}
       </button>
-      <div class="d-flex gap-2 align-items-center">
-        <select
-          v-model="selectedSample"
-          class="form-select form-select-sm"
-          :disabled="status === 'loading'"
-        >
-          <option
-            v-for="sample in samples"
-            :key="sample.slug"
-            :value="sample.slug"
-          >
-            {{ sample.label }}
-          </option>
-        </select>
-        <button
-          type="button"
-          class="btn btn-outline-info"
-          :disabled="status === 'loading'"
-          @click="loadSample(selectedSample)"
-        >
-          Load Sample
-        </button>
-      </div>
       <button
         type="button"
         class="btn btn-outline-success"
         @click="loadLastResult"
         :disabled="!hasStoredResult || status === 'loading'"
       >
-        Load Last Result
+        {{ t("views.optolithConverter.buttons.loadLast") }}
       </button>
     </div>
 
     <div v-if="status === 'loading'" class="alert alert-info" role="status">
-      Converting… please wait.
+      {{ t("views.optolithConverter.loading") }}
     </div>
     <div v-if="error" class="alert alert-danger" role="alert">
       {{ error }}
@@ -90,8 +88,12 @@
             <div>
               <h2 class="h5 mb-1">{{ result.exported.name }}</h2>
               <p class="mb-0 text-muted">
-                Dataset schema {{ result.manifest.schemaVersion }} · Source
-                checksum {{ result.manifest.sourceChecksum.slice(0, 12) }}…
+                {{
+                  t("views.optolithConverter.datasetInfo", {
+                    schema: result.manifest.schemaVersion,
+                    checksum: result.manifest.sourceChecksum.slice(0, 12),
+                  })
+                }}
               </p>
             </div>
             <div class="btn-group">
@@ -100,14 +102,14 @@
                 class="btn btn-success"
                 @click="downloadJson"
               >
-                Download JSON
+                {{ t("views.optolithConverter.buttons.download") }}
               </button>
               <button
                 type="button"
                 class="btn btn-outline-secondary"
                 @click="copyWarnings"
               >
-                Copy warnings
+                {{ t("views.optolithConverter.buttons.copyWarnings") }}
               </button>
             </div>
           </div>
@@ -117,7 +119,9 @@
             class="alert alert-warning"
             role="alert"
           >
-            <h3 class="h6 mb-2">Warnings</h3>
+            <h3 class="h6 mb-2">
+              {{ t("views.optolithConverter.warnings.title") }}
+            </h3>
             <ul class="mb-0 ps-3">
               <li v-for="warning in displayWarnings" :key="warning">
                 {{ warning }}
@@ -126,14 +130,18 @@
           </div>
 
           <details class="mb-3">
-            <summary class="fw-semibold">Normalized stat block</summary>
+            <summary class="fw-semibold">
+              {{ t("views.optolithConverter.normalizedHeading") }}
+            </summary>
             <pre class="bg-light border rounded p-3 small overflow-auto">{{
               result.normalizedSource
             }}</pre>
           </details>
 
           <details open>
-            <summary class="fw-semibold">Optolith JSON preview</summary>
+            <summary class="fw-semibold">
+              {{ t("views.optolithConverter.jsonHeading") }}
+            </summary>
             <pre class="bg-light border rounded p-3 small overflow-auto">{{
               formattedJson
             }}</pre>
@@ -146,6 +154,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import type {
   ConversionRequestMessage,
@@ -153,18 +162,14 @@ import type {
   ConverterWorkerMessage,
 } from "@/types/optolith/converter";
 
+const { t } = useI18n();
+
 const MAX_LENGTH = 6000;
 const STORAGE_KEY = "optolith-converter:last";
-const samples = [
-  { slug: "notia-botero-montez", label: "Notia Botero-Montez" },
-  { slug: "gerion-mtoto", label: "Gerion Mtoto" },
-  { slug: "schamane", label: "Schamane" },
-];
 
 type Status = "idle" | "loading" | "success" | "error";
 
 const input = ref("");
-const selectedSample = ref(samples[0]?.slug ?? "notia-botero-montez");
 const status = ref<Status>("idle");
 const error = ref<string | null>(null);
 const result = ref<ConversionResultPayload | null>(null);
@@ -189,17 +194,37 @@ const displayWarnings = computed(() => {
     return [] as string[];
   }
   const warnings = new Set<string>();
-  result.value.exportedWarnings.forEach((warning) => warnings.add(warning));
+  const localizeWarning = (message: string): string => {
+    if (message.startsWith("[Parser] ")) {
+      return `${t("views.optolithConverter.warnings.prefixes.parser")} ${message.slice(9)}`;
+    }
+    if (message.startsWith("[Resolver] ")) {
+      return `${t("views.optolithConverter.warnings.prefixes.resolver")} ${message.slice(10)}`;
+    }
+    if (message.startsWith("[Exporter] ")) {
+      return `${t("views.optolithConverter.warnings.prefixes.exporter")} ${message.slice(10)}`;
+    }
+    return message;
+  };
+  result.value.exportedWarnings.forEach((warning) =>
+    warnings.add(localizeWarning(warning)),
+  );
   result.value.parserWarnings.forEach((warning) =>
     warnings.add(
-      `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
+      localizeWarning(
+        `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
+      ),
     ),
   );
   result.value.resolverWarnings.forEach((warning) =>
-    warnings.add(`[Resolver] ${warning.section}: ${warning.message}`),
+    warnings.add(
+      localizeWarning(`[Resolver] ${warning.section}: ${warning.message}`),
+    ),
   );
   Object.entries(result.value.unresolved).forEach(([section, entries]) => {
-    entries.forEach((entry) => warnings.add(`[Resolver] ${section}: ${entry}`));
+    entries.forEach((entry) =>
+      warnings.add(localizeWarning(`[Resolver] ${section}: ${entry}`)),
+    );
   });
   return Array.from(warnings);
 });
@@ -251,27 +276,6 @@ function convert() {
       baseUrl,
     },
   } satisfies ConversionRequestMessage);
-}
-
-async function loadSample(slug: string | undefined) {
-  if (!slug) {
-    return;
-  }
-  status.value = "idle";
-  error.value = null;
-  result.value = null;
-  try {
-    const response = await fetch(
-      new URL(`samples/stat-blocks/${slug}.txt`, baseUrl).toString(),
-    );
-    if (!response.ok) {
-      throw new Error(`Sample ${slug} not available`);
-    }
-    input.value = await response.text();
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : String(err);
-    status.value = "error";
-  }
 }
 
 function loadLastResult() {

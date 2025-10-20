@@ -64,8 +64,43 @@
       "intro": "Für verlassene Tempel, geheime Lagerhäuser oder frisch geplünderte Karawanen – hier entstehen Schätze mit aventurischem Flair."
     },
     "optolithConverter": {
-      "title": "Optolith Konverter",
-      "intro": "Konvertiere DSA5-Statblöcke direkt im Browser in importfertige Optolith-Daten."
+      "title": "Optolith-Konverter",
+      "intro": "Wandle deutschsprachige DSA5-Statblöcke direkt im Browser in Optolith-kompatibles NPC-JSON um.",
+      "languageNote": "Dieses Werkzeug verarbeitet ausschließlich deutsche Statblöcke. Bitte passe andere Sprachen vor der Konvertierung an.",
+      "usage": {
+        "title": "So funktioniert es",
+        "steps": {
+          "paste": "Statblock vollständig in das Feld unten einfügen.",
+          "convert": "Sobald alles passt, auf \"Statblock konvertieren\" klicken.",
+          "review": "Warnungen und den normalisierten Statblock prüfen und gegebenenfalls nacharbeiten.",
+          "download": "Das Optolith-JSON herunterladen und in der Desktop-App importieren."
+        }
+      },
+      "input": {
+        "label": "Statblock",
+        "placeholder": "Statblock hier einfügen",
+        "help": "Maximale Länge {max} Zeichen. Aktuell: {current}.",
+        "tooLong": "Der Statblock überschreitet die unterstützte Länge."
+      },
+      "buttons": {
+        "convert": "Statblock konvertieren",
+        "reset": "Zurücksetzen",
+        "loadLast": "Letztes Ergebnis laden",
+        "download": "JSON herunterladen",
+        "copyWarnings": "Warnungen kopieren"
+      },
+      "loading": "Konvertierung läuft … bitte warten.",
+      "datasetInfo": "Datensatzschema {schema} · Quellen-Prüfsumme {checksum}…",
+      "warnings": {
+        "title": "Warnungen",
+        "prefixes": {
+          "parser": "Parser:",
+          "resolver": "Resolver:",
+          "exporter": "Exporter:"
+        }
+      },
+      "normalizedHeading": "Normalisierter Statblock",
+      "jsonHeading": "Optolith-JSON-Vorschau"
     },
     "about": {
       "title": "Über das Projekt",

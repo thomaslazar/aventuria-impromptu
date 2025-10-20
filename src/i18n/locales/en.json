@@ -65,7 +65,42 @@
     },
     "optolithConverter": {
       "title": "Optolith Converter",
-      "intro": "Convert German DSA5 stat blocks into Optolith NPC JSON directly in your browser."
+      "intro": "Convert German DSA5 stat blocks into Optolith NPC JSON directly in your browser.",
+      "languageNote": "Only German stat blocks are supported. Adjust the source material before converting other languages.",
+      "usage": {
+        "title": "How to use",
+        "steps": {
+          "paste": "Paste the complete stat block into the field below.",
+          "convert": "Hit \"Convert Stat Block\" once the text looks correct.",
+          "review": "Review warnings and the normalized stat block for manual clean-up.",
+          "download": "Download the Optolith JSON and import it into the desktop app."
+        }
+      },
+      "input": {
+        "label": "Stat block",
+        "placeholder": "Paste the stat block here",
+        "help": "Maximum length {max} characters. Current: {current}.",
+        "tooLong": "The stat block exceeds the supported length."
+      },
+      "buttons": {
+        "convert": "Convert Stat Block",
+        "reset": "Reset",
+        "loadLast": "Load Last Result",
+        "download": "Download JSON",
+        "copyWarnings": "Copy warnings"
+      },
+      "loading": "Converting… please wait.",
+      "datasetInfo": "Dataset schema {schema} · Source checksum {checksum}…",
+      "warnings": {
+        "title": "Warnings",
+        "prefixes": {
+          "parser": "Parser:",
+          "resolver": "Resolver:",
+          "exporter": "Exporter:"
+        }
+      },
+      "normalizedHeading": "Normalized stat block",
+      "jsonHeading": "Optolith JSON preview"
     },
     "about": {
       "title": "About",
