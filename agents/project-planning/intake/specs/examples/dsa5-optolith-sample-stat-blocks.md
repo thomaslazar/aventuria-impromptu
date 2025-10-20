@@ -363,6 +363,36 @@ Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
 
 ---
 
+Faedred
+MU 14 KL 12 IN 14 CH 14
+FF 10 GE 14 KO 14 KK 14
+LeP 36 AsP – KaP – INI 13+1W6
+AW 6 SK 2 ZK 2 GS 7
+Waffenlos: AT 14 PA 8 TP 1W6 RW
+kurz
+Langschwert: AT 15 PA 9 TP 1W6+4
+RW mittel
+RS/BE 4/1 (Kettenrüstung) (Modifikatoren durch Rüs-
+tungen sind bereits eingerechnet)
+Vorteile/Nachteile: Schlechte Eigenschaften (Arro-
+ganz, Eitelkeit), Prinzipientreue (Distelritter-Kodex;
+unter dem Einfluss des Roten Wyrms nicht mehr so
+stark), Verpflichtung II (Roter Wyrm)
+Sonderfertigkeiten: Belastungsgewöhnung I, Beritte-
+ner Kampf, Finte I, Wuchtschlag I
+Talente: Einschüchtern 11, Körperbeherrschung 13,
+Kraftakt 9, Reiten 12, Schwimmen 10, Selbstbeherr-
+schung 13, Sinnesschärfe 9, Verbergen 6, Willenskraft 13
+Kampfverhalten: Faedred setzt vor allem auf Finten.
+Wenn er im Kampf zu unterliegen droht, hat er keine
+Probleme damit, sich erst einmal zurückzuziehen.
+Flucht: Verlust von 50 % der LeP
+Schmerz +1 bei: 27 LeP, 18 LeP, 9 LeP, 5 LeP oder weniger
+Anmerkungen: Feenpakt I (Roter Wyrm); Paktge-
+schenk: Dunkles Abbild der Bündnisgabe I
+
+---
+
 Stammeskrieger der Keke-Wanaq
 MU 14 KL 10 IN 12 CH 10
 FF 13 GE 14 KO 14 KK 13

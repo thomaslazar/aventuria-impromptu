@@ -29,13 +29,13 @@ async function main(): Promise<void> {
 
   const parsed = parseStatBlock(source);
   const resolved = resolveStatBlock(parsed.model, lookups);
-  const exported = exportToOptolithCharacter({
+  const { hero, warnings: exportedWarnings } = exportToOptolithCharacter({
     dataset: lookups,
     parsed,
     resolved,
   });
 
-  const payload = JSON.stringify(exported, null, 2);
+  const payload = JSON.stringify(hero, null, 2);
 
   if (options.out) {
     await fs.writeFile(options.out, `${payload}\n`, "utf8");
@@ -44,9 +44,22 @@ async function main(): Promise<void> {
     process.stdout.write(`${payload}\n`);
   }
 
-  if (exported.warnings.length > 0) {
+  const warnings = new Set<string>(exportedWarnings);
+  for (const warning of parsed.warnings) {
+    warnings.add(
+      `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
+    );
+  }
+  for (const warning of resolved.warnings) {
+    warnings.add(`[Resolver] ${warning.section}: ${warning.message}`);
+  }
+  Object.entries(resolved.unresolved).forEach(([section, entries]) => {
+    entries.forEach((entry) => warnings.add(`[Resolver] ${section}: ${entry}`));
+  });
+
+  if (warnings.size > 0) {
     console.error("Warnings:");
-    for (const warning of exported.warnings) {
+    for (const warning of warnings) {
       console.error(`- ${warning}`);
     }
   }

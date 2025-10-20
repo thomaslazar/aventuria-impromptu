@@ -5,6 +5,7 @@ import type { ResolutionWarning } from "../../services/optolith/resolver";
 
 export interface ConversionResultPayload {
   readonly exported: OptolithExport;
+  readonly exportedWarnings: readonly string[];
   readonly manifest: OptolithDatasetManifest;
   readonly normalizedSource: string;
   readonly parserWarnings: readonly ParserWarning[];

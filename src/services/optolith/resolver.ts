@@ -49,6 +49,7 @@ const ADV_DISADV_BASE_ALIASES: Record<string, string> = {
   "schlechte eigenschaft": "Schlechte Eigenschaft",
   dammerungssicht: "Dunkelsicht",
   dammersicht: "Dunkelsicht",
+  verpflichtung: "Verpflichtungen",
 };
 
 const CITATION_PATTERN = /AKO(?:[IVXLCDM]+)?\s*\d{1,4}/g;
@@ -94,7 +95,10 @@ export function resolveStatBlock(
   const languageAccumulator = new Set(normalizedAdvDisadv.languages);
 
   const specialAbilityEntries = extractLanguageEntries(
-    statBlock.specialAbilities,
+    [
+      ...statBlock.specialAbilities,
+      ...extractSpecialAbilitiesFromNotes(statBlock.notes),
+    ],
     languageAccumulator,
     lookups,
   );
@@ -667,6 +671,32 @@ function extractLanguageEntries(
   return remaining;
 }
 
+function extractSpecialAbilitiesFromNotes(
+  notes: Readonly<Record<string, string>>,
+): string[] {
+  const abilities = new Set<string>();
+  for (const content of Object.values(notes)) {
+    if (!content) {
+      continue;
+    }
+    const segments = content.split(/;+/);
+    for (const segment of segments) {
+      const trimmed = segment.trim();
+      if (!trimmed) {
+        continue;
+      }
+      const paktMatch = trimmed.match(/^Paktgeschenke?:\s*(.+)$/i);
+      if (paktMatch) {
+        const ability = paktMatch[1]?.trim();
+        if (ability) {
+          abilities.add(ability);
+        }
+      }
+    }
+  }
+  return Array.from(abilities);
+}
+
 function normalizeAdvantageDisadvantageLists(
   statBlock: ParsedStatBlock,
   lookups: OptolithDatasetLookups,
@@ -774,6 +804,14 @@ function normalizeAdvDisadvEntry(value: string): {
   if (detailMatch) {
     detail = detailMatch[1];
     working = working.slice(0, detailMatch.index).trim();
+  }
+
+  if (!tierToken) {
+    const trailingTier = working.match(/\s+([IVX\d]+(?:\+[IVX\d]+)*)$/i);
+    if (trailingTier) {
+      tierToken = trailingTier[1];
+      working = working.slice(0, trailingTier.index).trim();
+    }
   }
 
   const canonicalBase = applyAdvantageAlias(working);

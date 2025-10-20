@@ -9,6 +9,21 @@ const DEFAULT_CLIENT_VERSION = "1.5.1";
 const DEFAULT_PHASE = 3;
 const DEFAULT_AP_TOTAL = 1100;
 const EXPECTED_DATASET_SCHEMA_VERSION = "1.0.0";
+const DEFAULT_EXPERIENCE_LEVEL_ID = "EL_1";
+const DEFAULT_RACE_ID = "R_1";
+const DEFAULT_CULTURE_ID = "C_1";
+const DEFAULT_PROFESSION_ID = "P_1";
+const DEFAULT_RACE_VARIANT_ID: string | undefined = undefined;
+const DEFAULT_PROFESSION_VARIANT_ID: string | undefined = undefined;
+const DEFAULT_SEX = "m";
+const DEFAULT_FAMILY_NAME = "Unbekannt";
+const DEFAULT_PLACE_OF_BIRTH = "Unbekannt";
+const DEFAULT_DATE_OF_BIRTH = "Unbekannt";
+const DEFAULT_AGE = "Unbekannt";
+const DEFAULT_SIZE = "Unbekannt";
+const DEFAULT_WEIGHT = "Unbekannt";
+const DEFAULT_SOCIAL_STATUS = 2;
+const DEFAULT_CULTURE_KNOWLEDGE = "Unbekannt";
 
 const ATTRIBUTE_ID_MAP: Readonly<Record<string, string>> = {
   MU: "ATTR_1",
@@ -21,15 +36,31 @@ const ATTRIBUTE_ID_MAP: Readonly<Record<string, string>> = {
   KK: "ATTR_8",
 };
 
-export interface PoolValues {
-  readonly lep: number | null;
-  readonly asp: number | null;
-  readonly kap: number | null;
-  readonly ini: string | null;
-  readonly aw: number | null;
-  readonly sk: number | null;
-  readonly zk: number | null;
-  readonly gs: number | null;
+interface PermanentEnergy {
+  readonly lost: number;
+  readonly redeemed?: number;
+}
+
+interface AttributeBlock {
+  readonly values: ReadonlyArray<{ id: string; value: number }>;
+  readonly attributeAdjustmentSelected: string;
+  readonly ae: number;
+  readonly kp: number;
+  readonly lp: number;
+  readonly permanentAE: PermanentEnergy;
+  readonly permanentKP: PermanentEnergy;
+  readonly permanentLP: { readonly lost: number };
+}
+
+interface PersonalData {
+  readonly family: string;
+  readonly placeofbirth: string;
+  readonly dateofbirth: string;
+  readonly age: string;
+  readonly size: string;
+  readonly weight: string;
+  readonly socialstatus: number;
+  readonly cultureAreaKnowledge: string;
 }
 
 export interface OptolithExport {
@@ -43,14 +74,15 @@ export interface OptolithExport {
   readonly ap: {
     readonly total: number;
   };
-  readonly attr: {
-    readonly values: ReadonlyArray<{ id: string; value: number }>;
-    readonly attributeAdjustmentSelected: string;
-    readonly ae: number;
-    readonly kp: number;
-    readonly lp: number;
-  };
-  readonly pools: PoolValues;
+  readonly el: string;
+  readonly r: string;
+  readonly c: string;
+  readonly p: string;
+  readonly rv?: string;
+  readonly pv?: string;
+  readonly sex: string;
+  readonly pers: PersonalData;
+  readonly attr: AttributeBlock;
   readonly activatable: Record<string, Array<Record<string, unknown>>>;
   readonly talents: Record<string, number>;
   readonly spells: Record<string, number>;
@@ -76,8 +108,12 @@ export interface OptolithExport {
     readonly enabledRuleBooks: string[];
     readonly enableLanguageSpecializations: boolean;
   };
-  readonly notes: ReadonlyArray<string>;
-  readonly warnings: ReadonlyArray<string>;
+  readonly pets: Record<string, unknown>;
+}
+
+export interface ExportResult {
+  readonly hero: OptolithExport;
+  readonly warnings: readonly string[];
 }
 
 export interface ExporterContext {
@@ -90,7 +126,7 @@ export function exportToOptolithCharacter({
   dataset,
   parsed,
   resolved,
-}: ExporterContext): OptolithExport {
+}: ExporterContext): ExportResult {
   if (dataset.manifest.schemaVersion !== EXPECTED_DATASET_SCHEMA_VERSION) {
     throw new Error(
       `Unsupported dataset schema version: ${dataset.manifest.schemaVersion}. Expected ${EXPECTED_DATASET_SCHEMA_VERSION}.`,
@@ -101,16 +137,13 @@ export function exportToOptolithCharacter({
   const id = generateHeroId();
 
   const attributes = buildAttributes(parsed);
-  const pools = buildPools(parsed);
   const activatable = buildActivatable(resolved);
   const talents = buildTalentRatings(resolved);
   const spells = buildRatedMap(resolved.spells);
   const liturgies = buildRatedMap(resolved.liturgies);
   const rituals = buildRatedMap(resolved.rituals);
 
-  const warnings = createWarningMessages(parsed, resolved);
-
-  return {
+  const hero: OptolithExport = {
     clientVersion: DEFAULT_CLIENT_VERSION,
     dateCreated: now,
     dateModified: now,
@@ -121,36 +154,67 @@ export function exportToOptolithCharacter({
     ap: {
       total: DEFAULT_AP_TOTAL,
     },
+    el: DEFAULT_EXPERIENCE_LEVEL_ID,
+    r: DEFAULT_RACE_ID,
+    c: DEFAULT_CULTURE_ID,
+    p: DEFAULT_PROFESSION_ID,
+    ...(DEFAULT_RACE_VARIANT_ID ? { rv: DEFAULT_RACE_VARIANT_ID } : {}),
+    ...(DEFAULT_PROFESSION_VARIANT_ID
+      ? { pv: DEFAULT_PROFESSION_VARIANT_ID }
+      : {}),
+    sex: inferSex(parsed),
+    pers: buildPersonalData(parsed),
     attr: attributes,
-    pools,
     activatable,
     talents,
     spells,
     liturgies,
     blessings: buildBlessings(resolved),
-    cantrips: [],
+    cantrips: buildCantrips(resolved),
     rituals,
     ct: {},
-    belongings: {
-      items: {},
-      armorZones: {},
-      purse: {
-        d: "0",
-        s: "0",
-        h: "0",
-        k: "0",
-      },
-    },
-    rules: {
-      higherParadeValues: 0,
-      attributeValueLimit: false,
-      enableAllRuleBooks: true,
-      enabledRuleBooks: [],
-      enableLanguageSpecializations: false,
-    },
-    notes: Object.values(parsed.model.notes),
+    belongings: buildBelongings(resolved),
+    rules: buildRules(),
+    pets: {},
+  };
+
+  const warnings = collectWarningMessages(parsed, resolved);
+
+  return {
+    hero,
     warnings,
   };
+}
+
+function inferSex(parsed: ParseResult): string {
+  const normalizedName = parsed.model.name.trim().toLowerCase();
+  const source = parsed.normalizedSource.toLowerCase();
+
+  const femaleIndicators = [
+    "kriegerin",
+    "magierin",
+    "priesterin",
+    "jägerin",
+    "herrin",
+    "schamanin",
+    "meisterin",
+    "händlerin",
+    "frau ",
+  ];
+  if (femaleIndicators.some((indicator) => source.includes(indicator))) {
+    return "f";
+  }
+
+  const maleIndicators = ["schamane", "priester", "magier", "herr ", "krieger"];
+  if (maleIndicators.some((indicator) => source.includes(indicator))) {
+    return "m";
+  }
+
+  if (normalizedName.endsWith("in") || normalizedName.endsWith("a")) {
+    return "f";
+  }
+
+  return DEFAULT_SEX;
 }
 
 function buildAttributes(parsed: ParseResult): OptolithExport["attr"] {
@@ -170,20 +234,9 @@ function buildAttributes(parsed: ParseResult): OptolithExport["attr"] {
     ae: 0,
     kp: 0,
     lp: 0,
-  };
-}
-
-function buildPools(parsed: ParseResult): OptolithExport["pools"] {
-  const { pools } = parsed.model;
-  return {
-    lep: pools.lep ?? null,
-    asp: pools.asp ?? null,
-    kap: pools.kap ?? null,
-    ini: pools.ini ?? null,
-    aw: pools.aw ?? null,
-    sk: pools.sk ?? null,
-    zk: pools.zk ?? null,
-    gs: pools.gs ?? null,
+    permanentAE: { lost: 0, redeemed: 0 },
+    permanentKP: { lost: 0, redeemed: 0 },
+    permanentLP: { lost: 0 },
   };
 }
 
@@ -295,7 +348,7 @@ function buildBlessings(resolved: ResolutionResult): string[] {
   return Array.from(blessings);
 }
 
-function createWarningMessages(
+function collectWarningMessages(
   parsed: ParseResult,
   resolved: ResolutionResult,
 ): string[] {
@@ -314,6 +367,61 @@ function createWarningMessages(
     }
   }
   return warnings;
+}
+
+function buildCantrips(resolved: ResolutionResult): string[] {
+  return resolved.specialAbilities
+    .filter((entry) => entry.match?.id.startsWith("CANTRIP_"))
+    .map((entry) => entry.match!.id);
+}
+
+function buildRules(): OptolithExport["rules"] {
+  return {
+    higherParadeValues: 0,
+    attributeValueLimit: false,
+    enableAllRuleBooks: true,
+    enabledRuleBooks: [],
+    enableLanguageSpecializations: false,
+  };
+}
+
+function buildPersonalData(parsed: ParseResult): PersonalData {
+  void parsed;
+  return {
+    family: DEFAULT_FAMILY_NAME,
+    placeofbirth: DEFAULT_PLACE_OF_BIRTH,
+    dateofbirth: DEFAULT_DATE_OF_BIRTH,
+    age: DEFAULT_AGE,
+    size: DEFAULT_SIZE,
+    weight: DEFAULT_WEIGHT,
+    socialstatus: DEFAULT_SOCIAL_STATUS,
+    cultureAreaKnowledge: DEFAULT_CULTURE_KNOWLEDGE,
+  };
+}
+
+function buildBelongings(
+  resolved: ResolutionResult,
+): OptolithExport["belongings"] {
+  const items: Record<string, unknown> = {};
+  resolved.equipment.forEach((entry, index) => {
+    if (!entry.match) {
+      return;
+    }
+    items[`ITEM_${index + 1}`] = {
+      template: entry.match.id,
+      amount: 1,
+    };
+  });
+  return {
+    items,
+    armorZones: {},
+    purse: {
+      d: "0",
+      s: "0",
+      h: "0",
+      k: "0",
+    },
+  };
 }
 
 export function describeSelectOption(option: SelectOptionReference): string {

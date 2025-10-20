@@ -55,7 +55,7 @@ async function main(): Promise<void> {
     try {
       const parsed = parseStatBlock(sample.text);
       const resolved = resolveStatBlock(parsed.model, lookups);
-      const exported = exportToOptolithCharacter({
+      const { hero, warnings: exportedWarnings } = exportToOptolithCharacter({
         dataset: lookups,
         parsed,
         resolved,
@@ -64,7 +64,8 @@ async function main(): Promise<void> {
       reports.push({
         sample,
         result: {
-          exported,
+          exported: hero,
+          exportedWarnings,
           manifest: lookups.manifest,
           normalizedSource: parsed.normalizedSource,
           parserWarnings: parsed.warnings,
@@ -187,8 +188,8 @@ async function writeReport(
 
     lines.push("### Exporter Warnings");
     lines.push(
-      result.exported.warnings.length > 0
-        ? result.exported.warnings.map((warning) => `- ${warning}`).join("\n")
+      result.exportedWarnings.length > 0
+        ? result.exportedWarnings.map((warning) => `- ${warning}`).join("\n")
         : "- None",
     );
     lines.push("");

@@ -15,17 +15,18 @@ describe("exportToOptolithCharacter", () => {
     const parsed = parseStatBlock(raw);
     const resolved = resolveStatBlock(parsed.model, lookups);
 
-    const exported = exportToOptolithCharacter({
+    const { hero, warnings } = exportToOptolithCharacter({
       dataset: lookups,
       parsed,
       resolved,
     });
 
-    expect(exported.name).toBe("Notia Botero-Montez");
-    expect(exported.locale).toBe(dataset.manifest.locale);
-    expect(exported.activatable.SA_29?.length).toBeGreaterThan(0);
-    expect(Object.keys(exported.talents)).not.toHaveLength(0);
-    expect(exported.spells).toEqual({});
-    expect(exported.warnings.length).toBeGreaterThanOrEqual(0);
+    expect(hero.name).toBe("Notia Botero-Montez");
+    expect(hero.locale).toBe(dataset.manifest.locale);
+    expect(hero.activatable.SA_29?.length).toBeGreaterThan(0);
+    expect(Object.keys(hero.talents)).not.toHaveLength(0);
+    expect(hero.sex).toBe("m");
+    expect(hero.pers.family).toBe("Unbekannt");
+    expect(warnings.length).toBeGreaterThanOrEqual(0);
   });
 });

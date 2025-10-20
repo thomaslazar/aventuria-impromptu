@@ -24,12 +24,17 @@ self.addEventListener(
       const dataset = await loadDataset(message.payload.baseUrl);
       const parsed = parseStatBlock(message.payload.source);
       const resolved = resolveStatBlock(parsed.model, dataset);
-      const exported = exportToOptolithCharacter({ dataset, parsed, resolved });
+      const { hero, warnings: exportedWarnings } = exportToOptolithCharacter({
+        dataset,
+        parsed,
+        resolved,
+      });
 
       const response: ConversionSuccessMessage = {
         type: "result",
         payload: {
-          exported,
+          exported: hero,
+          exportedWarnings,
           manifest: dataset.manifest,
           normalizedSource: parsed.normalizedSource,
           parserWarnings: parsed.warnings,

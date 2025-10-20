@@ -189,7 +189,7 @@ const displayWarnings = computed(() => {
     return [] as string[];
   }
   const warnings = new Set<string>();
-  result.value.exported.warnings.forEach((warning) => warnings.add(warning));
+  result.value.exportedWarnings.forEach((warning) => warnings.add(warning));
   result.value.parserWarnings.forEach((warning) =>
     warnings.add(
       `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
