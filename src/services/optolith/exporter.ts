@@ -98,7 +98,7 @@ export function exportToOptolithCharacter({
   }
 
   const now = new Date().toISOString();
-  const id = `NPC_${generateUuid()}`;
+  const id = generateHeroId();
 
   const attributes = buildAttributes(parsed);
   const pools = buildPools(parsed);
@@ -320,17 +320,7 @@ export function describeSelectOption(option: SelectOptionReference): string {
   return `${option.name} (#${option.optionId})`;
 }
 
-function generateUuid(): string {
-  const globalCrypto = (
-    globalThis as { crypto?: { randomUUID?: () => string } }
-  ).crypto;
-  if (globalCrypto?.randomUUID) {
-    return globalCrypto.randomUUID();
-  }
-  // RFC4122 v4 fallback
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (char) => {
-    const random = (Math.random() * 16) | 0;
-    const value = char === "x" ? random : (random & 0x3) | 0x8;
-    return value.toString(16);
-  });
+function generateHeroId(): string {
+  const random = Math.floor(1 + Math.random() * 9_000_000_000);
+  return `H_${random}`;
 }
