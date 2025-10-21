@@ -206,26 +206,27 @@ const displayWarnings = computed(() => {
     }
     return message;
   };
-  result.value.exportedWarnings.forEach((warning) =>
-    warnings.add(localizeWarning(warning)),
-  );
-  result.value.parserWarnings.forEach((warning) =>
+  const exportedWarnings = result.value.exportedWarnings ?? [];
+  exportedWarnings.forEach((warning) => warnings.add(localizeWarning(warning)));
+  (result.value.parserWarnings ?? []).forEach((warning) =>
     warnings.add(
       localizeWarning(
         `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
       ),
     ),
   );
-  result.value.resolverWarnings.forEach((warning) =>
+  (result.value.resolverWarnings ?? []).forEach((warning) =>
     warnings.add(
       localizeWarning(`[Resolver] ${warning.section}: ${warning.message}`),
     ),
   );
-  Object.entries(result.value.unresolved).forEach(([section, entries]) => {
-    entries.forEach((entry) =>
-      warnings.add(localizeWarning(`[Resolver] ${section}: ${entry}`)),
-    );
-  });
+  Object.entries(result.value.unresolved ?? {}).forEach(
+    ([section, entries]) => {
+      entries.forEach((entry) =>
+        warnings.add(localizeWarning(`[Resolver] ${section}: ${entry}`)),
+      );
+    },
+  );
   return Array.from(warnings);
 });
 
@@ -233,12 +234,17 @@ function ensureWorker(): Worker {
   if (worker.value) {
     return worker.value;
   }
-  const instance = new Worker(
-    new URL("../workers/optolithConverter.worker.ts", import.meta.url),
-    {
-      type: "module",
-    },
+  const workerUrl = new URL(
+    "../workers/optolithConverter.worker.ts",
+    import.meta.url,
   );
+  if (import.meta.env.BASE_URL && import.meta.env.BASE_URL !== "/") {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+    workerUrl.pathname = `${base}${workerUrl.pathname}`;
+  }
+  const instance = new Worker(workerUrl, {
+    type: "module",
+  });
   instance.addEventListener("message", handleWorkerMessage as EventListener);
   worker.value = instance;
   return instance;
@@ -289,7 +295,10 @@ function loadLastResult() {
       payload: ConversionResultPayload;
     };
     input.value = parsed.input;
-    result.value = parsed.payload;
+    result.value = {
+      ...parsed.payload,
+      exportedWarnings: parsed.payload.exportedWarnings ?? [],
+    };
     status.value = "success";
     error.value = null;
   } catch (err) {
