@@ -175,6 +175,9 @@ const error = ref<string | null>(null);
 const result = ref<ConversionResultPayload | null>(null);
 const worker = ref<Worker | null>(null);
 const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
+const resolvedBaseUrl = new URL(import.meta.env.BASE_URL, window.location.href)
+  .toString()
+  .replace(/\/?$/, "/");
 
 const inputTooLong = computed(() => input.value.length > MAX_LENGTH);
 const disableConvert = computed(
@@ -238,10 +241,7 @@ function ensureWorker(): Worker {
     "../workers/optolithConverter.worker.ts",
     import.meta.url,
   );
-  if (import.meta.env.BASE_URL && import.meta.env.BASE_URL !== "/") {
-    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-    workerUrl.pathname = `${base}${workerUrl.pathname}`;
-  }
+  const absoluteUrl = new URL(workerUrl.toString(), resolvedBaseUrl);
   const instance = new Worker(workerUrl, {
     type: "module",
   });

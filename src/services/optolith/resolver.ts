@@ -815,15 +815,13 @@ function normalizeAdvDisadvEntry(value: string): {
   }
 
   const canonicalBase = applyAdvantageAlias(working);
-  const parts: string[] = [canonicalBase];
-  if (detail) {
-    parts.push(`(${detail})`);
-  }
-
-  let label = parts.join(" ");
+  let label = canonicalBase;
   const levelNumber = tierToken ? normalizeTierToken(tierToken) : undefined;
   if (levelNumber) {
     label = `${label} ${integerToRoman(levelNumber)}`.trim();
+  }
+  if (detail) {
+    label = `${label} (${detail})`.trim();
   }
 
   return {
