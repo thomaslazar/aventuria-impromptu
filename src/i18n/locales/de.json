@@ -66,6 +66,7 @@
     "optolithConverter": {
       "title": "Optolith-Konverter",
       "intro": "Wandle deutschsprachige DSA5-Statblöcke direkt im Browser in Optolith-kompatibles NPC-JSON um.",
+      "roll20Note": "Das Hauptziel des Konverters ist ein Import für das DSA5-Charakterblatt auf Roll20.net, damit neue NSC dort schneller angelegt werden können.",
       "languageNote": "Dieses Werkzeug verarbeitet ausschließlich deutsche Statblöcke. Bitte passe andere Sprachen vor der Konvertierung an.",
       "usage": {
         "title": "So funktioniert es",

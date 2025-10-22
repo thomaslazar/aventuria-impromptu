@@ -4,6 +4,9 @@
     <p class="text-muted mb-3">
       {{ t("views.optolithConverter.intro") }}
     </p>
+    <p class="mb-3">
+      {{ t("views.optolithConverter.roll20Note") }}
+    </p>
     <div class="alert alert-info mb-4" role="note">
       {{ t("views.optolithConverter.languageNote") }}
     </div>
