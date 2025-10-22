@@ -66,7 +66,7 @@
     "optolithConverter": {
       "title": "Optolith Converter",
       "intro": "Convert German DSA5 stat blocks into Optolith NPC JSON directly in your browser.",
-      "roll20Note": "The converter’s main purpose is to produce an import file for the DSA5 character sheet on Roll20.net so you can spin up NPCs there faster.",
+      "roll20Note": "The converter’s main purpose is to produce an import file for the DSA5 character sheet on <link>Roll20.net</link> so you can spin up NPCs there faster.",
       "languageNote": "Only German stat blocks are supported. Adjust the source material before converting other languages.",
       "usage": {
         "title": "How to use",
