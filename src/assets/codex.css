@@ -392,6 +392,41 @@ a:focus-visible {
   color: rgba(94, 66, 13, 0.55);
 }
 
+.codex-release-notes h2,
+.codex-release-notes h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.codex-release-notes h2:first-child,
+.codex-release-notes h3:first-child {
+  margin-top: 0;
+}
+
+.codex-release-notes ul {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+}
+
+.codex-release-notes li {
+  margin-bottom: 0.5rem;
+}
+
+.codex-release-notes p {
+  margin-bottom: 1rem;
+}
+
+.codex-release-notes code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
 .codex-scroll {
   background: linear-gradient(
       0deg,

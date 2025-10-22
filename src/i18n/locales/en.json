@@ -113,7 +113,8 @@
       "body": {
         "paragraph1": "Aventuria Impromptu is a lean toolkit for GMs in Aventuria. The tables rely on classic random rolls and deliver flavourful results for improvised scenes.",
         "paragraph2": "The app stays deliberately lightweight: no servers, just Vue 3, Vite, and a touch of Bootstrap."
-      }
+      },
+      "releaseNotesTitle": "Release Notes"
     }
   },
   "tables": {

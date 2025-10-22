@@ -113,7 +113,8 @@
       "body": {
         "paragraph1": "Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und liefern dir stimmige Ergebnisse für improvisierte Szenen.",
         "paragraph2": "Die Anwendung ist bewusst leichtgewichtig gehalten: keine Server-Abhängigkeiten, nur Vue 3, Vite und ein Hauch Bootstrap."
-      }
+      },
+      "releaseNotesTitle": "Release Notes"
     }
   },
   "tables": {
