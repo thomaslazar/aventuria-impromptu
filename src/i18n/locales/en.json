@@ -78,7 +78,7 @@
           "paste": "Paste the complete stat block into the field below.",
           "convert": "Hit \"Convert Stat Block\" once the text looks correct.",
           "review": "Review warnings and the normalized stat block for manual clean-up.",
-          "download": "Download the Optolith JSON and import it into the desktop app."
+          "download": "Download the Optolith JSON and import it into the desktop app or Roll20."
         }
       },
       "input": {

@@ -258,6 +258,24 @@ a:focus-visible {
   );
 }
 
+.codex-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  background: linear-gradient(
+    135deg,
+    rgba(197, 143, 45, 0.6),
+    rgba(173, 116, 28, 0.55)
+  );
+}
+
+.codex-button:disabled:hover,
+.codex-button:disabled:focus-visible {
+  transform: none;
+  box-shadow: none;
+}
+
 .codex-button--ghost {
   background: transparent;
   color: var(--codex-accent);
@@ -268,6 +286,12 @@ a:focus-visible {
 .codex-button--ghost:focus-visible {
   background: rgba(197, 143, 45, 0.12);
   color: #251b0b;
+}
+
+.codex-button--ghost:disabled {
+  background: transparent;
+  color: rgba(37, 27, 11, 0.45);
+  border-color: rgba(197, 143, 45, 0.35);
 }
 
 .codex-link {

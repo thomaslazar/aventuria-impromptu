@@ -78,7 +78,7 @@
           "paste": "Statblock vollständig in das Feld unten einfügen.",
           "convert": "Sobald alles passt, auf \"Statblock konvertieren\" klicken.",
           "review": "Warnungen und den normalisierten Statblock prüfen und gegebenenfalls nacharbeiten.",
-          "download": "Das Optolith-JSON herunterladen und in der Desktop-App importieren."
+          "download": "Das Optolith-JSON herunterladen und in der Desktop-App oder auf Roll20 importieren."
         }
       },
       "input": {

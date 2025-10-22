@@ -1,162 +1,168 @@
 <template>
-  <div class="container py-4">
-    <h1 class="mb-3">{{ t("views.optolithConverter.title") }}</h1>
-    <p class="text-muted mb-3">
-      {{ t("views.optolithConverter.intro") }}
-    </p>
-    <p class="mb-3">
-      {{ t("views.optolithConverter.roll20Note.prefix") }}
-      <a href="https://roll20.net" target="_blank" rel="noopener noreferrer">
-        {{ t("views.optolithConverter.roll20Note.linkText") }}
-      </a>
-      {{ t("views.optolithConverter.roll20Note.suffix") }}
-    </p>
-    <div class="alert alert-info mb-4" role="note">
-      {{ t("views.optolithConverter.languageNote") }}
-    </div>
+  <section class="codex-section optolith-view">
+    <header class="codex-section-header">
+      <h1 class="codex-section-title">
+        {{ t("views.optolithConverter.title") }}
+      </h1>
+      <p class="codex-section-intro optolith-intro">
+        {{ t("views.optolithConverter.intro") }}
+      </p>
+    </header>
 
-    <div class="card shadow-sm mb-4">
-      <div class="card-body">
-        <h2 class="h5">{{ t("views.optolithConverter.usage.title") }}</h2>
-        <ol class="mb-0 ps-3">
+    <article class="codex-card codex-card--table optolith-card">
+      <div class="optolith-callout optolith-callout--accent" role="note">
+        <span>
+          {{ t("views.optolithConverter.roll20Note.prefix") }}
+          <a
+            class="optolith-roll20__link"
+            href="https://roll20.net"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ t("views.optolithConverter.roll20Note.linkText") }}
+          </a>
+          {{ t("views.optolithConverter.roll20Note.suffix") }}
+        </span>
+        <span>
+          {{ t("views.optolithConverter.languageNote") }}
+        </span>
+      </div>
+
+      <section class="optolith-usage">
+        <h2 class="codex-card-title optolith-usage__title">
+          {{ t("views.optolithConverter.usage.title") }}
+        </h2>
+        <ol class="optolith-usage__list">
           <li>{{ t("views.optolithConverter.usage.steps.paste") }}</li>
           <li>{{ t("views.optolithConverter.usage.steps.convert") }}</li>
           <li>{{ t("views.optolithConverter.usage.steps.review") }}</li>
           <li>{{ t("views.optolithConverter.usage.steps.download") }}</li>
         </ol>
-      </div>
-    </div>
+      </section>
 
-    <div class="mb-3">
-      <label for="stat-block-input" class="form-label">
-        {{ t("views.optolithConverter.input.label") }}
-      </label>
-      <textarea
-        id="stat-block-input"
-        v-model="input"
-        class="form-control"
-        :class="{ 'is-invalid': inputTooLong }"
-        rows="14"
-        :placeholder="t('views.optolithConverter.input.placeholder')"
-      ></textarea>
-      <div class="form-text">
-        {{
-          t("views.optolithConverter.input.help", {
-            max: MAX_LENGTH,
-            current: input.length,
-          })
-        }}
-      </div>
-      <div v-if="inputTooLong" class="invalid-feedback">
-        {{ t("views.optolithConverter.input.tooLong") }}
-      </div>
-    </div>
-
-    <div class="d-flex flex-wrap gap-2 mb-4">
-      <button
-        type="button"
-        class="btn btn-primary"
-        :disabled="disableConvert"
-        @click="convert"
-      >
-        {{ t("views.optolithConverter.buttons.convert") }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-secondary"
-        @click="reset"
-        :disabled="status === 'loading'"
-      >
-        {{ t("views.optolithConverter.buttons.reset") }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-success"
-        @click="loadLastResult"
-        :disabled="!hasStoredResult || status === 'loading'"
-      >
-        {{ t("views.optolithConverter.buttons.loadLast") }}
-      </button>
-    </div>
-
-    <div v-if="status === 'loading'" class="alert alert-info" role="status">
-      {{ t("views.optolithConverter.loading") }}
-    </div>
-    <div v-if="error" class="alert alert-danger" role="alert">
-      {{ error }}
-    </div>
-
-    <section v-if="result" class="mb-4">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <div
-            class="d-flex flex-wrap justify-content-between gap-2 align-items-center mb-3"
-          >
-            <div>
-              <h2 class="h5 mb-1">{{ result.exported.name }}</h2>
-              <p class="mb-0 text-muted">
-                {{
-                  t("views.optolithConverter.datasetInfo", {
-                    schema: result.manifest.schemaVersion,
-                    checksum: result.manifest.sourceChecksum.slice(0, 12),
-                  })
-                }}
-              </p>
-            </div>
-            <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-success"
-                @click="downloadJson"
-              >
-                {{ t("views.optolithConverter.buttons.download") }}
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                @click="copyWarnings"
-              >
-                {{ t("views.optolithConverter.buttons.copyWarnings") }}
-              </button>
-            </div>
-          </div>
-
-          <div
-            v-if="displayWarnings.length > 0"
-            class="alert alert-warning"
-            role="alert"
-          >
-            <h3 class="h6 mb-2">
-              {{ t("views.optolithConverter.warnings.title") }}
-            </h3>
-            <ul class="mb-0 ps-3">
-              <li v-for="warning in displayWarnings" :key="warning">
-                {{ warning }}
-              </li>
-            </ul>
-          </div>
-
-          <details class="mb-3">
-            <summary class="fw-semibold">
-              {{ t("views.optolithConverter.normalizedHeading") }}
-            </summary>
-            <pre class="bg-light border rounded p-3 small overflow-auto">{{
-              result.normalizedSource
-            }}</pre>
-          </details>
-
-          <details open>
-            <summary class="fw-semibold">
-              {{ t("views.optolithConverter.jsonHeading") }}
-            </summary>
-            <pre class="bg-light border rounded p-3 small overflow-auto">{{
-              formattedJson
-            }}</pre>
-          </details>
+      <div class="optolith-field-group">
+        <label for="stat-block-input" class="optolith-label">
+          {{ t("views.optolithConverter.input.label") }}
+        </label>
+        <textarea
+          id="stat-block-input"
+          v-model="input"
+          class="optolith-textarea"
+          :class="{ 'is-invalid': inputTooLong }"
+          rows="14"
+          :placeholder="t('views.optolithConverter.input.placeholder')"
+        ></textarea>
+        <div class="optolith-helper">
+          {{
+            t("views.optolithConverter.input.help", {
+              max: MAX_LENGTH,
+              current: input.length,
+            })
+          }}
         </div>
+        <p v-if="inputTooLong" class="optolith-inline-error">
+          {{ t("views.optolithConverter.input.tooLong") }}
+        </p>
       </div>
-    </section>
-  </div>
+
+      <div class="optolith-actions">
+        <button
+          type="button"
+          class="codex-button"
+          :disabled="disableConvert"
+          @click="convert"
+        >
+          {{ t("views.optolithConverter.buttons.convert") }}
+        </button>
+        <button
+          type="button"
+          class="codex-button codex-button--ghost"
+          @click="reset"
+          :disabled="status === 'loading'"
+        >
+          {{ t("views.optolithConverter.buttons.reset") }}
+        </button>
+        <button
+          type="button"
+          class="codex-button codex-button--ghost"
+          @click="loadLastResult"
+          :disabled="!hasStoredResult || status === 'loading'"
+        >
+          {{ t("views.optolithConverter.buttons.loadLast") }}
+        </button>
+      </div>
+
+      <div
+        v-if="status === 'loading'"
+        class="optolith-callout optolith-callout--info"
+        role="status"
+      >
+        {{ t("views.optolithConverter.loading") }}
+      </div>
+      <div
+        v-if="error"
+        class="optolith-callout optolith-callout--danger"
+        role="alert"
+      >
+        {{ error }}
+      </div>
+    </article>
+
+    <article v-if="result" class="codex-card codex-card--table optolith-result">
+      <header class="optolith-result__header">
+        <div>
+          <h2 class="codex-card-title optolith-result__title">
+            {{ result.exported.name }}
+          </h2>
+          <p class="optolith-result__meta">
+            {{
+              t("views.optolithConverter.datasetInfo", {
+                schema: result.manifest.schemaVersion,
+                checksum: result.manifest.sourceChecksum.slice(0, 12),
+              })
+            }}
+          </p>
+        </div>
+        <div class="optolith-result__actions">
+          <button type="button" class="codex-button" @click="downloadJson">
+            {{ t("views.optolithConverter.buttons.download") }}
+          </button>
+          <button
+            type="button"
+            class="codex-button codex-button--ghost"
+            @click="copyWarnings"
+          >
+            {{ t("views.optolithConverter.buttons.copyWarnings") }}
+          </button>
+        </div>
+      </header>
+
+      <div
+        v-if="displayWarnings.length > 0"
+        class="optolith-callout optolith-callout--warning"
+        role="alert"
+      >
+        <h3 class="optolith-callout__title">
+          {{ t("views.optolithConverter.warnings.title") }}
+        </h3>
+        <ul class="optolith-callout__list">
+          <li v-for="warning in displayWarnings" :key="warning">
+            {{ warning }}
+          </li>
+        </ul>
+      </div>
+
+      <details class="optolith-details">
+        <summary>{{ t("views.optolithConverter.normalizedHeading") }}</summary>
+        <pre>{{ result.normalizedSource }}</pre>
+      </details>
+
+      <details class="optolith-details" open>
+        <summary>{{ t("views.optolithConverter.jsonHeading") }}</summary>
+        <pre>{{ formattedJson }}</pre>
+      </details>
+    </article>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -377,7 +383,246 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 960px;
+.optolith-view {
+  display: grid;
+  gap: clamp(1.5rem, 2vw, 2.5rem);
+}
+
+.optolith-roll20 {
+  margin: 0;
+  color: rgba(47, 36, 18, 0.9);
+  max-width: 52ch;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.optolith-intro {
+  color: var(--codex-text);
+}
+
+.optolith-roll20__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-transform: none;
+  color: rgba(173, 116, 28, 0.95);
+  font-weight: 600;
+}
+
+.optolith-roll20__link:hover,
+.optolith-roll20__link:focus-visible {
+  color: var(--codex-accent-dark);
+}
+
+.optolith-card {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.optolith-callout {
+  border-left: 4px solid var(--codex-accent);
+  padding: 1rem 1.25rem;
+  border-radius: calc(var(--codex-radius) - 2px);
+  background: rgba(197, 143, 45, 0.14);
+  color: #4a3614;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.optolith-callout--accent {
+  background: rgba(197, 143, 45, 0.18);
+  border-left-color: rgba(197, 143, 45, 0.9);
+  color: rgba(47, 36, 18, 0.9);
+  font-weight: 500;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.optolith-callout--warning {
+  border-left-color: #ce7f1d;
+  background: rgba(206, 127, 29, 0.16);
+  color: #4a2a07;
+}
+
+.optolith-callout--danger {
+  border-left-color: #b3473e;
+  background: rgba(179, 71, 62, 0.16);
+  color: #5a1d18;
+}
+
+.optolith-usage {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.optolith-usage__title {
+  margin-bottom: 0;
+}
+
+.optolith-usage__list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.optolith-field-group {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.optolith-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(47, 36, 18, 0.68);
+}
+
+.optolith-textarea {
+  width: 100%;
+  min-height: 18rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--codex-radius);
+  border: 1px solid rgba(47, 36, 18, 0.18);
+  background: rgba(255, 255, 255, 0.86);
+  font-family:
+    ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.95rem;
+  color: #2f2412;
+  line-height: 1.5;
+  resize: vertical;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.optolith-textarea:focus {
+  outline: none;
+  border-color: rgba(197, 143, 45, 0.65);
+  box-shadow: 0 0 0 3px rgba(197, 143, 45, 0.18);
+}
+
+.optolith-textarea.is-invalid {
+  border-color: rgba(179, 71, 62, 0.75);
+  box-shadow: 0 0 0 3px rgba(179, 71, 62, 0.2);
+}
+
+.optolith-helper {
+  font-size: 0.85rem;
+  color: rgba(47, 36, 18, 0.65);
+}
+
+.optolith-inline-error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #7a1d18;
+  font-weight: 600;
+}
+
+.optolith-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.optolith-result {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.optolith-result__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.optolith-result__title {
+  margin-bottom: 0.25rem;
+}
+
+.optolith-result__meta {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(47, 36, 18, 0.7);
+}
+
+.optolith-result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.optolith-callout__title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.optolith-callout__list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.optolith-details {
+  border: 1px solid rgba(47, 36, 18, 0.16);
+  border-radius: var(--codex-radius);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 1rem 1.25rem;
+}
+
+.optolith-details + .optolith-details {
+  margin-top: 0.75rem;
+}
+
+.optolith-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: rgba(47, 36, 18, 0.85);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.optolith-details summary:focus-visible {
+  outline: 2px solid var(--codex-accent);
+  outline-offset: 4px;
+}
+
+.optolith-details pre {
+  margin: 0.85rem 0 0;
+  padding: 1rem;
+  border-radius: var(--codex-radius);
+  background: rgba(47, 36, 18, 0.08);
+  color: #251b0b;
+  max-height: 20rem;
+  overflow: auto;
+  font-family:
+    ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .optolith-result__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .optolith-result__actions {
+    width: 100%;
+  }
+
+  .optolith-result__actions .codex-button {
+    flex: 1 0 auto;
+    justify-content: center;
+  }
 }
 </style>
