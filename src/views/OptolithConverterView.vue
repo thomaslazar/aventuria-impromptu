@@ -4,13 +4,13 @@
     <p class="text-muted mb-3">
       {{ t("views.optolithConverter.intro") }}
     </p>
-    <i18n-t tag="p" class="mb-3" keypath="views.optolithConverter.roll20Note">
-      <template #link>
-        <a href="https://roll20.net" target="_blank" rel="noopener noreferrer">
-          Roll20.net
-        </a>
-      </template>
-    </i18n-t>
+    <p class="mb-3">
+      {{ t("views.optolithConverter.roll20Note.prefix") }}
+      <a href="https://roll20.net" target="_blank" rel="noopener noreferrer">
+        {{ t("views.optolithConverter.roll20Note.linkText") }}
+      </a>
+      {{ t("views.optolithConverter.roll20Note.suffix") }}
+    </p>
     <div class="alert alert-info mb-4" role="note">
       {{ t("views.optolithConverter.languageNote") }}
     </div>
