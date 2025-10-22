@@ -77,46 +77,46 @@ const releaseNotesHtml = computed(() => renderReleaseNotes(releaseNotesSource));
 </script>
 
 <template>
-  <section class="codex-section">
-    <header class="codex-section-header">
-      <h1 class="codex-section-title">{{ t("views.about.title") }}</h1>
-      <p class="codex-section-intro">{{ t("views.about.intro") }}</p>
+  <section class="aventuria-section">
+    <header class="aventuria-section-header">
+      <h1 class="aventuria-section-title">{{ t("views.about.title") }}</h1>
+      <p class="aventuria-section-intro">{{ t("views.about.intro") }}</p>
     </header>
 
-    <article class="codex-card codex-card--table">
+    <article class="aventuria-card aventuria-card--table">
       <p>{{ t("views.about.body.paragraph1") }}</p>
       <p>{{ t("views.about.body.paragraph2") }}</p>
 
-      <div class="codex-build-meta">
-        <h2 class="codex-card-title mb-3">
+      <div class="aventuria-build-meta">
+        <h2 class="aventuria-card-title mb-3">
           {{ t("build.informationTitle") }}
         </h2>
-        <div class="codex-meta-grid">
-          <div class="codex-meta-item">
-            <span class="codex-meta-label">
+        <div class="aventuria-meta-grid">
+          <div class="aventuria-meta-item">
+            <span class="aventuria-meta-label">
               {{ t("build.versionLabel") }}
             </span>
-            <span class="codex-meta-value">{{ buildInfo.version }}</span>
-            <span class="codex-meta-muted">
+            <span class="aventuria-meta-value">{{ buildInfo.version }}</span>
+            <span class="aventuria-meta-muted">
               {{ t("build.commitLabel", { sha: buildInfo.gitSha }) }}
             </span>
           </div>
-          <div class="codex-meta-item">
-            <span class="codex-meta-label">
+          <div class="aventuria-meta-item">
+            <span class="aventuria-meta-label">
               {{ t("build.builtAtLabel") }}
             </span>
-            <span class="codex-meta-value">{{ builtAtDisplay }}</span>
+            <span class="aventuria-meta-value">{{ builtAtDisplay }}</span>
           </div>
         </div>
       </div>
     </article>
 
-    <article class="codex-card codex-card--table">
-      <h2 class="codex-card-title mb-3">
+    <article class="aventuria-card aventuria-card--table">
+      <h2 class="aventuria-card-title mb-3">
         {{ t("views.about.releaseNotesTitle") }}
       </h2>
       <div
-        class="codex-release-notes"
+        class="aventuria-release-notes"
         v-html="releaseNotesHtml"
         aria-live="polite"
       ></div>

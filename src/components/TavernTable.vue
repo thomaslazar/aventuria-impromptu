@@ -79,37 +79,37 @@ const additionalDetails = computed(() =>
 </script>
 
 <template>
-  <section class="codex-card codex-card--table">
+  <section class="aventuria-card aventuria-card--table">
     <div
       class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
     >
-      <h3 class="codex-card-title mb-0">
+      <h3 class="aventuria-card-title mb-0">
         {{ t("tables.tavern.currentSpread") }}
       </h3>
-      <button type="button" class="codex-button" @click="reroll">
+      <button type="button" class="aventuria-button" @click="reroll">
         {{ t("buttons.reroll") }}
       </button>
     </div>
 
-    <ul class="codex-table-results mb-3">
-      <li class="codex-table-result">
-        <span class="codex-table-label">
+    <ul class="aventuria-table-results mb-3">
+      <li class="aventuria-table-result">
+        <span class="aventuria-table-label">
           {{ t("tables.tavern.nameLabel") }}
         </span>
-        <span class="codex-table-value">{{ tavernName }}</span>
+        <span class="aventuria-table-value">{{ tavernName }}</span>
       </li>
     </ul>
 
-    <ul v-if="additionalDetails.length" class="codex-table-results">
+    <ul v-if="additionalDetails.length" class="aventuria-table-results">
       <li
         v-for="(result, index) in additionalDetails"
         :key="index"
-        class="codex-table-result"
+        class="aventuria-table-result"
       >
-        <span class="codex-table-label">
+        <span class="aventuria-table-label">
           {{ translate(result.description ?? null) }}
         </span>
-        <span class="codex-table-value">
+        <span class="aventuria-table-value">
           {{ translate(result.result ?? null) }}
         </span>
       </li>

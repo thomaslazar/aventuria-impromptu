@@ -1,19 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Lato:wght@400;500;700&display=swap");
 
 :root {
-  --codex-background: #101528;
-  --codex-background-alt: #1c2138;
-  --codex-surface: rgba(241, 233, 210, 0.94);
-  --codex-surface-muted: rgba(241, 233, 210, 0.82);
-  --codex-surface-dark: rgba(20, 26, 46, 0.88);
-  --codex-border: rgba(197, 143, 45, 0.4);
-  --codex-border-strong: rgba(197, 143, 45, 0.85);
-  --codex-accent: #c58f2d;
-  --codex-accent-dark: #8f6520;
-  --codex-text: #f8f5ec;
-  --codex-text-muted: #d3ccba;
-  --codex-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
-  --codex-radius: 18px;
+  --aventuria-background: #101528;
+  --aventuria-background-alt: #1c2138;
+  --aventuria-surface: rgba(241, 233, 210, 0.94);
+  --aventuria-surface-muted: rgba(241, 233, 210, 0.82);
+  --aventuria-surface-dark: rgba(20, 26, 46, 0.88);
+  --aventuria-border: rgba(197, 143, 45, 0.4);
+  --aventuria-border-strong: rgba(197, 143, 45, 0.85);
+  --aventuria-accent: #c58f2d;
+  --aventuria-accent-dark: #8f6520;
+  --aventuria-text: #f8f5ec;
+  --aventuria-text-muted: #d3ccba;
+  --aventuria-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
+  --aventuria-radius: 18px;
 }
 
 *,
@@ -27,13 +27,13 @@ body {
   min-height: 100vh;
   font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  color: var(--codex-text);
+  color: var(--aventuria-text);
   background:
     radial-gradient(circle at 15% 20%, rgba(197, 143, 45, 0.18), transparent 55%),
     radial-gradient(circle at 80% 0%, rgba(59, 92, 162, 0.3), transparent 55%),
     radial-gradient(circle at 10% 100%, rgba(104, 54, 128, 0.32), transparent 60%),
     radial-gradient(circle at 90% 80%, rgba(197, 143, 45, 0.18), transparent 60%),
-    var(--codex-background);
+    var(--aventuria-background);
   background-attachment: fixed;
   line-height: 1.6;
 }
@@ -45,10 +45,10 @@ a {
 
 a:hover,
 a:focus-visible {
-  color: var(--codex-accent);
+  color: var(--aventuria-accent);
 }
 
-.codex-app {
+.aventuria-app {
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -56,43 +56,43 @@ a:focus-visible {
   overflow: hidden;
 }
 
-.codex-header {
+.aventuria-header {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 2.5rem 0 1.25rem;
 }
 
-.codex-brand {
+.aventuria-brand {
   font-family: "Cinzel", serif;
   font-size: clamp(1.85rem, 2.4vw, 2.75rem);
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--codex-text);
+  color: var(--aventuria-text);
   text-transform: uppercase;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
-.codex-tagline {
+.aventuria-tagline {
   margin: 0;
   max-width: 38rem;
-  color: var(--codex-text-muted);
+  color: var(--aventuria-text-muted);
   font-size: 1rem;
 }
 
-.codex-language-switch {
+.aventuria-language-switch {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   align-self: flex-end;
 }
 
-.codex-language-select {
+.aventuria-language-select {
   width: auto;
   min-width: 8rem;
 }
 
-.codex-nav {
+.aventuria-nav {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -100,7 +100,7 @@ a:focus-visible {
   padding: 0.75rem 0 2rem;
 }
 
-.codex-nav-link {
+.aventuria-nav-link {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -111,23 +111,23 @@ a:focus-visible {
   font-size: 0.95rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--codex-text-muted);
+  color: var(--aventuria-text-muted);
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(10px);
   transition: all 160ms ease;
   border: 1px solid transparent;
 }
 
-.codex-nav-link:hover,
-.codex-nav-link:focus-visible {
-  color: var(--codex-text);
+.aventuria-nav-link:hover,
+.aventuria-nav-link:focus-visible {
+  color: var(--aventuria-text);
   border-color: rgba(197, 143, 45, 0.5);
   background: rgba(197, 143, 45, 0.12);
 }
 
-.codex-nav-link.is-active {
-  color: var(--codex-text);
-  border-color: var(--codex-border-strong);
+.aventuria-nav-link.is-active {
+  color: var(--aventuria-text);
+  border-color: var(--aventuria-border-strong);
   background: linear-gradient(
     135deg,
     rgba(197, 143, 45, 0.35),
@@ -136,7 +136,7 @@ a:focus-visible {
   box-shadow: 0 6px 18px rgba(197, 143, 45, 0.2);
 }
 
-.codex-main {
+.aventuria-main {
   flex: 1;
   width: 100%;
   padding: 0 0 3rem;
@@ -144,29 +144,29 @@ a:focus-visible {
   justify-content: center;
 }
 
-.codex-main > * {
+.aventuria-main > * {
   width: 100%;
 }
 
-.codex-footer {
+.aventuria-footer {
   padding: 2rem 0 3rem;
   font-size: 0.85rem;
   color: rgba(248, 245, 236, 0.6);
   text-align: center;
 }
 
-.codex-card {
-  background: var(--codex-surface);
+.aventuria-card {
+  background: var(--aventuria-surface);
   color: #2f2412;
-  border-radius: var(--codex-radius);
-  border: 1px solid var(--codex-border);
-  box-shadow: var(--codex-shadow);
+  border-radius: var(--aventuria-radius);
+  border: 1px solid var(--aventuria-border);
+  box-shadow: var(--aventuria-shadow);
   padding: clamp(1.5rem, 2.5vw, 2.5rem);
   position: relative;
   overflow: hidden;
 }
 
-.codex-card::before {
+.aventuria-card::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -178,19 +178,19 @@ a:focus-visible {
   pointer-events: none;
 }
 
-.codex-card > *:last-child {
+.aventuria-card > *:last-child {
   margin-bottom: 0;
 }
 
-.codex-card--surface {
-  background: var(--codex-surface-muted);
+.aventuria-card--surface {
+  background: var(--aventuria-surface-muted);
 }
 
-.codex-card--table {
+.aventuria-card--table {
   background: rgba(241, 233, 210, 0.92);
 }
 
-.codex-card-title {
+.aventuria-card-title {
   font-family: "Cinzel", serif;
   font-size: 1.35rem;
   letter-spacing: 0.05em;
@@ -198,41 +198,41 @@ a:focus-visible {
   margin-bottom: 0.75rem;
 }
 
-.codex-hero {
+.aventuria-hero {
   display: grid;
   gap: 1.5rem;
   background: rgba(241, 233, 210, 0.92);
   color: #2f2412;
 }
 
-.codex-hero-title {
+.aventuria-hero-title {
   font-family: "Cinzel", serif;
   font-size: clamp(2rem, 3.8vw, 3rem);
   line-height: 1.2;
   margin: 0 0 0.75rem;
 }
 
-.codex-hero-text {
+.aventuria-hero-text {
   margin: 0 0 1.5rem;
   font-size: 1.05rem;
   color: #473722;
   max-width: 42rem;
 }
 
-.codex-hero-actions {
+.aventuria-hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.85rem;
 }
 
-.codex-button {
+.aventuria-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.65rem 1.4rem;
   border-radius: 999px;
-  border: 1px solid var(--codex-border-strong);
+  border: 1px solid var(--aventuria-border-strong);
   background: linear-gradient(
     135deg,
     rgba(197, 143, 45, 0.95),
@@ -247,8 +247,8 @@ a:focus-visible {
     background 160ms ease;
 }
 
-.codex-button:hover,
-.codex-button:focus-visible {
+.aventuria-button:hover,
+.aventuria-button:focus-visible {
   transform: translateY(-1px);
   box-shadow: 0 12px 24px rgba(197, 143, 45, 0.35);
   background: linear-gradient(
@@ -258,7 +258,7 @@ a:focus-visible {
   );
 }
 
-.codex-button:disabled {
+.aventuria-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
@@ -270,67 +270,67 @@ a:focus-visible {
   );
 }
 
-.codex-button:disabled:hover,
-.codex-button:disabled:focus-visible {
+.aventuria-button:disabled:hover,
+.aventuria-button:disabled:focus-visible {
   transform: none;
   box-shadow: none;
 }
 
-.codex-button--ghost {
+.aventuria-button--ghost {
   background: transparent;
-  color: var(--codex-accent);
+  color: var(--aventuria-accent);
   border-color: rgba(197, 143, 45, 0.65);
 }
 
-.codex-button--ghost:hover,
-.codex-button--ghost:focus-visible {
+.aventuria-button--ghost:hover,
+.aventuria-button--ghost:focus-visible {
   background: rgba(197, 143, 45, 0.12);
   color: #251b0b;
 }
 
-.codex-button--ghost:disabled {
+.aventuria-button--ghost:disabled {
   background: transparent;
   color: rgba(37, 27, 11, 0.45);
   border-color: rgba(197, 143, 45, 0.35);
 }
 
-.codex-link {
+.aventuria-link {
   font-weight: 600;
-  color: var(--codex-accent-dark);
+  color: var(--aventuria-accent-dark);
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
-.codex-link:hover,
-.codex-link:focus-visible {
+.aventuria-link:hover,
+.aventuria-link:focus-visible {
   color: #251b0b;
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
 
-.codex-grid {
+.aventuria-grid {
   margin-top: 2.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   gap: 1.75rem;
 }
 
-.codex-home {
+.aventuria-home {
   display: grid;
   gap: 2.5rem;
 }
 
-.codex-section {
+.aventuria-section {
   display: grid;
   gap: 1.5rem;
 }
 
-.codex-section-header {
+.aventuria-section-header {
   display: grid;
   gap: 0.5rem;
 }
 
-.codex-section-title {
+.aventuria-section-title {
   font-family: "Cinzel", serif;
   font-size: clamp(1.6rem, 2.8vw, 2.2rem);
   letter-spacing: 0.06em;
@@ -338,12 +338,12 @@ a:focus-visible {
   margin: 0;
 }
 
-.codex-section-intro {
+.aventuria-section-intro {
   margin: 0;
-  color: var(--codex-text-muted);
+  color: var(--aventuria-text-muted);
 }
 
-.codex-table-results {
+.aventuria-table-results {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -351,7 +351,7 @@ a:focus-visible {
   gap: 0.85rem;
 }
 
-.codex-table-result {
+.aventuria-table-result {
   padding: 0.85rem 1rem;
   border-left: 3px solid rgba(197, 143, 45, 0.65);
   background: rgba(255, 255, 255, 0.65);
@@ -359,7 +359,7 @@ a:focus-visible {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-.codex-table-label {
+.aventuria-table-label {
   display: block;
   font-family: "Cinzel", serif;
   font-weight: 600;
@@ -369,13 +369,13 @@ a:focus-visible {
   margin-bottom: 0.25rem;
 }
 
-.codex-table-value {
+.aventuria-table-value {
   display: block;
   color: #2f2412;
   font-weight: 500;
 }
 
-.codex-build-meta {
+.aventuria-build-meta {
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;
   border-radius: 14px;
@@ -387,62 +387,62 @@ a:focus-visible {
     0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-.codex-meta-grid {
+.aventuria-meta-grid {
   display: grid;
   gap: 0.65rem;
 }
 
-.codex-meta-item {
+.aventuria-meta-item {
   display: grid;
   gap: 0.15rem;
 }
 
-.codex-meta-label {
+.aventuria-meta-label {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(94, 66, 13, 0.6);
 }
 
-.codex-meta-value {
+.aventuria-meta-value {
   font-family: "Cinzel", serif;
   font-size: 1.05rem;
   color: #2f2412;
 }
 
-.codex-meta-muted {
+.aventuria-meta-muted {
   font-family: "Lato", sans-serif;
   font-size: 0.85rem;
   color: rgba(94, 66, 13, 0.55);
 }
 
-.codex-release-notes h2,
-.codex-release-notes h3 {
+.aventuria-release-notes h2,
+.aventuria-release-notes h3 {
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-.codex-release-notes h2:first-child,
-.codex-release-notes h3:first-child {
+.aventuria-release-notes h2:first-child,
+.aventuria-release-notes h3:first-child {
   margin-top: 0;
 }
 
-.codex-release-notes ul {
+.aventuria-release-notes ul {
   margin-bottom: 1rem;
   padding-left: 1.25rem;
 }
 
-.codex-release-notes li {
+.aventuria-release-notes li {
   margin-bottom: 0.5rem;
 }
 
-.codex-release-notes p {
+.aventuria-release-notes p {
   margin-bottom: 1rem;
 }
 
-.codex-release-notes code {
+.aventuria-release-notes code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
   background-color: rgba(0, 0, 0, 0.05);
@@ -451,14 +451,14 @@ a:focus-visible {
   font-size: 0.875em;
 }
 
-.codex-scroll {
+.aventuria-scroll {
   background: linear-gradient(
       0deg,
       rgba(197, 143, 45, 0.06) 15%,
       transparent 60%
     ),
-    var(--codex-surface-muted);
-  border-radius: var(--codex-radius);
+    var(--aventuria-surface-muted);
+  border-radius: var(--aventuria-radius);
   border: 1px solid rgba(197, 143, 45, 0.25);
   padding: 1.5rem;
 }
@@ -470,27 +470,27 @@ img {
 }
 
 @media (max-width: 992px) {
-  .codex-header {
+  .aventuria-header {
     padding-top: 2rem;
     text-align: center;
     align-items: center;
   }
 
-  .codex-nav {
+  .aventuria-nav {
     justify-content: center;
   }
 
-  .codex-tagline {
+  .aventuria-tagline {
     max-width: 100%;
   }
 }
 
 @media (max-width: 600px) {
-  .codex-card {
+  .aventuria-card {
     padding: 1.25rem;
   }
 
-  .codex-table-result {
+  .aventuria-table-result {
     padding: 0.75rem 0.85rem;
   }
 }

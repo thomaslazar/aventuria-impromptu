@@ -17,37 +17,40 @@ const features: FeatureConfig[] = [
 </script>
 
 <template>
-  <div class="codex-home">
-    <section class="codex-card codex-hero">
+  <div class="aventuria-home">
+    <section class="aventuria-card aventuria-hero">
       <div>
-        <h1 class="codex-hero-title">
+        <h1 class="aventuria-hero-title">
           {{ t("home.hero.title") }}
         </h1>
-        <p class="codex-hero-text">
+        <p class="aventuria-hero-text">
           {{ t("home.hero.intro") }}
         </p>
       </div>
-      <div class="codex-hero-actions">
-        <RouterLink to="/tavern" class="codex-button">
+      <div class="aventuria-hero-actions">
+        <RouterLink to="/tavern" class="aventuria-button">
           {{ t("buttons.heroPrimary") }}
         </RouterLink>
-        <RouterLink to="/about" class="codex-button codex-button--ghost">
+        <RouterLink
+          to="/about"
+          class="aventuria-button aventuria-button--ghost"
+        >
           {{ t("buttons.heroSecondary") }}
         </RouterLink>
       </div>
     </section>
 
-    <section class="codex-grid">
+    <section class="aventuria-grid">
       <article
         v-for="feature in features"
         :key="feature.to"
-        class="codex-card codex-card--table"
+        class="aventuria-card aventuria-card--table"
       >
-        <h2 class="codex-card-title">
+        <h2 class="aventuria-card-title">
           {{ t(`${feature.translationKey}.title`) }}
         </h2>
         <p>{{ t(`${feature.translationKey}.description`) }}</p>
-        <RouterLink :to="feature.to" class="codex-link">
+        <RouterLink :to="feature.to" class="aventuria-link">
           {{ t(`${feature.translationKey}.cta`) }}
         </RouterLink>
       </article>

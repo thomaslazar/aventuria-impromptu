@@ -26,28 +26,28 @@ const translate = (value: LocalizedText | null | undefined): string => {
 </script>
 
 <template>
-  <section class="codex-card codex-card--table">
+  <section class="aventuria-card aventuria-card--table">
     <div
       class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
     >
-      <h3 class="codex-card-title mb-0">
+      <h3 class="aventuria-card-title mb-0">
         {{ t("tables.treasureLoot.currentSpread") }}
       </h3>
-      <button type="button" class="codex-button" @click="reroll">
+      <button type="button" class="aventuria-button" @click="reroll">
         {{ t("buttons.reroll") }}
       </button>
     </div>
 
-    <ul class="codex-table-results">
+    <ul class="aventuria-table-results">
       <li
         v-for="(result, index) in results"
         :key="index"
-        class="codex-table-result"
+        class="aventuria-table-result"
       >
-        <span v-if="result.description" class="codex-table-label">
+        <span v-if="result.description" class="aventuria-table-label">
           {{ translate(result.description ?? null) }}
         </span>
-        <span class="codex-table-value">
+        <span class="aventuria-table-value">
           {{ translate(result.result ?? null) }}
         </span>
       </li>

@@ -35,10 +35,10 @@ describe("App", () => {
       },
     });
 
-    const navigation = wrapper.get("nav.codex-nav");
+    const navigation = wrapper.get("nav.aventuria-nav");
     expect(navigation.attributes("aria-label")).toBe("Hauptnavigation");
 
-    const localeSelect = wrapper.get("select#codex-language-select");
+    const localeSelect = wrapper.get("select#aventuria-language-select");
     const selectElement = localeSelect.element as HTMLSelectElement;
 
     expect(localeSelect.findAll("option")).toHaveLength(

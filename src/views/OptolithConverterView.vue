@@ -1,15 +1,15 @@
 <template>
-  <section class="codex-section optolith-view">
-    <header class="codex-section-header">
-      <h1 class="codex-section-title">
+  <section class="aventuria-section optolith-view">
+    <header class="aventuria-section-header">
+      <h1 class="aventuria-section-title">
         {{ t("views.optolithConverter.title") }}
       </h1>
-      <p class="codex-section-intro optolith-intro">
+      <p class="aventuria-section-intro optolith-intro">
         {{ t("views.optolithConverter.intro") }}
       </p>
     </header>
 
-    <article class="codex-card codex-card--table optolith-card">
+    <article class="aventuria-card aventuria-card--table optolith-card">
       <div class="optolith-callout optolith-callout--accent" role="note">
         <span>
           {{ t("views.optolithConverter.roll20Note.prefix") }}
@@ -29,7 +29,7 @@
       </div>
 
       <section class="optolith-usage">
-        <h2 class="codex-card-title optolith-usage__title">
+        <h2 class="aventuria-card-title optolith-usage__title">
           {{ t("views.optolithConverter.usage.title") }}
         </h2>
         <ol class="optolith-usage__list">
@@ -68,7 +68,7 @@
       <div class="optolith-actions">
         <button
           type="button"
-          class="codex-button"
+          class="aventuria-button"
           :disabled="disableConvert"
           @click="convert"
         >
@@ -76,7 +76,7 @@
         </button>
         <button
           type="button"
-          class="codex-button codex-button--ghost"
+          class="aventuria-button aventuria-button--ghost"
           @click="reset"
           :disabled="status === 'loading'"
         >
@@ -84,7 +84,7 @@
         </button>
         <button
           type="button"
-          class="codex-button codex-button--ghost"
+          class="aventuria-button aventuria-button--ghost"
           @click="loadLastResult"
           :disabled="!hasStoredResult || status === 'loading'"
         >
@@ -108,10 +108,13 @@
       </div>
     </article>
 
-    <article v-if="result" class="codex-card codex-card--table optolith-result">
+    <article
+      v-if="result"
+      class="aventuria-card aventuria-card--table optolith-result"
+    >
       <header class="optolith-result__header">
         <div>
-          <h2 class="codex-card-title optolith-result__title">
+          <h2 class="aventuria-card-title optolith-result__title">
             {{ result.exported.name }}
           </h2>
           <p class="optolith-result__meta">
@@ -124,12 +127,12 @@
           </p>
         </div>
         <div class="optolith-result__actions">
-          <button type="button" class="codex-button" @click="downloadJson">
+          <button type="button" class="aventuria-button" @click="downloadJson">
             {{ t("views.optolithConverter.buttons.download") }}
           </button>
           <button
             type="button"
-            class="codex-button codex-button--ghost"
+            class="aventuria-button aventuria-button--ghost"
             @click="copyWarnings"
           >
             {{ t("views.optolithConverter.buttons.copyWarnings") }}
@@ -397,7 +400,7 @@ onBeforeUnmount(() => {
 }
 
 .optolith-intro {
-  color: var(--codex-text);
+  color: var(--aventuria-text);
 }
 
 .optolith-roll20__link {
@@ -411,7 +414,7 @@ onBeforeUnmount(() => {
 
 .optolith-roll20__link:hover,
 .optolith-roll20__link:focus-visible {
-  color: var(--codex-accent-dark);
+  color: var(--aventuria-accent-dark);
 }
 
 .optolith-card {
@@ -420,9 +423,9 @@ onBeforeUnmount(() => {
 }
 
 .optolith-callout {
-  border-left: 4px solid var(--codex-accent);
+  border-left: 4px solid var(--aventuria-accent);
   padding: 1rem 1.25rem;
-  border-radius: calc(var(--codex-radius) - 2px);
+  border-radius: calc(var(--aventuria-radius) - 2px);
   background: rgba(197, 143, 45, 0.14);
   color: #4a3614;
   font-weight: 500;
@@ -484,7 +487,7 @@ onBeforeUnmount(() => {
   width: 100%;
   min-height: 18rem;
   padding: 1rem 1.1rem;
-  border-radius: var(--codex-radius);
+  border-radius: var(--aventuria-radius);
   border: 1px solid rgba(47, 36, 18, 0.18);
   background: rgba(255, 255, 255, 0.86);
   font-family:
@@ -573,7 +576,7 @@ onBeforeUnmount(() => {
 
 .optolith-details {
   border: 1px solid rgba(47, 36, 18, 0.16);
-  border-radius: var(--codex-radius);
+  border-radius: var(--aventuria-radius);
   background: rgba(255, 255, 255, 0.78);
   padding: 1rem 1.25rem;
 }
@@ -591,14 +594,14 @@ onBeforeUnmount(() => {
 }
 
 .optolith-details summary:focus-visible {
-  outline: 2px solid var(--codex-accent);
+  outline: 2px solid var(--aventuria-accent);
   outline-offset: 4px;
 }
 
 .optolith-details pre {
   margin: 0.85rem 0 0;
   padding: 1rem;
-  border-radius: var(--codex-radius);
+  border-radius: var(--aventuria-radius);
   background: rgba(47, 36, 18, 0.08);
   color: #251b0b;
   max-height: 20rem;
@@ -620,7 +623,7 @@ onBeforeUnmount(() => {
     width: 100%;
   }
 
-  .optolith-result__actions .codex-button {
+  .optolith-result__actions .aventuria-button {
     flex: 1 0 auto;
     justify-content: center;
   }

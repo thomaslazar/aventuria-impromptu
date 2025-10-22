@@ -6,12 +6,12 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <section class="codex-section">
-    <header class="codex-section-header">
-      <h1 class="codex-section-title">
+  <section class="aventuria-section">
+    <header class="aventuria-section-header">
+      <h1 class="aventuria-section-title">
         {{ t("views.treasureLoot.title") }}
       </h1>
-      <p class="codex-section-intro">
+      <p class="aventuria-section-intro">
         {{ t("views.treasureLoot.intro") }}
       </p>
     </header>

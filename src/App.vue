@@ -38,22 +38,22 @@ const isActive = (to: string, exact?: boolean) => {
 </script>
 
 <template>
-  <div class="codex-app">
-    <header class="codex-header container-xl">
-      <RouterLink :to="{ path: '/' }" class="codex-brand">
+  <div class="aventuria-app">
+    <header class="aventuria-header container-xl">
+      <RouterLink :to="{ path: '/' }" class="aventuria-brand">
         {{ t("app.title") }}
       </RouterLink>
-      <p class="codex-tagline">
+      <p class="aventuria-tagline">
         {{ t("app.tagline") }}
       </p>
-      <div class="codex-language-switch">
-        <label class="visually-hidden" for="codex-language-select">
+      <div class="aventuria-language-switch">
+        <label class="visually-hidden" for="aventuria-language-select">
           {{ t("language.label") }}
         </label>
         <select
-          id="codex-language-select"
+          id="aventuria-language-select"
           v-model="currentLocale"
-          class="form-select form-select-sm codex-language-select"
+          class="form-select form-select-sm aventuria-language-select"
         >
           <option
             v-for="option in languageOptions"
@@ -66,25 +66,25 @@ const isActive = (to: string, exact?: boolean) => {
       </div>
     </header>
 
-    <nav class="codex-nav container-xl" :aria-label="t('nav.ariaLabel')">
+    <nav class="aventuria-nav container-xl" :aria-label="t('nav.ariaLabel')">
       <RouterLink
         v-for="item in navigationItems"
         :key="item.to"
         :to="item.to"
-        class="codex-nav-link"
+        class="aventuria-nav-link"
         :class="{ 'is-active': isActive(item.to, item.exact) }"
       >
         {{ t(item.labelKey) }}
       </RouterLink>
     </nav>
 
-    <main class="codex-main">
+    <main class="aventuria-main">
       <div class="container-xl">
         <RouterView />
       </div>
     </main>
 
-    <footer class="codex-footer">
+    <footer class="aventuria-footer">
       {{
         t("app.footer.copy", {
           year: currentYear,
