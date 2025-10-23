@@ -108,6 +108,108 @@
       </div>
     </article>
 
+    <article class="aventuria-card aventuria-card--table optolith-history">
+      <header class="optolith-history__header">
+        <h2 class="aventuria-card-title">
+          {{ t("views.optolithConverter.recent.title") }}
+        </h2>
+        <button
+          type="button"
+          class="aventuria-button aventuria-button--ghost"
+          :disabled="!canClearCache"
+          @click="clearHistory"
+        >
+          {{ t("views.optolithConverter.recent.actions.clear") }}
+        </button>
+      </header>
+
+      <div
+        v-if="cacheState.status === 'disabled'"
+        class="optolith-callout optolith-callout--warning"
+        role="alert"
+      >
+        {{ t("views.optolithConverter.recent.disabled") }}
+      </div>
+      <div
+        v-else-if="recentEntries.length === 0"
+        class="optolith-history__empty"
+      >
+        {{ t("views.optolithConverter.recent.empty") }}
+      </div>
+      <ul v-else class="optolith-history__list">
+        <li
+          v-for="entry in recentEntries"
+          :key="entry.id"
+          class="optolith-history__item"
+        >
+          <div class="optolith-history__item-header">
+            <div class="optolith-history__item-summary">
+              <h3 class="optolith-history__item-name">
+                {{ entry.name }}
+              </h3>
+              <p class="optolith-history__timestamp">
+                {{
+                  t("views.optolithConverter.recent.storedAt", {
+                    date: entry.formattedDate,
+                  })
+                }}
+              </p>
+              <span
+                class="optolith-history__warnings"
+                :class="{
+                  'optolith-history__warnings--has':
+                    entry.warningSummary.total > 0,
+                }"
+                :title="warningBreakdown(entry.warningSummary)"
+              >
+                {{ warningLabel(entry.warningSummary) }}
+              </span>
+            </div>
+            <div class="optolith-history__actions">
+              <button
+                type="button"
+                class="aventuria-button aventuria-button--ghost"
+                :disabled="!canMutateCache"
+                @click="loadEntry(entry.id)"
+              >
+                {{ t("views.optolithConverter.recent.actions.load") }}
+              </button>
+              <button
+                type="button"
+                class="aventuria-button aventuria-button--ghost"
+                :disabled="cacheState.status !== 'available'"
+                @click="downloadEntry(entry.id)"
+              >
+                {{ t("views.optolithConverter.recent.actions.download") }}
+              </button>
+              <button
+                type="button"
+                class="aventuria-button aventuria-button--ghost"
+                :disabled="!canMutateCache"
+                @click="removeEntry(entry.id)"
+              >
+                {{ t("views.optolithConverter.recent.actions.remove") }}
+              </button>
+            </div>
+          </div>
+
+          <details class="optolith-details">
+            <summary>
+              {{ t("views.optolithConverter.recent.labels.statBlock") }}
+            </summary>
+            <pre class="optolith-history__pre">{{ entry.statBlock }}</pre>
+          </details>
+
+          <details class="optolith-details">
+            <summary>
+              {{ t("views.optolithConverter.recent.labels.json") }}
+            </summary>
+            <pre class="optolith-history__pre">{{ entry.json }}</pre>
+          </details>
+        </li>
+      </ul>
+    </article>
+
     <article
       v-if="result"
       class="aventuria-card aventuria-card--table optolith-result"
@@ -177,12 +279,17 @@ import type {
   ConversionResultPayload,
   ConverterWorkerMessage,
 } from "@/types/optolith/converter";
+import { conversionCache } from "@/services/optolith/conversionCache";
+import type {
+  CacheChangeEvent,
+  CacheState,
+  CachedConversionEntry,
+  WarningSummary,
+} from "@/types/optolith/cache";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const MAX_LENGTH = 6000;
-const STORAGE_KEY = "optolith-converter:last";
-
 type Status = "idle" | "loading" | "success" | "error";
 
 const input = ref("");
@@ -191,6 +298,9 @@ const error = ref<string | null>(null);
 const result = ref<ConversionResultPayload | null>(null);
 const worker = ref<Worker | null>(null);
 const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
+const cacheState = ref<CacheState>(conversionCache.getState());
+const cacheEntries = ref<readonly CachedConversionEntry[]>([]);
+const cacheActionPending = ref(false);
 
 const inputTooLong = computed(() => input.value.length > MAX_LENGTH);
 const disableConvert = computed(
@@ -199,11 +309,49 @@ const disableConvert = computed(
     input.value.trim().length === 0 ||
     inputTooLong.value,
 );
-const hasStoredResult = computed(() =>
-  Boolean(localStorage.getItem(STORAGE_KEY)),
+const hasStoredResult = computed(
+  () =>
+    cacheState.value.status === "available" && cacheEntries.value.length > 0,
 );
 const formattedJson = computed(() =>
   result.value ? JSON.stringify(result.value.exported, null, 2) : "",
+);
+const cacheDateFormatter = computed(
+  () =>
+    new Intl.DateTimeFormat(locale.value, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }),
+);
+
+interface CacheEntryViewModel {
+  readonly id: string;
+  readonly name: string;
+  readonly createdAt: string;
+  readonly formattedDate: string;
+  readonly statBlock: string;
+  readonly json: string;
+  readonly warningSummary: WarningSummary;
+}
+
+const recentEntries = computed<CacheEntryViewModel[]>(() =>
+  cacheEntries.value.map((entry) => ({
+    id: entry.id,
+    name: entry.name,
+    createdAt: entry.createdAt,
+    formattedDate: cacheDateFormatter.value.format(new Date(entry.createdAt)),
+    statBlock: entry.statBlock,
+    json: JSON.stringify(entry.payload.exported, null, 2),
+    warningSummary: entry.warningSummary,
+  })),
+);
+
+const canMutateCache = computed(
+  () => cacheState.value.status === "available" && !cacheActionPending.value,
+);
+
+const canClearCache = computed(
+  () => canMutateCache.value && cacheEntries.value.length > 0,
 );
 const displayWarnings = computed(() => {
   if (!result.value) {
@@ -274,7 +422,9 @@ function handleWorkerMessage(event: MessageEvent<ConverterWorkerMessage>) {
   status.value = "success";
   error.value = null;
   result.value = message.payload;
-  persistLastResult();
+  void conversionCache
+    .save(input.value, message.payload)
+    .catch((err) => console.error("Failed to persist cached conversion", err));
 }
 
 function convert() {
@@ -295,39 +445,98 @@ function convert() {
   } satisfies ConversionRequestMessage);
 }
 
-function loadLastResult() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) {
+function loadCachedEntry(entry: CachedConversionEntry | undefined): void {
+  if (!entry) {
     return;
   }
+  input.value = entry.statBlock;
+  result.value = {
+    ...entry.payload,
+    exportedWarnings: entry.payload.exportedWarnings ?? [],
+  };
+  status.value = "success";
+  error.value = null;
+}
+
+function loadLastResult() {
+  loadCachedEntry(cacheEntries.value[0]);
+}
+
+function findCachedEntry(id: string): CachedConversionEntry | undefined {
+  return cacheEntries.value.find((entry) => entry.id === id);
+}
+
+function loadEntry(id: string): void {
+  const entry = findCachedEntry(id);
+  if (!entry) {
+    return;
+  }
+  loadCachedEntry(entry);
+}
+
+function downloadEntry(id: string): void {
+  const entry = findCachedEntry(id);
+  if (!entry) {
+    return;
+  }
+  const blob = new Blob([JSON.stringify(entry.payload.exported, null, 2)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  const safeName = entry.name.toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+  anchor.href = url;
+  anchor.download = `${safeName || "npc"}-optolith.json`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
+}
+
+async function removeEntry(id: string): Promise<void> {
+  if (!canMutateCache.value) {
+    return;
+  }
+  cacheActionPending.value = true;
   try {
-    const parsed = JSON.parse(stored) as {
-      input: string;
-      payload: ConversionResultPayload;
-    };
-    input.value = parsed.input;
-    result.value = {
-      ...parsed.payload,
-      exportedWarnings: parsed.payload.exportedWarnings ?? [],
-    };
-    status.value = "success";
-    error.value = null;
+    await conversionCache.remove(id);
   } catch (err) {
-    console.error("Failed to restore cached result", err);
-    localStorage.removeItem(STORAGE_KEY);
+    console.error("Failed to remove cached conversion", err);
+  } finally {
+    cacheActionPending.value = false;
   }
 }
 
-function persistLastResult() {
-  if (!result.value) {
+async function clearHistory(): Promise<void> {
+  if (!canClearCache.value) {
     return;
   }
-  const payload = {
-    input: input.value,
-    payload: result.value,
-    storedAt: new Date().toISOString(),
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  cacheActionPending.value = true;
+  try {
+    await conversionCache.clear();
+  } catch (err) {
+    console.error("Failed to clear cached conversions", err);
+  } finally {
+    cacheActionPending.value = false;
+  }
+}
+
+function warningLabel(summary: WarningSummary): string {
+  if (summary.total === 0) {
+    return t("views.optolithConverter.recent.warnings.none");
+  }
+  return t("views.optolithConverter.recent.warnings.some", {
+    count: summary.total,
+  });
+}
+
+function warningBreakdown(summary: WarningSummary): string {
+  return t("views.optolithConverter.recent.warnings.breakdown", {
+    parser: summary.parser,
+    resolver: summary.resolver,
+    exporter: summary.exporter,
+    unresolved: summary.unresolved,
+  });
 }
 
 function downloadJson() {
@@ -372,9 +581,37 @@ function reset() {
 }
 
 onMounted(() => {
-  if (hasStoredResult.value) {
-    loadLastResult();
-  }
+  const handleCacheChange = (event: Event) => {
+    const detail = (event as CacheChangeEvent).detail;
+    cacheState.value = detail.state;
+    cacheEntries.value = detail.entries;
+  };
+
+  conversionCache.addEventListener(
+    "change",
+    handleCacheChange as EventListener,
+  );
+
+  void conversionCache
+    .init()
+    .then(() => {
+      cacheState.value = conversionCache.getState();
+      cacheEntries.value = conversionCache.getEntries();
+      if (cacheEntries.value.length > 0) {
+        loadCachedEntry(cacheEntries.value[0]);
+      }
+    })
+    .catch(() => {
+      cacheState.value = conversionCache.getState();
+      cacheEntries.value = conversionCache.getEntries();
+    });
+
+  onBeforeUnmount(() => {
+    conversionCache.removeEventListener(
+      "change",
+      handleCacheChange as EventListener,
+    );
+  });
 });
 
 onBeforeUnmount(() => {
@@ -613,6 +850,107 @@ onBeforeUnmount(() => {
   line-height: 1.6;
 }
 
+.optolith-history {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.optolith-history__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.optolith-history__empty {
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border-radius: 0.75rem;
+  background-color: rgba(47, 36, 18, 0.05);
+  color: rgba(47, 36, 18, 0.75);
+  font-weight: 500;
+}
+
+.optolith-history__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.optolith-history__item {
+  display: grid;
+  gap: clamp(0.65rem, 2vw, 0.9rem);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(47, 36, 18, 0.12);
+  padding: clamp(0.75rem, 2vw, 1rem);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.optolith-history__item-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 2vw, 1rem);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.optolith-history__item-summary {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 16rem;
+}
+
+.optolith-history__item-name {
+  margin: 0;
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+}
+
+.optolith-history__timestamp {
+  margin: 0;
+  color: rgba(47, 36, 18, 0.68);
+  font-size: 0.9rem;
+}
+
+.optolith-history__warnings {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(47, 36, 18, 0.08);
+  color: rgba(47, 36, 18, 0.75);
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.optolith-history__warnings--has {
+  background: rgba(179, 71, 62, 0.15);
+  color: rgba(121, 34, 22, 0.95);
+}
+
+.optolith-history__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.optolith-history__pre {
+  margin: 0;
+  padding: clamp(0.6rem, 1.5vw, 0.8rem);
+  border-radius: 0.5rem;
+  background: rgba(47, 36, 18, 0.05);
+  max-height: 12rem;
+  overflow: auto;
+  font-family:
+    ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 @media (max-width: 768px) {
   .optolith-result__header {
     flex-direction: column;
@@ -624,6 +962,16 @@ onBeforeUnmount(() => {
   }
 
   .optolith-result__actions .aventuria-button {
+    flex: 1 0 auto;
+    justify-content: center;
+  }
+
+  .optolith-history__actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .optolith-history__actions .aventuria-button {
     flex: 1 0 auto;
     justify-content: center;
   }

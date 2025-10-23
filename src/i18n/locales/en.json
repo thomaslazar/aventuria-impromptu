@@ -105,7 +105,28 @@
         }
       },
       "normalizedHeading": "Normalized stat block",
-      "jsonHeading": "Optolith JSON preview"
+      "jsonHeading": "Optolith JSON preview",
+      "recent": {
+        "title": "Recent conversions",
+        "empty": "No conversions cached yet. Run a conversion to populate this list.",
+        "disabled": "Browser storage is unavailable in this session, so recent conversions cannot be cached.",
+        "actions": {
+          "clear": "Clear history",
+          "load": "Load into editor",
+          "download": "Download JSON",
+          "remove": "Remove entry"
+        },
+        "warnings": {
+          "some": "{count, plural, one {# warning} other {# warnings}}",
+          "none": "No warnings recorded",
+          "breakdown": "Parser: {parser}, Resolver: {resolver}, Exporter: {exporter}, Unresolved: {unresolved}"
+        },
+        "storedAt": "Saved {date}",
+        "labels": {
+          "statBlock": "Stat block",
+          "json": "Cached JSON"
+        }
+      }
     },
     "about": {
       "title": "About",

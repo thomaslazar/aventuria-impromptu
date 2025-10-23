@@ -105,7 +105,28 @@
         }
       },
       "normalizedHeading": "Normalisierter Statblock",
-      "jsonHeading": "Optolith-JSON-Vorschau"
+      "jsonHeading": "Optolith-JSON-Vorschau",
+      "recent": {
+        "title": "Zuletzt konvertiert",
+        "empty": "Noch keine Konvertierungen gespeichert. Führe eine Konvertierung aus, um die Liste zu füllen.",
+        "disabled": "Der Browserspeicher ist in dieser Sitzung nicht verfügbar, daher können keine Konvertierungen abgelegt werden.",
+        "actions": {
+          "clear": "Verlauf leeren",
+          "load": "In Editor laden",
+          "download": "JSON herunterladen",
+          "remove": "Eintrag entfernen"
+        },
+        "warnings": {
+          "some": "{count, plural, one {# Hinweis} other {# Hinweise}}",
+          "none": "Keine Hinweise gespeichert",
+          "breakdown": "Parser: {parser}, Resolver: {resolver}, Exporter: {exporter}, Unaufgelöst: {unresolved}"
+        },
+        "storedAt": "Gespeichert am {date}",
+        "labels": {
+          "statBlock": "Statblock",
+          "json": "Gespeichertes JSON"
+        }
+      }
     },
     "about": {
       "title": "Über das Projekt",
