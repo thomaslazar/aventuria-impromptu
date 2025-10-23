@@ -11,11 +11,11 @@ import type { ConversionResultPayload } from "../../src/types/optolith/converter
 const DATASET_DIR = path.resolve(process.cwd(), "public/data/optolith");
 const SAMPLE_MD = path.resolve(
   process.cwd(),
-  "agents/project-planning/intake/specs/examples/dsa5-optolith-sample-stat-blocks.md",
+  "planning/intake/specs/examples/dsa5-optolith-sample-stat-blocks.md",
 );
 const DEFAULT_RUN_DIR = path.resolve(
   process.cwd(),
-  "agents/project-planning/runs/20251016-dsa5-optolith-converter",
+  "planning/runs/2025-10-16T12-00-00-dsa5-optolith-converter",
 );
 
 function resolveReportPath(): string {
@@ -25,9 +25,8 @@ function resolveReportPath(): string {
   }
   const timestamp = new Date()
     .toISOString()
-    .replace(/[:.]/g, "-")
-    .replace("T", "-")
-    .slice(0, 19);
+    .replace(/:/g, "-")
+    .replace(/\..+$/, "");
   const fileName = `sample-analysis-${timestamp}.md`;
   return path.join(DEFAULT_RUN_DIR, fileName);
 }

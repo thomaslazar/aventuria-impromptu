@@ -16,7 +16,7 @@ import {
 import { normalizeLabel } from "../../src/utils/optolith/normalizer";
 
 const DEFAULT_ZIP_PATH =
-  "agents/project-planning/intake/assets/dsa5-optolith-converter/optolith-data.zip";
+  "planning/intake/assets/dsa5-optolith-converter/optolith-data.zip";
 const DEFAULT_OUTPUT_DIR = "public/data/optolith";
 const DEFAULT_LOCALE = "de-DE";
 const SCHEMA_VERSION = "1.0.0";

@@ -65,9 +65,9 @@ The repository root is now the application root; avoid moving `.codex/`, `.devco
    - Do not bundle unrelated features and formatting in the same commit.
    - Agents may run `git commit` and/or `git push` only when the user explicitly prompts for it; otherwise surface ready-to-review changes for a human maintainer. Never merge branches directly.
 
-3. **PR Expectations**
-   - Summarize changes and verification commands in bullet form.
-   - Call out migration steps if consumers must rerun installations or rebuild assets.
+3. **Review Expectations**
+   - Document change summaries and verification commands in the associated work item before handing off for review.
+   - Call out migration steps if consumers must rerun installations or rebuild assets so the maintainer can plan the merge.
 
 ---
 
@@ -208,7 +208,7 @@ Replace the content with specifics when communicating with the team.
 
 ## 15. Agent Workspaces
 
-- `agents/project-planning`: Intake → run → publish flow for turning specs into Scrum stories and plans. Start with the README in that directory for naming conventions, templates, and publishing guidance.
+- `planning`: Intake → run → work-item flow with ISO-timestamped sessions and maintainer-controlled scheduling. Start with the README in that directory for naming conventions, templates, and workflow guidance.
 - `agents/product-owner`: Product management checklists for preparing specs and shepherding backlog items.
 - `agents/scrum-master`: Ceremony guidance, metrics, and escalation practices that keep delivery smooth.
 - `agents/qa`: Quality assurance workflows for translating acceptance criteria into reliable coverage.

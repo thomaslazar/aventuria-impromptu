@@ -33,14 +33,14 @@ Update this table when dependencies move so reviewer expectations stay current.
 
 > Source control guardrail: reviewers do **not** run `git commit`, `git push`, or merge branches. Provide feedback and approvals so maintainers can apply the reviewed changes.
 
-1. **Scope the PR**
-   - Read the description. Confirm change intent, affected areas (`src/types/tables/`, Vue SFCs, tooling, etc.).
+1. **Scope the change**
+   - Read the maintainer or developer summary in the work-item notes. Confirm change intent, affected areas (`src/types/tables/`, Vue SFCs, tooling, etc.).
    - Identify risk zones: optional follow-up rolls, localization updates, build config.
 2. **Assess Build Discipline**
    - Check the author ran `npm run lint`, `npm run typecheck`, `npm run test:unit`, and `npm run build`. If evidence is missing, flag it.
    - Ensure changes respect strict TS settings (`noUncheckedIndexedAccess`, avoid unsafe casts).
 3. **Walk the Diff**
-   - Prioritize behaviour regressions, logic errors, or data inconsistencies. Reference the exact file & line (`path/to/file.ts:42` or `#L42`).
+   - Review the local diff supplied (`git diff` output, patch file, etc.). Prioritize behaviour regressions, logic errors, or data inconsistencies. Reference the exact file & line (`path/to/file.ts:42` or `#L42`).
    - Verify domain invariants: random tables must not mutate state in place; follow-up rolls should concatenate results.
    - Watch for untranslated strings or copy edits that skip the German source locale.
 4. **Tooling & Config**

@@ -5,8 +5,8 @@
 - Advocate for automated coverage where it reduces manual effort.
 
 ## Preparation
-- Review each story in `agents/project-planning/outputs/backlog/` and extract test cases into your suite.
-- Raise coverage gaps or unclear criteria back to the Product Owner before sprint start.
+- Review each story in `planning/work-items/backlog/` and extract test cases into your suite.
+- Raise coverage gaps or unclear criteria back to the Product Owner before the maintainer promotes items to `to-do/`.
 - Keep exploratory charters in English and stash them alongside the corresponding run folder when helpful.
 - Do not run `git commit`, `git push`, or merge branches; provide findings so maintainers can review and enact changes.
 
@@ -18,10 +18,10 @@
 ## Collaboration
 - Join story kickoffs to clarify edge cases early.
 - Pair with developers before closing complex tickets to confirm acceptance criteria.
-- Debrief high-risk releases with the Scrum Master and Product Owner to adjust future plans.
+- Debrief high-risk releases with the maintainer and Product Owner to adjust future plans.
 
 ## Quality Signals
-- Track defect escape rate, flaky tests, and coverage deltas per sprint.
+- Track defect escape rate, flaky tests, and coverage deltas per delivery cycle.
 - Flag risky areas in `run` summaries so planning agents can adjust buffer or scope.
 
 Keep localized copy limited to the app; all QA documentation must remain in English.
