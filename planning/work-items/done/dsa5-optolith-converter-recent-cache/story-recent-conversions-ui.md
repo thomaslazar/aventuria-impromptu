@@ -27,7 +27,7 @@ As a converter user I want a “Recent Conversions” panel that lists my last 1
 - Groomed on 2025-10-22; depends on finalized warning summary shape from controller story and must surface disabled-state messaging when storage is unavailable.
 
 ## Implementation Notes (2025-10-22)
-- Added a “Recent conversions” card to `OptolithConverterView.vue` with list rendering, per-entry actions (load, download, remove), and a clear-history control wired to the new cache controller.
+- Added a dedicated “Recent conversions” tab to `OptolithConverterView.vue` with a compact list, single-entry accordion, per-entry actions (load, download, remove), and a clear-history control wired to the new cache controller.
 - Surfaced cached stat blocks and JSON previews via collapsible `<details>` panels, including warning badges with localized breakdown tooltips.
 - Extended styles and i18n resources (DE/EN) to support the new UI state and disabled/empty messaging.
 

@@ -81,6 +81,10 @@
           "download": "Download the Optolith JSON and import it into the desktop app or Roll20."
         }
       },
+      "tabs": {
+        "convert": "Converter",
+        "recent": "Recent conversions"
+      },
       "input": {
         "label": "Stat block",
         "placeholder": "Paste the stat block here",
@@ -117,7 +121,8 @@
           "remove": "Remove entry"
         },
         "warnings": {
-          "some": "{count, plural, one {# warning} other {# warnings}}",
+          "single": "1 warning",
+          "multiple": "{count} warnings",
           "none": "No warnings recorded",
           "breakdown": "Parser: {parser}, Resolver: {resolver}, Exporter: {exporter}, Unresolved: {unresolved}"
         },

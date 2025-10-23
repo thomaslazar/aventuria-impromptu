@@ -81,6 +81,10 @@
           "download": "Das Optolith-JSON herunterladen und in der Desktop-App oder auf Roll20 importieren."
         }
       },
+      "tabs": {
+        "convert": "Konverter",
+        "recent": "Zuletzt konvertiert"
+      },
       "input": {
         "label": "Statblock",
         "placeholder": "Statblock hier einfügen",
@@ -117,7 +121,8 @@
           "remove": "Eintrag entfernen"
         },
         "warnings": {
-          "some": "{count, plural, one {# Hinweis} other {# Hinweise}}",
+          "single": "1 Hinweis",
+          "multiple": "{count} Hinweise",
           "none": "Keine Hinweise gespeichert",
           "breakdown": "Parser: {parser}, Resolver: {resolver}, Exporter: {exporter}, Unaufgelöst: {unresolved}"
         },

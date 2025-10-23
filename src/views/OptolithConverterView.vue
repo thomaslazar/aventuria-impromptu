@@ -9,151 +9,245 @@
       </p>
     </header>
 
-    <article class="aventuria-card aventuria-card--table optolith-card">
-      <div class="optolith-callout optolith-callout--accent" role="note">
-        <span>
-          {{ t("views.optolithConverter.roll20Note.prefix") }}
-          <a
-            class="optolith-roll20__link"
-            href="https://roll20.net"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ t("views.optolithConverter.roll20Note.linkText") }}
-          </a>
-          {{ t("views.optolithConverter.roll20Note.suffix") }}
-        </span>
-        <span>
-          {{ t("views.optolithConverter.languageNote") }}
-        </span>
-      </div>
+    <nav class="optolith-tabs" role="tablist">
+      <button
+        type="button"
+        role="tab"
+        class="optolith-tabs__button"
+        :class="{ 'optolith-tabs__button--active': activeTab === 'convert' }"
+        :aria-selected="activeTab === 'convert'"
+        @click="activeTab = 'convert'"
+      >
+        {{ t("views.optolithConverter.tabs.convert") }}
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="optolith-tabs__button"
+        :class="{ 'optolith-tabs__button--active': activeTab === 'recent' }"
+        :aria-selected="activeTab === 'recent'"
+        @click="activeTab = 'recent'"
+      >
+        {{ t("views.optolithConverter.tabs.recent") }}
+      </button>
+    </nav>
 
-      <section class="optolith-usage">
-        <h2 class="aventuria-card-title optolith-usage__title">
-          {{ t("views.optolithConverter.usage.title") }}
-        </h2>
-        <ol class="optolith-usage__list">
-          <li>{{ t("views.optolithConverter.usage.steps.paste") }}</li>
-          <li>{{ t("views.optolithConverter.usage.steps.convert") }}</li>
-          <li>{{ t("views.optolithConverter.usage.steps.review") }}</li>
-          <li>{{ t("views.optolithConverter.usage.steps.download") }}</li>
-        </ol>
-      </section>
-
-      <div class="optolith-field-group">
-        <label for="stat-block-input" class="optolith-label">
-          {{ t("views.optolithConverter.input.label") }}
-        </label>
-        <textarea
-          id="stat-block-input"
-          v-model="input"
-          class="optolith-textarea"
-          :class="{ 'is-invalid': inputTooLong }"
-          rows="14"
-          :placeholder="t('views.optolithConverter.input.placeholder')"
-        ></textarea>
-        <div class="optolith-helper">
-          {{
-            t("views.optolithConverter.input.help", {
-              max: MAX_LENGTH,
-              current: input.length,
-            })
-          }}
+    <div v-if="activeTab === 'convert'" class="optolith-panel">
+      <article class="aventuria-card aventuria-card--table optolith-card">
+        <div class="optolith-callout optolith-callout--accent" role="note">
+          <span>
+            {{ t("views.optolithConverter.roll20Note.prefix") }}
+            <a
+              class="optolith-roll20__link"
+              href="https://roll20.net"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ t("views.optolithConverter.roll20Note.linkText") }}
+            </a>
+            {{ t("views.optolithConverter.roll20Note.suffix") }}
+          </span>
+          <span>
+            {{ t("views.optolithConverter.languageNote") }}
+          </span>
         </div>
-        <p v-if="inputTooLong" class="optolith-inline-error">
-          {{ t("views.optolithConverter.input.tooLong") }}
-        </p>
-      </div>
 
-      <div class="optolith-actions">
-        <button
-          type="button"
-          class="aventuria-button"
-          :disabled="disableConvert"
-          @click="convert"
-        >
-          {{ t("views.optolithConverter.buttons.convert") }}
-        </button>
-        <button
-          type="button"
-          class="aventuria-button aventuria-button--ghost"
-          @click="reset"
-          :disabled="status === 'loading'"
-        >
-          {{ t("views.optolithConverter.buttons.reset") }}
-        </button>
-        <button
-          type="button"
-          class="aventuria-button aventuria-button--ghost"
-          @click="loadLastResult"
-          :disabled="!hasStoredResult || status === 'loading'"
-        >
-          {{ t("views.optolithConverter.buttons.loadLast") }}
-        </button>
-      </div>
+        <section class="optolith-usage">
+          <h2 class="aventuria-card-title optolith-usage__title">
+            {{ t("views.optolithConverter.usage.title") }}
+          </h2>
+          <ol class="optolith-usage__list">
+            <li>{{ t("views.optolithConverter.usage.steps.paste") }}</li>
+            <li>{{ t("views.optolithConverter.usage.steps.convert") }}</li>
+            <li>{{ t("views.optolithConverter.usage.steps.review") }}</li>
+            <li>{{ t("views.optolithConverter.usage.steps.download") }}</li>
+          </ol>
+        </section>
 
-      <div
-        v-if="status === 'loading'"
-        class="optolith-callout optolith-callout--info"
-        role="status"
-      >
-        {{ t("views.optolithConverter.loading") }}
-      </div>
-      <div
-        v-if="error"
-        class="optolith-callout optolith-callout--danger"
-        role="alert"
-      >
-        {{ error }}
-      </div>
-    </article>
+        <div class="optolith-field-group">
+          <label for="stat-block-input" class="optolith-label">
+            {{ t("views.optolithConverter.input.label") }}
+          </label>
+          <textarea
+            id="stat-block-input"
+            v-model="input"
+            class="optolith-textarea"
+            :class="{ 'is-invalid': inputTooLong }"
+            rows="14"
+            :placeholder="t('views.optolithConverter.input.placeholder')"
+          ></textarea>
+          <div class="optolith-helper">
+            {{
+              t("views.optolithConverter.input.help", {
+                max: MAX_LENGTH,
+                current: input.length,
+              })
+            }}
+          </div>
+          <p v-if="inputTooLong" class="optolith-inline-error">
+            {{ t("views.optolithConverter.input.tooLong") }}
+          </p>
+        </div>
 
-    <article class="aventuria-card aventuria-card--table optolith-history">
-      <header class="optolith-history__header">
-        <h2 class="aventuria-card-title">
-          {{ t("views.optolithConverter.recent.title") }}
-        </h2>
-        <button
-          type="button"
-          class="aventuria-button aventuria-button--ghost"
-          :disabled="!canClearCache"
-          @click="clearHistory"
-        >
-          {{ t("views.optolithConverter.recent.actions.clear") }}
-        </button>
-      </header>
+        <div class="optolith-actions">
+          <button
+            type="button"
+            class="aventuria-button"
+            :disabled="disableConvert"
+            @click="convert"
+          >
+            {{ t("views.optolithConverter.buttons.convert") }}
+          </button>
+          <button
+            type="button"
+            class="aventuria-button aventuria-button--ghost"
+            @click="reset"
+            :disabled="status === 'loading'"
+          >
+            {{ t("views.optolithConverter.buttons.reset") }}
+          </button>
+          <button
+            type="button"
+            class="aventuria-button aventuria-button--ghost"
+            @click="loadLastResult"
+            :disabled="!hasStoredResult || status === 'loading'"
+          >
+            {{ t("views.optolithConverter.buttons.loadLast") }}
+          </button>
+        </div>
 
-      <div
-        v-if="cacheState.status === 'disabled'"
-        class="optolith-callout optolith-callout--warning"
-        role="alert"
-      >
-        {{ t("views.optolithConverter.recent.disabled") }}
-      </div>
-      <div
-        v-else-if="recentEntries.length === 0"
-        class="optolith-history__empty"
-      >
-        {{ t("views.optolithConverter.recent.empty") }}
-      </div>
-      <ul v-else class="optolith-history__list">
-        <li
-          v-for="entry in recentEntries"
-          :key="entry.id"
-          class="optolith-history__item"
+        <div
+          v-if="status === 'loading'"
+          class="optolith-callout optolith-callout--info"
+          role="status"
         >
-          <div class="optolith-history__item-header">
-            <div class="optolith-history__item-summary">
-              <h3 class="optolith-history__item-name">
-                {{ entry.name }}
-              </h3>
-              <p class="optolith-history__timestamp">
+          {{ t("views.optolithConverter.loading") }}
+        </div>
+        <div
+          v-if="error"
+          class="optolith-callout optolith-callout--danger"
+          role="alert"
+        >
+          {{ error }}
+        </div>
+      </article>
+
+      <article
+        v-if="result"
+        class="aventuria-card aventuria-card--table optolith-result"
+      >
+        <header class="optolith-result__header">
+          <div>
+            <h2 class="aventuria-card-title optolith-result__title">
+              {{ result.exported.name }}
+            </h2>
+            <p class="optolith-result__meta">
+              {{
+                t("views.optolithConverter.datasetInfo", {
+                  schema: result.manifest.schemaVersion,
+                  checksum: result.manifest.sourceChecksum.slice(0, 12),
+                })
+              }}
+            </p>
+          </div>
+          <div class="optolith-result__actions">
+            <button
+              type="button"
+              class="aventuria-button"
+              @click="downloadJson"
+            >
+              {{ t("views.optolithConverter.buttons.download") }}
+            </button>
+            <button
+              type="button"
+              class="aventuria-button aventuria-button--ghost"
+              @click="copyWarnings"
+            >
+              {{ t("views.optolithConverter.buttons.copyWarnings") }}
+            </button>
+          </div>
+        </header>
+
+        <div
+          v-if="displayWarnings.length > 0"
+          class="optolith-callout optolith-callout--warning"
+          role="alert"
+        >
+          <h3 class="optolith-callout__title">
+            {{ t("views.optolithConverter.warnings.title") }}
+          </h3>
+          <ul class="optolith-callout__list">
+            <li v-for="warning in displayWarnings" :key="warning">
+              {{ warning }}
+            </li>
+          </ul>
+        </div>
+
+        <details class="optolith-details">
+          <summary>
+            {{ t("views.optolithConverter.normalizedHeading") }}
+          </summary>
+          <pre>{{ result.normalizedSource }}</pre>
+        </details>
+
+        <details class="optolith-details" open>
+          <summary>{{ t("views.optolithConverter.jsonHeading") }}</summary>
+          <pre>{{ formattedJson }}</pre>
+        </details>
+      </article>
+    </div>
+
+    <div v-else class="optolith-panel">
+      <article class="aventuria-card aventuria-card--table optolith-history">
+        <header class="optolith-history__header">
+          <h2 class="aventuria-card-title">
+            {{ t("views.optolithConverter.recent.title") }}
+          </h2>
+          <button
+            type="button"
+            class="aventuria-button aventuria-button--ghost"
+            :disabled="!canClearCache"
+            @click="clearHistory"
+          >
+            {{ t("views.optolithConverter.recent.actions.clear") }}
+          </button>
+        </header>
+
+        <div
+          v-if="cacheState.status === 'disabled'"
+          class="optolith-callout optolith-callout--warning"
+          role="alert"
+        >
+          {{ t("views.optolithConverter.recent.disabled") }}
+        </div>
+        <div
+          v-else-if="recentEntries.length === 0"
+          class="optolith-history__empty"
+        >
+          {{ t("views.optolithConverter.recent.empty") }}
+        </div>
+        <ul v-else class="optolith-history__list">
+          <li
+            v-for="entry in recentEntries"
+            :key="entry.id"
+            class="optolith-history__item"
+          >
+            <button
+              type="button"
+              class="optolith-history__toggle"
+              :aria-expanded="expandedEntryId === entry.id"
+              @click="toggleEntry(entry.id)"
+            >
+              <span class="optolith-history__toggle-name">{{
+                entry.name
+              }}</span>
+              <span class="optolith-history__timestamp">
                 {{
                   t("views.optolithConverter.recent.storedAt", {
                     date: entry.formattedDate,
                   })
                 }}
-              </p>
+              </span>
               <span
                 class="optolith-history__warnings"
                 :class="{
@@ -164,114 +258,63 @@
               >
                 {{ warningLabel(entry.warningSummary) }}
               </span>
+              <span class="optolith-history__chevron" aria-hidden="true"></span>
+            </button>
+
+            <div
+              v-if="expandedEntryId === entry.id"
+              class="optolith-history__panel"
+            >
+              <div class="optolith-history__panel-actions">
+                <button
+                  type="button"
+                  class="aventuria-button aventuria-button--ghost"
+                  :disabled="!canMutateCache"
+                  @click="loadEntry(entry.id)"
+                >
+                  {{ t("views.optolithConverter.recent.actions.load") }}
+                </button>
+                <button
+                  type="button"
+                  class="aventuria-button aventuria-button--ghost"
+                  @click="downloadEntry(entry.id)"
+                >
+                  {{ t("views.optolithConverter.recent.actions.download") }}
+                </button>
+                <button
+                  type="button"
+                  class="aventuria-button aventuria-button--ghost"
+                  :disabled="!canMutateCache"
+                  @click="removeEntry(entry.id)"
+                >
+                  {{ t("views.optolithConverter.recent.actions.remove") }}
+                </button>
+              </div>
+
+              <div class="optolith-history__panel-content">
+                <section class="optolith-history__section">
+                  <h3 class="optolith-history__section-title">
+                    {{ t("views.optolithConverter.recent.labels.statBlock") }}
+                  </h3>
+                  <pre class="optolith-history__pre">{{ entry.statBlock }}</pre>
+                </section>
+                <section class="optolith-history__section">
+                  <h3 class="optolith-history__section-title">
+                    {{ t("views.optolithConverter.recent.labels.json") }}
+                  </h3>
+                  <pre class="optolith-history__pre">{{ entry.json }}</pre>
+                </section>
+              </div>
             </div>
-            <div class="optolith-history__actions">
-              <button
-                type="button"
-                class="aventuria-button aventuria-button--ghost"
-                :disabled="!canMutateCache"
-                @click="loadEntry(entry.id)"
-              >
-                {{ t("views.optolithConverter.recent.actions.load") }}
-              </button>
-              <button
-                type="button"
-                class="aventuria-button aventuria-button--ghost"
-                :disabled="cacheState.status !== 'available'"
-                @click="downloadEntry(entry.id)"
-              >
-                {{ t("views.optolithConverter.recent.actions.download") }}
-              </button>
-              <button
-                type="button"
-                class="aventuria-button aventuria-button--ghost"
-                :disabled="!canMutateCache"
-                @click="removeEntry(entry.id)"
-              >
-                {{ t("views.optolithConverter.recent.actions.remove") }}
-              </button>
-            </div>
-          </div>
-
-          <details class="optolith-details">
-            <summary>
-              {{ t("views.optolithConverter.recent.labels.statBlock") }}
-            </summary>
-            <pre class="optolith-history__pre">{{ entry.statBlock }}</pre>
-          </details>
-
-          <details class="optolith-details">
-            <summary>
-              {{ t("views.optolithConverter.recent.labels.json") }}
-            </summary>
-            <pre class="optolith-history__pre">{{ entry.json }}</pre>
-          </details>
-        </li>
-      </ul>
-    </article>
-
-    <article
-      v-if="result"
-      class="aventuria-card aventuria-card--table optolith-result"
-    >
-      <header class="optolith-result__header">
-        <div>
-          <h2 class="aventuria-card-title optolith-result__title">
-            {{ result.exported.name }}
-          </h2>
-          <p class="optolith-result__meta">
-            {{
-              t("views.optolithConverter.datasetInfo", {
-                schema: result.manifest.schemaVersion,
-                checksum: result.manifest.sourceChecksum.slice(0, 12),
-              })
-            }}
-          </p>
-        </div>
-        <div class="optolith-result__actions">
-          <button type="button" class="aventuria-button" @click="downloadJson">
-            {{ t("views.optolithConverter.buttons.download") }}
-          </button>
-          <button
-            type="button"
-            class="aventuria-button aventuria-button--ghost"
-            @click="copyWarnings"
-          >
-            {{ t("views.optolithConverter.buttons.copyWarnings") }}
-          </button>
-        </div>
-      </header>
-
-      <div
-        v-if="displayWarnings.length > 0"
-        class="optolith-callout optolith-callout--warning"
-        role="alert"
-      >
-        <h3 class="optolith-callout__title">
-          {{ t("views.optolithConverter.warnings.title") }}
-        </h3>
-        <ul class="optolith-callout__list">
-          <li v-for="warning in displayWarnings" :key="warning">
-            {{ warning }}
           </li>
         </ul>
-      </div>
-
-      <details class="optolith-details">
-        <summary>{{ t("views.optolithConverter.normalizedHeading") }}</summary>
-        <pre>{{ result.normalizedSource }}</pre>
-      </details>
-
-      <details class="optolith-details" open>
-        <summary>{{ t("views.optolithConverter.jsonHeading") }}</summary>
-        <pre>{{ formattedJson }}</pre>
-      </details>
-    </article>
+      </article>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import type {
@@ -301,6 +344,8 @@ const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
 const cacheState = ref<CacheState>(conversionCache.getState());
 const cacheEntries = ref<readonly CachedConversionEntry[]>([]);
 const cacheActionPending = ref(false);
+const activeTab = ref<"convert" | "recent">("convert");
+const expandedEntryId = ref<string | null>(null);
 
 const inputTooLong = computed(() => input.value.length > MAX_LENGTH);
 const disableConvert = computed(
@@ -466,12 +511,18 @@ function findCachedEntry(id: string): CachedConversionEntry | undefined {
   return cacheEntries.value.find((entry) => entry.id === id);
 }
 
+function toggleEntry(id: string): void {
+  expandedEntryId.value = expandedEntryId.value === id ? null : id;
+}
+
 function loadEntry(id: string): void {
   const entry = findCachedEntry(id);
   if (!entry) {
     return;
   }
   loadCachedEntry(entry);
+  activeTab.value = "convert";
+  expandedEntryId.value = null;
 }
 
 function downloadEntry(id: string): void {
@@ -500,6 +551,7 @@ async function removeEntry(id: string): Promise<void> {
   cacheActionPending.value = true;
   try {
     await conversionCache.remove(id);
+    expandedEntryId.value = null;
   } catch (err) {
     console.error("Failed to remove cached conversion", err);
   } finally {
@@ -514,6 +566,7 @@ async function clearHistory(): Promise<void> {
   cacheActionPending.value = true;
   try {
     await conversionCache.clear();
+    expandedEntryId.value = null;
   } catch (err) {
     console.error("Failed to clear cached conversions", err);
   } finally {
@@ -525,7 +578,10 @@ function warningLabel(summary: WarningSummary): string {
   if (summary.total === 0) {
     return t("views.optolithConverter.recent.warnings.none");
   }
-  return t("views.optolithConverter.recent.warnings.some", {
+  if (summary.total === 1) {
+    return t("views.optolithConverter.recent.warnings.single");
+  }
+  return t("views.optolithConverter.recent.warnings.multiple", {
     count: summary.total,
   });
 }
@@ -612,6 +668,15 @@ onMounted(() => {
       handleCacheChange as EventListener,
     );
   });
+});
+
+watch(cacheEntries, (entries) => {
+  if (
+    expandedEntryId.value &&
+    !entries.some((entry) => entry.id === expandedEntryId.value)
+  ) {
+    expandedEntryId.value = null;
+  }
 });
 
 onBeforeUnmount(() => {
@@ -768,6 +833,59 @@ onBeforeUnmount(() => {
   gap: 0.75rem;
 }
 
+.optolith-tabs {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-bottom: clamp(0.25rem, 0.6vw, 0.4rem);
+}
+
+.optolith-tabs__button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--aventuria-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  transition: all 160ms ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.optolith-tabs__button:hover,
+.optolith-tabs__button:focus-visible {
+  color: var(--aventuria-text);
+  border-color: rgba(197, 143, 45, 0.5);
+  background: rgba(197, 143, 45, 0.12);
+}
+
+.optolith-tabs__button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(197, 143, 45, 0.18);
+}
+
+.optolith-tabs__button--active {
+  color: var(--aventuria-text);
+  border-color: var(--aventuria-border-strong);
+  background: linear-gradient(
+    135deg,
+    rgba(197, 143, 45, 0.35),
+    rgba(197, 143, 45, 0.15)
+  );
+  box-shadow: 0 6px 18px rgba(197, 143, 45, 0.2);
+}
+
+.optolith-panel {
+  display: grid;
+  gap: clamp(1.5rem, 2vw, 2rem);
+}
+
 .optolith-result {
   display: grid;
   gap: 1.5rem;
@@ -881,30 +999,51 @@ onBeforeUnmount(() => {
 
 .optolith-history__item {
   display: grid;
-  gap: clamp(0.65rem, 2vw, 0.9rem);
+  gap: clamp(0.5rem, 1.5vw, 0.75rem);
   border-radius: 0.75rem;
   border: 1px solid rgba(47, 36, 18, 0.12);
-  padding: clamp(0.75rem, 2vw, 1rem);
-  background: rgba(255, 255, 255, 0.88);
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
+  background: rgba(255, 255, 255, 0.9);
 }
 
-.optolith-history__item-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(0.75rem, 2vw, 1rem);
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.optolith-history__item-summary {
+.optolith-history__toggle {
   display: grid;
-  gap: 0.4rem;
-  min-width: 16rem;
+  grid-template-columns: minmax(0, 2fr) auto auto auto;
+  align-items: center;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(0.5rem, 1.5vw, 0.75rem);
+  border-radius: 0.6rem;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
-.optolith-history__item-name {
+.optolith-history__toggle:hover {
+  background: rgba(47, 36, 18, 0.05);
+}
+
+.optolith-history__toggle:focus-visible {
+  outline: 2px solid var(--aventuria-accent);
+  outline-offset: 2px;
+}
+
+.optolith-history__toggle[aria-expanded="true"] {
+  background: rgba(197, 143, 45, 0.14);
+}
+
+.optolith-history__toggle-name {
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  font-weight: 600;
   margin: 0;
-  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .optolith-history__timestamp {
@@ -917,11 +1056,11 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.2rem 0.55rem;
+  padding: 0.15rem 0.55rem;
   border-radius: 999px;
   background: rgba(47, 36, 18, 0.08);
   color: rgba(47, 36, 18, 0.75);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   line-height: 1.2;
 }
 
@@ -930,11 +1069,52 @@ onBeforeUnmount(() => {
   color: rgba(121, 34, 22, 0.95);
 }
 
-.optolith-history__actions {
+.optolith-history__chevron {
+  display: inline-block;
+  justify-self: flex-end;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-right: 2px solid rgba(47, 36, 18, 0.6);
+  border-bottom: 2px solid rgba(47, 36, 18, 0.6);
+  transform: rotate(-45deg);
+  transition: transform 160ms ease;
+}
+
+.optolith-history__toggle[aria-expanded="true"] .optolith-history__chevron {
+  transform: rotate(45deg);
+}
+
+.optolith-history__panel {
+  display: grid;
+  gap: clamp(0.6rem, 1.8vw, 0.9rem);
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
+  border-radius: 0.6rem;
+  background: rgba(47, 36, 18, 0.04);
+}
+
+.optolith-history__panel-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  justify-content: flex-end;
+  justify-content: flex-start;
+}
+
+.optolith-history__panel-content {
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.optolith-history__section {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.optolith-history__section-title {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(47, 36, 18, 0.68);
 }
 
 .optolith-history__pre {
@@ -966,14 +1146,24 @@ onBeforeUnmount(() => {
     justify-content: center;
   }
 
-  .optolith-history__actions {
+  .optolith-history__panel-actions {
     width: 100%;
     justify-content: stretch;
   }
 
-  .optolith-history__actions .aventuria-button {
+  .optolith-history__panel-actions .aventuria-button {
     flex: 1 0 auto;
     justify-content: center;
+  }
+
+  .optolith-history__toggle {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0.35rem;
+  }
+
+  .optolith-history__timestamp,
+  .optolith-history__warnings {
+    justify-self: flex-start;
   }
 }
 </style>

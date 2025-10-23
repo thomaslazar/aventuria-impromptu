@@ -167,20 +167,47 @@ async function clearIndexedDb(db: IDBDatabase): Promise<void> {
 function computeWarningSummary(
   payload: ConversionResultPayload,
 ): WarningSummary {
-  const parser = payload.parserWarnings?.length ?? 0;
-  const resolver = payload.resolverWarnings?.length ?? 0;
-  const exporter = payload.exportedWarnings?.length ?? 0;
-  const unresolved = Object.values(payload.unresolved ?? {}).reduce(
-    (total, entries) => total + entries.length,
-    0,
-  );
-  const total = parser + resolver + exporter + unresolved;
+  const parserKeys = new Set<string>();
+  const resolverKeys = new Set<string>();
+  const exporterKeys = new Set<string>();
+  const unresolvedKeys = new Set<string>();
+  const overallKeys = new Set<string>();
+
+  const addOverall = (key: string) => {
+    overallKeys.add(key);
+  };
+
+  (payload.exportedWarnings ?? []).forEach((warning) => {
+    exporterKeys.add(warning);
+    addOverall(warning);
+  });
+
+  (payload.parserWarnings ?? []).forEach((warning) => {
+    const key = `[Parser] ${warning.section ?? "general"}: ${warning.message}`;
+    parserKeys.add(key);
+    addOverall(key);
+  });
+
+  (payload.resolverWarnings ?? []).forEach((warning) => {
+    const key = `[Resolver] ${warning.section}: ${warning.message}`;
+    resolverKeys.add(key);
+    addOverall(key);
+  });
+
+  Object.entries(payload.unresolved ?? {}).forEach(([section, entries]) => {
+    entries.forEach((entry) => {
+      const key = `[Resolver] ${section}: ${entry}`;
+      unresolvedKeys.add(key);
+      addOverall(key);
+    });
+  });
+
   return {
-    total,
-    parser,
-    resolver,
-    exporter,
-    unresolved,
+    total: overallKeys.size,
+    parser: parserKeys.size,
+    resolver: resolverKeys.size,
+    exporter: exporterKeys.size,
+    unresolved: unresolvedKeys.size,
   };
 }
 

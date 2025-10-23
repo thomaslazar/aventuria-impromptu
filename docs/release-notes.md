@@ -2,6 +2,12 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.3.1 — Optolith Conversion History (2025-10-22)
+
+- Introduced tabbed navigation on the Optolith converter with a dedicated “Recent conversions” view, matching the site-wide pill styling.
+- Persisted the ten most recent conversion results client-side, exposing stat block previews, warning counts, re-downloads, and editor reloads without rerunning the worker.
+- Normalized warning deduplication so the badge count mirrors the warning list, fixing mismatches seen on cached entries like “Messerstecher”.
+
 ## 0.3.0 — Optolith Converter (2025-10-20)
 
 - Added the Optolith converter pipeline and UI for transforming German DSA5 stat blocks into Optolith-compatible NPC JSON, including background worker execution, QA samples, and import-ready data packs (`fe1b310`).
