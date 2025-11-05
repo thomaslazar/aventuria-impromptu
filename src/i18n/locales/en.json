@@ -72,6 +72,11 @@
         "suffix": " so you can spin up NPCs there faster."
       },
       "languageNote": "Only German stat blocks are supported. Adjust the source material before converting other languages.",
+      "bugReportNote": {
+        "prefix": "If you encounter issues with a stat block that you believe is a bug, please ",
+        "linkText": "report it on GitHub",
+        "suffix": " including the stat block in question."
+      },
       "usage": {
         "title": "How to use",
         "steps": {

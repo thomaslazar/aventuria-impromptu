@@ -50,6 +50,18 @@
           <span>
             {{ t("views.optolithConverter.languageNote") }}
           </span>
+          <span>
+            {{ t("views.optolithConverter.bugReportNote.prefix") }}
+            <a
+              class="optolith-github__link"
+              href="https://github.com/thomaslazar/aventuria-impromptu/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ t("views.optolithConverter.bugReportNote.linkText") }}
+            </a>
+            {{ t("views.optolithConverter.bugReportNote.suffix") }}
+          </span>
         </div>
 
         <section class="optolith-usage">
@@ -716,6 +728,20 @@ onBeforeUnmount(() => {
 
 .optolith-roll20__link:hover,
 .optolith-roll20__link:focus-visible {
+  color: var(--aventuria-accent-dark);
+}
+
+.optolith-github__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-transform: none;
+  color: rgba(173, 116, 28, 0.95);
+  font-weight: 600;
+}
+
+.optolith-github__link:hover,
+.optolith-github__link:focus-visible {
   color: var(--aventuria-accent-dark);
 }
 

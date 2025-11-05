@@ -72,6 +72,11 @@
         "suffix": ", damit neue NSC dort schneller angelegt werden können."
       },
       "languageNote": "Dieses Werkzeug verarbeitet ausschließlich deutsche Statblöcke. Bitte passe andere Sprachen vor der Konvertierung an.",
+      "bugReportNote": {
+        "prefix": "Falls du Probleme mit einem Statblock hast, die du für einen Bug hältst, ",
+        "linkText": "melde das bitte auf GitHub",
+        "suffix": " und füge den betreffenden Statblock bei."
+      },
       "usage": {
         "title": "So funktioniert es",
         "steps": {
