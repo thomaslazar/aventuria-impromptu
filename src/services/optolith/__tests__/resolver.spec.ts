@@ -327,4 +327,85 @@ describe("resolveStatBlock", () => {
     );
     expect(weaponWarnings).toHaveLength(1);
   });
+
+  it("maps peitsche variants via keyword fallback", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Entdeckerpeitsche",
+          category: "melee",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.weapons).toHaveLength(1);
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.match?.normalizedName).toBe("fuhrmannspeitsche");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "weapons" &&
+          warning.type === "fuzzy-match" &&
+          warning.message.includes('Schlüsselwort "peitsche"'),
+      ),
+    ).toBe(true);
+  });
+
+  it("splits compound weapon names to resolve dataset entries", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Epharit-Speer",
+          category: "melee",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.match?.normalizedName).toBe("speer");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "weapons" &&
+          warning.type === "fuzzy-match" &&
+          warning.message.includes('Teilbegriff "Speer"'),
+      ),
+    ).toBe(true);
+  });
+
+  it("resolves equipment entries via contained item names", () => {
+    const statBlock = createStatBlock({
+      equipment: ["Immanschläger (Knüppel)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.equipment).toHaveLength(1);
+    const entry = resolved.equipment[0];
+    expect(entry).toBeDefined();
+    if (!entry) {
+      throw new Error("Expected equipment entry to resolve");
+    }
+    expect(entry.match?.normalizedName).toBe("knuppel");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "equipment" &&
+          warning.type === "fuzzy-match" &&
+          warning.message.includes('Teilbegriff "Knüppel"'),
+      ),
+    ).toBe(true);
+  });
 });

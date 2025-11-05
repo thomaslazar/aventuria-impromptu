@@ -1,4 +1,8 @@
-import type { OptolithDatasetLookups, SelectOptionReference } from "./dataset";
+import type {
+  DerivedLookup,
+  OptolithDatasetLookups,
+  SelectOptionReference,
+} from "./dataset";
 import type {
   ArmorStats,
   ParsedStatBlock,
@@ -73,6 +77,13 @@ const ADV_DISADV_BASE_ALIASES: Record<string, string> = {
 
 const CITATION_PATTERN = /AKO(?:[IVXLCDM]+)?\s*\d{1,4}/g;
 const TRAILING_DELIMITER_PATTERN = /[,:;]+$/;
+
+const EQUIPMENT_KEYWORD_FALLBACKS: Record<string, string> = {
+  peitsche: "fuhrmannspeitsche",
+  speer: "speer",
+  schwert: "langschwert",
+  schild: "holzschild",
+};
 
 export interface ResolutionResult {
   readonly name: string;
@@ -273,6 +284,18 @@ function resolveSection(
         optionNameForLabel = usedOptionForNormalization;
       }
 
+      if (!match && section === "equipment") {
+        const fallbackMatch = resolveEquipmentFallbackMatch(
+          value,
+          "equipment",
+          context,
+          components.options,
+        );
+        if (fallbackMatch) {
+          match = fallbackMatch;
+        }
+      }
+
       const sourceLabel = buildResolvedLabel(
         components.baseName,
         components.level,
@@ -369,12 +392,16 @@ function resolveWeapons(
     const isUnarmed =
       weapon.category === "unarmed" || normalized === "waffenlos";
 
-    const match =
+    let match =
       normalized.length > 0
         ? context.lookups.equipment.byName.get(normalized)
         : undefined;
     let combatTechnique: DerivedEntity | undefined;
     let fallback: ResolvedWeapon["fallback"];
+
+    if (!match) {
+      match = resolveEquipmentFallbackMatch(weapon.name, "weapons", context);
+    }
 
     if (!match && isUnarmed) {
       fallback = "unarmed";
@@ -709,6 +736,141 @@ function pushWarning(
   }
   context.warningKeys.add(key);
   context.warnings.push(warning);
+}
+
+interface EquipmentFallbackMatch {
+  readonly match: DerivedEntity;
+  readonly token: string;
+  readonly reason: "token" | "keyword";
+  readonly keyword?: string;
+}
+
+function resolveEquipmentFallbackMatch(
+  value: string,
+  section: "weapons" | "equipment",
+  context: ResolutionContext,
+  optionCandidates: readonly string[] = [],
+): DerivedEntity | undefined {
+  const fallback = findEquipmentFallbackMatch(
+    value,
+    context.lookups.equipment,
+    optionCandidates,
+  );
+  if (!fallback) {
+    return undefined;
+  }
+  const message = buildEquipmentFallbackWarning(
+    section,
+    value,
+    fallback.match.name,
+    fallback,
+  );
+  pushWarning(
+    {
+      type: "fuzzy-match",
+      section,
+      value,
+      message,
+    },
+    context,
+  );
+  return fallback.match;
+}
+
+function findEquipmentFallbackMatch(
+  value: string,
+  lookup: DerivedLookup,
+  optionCandidates: readonly string[],
+): EquipmentFallbackMatch | undefined {
+  const normalizedOriginal = normalizeLabel(value);
+  const tokens = collectCandidateTokens(value, optionCandidates);
+
+  for (const token of tokens) {
+    const normalizedToken = normalizeLabel(token);
+    if (!normalizedToken) {
+      continue;
+    }
+    if (normalizedToken === normalizedOriginal) {
+      continue;
+    }
+    const direct = lookup.byName.get(normalizedToken);
+    if (direct) {
+      return {
+        match: direct,
+        token,
+        reason: "token",
+      };
+    }
+  }
+
+  for (const token of tokens) {
+    const normalizedToken = normalizeLabel(token);
+    if (!normalizedToken) {
+      continue;
+    }
+    for (const [keyword, fallbackNormalized] of Object.entries(
+      EQUIPMENT_KEYWORD_FALLBACKS,
+    )) {
+      if (normalizedToken === keyword || normalizedToken.includes(keyword)) {
+        const fallbackMatch = lookup.byName.get(fallbackNormalized);
+        if (fallbackMatch) {
+          return {
+            match: fallbackMatch,
+            token,
+            reason: "keyword",
+            keyword,
+          };
+        }
+      }
+    }
+  }
+
+  return undefined;
+}
+
+function collectCandidateTokens(
+  value: string,
+  optionCandidates: readonly string[],
+): string[] {
+  const tokens = new Set<string>();
+  const push = (input: string | null | undefined) => {
+    if (!input) {
+      return;
+    }
+    const trimmed = input.trim();
+    if (trimmed.length === 0) {
+      return;
+    }
+    tokens.add(trimmed);
+  };
+
+  push(value);
+
+  const withoutParens = value.replace(/[()]/g, " ");
+  withoutParens.split(/[-–—\/]/).forEach((segment) => {
+    push(segment);
+    segment.split(/[,&]/).forEach((part) => push(part));
+  });
+  withoutParens.split(/[,&]/).forEach((segment) => push(segment));
+  withoutParens.split(/\s+/).forEach((part) => push(part));
+
+  optionCandidates.forEach((candidate) => push(candidate));
+
+  return Array.from(tokens.values());
+}
+
+function buildEquipmentFallbackWarning(
+  section: "weapons" | "equipment",
+  original: string,
+  matchName: string,
+  fallback: EquipmentFallbackMatch,
+): string {
+  const subject = section === "weapons" ? "Waffe" : "Ausrüstungseintrag";
+  if (fallback.reason === "keyword") {
+    const keyword = fallback.keyword ?? fallback.token;
+    return `${subject} "${original}" wurde als "${matchName}" interpretiert (Schlüsselwort "${keyword}").`;
+  }
+  return `${subject} "${original}" wurde als "${matchName}" interpretiert (Teilbegriff "${fallback.token}").`;
 }
 
 function extractCombatTechniqueId(entry: DerivedEntity): string | undefined {
