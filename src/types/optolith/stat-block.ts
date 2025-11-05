@@ -33,6 +33,15 @@ export interface WeaponStats {
   readonly reach?: string | null;
   readonly notes?: string | null;
   readonly raw: Record<string, string>;
+  readonly rawInput: string;
+}
+
+export interface ArmorStats {
+  readonly rs: number | null;
+  readonly be: number | null;
+  readonly description: string | null;
+  readonly notes: string | null;
+  readonly raw: string;
 }
 
 export interface TalentRating {
@@ -55,7 +64,7 @@ export interface ParsedStatBlock {
   readonly name: string;
   readonly attributes: AttributeSet;
   readonly pools: ResourcePools;
-  readonly armor?: string;
+  readonly armor?: ArmorStats | null;
   readonly actions?: number | null;
   readonly weapons: readonly WeaponStats[];
   readonly advantages: readonly string[];
