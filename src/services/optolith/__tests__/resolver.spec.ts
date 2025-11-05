@@ -436,4 +436,57 @@ describe("resolveStatBlock", () => {
       ),
     ).toBe(false);
   });
+
+  it("handles personality weaknesses, relative clauses, and tradition naming", () => {
+    const statBlock = createStatBlock({
+      disadvantages: [
+        "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
+      ],
+      equipment: ["Immanschläger, den er als Knüppel nutzt"],
+      specialAbilities: ["Tradition (Praiosgeweihte)"],
+      blessings: ["die Zwölf Segnungen"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const disadvantage = resolved.disadvantages[0];
+    expect(disadvantage?.match?.normalizedName).toBe(
+      "personlichkeitsschwachen",
+    );
+
+    const equipment = resolved.equipment[0];
+    expect(equipment?.match?.normalizedName).toBe("knuppel");
+
+    const tradition = resolved.specialAbilities[0];
+    expect(tradition?.match?.normalizedName).toBe("tradition praioskirche");
+
+    expect(resolved.blessings).toHaveLength(1);
+    expect(resolved.unresolved.blessings ?? []).toHaveLength(0);
+  });
+
+  it("matches clothing variants without generating armor warnings", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 0,
+        be: 0,
+        description: "normale Kleidung oder nackt",
+        raw: "RS/BE 0/0 normale Kleidung oder nackt",
+      }),
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.match?.normalizedName).toBe("normale kleidung");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "armor" && warning.type === "unresolved",
+      ),
+    ).toBe(false);
+  });
 });

@@ -134,4 +134,40 @@ describe("parseStatBlock", () => {
     expect(result.model.armor?.be).toBe(0);
     expect(result.model.armor?.description).toBe("Bastrüstung");
   });
+
+  it("parses relative clauses, composite abilities, and footnote markers", () => {
+    const raw = `Testfigur
+MU 10 KL 10 IN 10 CH 10
+FF 10 GE 10 KO 10 KK 10
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Waffenlos: AT 10 PA 7 TP 1W6 RW kurz
+RS/BE: 0/0 normale Kleidung oder nackt
+Vorteile: keine
+Nachteile: Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)
+Sonderfertigkeiten: Haltegriff (Waffenlos) Schildspalter (Yeti-Keule)
+Talente: Verbergen 8**
+Segnungen: die Zwölf Segnungen
+Ausrüstung: Immanschläger, den er als Knüppel nutzt
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.armor?.description).toBe("normale Kleidung oder nackt");
+    expect(result.model.specialAbilities).toEqual([
+      "Haltegriff (Waffenlos)",
+      "Schildspalter (Yeti-Keule)",
+    ]);
+    const hiding = result.model.talents.find(
+      (talent) => talent.name === "Verbergen",
+    );
+    expect(hiding?.value).toBe(8);
+    expect(result.model.equipment).toContain(
+      "Immanschläger, den er als Knüppel nutzt",
+    );
+    expect(result.model.blessings).toContain("die Zwölf Segnungen");
+    expect(result.model.disadvantages).toContain(
+      "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
+    );
+  });
 });

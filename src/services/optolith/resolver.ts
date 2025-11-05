@@ -73,6 +73,8 @@ const ADV_DISADV_BASE_ALIASES: Record<string, string> = {
   dammerungssicht: "Dunkelsicht",
   dammersicht: "Dunkelsicht",
   verpflichtung: "Verpflichtungen",
+  personlichkeitsschwache: "Persönlichkeitsschwächen",
+  personlichkeitsschwachen: "Persönlichkeitsschwächen",
 };
 
 const CITATION_PATTERN = /AKO(?:[IVXLCDM]+)?\s*\d{1,4}/g;
@@ -309,6 +311,21 @@ function resolveSection(
         optionNameForLabel,
       );
 
+      if (
+        !match &&
+        section === "blessings" &&
+        isStandardBlessingsAggregate(sourceLabel)
+      ) {
+        return {
+          source: sourceLabel,
+          normalizedSource: normalized,
+          match: undefined,
+          selectOption,
+          level: components.level ?? undefined,
+          rawOption,
+        };
+      }
+
       if (!match) {
         registerUnresolved(section, sourceLabel, context);
       }
@@ -510,7 +527,16 @@ function resolveArmor(
     return null;
   }
 
-  const sanitizedDescription = sanitizeResolvableValue(trimmedDescription);
+  let descriptionForLookup = trimmedDescription;
+  if (
+    trimmedDescription &&
+    descriptionLower.includes("normale kleidung") &&
+    descriptionLower.includes("oder nackt")
+  ) {
+    descriptionForLookup = "normale Kleidung";
+  }
+
+  const sanitizedDescription = sanitizeResolvableValue(descriptionForLookup);
   const normalized =
     sanitizedDescription.length > 0
       ? normalizeLabel(sanitizedDescription)
@@ -915,6 +941,15 @@ function buildEquipmentFallbackWarning(
   return `${subject} "${original}" wurde als "${matchName}" interpretiert (Teilbegriff "${fallback.token}").`;
 }
 
+function isStandardBlessingsAggregate(value: string): boolean {
+  const normalized = normalizeLabel(value);
+  return (
+    normalized === "die zwolf segnungen" ||
+    normalized === "zwolf segnungen" ||
+    normalized === "12 segnungen"
+  );
+}
+
 function extractCombatTechniqueId(entry: DerivedEntity): string | undefined {
   const base = entry.base as Record<string, unknown> | undefined;
   if (!base || typeof base !== "object") {
@@ -994,7 +1029,22 @@ function sanitizeResolvableValue(value: string): string {
   const withoutTrailingDelimiters = collapsedWhitespace
     .replace(TRAILING_DELIMITER_PATTERN, "")
     .trim();
-  return withoutTrailingDelimiters;
+  return normalizeTraditionLabels(withoutTrailingDelimiters);
+}
+
+function normalizeTraditionLabels(label: string): string {
+  return label.replace(
+    /(Tradition\s*\()([^)]*?)geweih(?:ter|te|ten)(\))/gi,
+    (_match, prefix, body, suffix) => {
+      const base = body.trim().replace(/[-\s]+$/g, "");
+      if (!base) {
+        return `${prefix}${body}${suffix}`;
+      }
+      // Preserve original casing for the base while appending "kirche".
+      const combined = `${base}kirche`;
+      return `${prefix}${combined}${suffix}`;
+    },
+  );
 }
 
 function parseEntryComponents(value: string): {
@@ -1023,7 +1073,20 @@ function parseEntryComponents(value: string): {
     }
     const valueInside = optionMatch[1]?.trim();
     if (valueInside) {
-      options.unshift(valueInside);
+      const splittedOptions = valueInside
+        .split(/[,;]/)
+        .map((option) => option.trim())
+        .filter((option): option is string => option.length > 0);
+      if (splittedOptions.length === 0) {
+        options.unshift(valueInside);
+      } else {
+        for (let index = splittedOptions.length - 1; index >= 0; index -= 1) {
+          const optionValue = splittedOptions[index];
+          if (optionValue) {
+            options.unshift(optionValue);
+          }
+        }
+      }
     }
     working = working.slice(0, optionMatch.index).trim();
   }
