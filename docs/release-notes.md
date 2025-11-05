@@ -2,6 +2,10 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.3.2 — GitHub Issue Reporting (2025-11-05)
+
+- Added a GitHub issues link in the Optolith converter to help users report stat block conversion bugs, including localized guidance in German and English for submitting problematic stat blocks.
+
 ## 0.3.1 — Optolith Conversion History (2025-10-22)
 
 - Introduced tabbed navigation on the Optolith converter with a dedicated “Recent conversions” view, matching the site-wide pill styling.
