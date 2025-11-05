@@ -8,6 +8,7 @@ import type {
   TalentRating,
   RatedEntry,
   WeaponStats,
+  ArmorStats,
 } from "../../types/optolith/stat-block";
 
 type SectionKey =
@@ -138,11 +139,19 @@ export function parseStatBlock(raw: string): ParseResult {
   const weapons: WeaponStats[] = [];
   while (workingLines.length > 0) {
     const candidate = workingLines[0];
-    if (!candidate || !isWeaponLine(candidate)) {
+    if (!candidate || !isWeaponStartLine(candidate)) {
       break;
     }
     workingLines.shift();
-    const weapon = parseWeaponLine(candidate, warnings);
+    const aggregatedParts = [candidate];
+    while (
+      workingLines.length > 0 &&
+      shouldContinueWeaponLine(workingLines[0])
+    ) {
+      aggregatedParts.push(workingLines.shift()!);
+    }
+    const weaponLine = aggregatedParts.join(" ").replace(/\s+/g, " ").trim();
+    const weapon = parseWeaponLine(weaponLine, warnings);
     if (weapon) {
       weapons.push(weapon);
     }
@@ -179,7 +188,7 @@ export function parseStatBlock(raw: string): ParseResult {
 
   const seenSections = new Set<SectionKey | "advantages-disadvantages">();
   const notes: Record<string, string> = {};
-  let armor: string | undefined;
+  let armor: ArmorStats | null = null;
   let actions: number | null | undefined;
 
   for (const section of sections) {
@@ -239,7 +248,7 @@ export function parseStatBlock(raw: string): ParseResult {
         appendList(sectionBuckets.equipment, content);
         break;
       case "armor":
-        armor = content;
+        armor = parseArmorSection(content, warnings);
         break;
       case "actions":
         actions = parseNullableInteger(content);
@@ -398,8 +407,77 @@ function parseNullableInteger(value: string): number | null {
   return Number.isNaN(parsed) ? null : parsed;
 }
 
-function isWeaponLine(line: string): boolean {
+function isWeaponStartLine(line: string): boolean {
   return /^[^:]+:\s+(AT|FK)\s+/i.test(line);
+}
+
+function shouldContinueWeaponLine(line: string | undefined): boolean {
+  if (!line) {
+    return false;
+  }
+  const trimmed = line.trim();
+  if (!trimmed) {
+    return false;
+  }
+  if (isWeaponStartLine(trimmed)) {
+    return false;
+  }
+  if (HEADING_PATTERN.test(trimmed)) {
+    return false;
+  }
+  if (/^RS\s*\/\s*BE/i.test(trimmed)) {
+    return false;
+  }
+  // Lines that begin with key tokens (RW, LZ, BEM, etc.) or standalone descriptors.
+  return true;
+}
+
+function parseArmorSection(
+  content: string,
+  warnings: ParserWarning[],
+): ArmorStats | null {
+  const normalized = normalizeWhitespace(content);
+  if (!normalized) {
+    return null;
+  }
+
+  const raw = normalized;
+  const match = normalized.match(/^(\d+)\s*\/\s*(\d+)(.*)$/);
+  if (!match) {
+    warnings.push({
+      type: "parse-error",
+      section: "armor",
+      message: `Rüstungseintrag "${normalized}" konnte nicht interpretiert werden.`,
+    });
+    return {
+      rs: null,
+      be: null,
+      description: null,
+      notes: normalized,
+      raw,
+    };
+  }
+
+  const [, rsPartRaw, bePartRaw, remainderRaw = ""] = match;
+  const remainder = remainderRaw ?? "";
+
+  const parenthesesMatches = [...remainder.matchAll(/\(([^)]+)\)/g)].map(
+    (result) => result[1]?.trim() ?? "",
+  );
+
+  const description = parenthesesMatches[0] ?? null;
+  const notes =
+    parenthesesMatches.length > 1
+      ? parenthesesMatches.slice(1).filter(Boolean).join("; ")
+      : null;
+
+  return {
+    rs: parseNullableInteger(rsPartRaw ?? ""),
+    be: parseNullableInteger(bePartRaw ?? ""),
+    description,
+    notes,
+    raw,
+  };
 }
 
 function parseWeaponLine(
@@ -445,6 +523,7 @@ function parseWeaponLine(
     reach: stats["RE"] ?? null,
     notes: stats["BEM"] ?? null,
     raw: stats,
+    rawInput: line.trim(),
   };
 }
 
@@ -519,7 +598,7 @@ function normalizeHeading(
   const sanitized = heading
     .toLowerCase()
     .replace(/\s+/g, "")
-    .replace(/[()]/g, "");
+    .replace(/[()\/]/g, "");
   if (sanitized.startsWith("schmerz")) {
     return "notes";
   }
@@ -838,7 +917,7 @@ function createEmptyModel(): ParsedStatBlock {
     name: "Unbekannt",
     attributes: {},
     pools: {},
-    armor: undefined,
+    armor: null,
     actions: null,
     weapons: [],
     advantages: [],

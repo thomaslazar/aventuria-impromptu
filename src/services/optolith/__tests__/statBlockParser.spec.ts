@@ -21,6 +21,24 @@ describe("parseStatBlock", () => {
     expect(result.model.talents).toContainEqual({ name: "Betören", value: 10 });
     expect(result.model.weapons).toHaveLength(2);
     expect(result.warnings).toHaveLength(0);
+
+    const rapier = result.model.weapons.find(
+      (weapon) => weapon.name === "Rapier",
+    );
+    expect(rapier?.attack).toBe(18);
+    expect(rapier?.parry).toBe(10);
+    expect(rapier?.range).toBe("mittel");
+    expect(rapier?.rawInput).toContain("Rapier");
+
+    const whip = result.model.weapons.find(
+      (weapon) => weapon.name === "Entdeckerpeitsche",
+    );
+    expect(whip?.range).toBe("lang");
+    expect(whip?.attack).toBe(16);
+
+    expect(result.model.armor?.rs).toBe(1);
+    expect(result.model.armor?.be).toBe(0);
+    expect(result.model.armor?.description).toBe("schwere Kleidung");
   });
 
   it("classifies combined advantages/disadvantages correctly", async () => {
@@ -37,6 +55,13 @@ describe("parseStatBlock", () => {
       result.model.weapons.find((weapon) => weapon.name === "Wurfspeer")
         ?.category,
     ).toBe("ranged");
+
+    const unarmed = result.model.weapons.find(
+      (weapon) => weapon.name === "Waffenlos",
+    );
+    expect(unarmed?.category).toBe("unarmed");
+    expect(result.model.armor?.rs).toBe(0);
+    expect(result.model.armor?.description).toBeNull();
   });
 
   it("normalizes wrapped talents for Gerion sample", async () => {
@@ -73,6 +98,12 @@ describe("parseStatBlock", () => {
     expect(distanceAbility).toBeDefined();
     expect(distanceAbility).toContain("Tauchspeer");
     expect(distanceAbility).not.toMatch(/AKO/i);
+
+    const blowpipe = result.model.weapons.find(
+      (weapon) => weapon.name === "Blasrohr",
+    );
+    expect(blowpipe?.rangedAttack).toBe(14);
+    expect(blowpipe?.damage).toBe("1W3+1(+Gift*)");
   });
 
   it("captures liturgies and handles explicit none markers", async () => {
@@ -98,5 +129,9 @@ describe("parseStatBlock", () => {
       (talent) => talent.name === "Sinnesschärfe",
     );
     expect(senseTalent?.value).toBe(8);
+
+    expect(result.model.armor?.rs).toBe(2);
+    expect(result.model.armor?.be).toBe(0);
+    expect(result.model.armor?.description).toBe("Bastrüstung");
   });
 });
