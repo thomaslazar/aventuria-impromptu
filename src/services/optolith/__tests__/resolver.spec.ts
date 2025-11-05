@@ -408,4 +408,32 @@ describe("resolveStatBlock", () => {
       ),
     ).toBe(true);
   });
+
+  it("suppresses armor BE mismatch when Belastungsgewöhnung applies", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 4,
+        be: 0,
+        description: "Kettenhemd",
+        raw: "RS/BE 4/0 (Kettenhemd)",
+      }),
+      specialAbilities: ["Belastungsgewöhnung I"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.match?.normalizedName).toBe("kettenhemd");
+    expect(armor.datasetEncumbrance).toBe(2);
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "armor" && warning.type === "value-mismatch",
+      ),
+    ).toBe(false);
+  });
 });

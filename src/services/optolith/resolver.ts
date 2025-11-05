@@ -85,6 +85,8 @@ const EQUIPMENT_KEYWORD_FALLBACKS: Record<string, string> = {
   schild: "holzschild",
 };
 
+const LOAD_ADAPTATION_NORMALIZED_NAME = "belastungsgewohnung";
+
 export interface ResolutionResult {
   readonly name: string;
   readonly advantages: readonly ResolvedReference[];
@@ -203,8 +205,13 @@ export function resolveStatBlock(
     context,
   );
 
+  const loadAdaptationLevel = getLoadAdaptationLevel(specialAbilities);
   const weapons = resolveWeapons(statBlock.weapons, context);
-  const armor = resolveArmor(statBlock.armor ?? null, context);
+  const armor = resolveArmor(
+    statBlock.armor ?? null,
+    context,
+    loadAdaptationLevel,
+  );
 
   const unresolvedRecord: Record<string, readonly string[]> = {};
   for (const [section, values] of context.unresolved.entries()) {
@@ -379,6 +386,22 @@ function resolveTalents(
   });
 }
 
+function getLoadAdaptationLevel(
+  specialAbilities: readonly ResolvedReference[],
+): number {
+  let level = 0;
+  for (const ability of specialAbilities) {
+    if (ability.match?.normalizedName !== LOAD_ADAPTATION_NORMALIZED_NAME) {
+      continue;
+    }
+    const abilityLevel = ability.level ?? 1;
+    if (abilityLevel > level) {
+      level = abilityLevel;
+    }
+  }
+  return level;
+}
+
 function resolveWeapons(
   weapons: readonly WeaponStats[],
   context: ResolutionContext,
@@ -466,6 +489,7 @@ function resolveWeapons(
 function resolveArmor(
   armor: ArmorStats | null,
   context: ResolutionContext,
+  loadAdaptationLevel: number,
 ): ResolvedArmor | null {
   if (!armor) {
     return null;
@@ -536,15 +560,22 @@ function resolveArmor(
       typeof datasetEncumbrance === "number" &&
       armor.be !== datasetEncumbrance
     ) {
-      pushWarning(
-        {
-          type: "value-mismatch",
-          section: "armor",
-          value: trimmedDescription || match.name,
-          message: `BE (${armor.be}) weicht vom Optolith-Wert (${datasetEncumbrance}) ab.`,
-        },
-        context,
-      );
+      const encumbranceReduction = loadAdaptationLevel * 2;
+      const canCompensateReduction =
+        loadAdaptationLevel > 0 &&
+        armor.be < datasetEncumbrance &&
+        datasetEncumbrance - armor.be <= encumbranceReduction;
+      if (!canCompensateReduction) {
+        pushWarning(
+          {
+            type: "value-mismatch",
+            section: "armor",
+            value: trimmedDescription || match.name,
+            message: `BE (${armor.be}) weicht vom Optolith-Wert (${datasetEncumbrance}) ab.`,
+          },
+          context,
+        );
+      }
     }
   } else {
     const label =
