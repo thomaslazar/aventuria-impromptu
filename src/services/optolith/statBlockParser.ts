@@ -82,7 +82,42 @@ const SECTION_NORMALIZATION_MAP: Record<
 const TYPO_CORRECTIONS: Record<string, string> = {
   sinesschärfe: "Sinnesschärfe",
   "angriff verbessern": "Attacke verbessern",
+  schnelladen: "Schnellladen",
+  eigne: "Eigene",
 };
+
+const ATTRIBUTE_ABBREVIATIONS: Record<string, string> = {
+  MU: "Mut",
+  KL: "Klugheit",
+  IN: "Intuition",
+  CH: "Charisma",
+  FF: "Fingerfertigkeit",
+  GE: "Gewandheit",
+  KO: "Konstitution",
+  KK: "Körperkraft",
+};
+
+const NUMBER_WORDS = new Set(
+  [
+    "ein",
+    "eine",
+    "einen",
+    "einem",
+    "einer",
+    "eins",
+    "zwei",
+    "drei",
+    "vier",
+    "fünf",
+    "sechs",
+    "sieben",
+    "acht",
+    "neun",
+    "zehn",
+    "elf",
+    "zwölf",
+  ].map((value) => value.toLowerCase()),
+);
 
 export function parseStatBlock(raw: string): ParseResult {
   const warnings: ParserWarning[] = [];
@@ -296,7 +331,7 @@ export function parseStatBlock(raw: string): ParseResult {
     ),
     rituals: parseRatedEntries(sectionBuckets.rituals, "rituals", warnings),
     blessings: sanitizeList(sectionBuckets.blessings),
-    equipment: sanitizeList(sectionBuckets.equipment),
+    equipment: sanitizeEquipmentList(sectionBuckets.equipment),
     talents: parseTalentRatings(sectionBuckets.talents, warnings),
     notes,
     extras,
@@ -691,6 +726,14 @@ function mergeRelativeClauses(entries: string[]): string[] {
   return result;
 }
 
+function sanitizeEquipmentList(values: string[]): string[] {
+  return sanitizeList(values)
+    .map((value) =>
+      stripTrailingQuantityAnnotation(stripLeadingQuantity(value)),
+    )
+    .filter((value) => value.length > 0);
+}
+
 function splitCompositeAbilityEntry(value: string): string[] {
   const parts = value
     .split(/(?<=\))\s+(?=[A-ZÄÖÜ][a-zäöüß])/u)
@@ -762,6 +805,7 @@ function sanitizeList(values: string[]): string[] {
     .map((value) => normalizeWhitespace(value))
     .map((value) => mergeSplitWords(value))
     .map((value) => stripCitations(value))
+    .map((value) => expandAttributeAbbreviations(value))
     .map((value) => normalizeTypos(value))
     .map((value) => stripFootnoteMarkers(value))
     .map((value) => normalizeWhitespace(value))
@@ -806,6 +850,49 @@ function normalizeTypos(value: string): string {
 
 function stripFootnoteMarkers(value: string): string {
   return value.replace(/\*+$/g, "").trim();
+}
+
+function expandAttributeAbbreviations(value: string): string {
+  return value.replace(/\(([^)]+)\)/g, (_match, content: string) => {
+    const tokens = content
+      .split(/\s*[;,\/]\s*/)
+      .map((token) => {
+        const trimmed = token.trim();
+        const upper = trimmed.toUpperCase();
+        const mapped = ATTRIBUTE_ABBREVIATIONS[upper];
+        return mapped ?? trimmed;
+      })
+      .filter((token) => token.length > 0);
+    return `(${tokens.join(", ")})`;
+  });
+}
+
+function stripLeadingQuantity(value: string): string {
+  const working = value.trim();
+  const numericMatch = working.match(/^(\d+)\s+(.*)$/u);
+  if (numericMatch && numericMatch[2]) {
+    return numericMatch[2].trim();
+  }
+
+  const wordMatch = working.match(/^([A-Za-zÄÖÜäöüß]+)\s+(.*)$/u);
+  if (wordMatch && wordMatch[2]) {
+    const word = wordMatch[1]?.toLowerCase();
+    if (word && NUMBER_WORDS.has(word)) {
+      return wordMatch[2].trim();
+    }
+  }
+
+  return working;
+}
+
+function stripTrailingQuantityAnnotation(value: string): string {
+  let working = value.trim();
+  working = working.replace(/\(\s*(?:x\s*)?\d+\s*\)\s*$/iu, "").trim();
+  return working;
+}
+
+function stripTrailingParentheticalNote(value: string): string {
+  return value.replace(/\(\s*[^)]*\)\s*$/u, "").trim();
 }
 
 function splitOnSlash(value: string): string[] {
@@ -905,7 +992,8 @@ function parseRatedEntries(
 ): RatedEntry[] {
   const values: RatedEntry[] = [];
   for (const entry of sanitizeList(rawValues)) {
-    const match = entry.match(/^(.+?)\s+(-?\d+|[IVX]+)$/i);
+    const cleanedEntry = stripTrailingParentheticalNote(entry);
+    const match = cleanedEntry.match(/^(.+?)\s+(-?\d+|[IVX]+)$/i);
     if (!match) {
       values.push({ name: entry, value: 0 });
       warnings.push({

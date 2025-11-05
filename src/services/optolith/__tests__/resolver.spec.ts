@@ -148,22 +148,30 @@ describe("resolveStatBlock", () => {
     expect(resolved.warnings).toHaveLength(0);
   });
 
-  it("maps Dämmerungssicht to Dunkelsicht advantages only", () => {
+  it("maps Dämmerungssicht and Dunkesicht variants to Dunkelsicht advantages only", () => {
     const statBlock = createStatBlock({
-      advantages: ["Dämmerungssicht II"],
+      advantages: ["Dämmerungssicht II", "Dunkesicht"],
     });
 
     const resolved = resolveStatBlock(statBlock, lookups);
 
-    expect(resolved.advantages).toHaveLength(1);
+    expect(resolved.advantages).toHaveLength(2);
     expect(resolved.disadvantages).toHaveLength(0);
-    const advantage = resolved.advantages[0];
-    expect(advantage).toBeDefined();
-    if (!advantage) {
+    const daemmerung = resolved.advantages.find((entry) =>
+      entry.source.startsWith("Dunkelsicht"),
+    );
+    expect(daemmerung).toBeDefined();
+    if (!daemmerung) {
       throw new Error("Expected advantage to resolve");
     }
-    expect(advantage.match?.normalizedName).toBe("dunkelsicht");
-    expect(advantage.source).toBe("Dunkelsicht II");
+    expect(daemmerung.match?.normalizedName).toBe("dunkelsicht");
+    expect(daemmerung.source).toBe("Dunkelsicht II");
+
+    const typoEntry = resolved.advantages.find(
+      (entry) => entry.source === "Dunkelsicht",
+    );
+    expect(typoEntry?.match?.normalizedName).toBe("dunkelsicht");
+
     expect(resolved.warnings).toHaveLength(0);
   });
 
@@ -488,5 +496,140 @@ describe("resolveStatBlock", () => {
           warning.section === "armor" && warning.type === "unresolved",
       ),
     ).toBe(false);
+  });
+
+  it("resolves immunity advantages and personality weakness options", () => {
+    const statBlock = createStatBlock({
+      advantages: ["Immunität gegen Zorganpocken"],
+      disadvantages: ["Arroganz"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const immunity = resolved.advantages.find((entry) =>
+      entry.source.startsWith("Immunität gegen"),
+    );
+    expect(immunity?.match?.normalizedName).toBe("immunitat gegen");
+
+    const weakness = resolved.disadvantages.find((entry) =>
+      entry.source.includes("Arroganz"),
+    );
+    expect(weakness?.source).toBe("Persönlichkeitsschwächen (Arroganz)");
+    expect(weakness?.match?.normalizedName).toBe("personlichkeitsschwachen");
+  });
+
+  it("interprets hyphenated ability tiers and option splits", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: ["Beidhändiger Kampf I-II", "Finte I-II"],
+      combatSpecialAbilities: [
+        "Wuchtschlag I-III (Waffenlos, Yeti-Keule)",
+        "Verbessertes Ausweichen I-III",
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const dualWield = resolved.specialAbilities.find((entry) =>
+      entry.source.startsWith("Beidhändiger Kampf"),
+    );
+    expect(dualWield?.level).toBe(2);
+
+    const finte = resolved.specialAbilities.find((entry) =>
+      entry.source.startsWith("Finte"),
+    );
+    expect(finte?.level).toBe(2);
+
+    const wuchtschlag = resolved.combatSpecialAbilities.find((entry) =>
+      entry.source.startsWith("Wuchtschlag"),
+    );
+    expect(wuchtschlag?.level).toBe(3);
+
+    const ausweichen = resolved.combatSpecialAbilities.find((entry) =>
+      entry.source.startsWith("Verbessertes Ausweichen"),
+    );
+    expect(ausweichen?.level).toBe(3);
+  });
+
+  it("splits Angst vor entries with nested lists", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Angst vor (… (Feuer, Luchsen))"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(
+      resolved.disadvantages.some(
+        (entry) => entry.source === "Angst vor (Feuer)",
+      ),
+    ).toBe(true);
+    expect(
+      resolved.disadvantages.some(
+        (entry) => entry.source === "Angst vor (Luchsen)",
+      ),
+    ).toBe(true);
+  });
+
+  it("normalizes shorthand spells to canonical entries", () => {
+    const statBlock = createStatBlock({
+      spells: [
+        { name: "Analys", value: 12 },
+        { name: "Odem", value: 10 },
+        { name: "Zauberklinge", value: 7 },
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+    const spellNames = resolved.spells
+      .map((spell) => spell.match?.normalizedName)
+      .filter((name): name is string => Boolean(name));
+
+    expect(spellNames).toContain("analys arkanstruktur");
+    expect(spellNames).toContain("odem arcanum");
+    expect(spellNames).toContain("zauberklinge geisterspeer");
+  });
+
+  it("maps equipment quantities and keywords to canonical gear", () => {
+    const statBlock = createStatBlock({
+      equipment: [
+        "drei Speere",
+        "vier Wurfkeulen",
+        "Giftdolch",
+        "Shakagra-Krummsäbel (2)",
+        "Leichte Shakagra-Platte",
+        "Shakagra-Langschild",
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const speer = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "speer",
+    );
+    expect(speer?.normalizedSource).toBe("speere");
+
+    const wurfkeule = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "wurfkeule",
+    );
+    expect(wurfkeule?.normalizedSource).toBe("wurfkeulen");
+
+    const dolch = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "dolch",
+    );
+    expect(dolch?.normalizedSource).toBe("giftdolch");
+
+    const saebel = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "sabel",
+    );
+    expect(saebel?.normalizedSource).toBe("shakagra krummsabel");
+
+    const plattenrustung = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "plattenrustung",
+    );
+    expect(plattenrustung?.normalizedSource).toBe("leichte shakagra platte");
+
+    const grossschild = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "gro schild",
+    );
+    expect(grossschild?.normalizedSource).toBe("shakagra langschild");
   });
 });

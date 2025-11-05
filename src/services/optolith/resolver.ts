@@ -72,6 +72,7 @@ const ADV_DISADV_BASE_ALIASES: Record<string, string> = {
   "schlechte eigenschaft": "Schlechte Eigenschaft",
   dammerungssicht: "Dunkelsicht",
   dammersicht: "Dunkelsicht",
+  dunkesicht: "Dunkelsicht",
   verpflichtung: "Verpflichtungen",
   personlichkeitsschwache: "Persönlichkeitsschwächen",
   personlichkeitsschwachen: "Persönlichkeitsschwächen",
@@ -84,10 +85,53 @@ const EQUIPMENT_KEYWORD_FALLBACKS: Record<string, string> = {
   peitsche: "fuhrmannspeitsche",
   speer: "speer",
   schwert: "langschwert",
+  langschild: "gro schild",
   schild: "holzschild",
+  dolch: "dolch",
+  krummsabel: "sabel",
+  krummsaebel: "sabel",
+  platte: "plattenrustung",
 };
 
 const LOAD_ADAPTATION_NORMALIZED_NAME = "belastungsgewohnung";
+
+const PERSONALITY_WEAKNESS_OPTIONS = [
+  "Arroganz",
+  "Eitelkeit",
+  "Neid",
+  "Streitsucht",
+  "Unheimlich",
+  "Verwöhnt",
+  "Vorurteile",
+  "Weltfremd",
+  "Anzügliches Verhalten",
+  "Eifersucht",
+  "Busenkomplexe",
+  "Peniskomplexe",
+  "Stimmungsschwankungen",
+];
+
+const NUMBER_WORDS = new Set(
+  [
+    "ein",
+    "eine",
+    "einen",
+    "einem",
+    "einer",
+    "eins",
+    "zwei",
+    "drei",
+    "vier",
+    "fünf",
+    "sechs",
+    "sieben",
+    "acht",
+    "neun",
+    "zehn",
+    "elf",
+    "zwölf",
+  ].map((value) => value.toLowerCase()),
+);
 
 export interface ResolutionResult {
   readonly name: string;
@@ -285,6 +329,11 @@ function resolveSection(
           }
         }
       } else if (components.options.length > 0) {
+        optionNameForLabel =
+          usedOptionForNormalization ?? components.options[0];
+      }
+
+      if (!optionNameForLabel && components.options.length > 0) {
         optionNameForLabel =
           usedOptionForNormalization ?? components.options[0];
       }
@@ -909,7 +958,13 @@ function collectCandidateTokens(
     if (trimmed.length === 0) {
       return;
     }
-    tokens.add(trimmed);
+    const sanitized = stripTrailingQuantityToken(
+      stripLeadingQuantityToken(trimmed),
+    );
+    addTokenWithVariants(tokens, sanitized);
+    if (sanitized !== trimmed) {
+      addTokenWithVariants(tokens, trimmed);
+    }
   };
 
   push(value);
@@ -925,6 +980,50 @@ function collectCandidateTokens(
   optionCandidates.forEach((candidate) => push(candidate));
 
   return Array.from(tokens.values());
+}
+
+function addTokenWithVariants(store: Set<string>, token: string): void {
+  if (!token) {
+    return;
+  }
+  if (!store.has(token)) {
+    store.add(token);
+  }
+  for (const variant of deriveSingularForms(token)) {
+    if (variant.length > 0) {
+      store.add(variant);
+    }
+  }
+}
+
+function deriveSingularForms(value: string): string[] {
+  const result = new Set<string>();
+  const trimmed = value.trim();
+  const lower = trimmed.toLowerCase();
+  if (lower.length <= 2) {
+    return [];
+  }
+
+  const add = (candidate: string) => {
+    if (candidate && candidate !== trimmed) {
+      result.add(candidate);
+    }
+  };
+
+  const removeSuffix = (suffix: string, replacement = "") => {
+    if (lower.endsWith(suffix) && trimmed.length > suffix.length + 1) {
+      add(trimmed.slice(0, trimmed.length - suffix.length) + replacement);
+    }
+  };
+
+  removeSuffix("en");
+  removeSuffix("en", "e");
+  removeSuffix("e");
+  removeSuffix("er");
+  removeSuffix("n");
+  removeSuffix("s");
+
+  return Array.from(result.values());
 }
 
 function buildEquipmentFallbackWarning(
@@ -1029,7 +1128,9 @@ function sanitizeResolvableValue(value: string): string {
   const withoutTrailingDelimiters = collapsedWhitespace
     .replace(TRAILING_DELIMITER_PATTERN, "")
     .trim();
-  return normalizeTraditionLabels(withoutTrailingDelimiters);
+  return applyLabelOverrides(
+    normalizeTraditionLabels(withoutTrailingDelimiters),
+  );
 }
 
 function normalizeTraditionLabels(label: string): string {
@@ -1047,12 +1148,46 @@ function normalizeTraditionLabels(label: string): string {
   );
 }
 
+function applyLabelOverrides(label: string): string {
+  const overrides: Record<string, string> = {
+    analys: "Analys Arkanstruktur",
+    odem: "Odem Arcanum",
+    zauberklinge: "Zauberklinge Geisterspeer",
+  };
+  const normalized = normalizeLabel(label);
+  return overrides[normalized] ?? label;
+}
+
+function stripLeadingQuantityToken(value: string): string {
+  const working = value.trim();
+  const numericMatch = working.match(/^(\d+)\s+(.*)$/u);
+  if (numericMatch && numericMatch[2]) {
+    return numericMatch[2].trim();
+  }
+
+  const wordMatch = working.match(/^([A-Za-zÄÖÜäöüß]+)\s+(.*)$/u);
+  if (wordMatch && wordMatch[2]) {
+    const word = wordMatch[1]?.toLowerCase();
+    if (word && NUMBER_WORDS.has(word)) {
+      return wordMatch[2].trim();
+    }
+  }
+
+  return working;
+}
+
+function stripTrailingQuantityToken(value: string): string {
+  return value.replace(/\(\s*(?:x\s*)?\d+\s*\)\s*$/iu, "").trim();
+}
+
 function parseEntryComponents(value: string): {
   baseName: string;
   options: readonly string[];
   level?: number;
 } {
   let working = value.trim();
+  working = stripTrailingQuantityToken(stripLeadingQuantityToken(working));
+  working = working.replace(/([IVX]+)\s*-\s*([IVX]+)/gi, "$1+$2");
   let levelToken: string | undefined;
   const options: string[] = [];
 
@@ -1247,55 +1382,57 @@ function normalizeAdvantageDisadvantageLists(
     if (!sanitized) {
       return;
     }
-
     if (/^muttersprache\b/i.test(sanitized)) {
       const languageEntry = normalizeMutterspracheEntry(sanitized);
       languages.add(languageEntry);
       return;
     }
 
-    const { label, baseLabel, detail } = normalizeAdvDisadvEntry(sanitized);
-    const normalizedKey = normalizeLabel(baseLabel);
-    let advantageMatch = lookups.advantages.byName.get(normalizedKey);
-    let disadvantageMatch = lookups.disadvantages.byName.get(normalizedKey);
+    const variants = preprocessAdvDisadvEntry(sanitized);
+    for (const variant of variants) {
+      const { label, baseLabel, detail } = normalizeAdvDisadvEntry(variant);
+      const normalizedKey = normalizeLabel(baseLabel);
+      let advantageMatch = lookups.advantages.byName.get(normalizedKey);
+      let disadvantageMatch = lookups.disadvantages.byName.get(normalizedKey);
 
-    if (!advantageMatch && !disadvantageMatch && detail) {
-      const combinedKey = normalizeLabel(`${baseLabel} (${detail})`);
-      advantageMatch = lookups.advantages.byName.get(combinedKey);
-      disadvantageMatch = lookups.disadvantages.byName.get(combinedKey);
-    }
+      if (!advantageMatch && !disadvantageMatch && detail) {
+        const combinedKey = normalizeLabel(`${baseLabel} (${detail})`);
+        advantageMatch = lookups.advantages.byName.get(combinedKey);
+        disadvantageMatch = lookups.disadvantages.byName.get(combinedKey);
+      }
 
-    if (advantageMatch && !disadvantageMatch) {
-      advantages.add(label);
-      return;
-    }
-    if (disadvantageMatch && !advantageMatch) {
-      disadvantages.add(label);
-      return;
-    }
-    if (advantageMatch && disadvantageMatch) {
+      if (advantageMatch && !disadvantageMatch) {
+        advantages.add(label);
+        continue;
+      }
+      if (disadvantageMatch && !advantageMatch) {
+        disadvantages.add(label);
+        continue;
+      }
+      if (advantageMatch && disadvantageMatch) {
+        if (suggested === "advantage") {
+          advantages.add(label);
+        } else {
+          disadvantages.add(label);
+        }
+        continue;
+      }
+
+      const hint = classifyAdvDisadvantageHint(label);
+      if (hint === "advantage") {
+        advantages.add(label);
+        continue;
+      }
+      if (hint === "disadvantage") {
+        disadvantages.add(label);
+        continue;
+      }
+
       if (suggested === "advantage") {
         advantages.add(label);
       } else {
         disadvantages.add(label);
       }
-      return;
-    }
-
-    const hint = classifyAdvDisadvantageHint(label);
-    if (hint === "advantage") {
-      advantages.add(label);
-      return;
-    }
-    if (hint === "disadvantage") {
-      disadvantages.add(label);
-      return;
-    }
-
-    if (suggested === "advantage") {
-      advantages.add(label);
-    } else {
-      disadvantages.add(label);
     }
   };
 
@@ -1313,12 +1450,113 @@ function normalizeAdvantageDisadvantageLists(
   };
 }
 
+function preprocessAdvDisadvEntry(entry: string): string[] {
+  const expanded = expandAngstVorEntry(entry);
+  const results: string[] = [];
+  for (const candidate of expanded) {
+    const personality = tryConvertPersonalityWeakness(candidate);
+    if (personality) {
+      results.push(personality);
+      continue;
+    }
+    results.push(applyImmunityNormalization(candidate));
+  }
+  return Array.from(new Set(results));
+}
+
+function applyImmunityNormalization(entry: string): string {
+  const match = entry.match(/^Immunität gegen\s+([^()]+)$/i);
+  if (match && match[1]) {
+    const detail = match[1].trim();
+    if (detail.length > 0) {
+      return `Immunität gegen (${detail})`;
+    }
+  }
+  return entry;
+}
+
+function tryConvertPersonalityWeakness(entry: string): string | undefined {
+  if (/^persönlichkeitsschwäche\b/i.test(entry)) {
+    return entry.replace(
+      /^persönlichkeitsschwäche/i,
+      "Persönlichkeitsschwächen",
+    );
+  }
+  if (/^persönlichkeitsschwächen\b/i.test(entry)) {
+    return entry;
+  }
+
+  const trimmed = entry.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+  const lower = trimmed.toLowerCase();
+
+  for (const option of PERSONALITY_WEAKNESS_OPTIONS) {
+    const optionLower = option.toLowerCase();
+    if (lower === optionLower || lower.startsWith(`${optionLower} `)) {
+      return `Persönlichkeitsschwächen (${trimmed})`;
+    }
+  }
+
+  return undefined;
+}
+
+function expandAngstVorEntry(entry: string): string[] {
+  const trimmed = entry.trim();
+  const prefixMatch = trimmed.match(/^Angst vor\b(.*)$/i);
+  if (!prefixMatch) {
+    return [trimmed];
+  }
+
+  const remainder = prefixMatch[1]?.trim() ?? "";
+  if (!remainder) {
+    return [`Angst vor`];
+  }
+
+  let inner = remainder;
+  if (inner.startsWith("(") && inner.endsWith(")")) {
+    inner = inner.slice(1, -1).trim();
+  } else {
+    const nested = inner.match(/\(([^)]+)\)/);
+    if (nested && nested[1]) {
+      inner = nested[1].trim();
+    } else {
+      inner = inner.trim();
+    }
+  }
+
+  inner = inner.replace(/^…\s*/u, "");
+  if (!inner) {
+    return [`Angst vor`];
+  }
+
+  const parts = inner
+    .split(/[,;/]/)
+    .map((part) => {
+      const trimmedPart = part.trim();
+      const withoutEllipsis = trimmedPart.replace(/^…\s*/u, "");
+      const withoutParens = withoutEllipsis
+        .replace(/^\(+/u, "")
+        .replace(/\)+$/u, "");
+      return withoutParens.trim();
+    })
+    .filter((part) => part.length > 0);
+
+  if (parts.length === 0) {
+    return [`Angst vor (${inner})`];
+  }
+
+  return parts.map((part) => `Angst vor (${part})`);
+}
+
 function normalizeAdvDisadvEntry(value: string): {
   label: string;
   baseLabel: string;
   detail?: string;
 } {
   let working = value.trim();
+  working = working.replace(/([IVX]+)\s*-\s*([IVX]+)/gi, "$1+$2");
 
   const tierMatch = working.match(/\s+([IVX\d]+(?:\+[IVX\d]+)*)$/i);
   let tierToken: string | undefined;
@@ -1331,10 +1569,10 @@ function normalizeAdvDisadvEntry(value: string): {
   const inlineFearMatch = working.match(/^Angst vor\s+(.+)$/i);
   if (inlineFearMatch) {
     const extracted = inlineFearMatch[1]?.trim();
-    if (extracted) {
+    if (extracted && !extracted.startsWith("(")) {
       detail = extracted;
+      working = "Angst vor";
     }
-    working = "Angst vor";
   }
 
   const detailMatch = working.match(/\s*\(([^)]+)\)\s*$/);
