@@ -3,7 +3,11 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createDatasetLookups } from "../dataset";
 import type { OptolithDatasetLookups } from "../dataset";
 import { resolveStatBlock } from "../resolver";
-import type { ParsedStatBlock } from "../../../types/optolith/stat-block";
+import type {
+  ArmorStats,
+  ParsedStatBlock,
+  WeaponStats,
+} from "../../../types/optolith/stat-block";
 
 import { loadDataset } from "./helpers";
 
@@ -35,6 +39,35 @@ function createStatBlock(overrides: Partial<ParsedStatBlock>): ParsedStatBlock {
     extras: [],
     ...overrides,
   } as ParsedStatBlock;
+}
+
+function createWeapon(overrides: Partial<WeaponStats>): WeaponStats {
+  return {
+    name: "Testwaffe",
+    category: "melee",
+    attack: null,
+    parry: null,
+    rangedAttack: null,
+    damage: null,
+    range: null,
+    load: null,
+    reach: null,
+    notes: null,
+    raw: {},
+    rawInput: "",
+    ...overrides,
+  } as WeaponStats;
+}
+
+function createArmor(overrides: Partial<ArmorStats>): ArmorStats {
+  return {
+    rs: null,
+    be: null,
+    description: null,
+    notes: null,
+    raw: "",
+    ...overrides,
+  } as ArmorStats;
 }
 
 describe("resolveStatBlock", () => {
@@ -194,5 +227,104 @@ describe("resolveStatBlock", () => {
           warning.value === "Fährtensuchern",
       ),
     ).toBe(true);
+  });
+
+  it("resolves weapon entries and assigns combat techniques", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Dolch",
+          category: "melee",
+          rawInput: "Dolch: AT 12 PA 8 TP 1W6+1 RW kurz",
+          raw: {
+            AT: "12",
+            PA: "8",
+            TP: "1W6+1",
+            RW: "kurz",
+          },
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.weapons).toHaveLength(1);
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.match?.normalizedName).toBe("dolch");
+    expect(weapon.combatTechnique?.id).toBe("CT_3");
+    expect(resolved.unresolved.weapons ?? []).toHaveLength(0);
+  });
+
+  it("maps unarmed weapons to the Raufen combat technique", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Waffenlos",
+          category: "unarmed",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.weapons).toHaveLength(1);
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.fallback).toBe("unarmed");
+    expect(weapon.combatTechnique?.id).toBe("CT_9");
+    expect(resolved.unresolved.weapons ?? []).toHaveLength(0);
+  });
+
+  it("resolves armor entries and warns on BE mismatches", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 4,
+        be: 3,
+        description: "Kettenhemd",
+        raw: "RS/BE 4/3 (Kettenhemd)",
+      }),
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.match?.normalizedName).toBe("kettenhemd");
+    expect(armor.datasetProtection).toBe(4);
+    expect(armor.datasetEncumbrance).toBe(2);
+    expect(
+      resolved.warnings.some((warning) =>
+        warning.message.includes("BE (3) weicht vom Optolith-Wert (2) ab."),
+      ),
+    ).toBe(true);
+    expect(resolved.unresolved.armor ?? []).toHaveLength(0);
+  });
+
+  it("deduplicates unresolved warnings for repeated entries", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({ name: "Improvisiertes Werkzeug" }),
+        createWeapon({ name: "Improvisiertes Werkzeug" }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.unresolved.weapons ?? []).toHaveLength(1);
+    const weaponWarnings = resolved.warnings.filter(
+      (warning) =>
+        warning.section === "weapons" && warning.type === "unresolved",
+    );
+    expect(weaponWarnings).toHaveLength(1);
   });
 });

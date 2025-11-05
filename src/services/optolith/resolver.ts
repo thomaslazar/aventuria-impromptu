@@ -1,8 +1,10 @@
 import type { OptolithDatasetLookups, SelectOptionReference } from "./dataset";
 import type {
+  ArmorStats,
   ParsedStatBlock,
   RatedEntry,
   TalentRating,
+  WeaponStats,
 } from "../../types/optolith/stat-block";
 import type { DerivedEntity } from "../../types/optolith/manifest";
 import { normalizeLabel } from "../../utils/optolith/normalizer";
@@ -33,12 +35,29 @@ export interface ResolvedRatedReference extends ResolvedReference {
   readonly value: number;
 }
 
+export interface ResolvedWeapon {
+  readonly source: WeaponStats;
+  readonly normalizedSource: string;
+  readonly match?: DerivedEntity;
+  readonly combatTechnique?: DerivedEntity;
+  readonly fallback?: "unarmed";
+}
+
+export interface ResolvedArmor {
+  readonly source: ArmorStats;
+  readonly normalizedSource?: string;
+  readonly match?: DerivedEntity;
+  readonly datasetProtection?: number | null;
+  readonly datasetEncumbrance?: number | null;
+}
+
 export interface ResolutionWarning {
   readonly type:
     | "unresolved"
     | "level-out-of-range"
     | "unresolved-option"
-    | "fuzzy-match";
+    | "fuzzy-match"
+    | "value-mismatch";
   readonly section: string;
   readonly value: string;
   readonly message: string;
@@ -68,6 +87,8 @@ export interface ResolutionResult {
   readonly rituals: readonly ResolvedRatedReference[];
   readonly blessings: readonly ResolvedReference[];
   readonly equipment: readonly ResolvedReference[];
+  readonly weapons: readonly ResolvedWeapon[];
+  readonly armor: ResolvedArmor | null;
   readonly unresolved: Readonly<Record<string, readonly string[]>>;
   readonly warnings: readonly ResolutionWarning[];
 }
@@ -76,6 +97,7 @@ interface ResolutionContext {
   readonly lookups: OptolithDatasetLookups;
   readonly warnings: ResolutionWarning[];
   readonly unresolved: Map<string, Set<string>>;
+  readonly warningKeys: Set<string>;
 }
 
 export function resolveStatBlock(
@@ -86,6 +108,7 @@ export function resolveStatBlock(
     lookups,
     warnings: [],
     unresolved: new Map(),
+    warningKeys: new Set(),
   };
 
   const normalizedAdvDisadv = normalizeAdvantageDisadvantageLists(
@@ -169,6 +192,9 @@ export function resolveStatBlock(
     context,
   );
 
+  const weapons = resolveWeapons(statBlock.weapons, context);
+  const armor = resolveArmor(statBlock.armor ?? null, context);
+
   const unresolvedRecord: Record<string, readonly string[]> = {};
   for (const [section, values] of context.unresolved.entries()) {
     unresolvedRecord[section] = Array.from(values.values());
@@ -187,6 +213,8 @@ export function resolveStatBlock(
     rituals,
     blessings,
     equipment,
+    weapons,
+    armor,
     unresolved: unresolvedRecord,
     warnings: context.warnings,
   };
@@ -308,12 +336,15 @@ function resolveTalents(
       );
       if (fuzzy) {
         match = fuzzy.entry;
-        context.warnings.push({
-          type: "fuzzy-match",
-          section: "talents",
-          value: talent.name,
-          message: `Talent "${talent.name}" wurde als "${match.name}" interpretiert (Schreibweise korrigiert).`,
-        });
+        pushWarning(
+          {
+            type: "fuzzy-match",
+            section: "talents",
+            value: talent.name,
+            message: `Talent "${talent.name}" wurde als "${match.name}" interpretiert (Schreibweise korrigiert).`,
+          },
+          context,
+        );
       } else {
         registerUnresolved("talents", talent.name, context);
       }
@@ -323,6 +354,184 @@ function resolveTalents(
       match,
     };
   });
+}
+
+function resolveWeapons(
+  weapons: readonly WeaponStats[],
+  context: ResolutionContext,
+): ResolvedWeapon[] {
+  const results: ResolvedWeapon[] = [];
+  for (const weapon of weapons) {
+    const sanitizedName = sanitizeResolvableValue(weapon.name);
+    const normalized = normalizeLabel(
+      sanitizedName.length > 0 ? sanitizedName : weapon.name,
+    );
+    const isUnarmed =
+      weapon.category === "unarmed" || normalized === "waffenlos";
+
+    const match =
+      normalized.length > 0
+        ? context.lookups.equipment.byName.get(normalized)
+        : undefined;
+    let combatTechnique: DerivedEntity | undefined;
+    let fallback: ResolvedWeapon["fallback"];
+
+    if (!match && isUnarmed) {
+      fallback = "unarmed";
+      combatTechnique = context.lookups.combatTechniques.byId.get("CT_9");
+      if (!combatTechnique) {
+        pushWarning(
+          {
+            type: "unresolved",
+            section: "combatTechniques",
+            value: "CT_9",
+            message: "Kampftechnik Raufen (CT_9) konnte nicht geladen werden.",
+          },
+          context,
+        );
+      }
+    }
+
+    if (match) {
+      const combatTechniqueId = extractCombatTechniqueId(match);
+      if (combatTechniqueId) {
+        combatTechnique =
+          context.lookups.combatTechniques.byId.get(combatTechniqueId);
+        if (!combatTechnique) {
+          pushWarning(
+            {
+              type: "unresolved",
+              section: "combatTechniques",
+              value: combatTechniqueId,
+              message: `Kampftechnik-ID "${combatTechniqueId}" fehlt im Datensatz (für ${weapon.name}).`,
+            },
+            context,
+          );
+        }
+      } else if (!fallback) {
+        pushWarning(
+          {
+            type: "unresolved",
+            section: "weapons",
+            value: weapon.name,
+            message: `Waffe "${weapon.name}" enthält keine Kampftechnik im Datensatz.`,
+          },
+          context,
+        );
+      }
+    }
+
+    if (!match && !fallback) {
+      registerUnresolved("weapons", weapon.name, context);
+    }
+
+    results.push({
+      source: weapon,
+      normalizedSource: normalized,
+      match,
+      combatTechnique,
+      fallback,
+    });
+  }
+  return results;
+}
+
+function resolveArmor(
+  armor: ArmorStats | null,
+  context: ResolutionContext,
+): ResolvedArmor | null {
+  if (!armor) {
+    return null;
+  }
+
+  const description = armor.description ?? "";
+  const trimmedDescription = description.trim();
+  const descriptionLower = trimmedDescription.toLowerCase();
+  const indicatesNoArmor =
+    descriptionLower.includes("keine") || descriptionLower.includes("ohne");
+  const hasStats =
+    (armor.rs ?? 0) > 0 || (armor.be ?? 0) > 0 || trimmedDescription.length > 0;
+
+  if (
+    !hasStats ||
+    ((armor.rs ?? 0) === 0 && (armor.be ?? 0) === 0 && indicatesNoArmor)
+  ) {
+    return null;
+  }
+
+  const sanitizedDescription = sanitizeResolvableValue(trimmedDescription);
+  const normalized =
+    sanitizedDescription.length > 0
+      ? normalizeLabel(sanitizedDescription)
+      : undefined;
+
+  const match = normalized
+    ? context.lookups.equipment.byName.get(normalized)
+    : undefined;
+
+  let datasetProtection: number | null | undefined;
+  let datasetEncumbrance: number | null | undefined;
+
+  if (match) {
+    const stats = extractArmorStats(match);
+    datasetProtection = stats?.protection;
+    datasetEncumbrance = stats?.encumbrance;
+
+    if (!stats) {
+      pushWarning(
+        {
+          type: "unresolved",
+          section: "armor",
+          value: match.name,
+          message: `Rüstung "${match.name}" enthält keine RS/BE-Daten im Optolith-Katalog.`,
+        },
+        context,
+      );
+    }
+
+    if (
+      typeof armor.rs === "number" &&
+      typeof datasetProtection === "number" &&
+      armor.rs !== datasetProtection
+    ) {
+      pushWarning(
+        {
+          type: "value-mismatch",
+          section: "armor",
+          value: trimmedDescription || match.name,
+          message: `RS (${armor.rs}) weicht vom Optolith-Wert (${datasetProtection}) ab.`,
+        },
+        context,
+      );
+    }
+    if (
+      typeof armor.be === "number" &&
+      typeof datasetEncumbrance === "number" &&
+      armor.be !== datasetEncumbrance
+    ) {
+      pushWarning(
+        {
+          type: "value-mismatch",
+          section: "armor",
+          value: trimmedDescription || match.name,
+          message: `BE (${armor.be}) weicht vom Optolith-Wert (${datasetEncumbrance}) ab.`,
+        },
+        context,
+      );
+    }
+  } else {
+    const label =
+      trimmedDescription || `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
+    registerUnresolved("armor", label, context);
+  }
+
+  return {
+    source: armor,
+    normalizedSource: normalized,
+    match,
+    datasetProtection: datasetProtection ?? null,
+    datasetEncumbrance: datasetEncumbrance ?? null,
+  };
 }
 
 function resolveLanguages(
@@ -346,12 +555,15 @@ function resolveLanguages(
       }
 
       if (parsed.level && option.maxLevel && parsed.level > option.maxLevel) {
-        context.warnings.push({
-          type: "level-out-of-range",
-          section: "languages",
-          value,
-          message: `Sprachstufe ${parsed.level} überschreitet den erlaubten Bereich (${option.maxLevel}).`,
-        });
+        pushWarning(
+          {
+            type: "level-out-of-range",
+            section: "languages",
+            value,
+            message: `Sprachstufe ${parsed.level} überschreitet den erlaubten Bereich (${option.maxLevel}).`,
+          },
+          context,
+        );
       }
 
       return {
@@ -471,13 +683,71 @@ function registerUnresolved(
   if (!context.unresolved.has(section)) {
     context.unresolved.set(section, new Set());
   }
-  context.unresolved.get(section)!.add(value);
-  context.warnings.push({
-    type: "unresolved",
-    section,
-    value,
-    message: `Eintrag "${value}" konnte im Abschnitt ${section} nicht aufgelöst werden.`,
-  });
+  const entries = context.unresolved.get(section)!;
+  const sizeBefore = entries.size;
+  entries.add(value);
+  if (entries.size !== sizeBefore) {
+    pushWarning(
+      {
+        type: "unresolved",
+        section,
+        value,
+        message: `Eintrag "${value}" konnte im Abschnitt ${section} nicht aufgelöst werden.`,
+      },
+      context,
+    );
+  }
+}
+
+function pushWarning(
+  warning: ResolutionWarning,
+  context: ResolutionContext,
+): void {
+  const key = `${warning.type}:${warning.section}:${warning.value}:${warning.message}`;
+  if (context.warningKeys.has(key)) {
+    return;
+  }
+  context.warningKeys.add(key);
+  context.warnings.push(warning);
+}
+
+function extractCombatTechniqueId(entry: DerivedEntity): string | undefined {
+  const base = entry.base as Record<string, unknown> | undefined;
+  if (!base || typeof base !== "object") {
+    return undefined;
+  }
+  const special = (base as Record<string, unknown>).special as
+    | Record<string, unknown>
+    | undefined;
+  if (!special || typeof special !== "object") {
+    return undefined;
+  }
+  const combatTechnique = (special as Record<string, unknown>).combatTechnique;
+  return typeof combatTechnique === "string" ? combatTechnique : undefined;
+}
+
+function extractArmorStats(
+  entry: DerivedEntity,
+): { protection?: number | null; encumbrance?: number | null } | undefined {
+  const base = entry.base as Record<string, unknown> | undefined;
+  if (!base || typeof base !== "object") {
+    return undefined;
+  }
+  const special = (base as Record<string, unknown>).special as
+    | Record<string, unknown>
+    | undefined;
+  if (!special || typeof special !== "object") {
+    return undefined;
+  }
+  const protection = (special as Record<string, unknown>).protection;
+  const encumbrance = (special as Record<string, unknown>).encumbrance;
+  if (typeof protection !== "number" && typeof encumbrance !== "number") {
+    return undefined;
+  }
+  return {
+    protection: typeof protection === "number" ? protection : null,
+    encumbrance: typeof encumbrance === "number" ? encumbrance : null,
+  };
 }
 
 function findSelectOption(
