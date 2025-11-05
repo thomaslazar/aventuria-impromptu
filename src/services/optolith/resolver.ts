@@ -581,6 +581,17 @@ function resolveArmor(
     const label =
       trimmedDescription || `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
     registerUnresolved("armor", label, context);
+    if (!trimmedDescription) {
+      pushWarning(
+        {
+          type: "fuzzy-match",
+          section: "armor",
+          value: label,
+          message: `RS/BE-Angabe ohne Beschreibung (möglicherweise natürlicher Rüstungsschutz).`,
+        },
+        context,
+      );
+    }
   }
 
   return {
