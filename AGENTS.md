@@ -63,6 +63,7 @@ The repository root is now the application root; avoid moving `.codex/`, `.devco
 2. **Commit Style**
    - Conventional, short prefix (`feat:`, `fix:`, `chore:`). Example: `chore: upgrade Vue stack`.
    - Do not bundle unrelated features and formatting in the same commit.
+   - Include a brief body (one or two bullets) when committing to describe key changes.
    - Agents may run `git commit` and/or `git push` only when the user explicitly prompts for it; otherwise surface ready-to-review changes for a human maintainer. Never merge branches directly.
 
 3. **Review Expectations**
