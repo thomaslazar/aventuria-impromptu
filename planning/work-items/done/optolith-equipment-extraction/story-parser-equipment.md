@@ -10,10 +10,10 @@ As a converter maintainer I want the stat block parser to extract weapon and arm
 ## Acceptance Criteria
 | Criterion | Gherkin phrasing | Status |
 | --- | --- | --- |
-| AC1 | Given the sample stat blocks When the parser runs Then weapon lines are captured with name, attack/parry, damage, range, and raw text | open |
-| AC2 | Given the sample stat blocks When the parser runs Then RS/BE values and optional armor descriptions are captured | open |
-| AC3 | Given stat blocks without weapons or armor When the parser runs Then equipment arrays remain empty without throwing | open |
-| AC4 | Given the Messerstecher and other samples with line wraps When the parser runs Then multi-line weapon entries are parsed correctly | open |
+| AC1 | Given the sample stat blocks When the parser runs Then weapon lines are captured with name, attack/parry, damage, range, and raw text | done |
+| AC2 | Given the sample stat blocks When the parser runs Then RS/BE values and optional armor descriptions are captured | done |
+| AC3 | Given stat blocks without weapons or armor When the parser runs Then equipment arrays remain empty without throwing | done |
+| AC4 | Given the Messerstecher and other samples with line wraps When the parser runs Then multi-line weapon entries are parsed correctly | done |
 
 ## Dependencies
 - None (first slice of equipment work).

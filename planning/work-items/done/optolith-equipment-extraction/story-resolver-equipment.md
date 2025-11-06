@@ -10,10 +10,10 @@ As a converter maintainer I want parsed weapons and armor resolved against the O
 ## Acceptance Criteria
 | Criterion | Gherkin phrasing | Status |
 | --- | --- | --- |
-| AC1 | Given parsed weapon entries When the resolver runs Then matching Optolith IDs and combat techniques are assigned or warnings recorded | open |
-| AC2 | Given parsed armor entries with RS/BE When the resolver runs Then armor is matched to the dataset (including derived BE) or unresolved warnings are emitted | open |
-| AC3 | Given “Waffenlos” and unmapped weapons When the resolver runs Then the unarmed template or warning metadata is produced accordingly | open |
-| AC4 | Given resolver output When exported warnings are aggregated Then unique warning keys (e.g. Messerstecher) reflect actual list size | open |
+| AC1 | Given parsed weapon entries When the resolver runs Then matching Optolith IDs and combat techniques are assigned or warnings recorded | done |
+| AC2 | Given parsed armor entries with RS/BE When the resolver runs Then armor is matched to the dataset (including derived BE) or unresolved warnings are emitted | done |
+| AC3 | Given “Waffenlos” and unmapped weapons When the resolver runs Then the unarmed template or warning metadata is produced accordingly | done |
+| AC4 | Given resolver output When exported warnings are aggregated Then unique warning keys (e.g. Messerstecher) reflect actual list size | done |
 
 ## Dependencies
 - Parser enhancements (Story OPT-Equip-001).

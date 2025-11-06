@@ -15,3 +15,6 @@ bearer_token_env_var = "GITHUB_MCP_PAT"
 [mcp_servers.gitkraken]
 command = "gk"
 args = ["mcp"]
+
+[notice]
+hide_full_access_warning = true
