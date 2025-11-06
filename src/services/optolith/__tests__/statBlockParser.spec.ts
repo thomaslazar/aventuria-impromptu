@@ -135,6 +135,40 @@ describe("parseStatBlock", () => {
     expect(result.model.armor?.description).toBe("Bastrüstung");
   });
 
+  it("parses weapon lines following dash-prefixed resource markers", () => {
+    const raw = `Kopfgeldjäger
+MU 14 KL 12 IN 14 CH 11
+FF 13 GE 14 KO 14 KK 13
+LeP 36 AsP
+– KaP
+– INI 14+1W6
+AW 7 SK 2 ZK 2 GS 7
+Waffenlos: AT 16 PA 9 TP 1W6 RW kurz
+Mengbilar: AT 16 PA 7 TP 1W6+1* RW kurz
+Sklaventod: AT 16 PA 9 TP 1W6+4 RW mittel
+Schwere Armbrust: FK 15 LZ 15 TP 2W6+6*
+RW 20/100/160
+RS/BE: 3/1 (Lederrüstung) (Modifikatoren durch Rüstungen bereits eingerechnet)
+Vorteile/Nachteile: Schlechte Eigenschaft (Goldgier)
+Sonderfertigkeiten: Armbrust überdrehenAKO151
+(Schwere Armbrust), Aufmerksamkeit, Finte I (Waffenlos, Mengbilar, Sklaventod), Klinge drehenAKOII128
+(Mengbilar, Sklaventod), Muttersprache Garethi III,
+Ortskenntnis (Heimatdorf), Wuchtschlag I (Waffenlos, Mengbilar, Sklaventod)
+Talente: Einschüchtern 10, Fährtensuchern 13, Gassenwissen 12, Handel 8, Körperbeherrschung 10, Kraftakt 10, Menschenkenntnis 12, Selbstbeherrschung 11,
+Sinnesschärfe 12, Überreden 9, Verbergen 10,
+Willenskraft 9
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.weapons.map((weapon) => weapon.name)).toEqual([
+      "Waffenlos",
+      "Mengbilar",
+      "Sklaventod",
+      "Schwere Armbrust",
+    ]);
+  });
+
   it("parses relative clauses, composite abilities, and footnote markers", () => {
     const raw = `Testfigur
 MU 10 KL 10 IN 10 CH 10

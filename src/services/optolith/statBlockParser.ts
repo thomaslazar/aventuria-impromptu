@@ -171,6 +171,7 @@ export function parseStatBlock(raw: string): ParseResult {
     parseResourceLine(secondResourceLine, pools);
     workingLines.shift();
   }
+  consumeAdditionalResourceLines(workingLines, pools);
 
   const weapons: WeaponStats[] = [];
   while (workingLines.length > 0) {
@@ -431,6 +432,25 @@ function parseResourceLine(line: string, pools: ResourcePools): void {
       default:
         break;
     }
+  }
+}
+
+function consumeAdditionalResourceLines(
+  lines: string[],
+  pools: ResourcePools,
+): void {
+  while (lines.length > 0) {
+    const candidate = lines[0]?.trim() ?? "";
+    if (!candidate) {
+      lines.shift();
+      continue;
+    }
+    const sanitized = candidate.replace(/^[–—-]\s*/, "").trim();
+    if (!/^(LeP|AsP|KaP|INI|AW|SK|ZK|GS)\b/i.test(sanitized)) {
+      break;
+    }
+    lines.shift();
+    parseResourceLine(sanitized, pools);
   }
 }
 
