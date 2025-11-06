@@ -134,4 +134,52 @@ describe("parseStatBlock", () => {
     expect(result.model.armor?.be).toBe(0);
     expect(result.model.armor?.description).toBe("Bastrüstung");
   });
+
+  it("parses relative clauses, composite abilities, and footnote markers", () => {
+    const raw = `Testfigur
+MU 10 KL 10 IN 10 CH 10
+FF 10 GE 10 KO 10 KK 10
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Waffenlos: AT 10 PA 7 TP 1W6 RW kurz
+RS/BE: 0/0 normale Kleidung oder nackt
+Vorteile: keine
+Nachteile: Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige), Arroganz
+Sonderfertigkeiten: Haltegriff (Waffenlos) Schildspalter (Yeti-Keule)
+Talente: Verbergen 8**
+Segnungen: die Zwölf Segnungen
+Zauber: Attributo (KK) 8, Analys 12, Odem 10, Zauberklinge 7, Corpofrigo 7 (10/14/12), Paralysis 18 (Die Opfer fliehen nicht, sondern erstarren vor Furcht.)
+Ausrüstung: Immanschläger, den er als Knüppel nutzt, drei Speere, vier Wurfkeulen, Shakagra-Krummsäbel (2)
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.armor?.description).toBe("normale Kleidung oder nackt");
+    expect(result.model.specialAbilities).toEqual([
+      "Haltegriff (Waffenlos)",
+      "Schildspalter (Yeti-Keule)",
+    ]);
+    const hiding = result.model.talents.find(
+      (talent) => talent.name === "Verbergen",
+    );
+    expect(hiding?.value).toBe(8);
+    expect(result.model.equipment).toContain(
+      "Immanschläger, den er als Knüppel nutzt",
+    );
+    expect(result.model.equipment).toContain("Speere");
+    expect(result.model.equipment).toContain("Wurfkeulen");
+    expect(result.model.equipment).toContain("Shakagra-Krummsäbel");
+    expect(result.model.spells).toEqual([
+      { name: "Attributo (Körperkraft)", value: 8 },
+      { name: "Analys", value: 12 },
+      { name: "Odem", value: 10 },
+      { name: "Zauberklinge", value: 7 },
+      { name: "Corpofrigo", value: 7 },
+      { name: "Paralysis", value: 18 },
+    ]);
+    expect(result.model.blessings).toContain("die Zwölf Segnungen");
+    expect(result.model.disadvantages).toContain(
+      "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
+    );
+  });
 });
