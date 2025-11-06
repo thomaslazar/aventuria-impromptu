@@ -114,7 +114,23 @@
         }
       },
       "normalizedHeading": "Normalisierter Statblock",
-      "jsonHeading": "Optolith-JSON-Vorschau",
+  "jsonHeading": "Optolith-JSON-Vorschau",
+  "result": {
+    "equipment": {
+      "heading": "Ausrüstungsübersicht",
+      "weapons": "Waffen",
+      "armor": "Rüstung",
+      "gear": "Weitere Ausrüstung",
+      "notLinked": "nicht verknüpft",
+      "noTechnique": "keine Kampftechnik",
+      "unarmed": "waffenlos",
+      "noProtection": "RS n/v",
+      "noEncumbrance": "BE n/v",
+      "protectionValue": "RS {value}",
+      "encumbranceValue": "BE {value}",
+      "unresolved": "nicht exportiert"
+    }
+  },
       "recent": {
         "title": "Zuletzt konvertiert",
         "empty": "Noch keine Konvertierungen gespeichert. Führe eine Konvertierung aus, um die Liste zu füllen.",
@@ -132,10 +148,11 @@
           "breakdown": "Parser: {parser}, Resolver: {resolver}, Exporter: {exporter}, Unaufgelöst: {unresolved}"
         },
         "storedAt": "Gespeichert am {date}",
-        "labels": {
-          "statBlock": "Statblock",
-          "json": "Gespeichertes JSON"
-        }
+    "labels": {
+      "statBlock": "Statblock",
+      "json": "Gespeichertes JSON",
+      "equipment": "Ausrüstungsübersicht"
+    }
       }
     },
     "about": {

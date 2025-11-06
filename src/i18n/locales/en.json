@@ -114,7 +114,23 @@
         }
       },
       "normalizedHeading": "Normalized stat block",
-      "jsonHeading": "Optolith JSON preview",
+  "jsonHeading": "Optolith JSON preview",
+  "result": {
+    "equipment": {
+      "heading": "Equipment Summary",
+      "weapons": "Weapons",
+      "armor": "Armor",
+      "gear": "Other Equipment",
+      "notLinked": "not linked",
+      "noTechnique": "no technique",
+      "unarmed": "unarmed",
+      "noProtection": "RS n/a",
+      "noEncumbrance": "BE n/a",
+      "protectionValue": "RS {value}",
+      "encumbranceValue": "BE {value}",
+      "unresolved": "not exported"
+    }
+  },
       "recent": {
         "title": "Recent conversions",
         "empty": "No conversions cached yet. Run a conversion to populate this list.",
@@ -134,7 +150,8 @@
         "storedAt": "Saved {date}",
         "labels": {
           "statBlock": "Stat block",
-          "json": "Cached JSON"
+          "json": "Cached JSON",
+          "equipment": "Equipment Summary"
         }
       }
     },

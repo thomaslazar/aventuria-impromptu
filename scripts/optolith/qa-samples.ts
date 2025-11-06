@@ -6,7 +6,10 @@ import { exportToOptolithCharacter } from "../../src/services/optolith/exporter"
 import { resolveStatBlock } from "../../src/services/optolith/resolver";
 import { parseStatBlock } from "../../src/services/optolith/statBlockParser";
 import type { OptolithDataset } from "../../src/services/optolith/dataset";
-import type { ConversionResultPayload } from "../../src/types/optolith/converter";
+import type {
+  ConversionResultPayload,
+  EquipmentSummary,
+} from "../../src/types/optolith/converter";
 
 const DATASET_DIR = path.resolve(process.cwd(), "public/data/optolith");
 const SAMPLE_MD = path.resolve(
@@ -59,6 +62,7 @@ async function main(): Promise<void> {
         parsed,
         resolved,
       });
+      const equipmentSummary = buildEquipmentSummary(resolved);
 
       reports.push({
         sample,
@@ -70,6 +74,7 @@ async function main(): Promise<void> {
           parserWarnings: parsed.warnings,
           resolverWarnings: resolved.warnings,
           unresolved: resolved.unresolved,
+          equipmentSummary,
         },
       });
     } catch (error) {
@@ -133,6 +138,50 @@ async function loadSamples(filePath: string): Promise<SampleBlock[]> {
       text: block,
     };
   });
+}
+
+function buildEquipmentSummary(
+  resolved: ReturnType<typeof resolveStatBlock>,
+): EquipmentSummary {
+  const weapons = resolved.weapons.map((weapon) => ({
+    name: weapon.source.name,
+    templateId: weapon.match?.id,
+    combatTechniqueId: weapon.combatTechnique?.id,
+    fallback: weapon.fallback,
+    unresolved: !weapon.match,
+  }));
+
+  const armor = resolved.armor
+    ? {
+        name:
+          resolved.armor.source.description ??
+          resolved.armor.source.notes ??
+          resolved.armor.source.raw ??
+          "Unknown armor",
+        templateId: resolved.armor.match?.id,
+        protection:
+          typeof resolved.armor.datasetProtection === "number"
+            ? resolved.armor.datasetProtection
+            : null,
+        encumbrance:
+          typeof resolved.armor.datasetEncumbrance === "number"
+            ? resolved.armor.datasetEncumbrance
+            : null,
+        unresolved: !resolved.armor.match,
+      }
+    : null;
+
+  const gear = resolved.equipment.map((entry) => ({
+    name: entry.source,
+    templateId: entry.match?.id,
+    unresolved: !entry.match,
+  }));
+
+  return {
+    weapons,
+    armor,
+    gear,
+  };
 }
 
 async function writeReport(
