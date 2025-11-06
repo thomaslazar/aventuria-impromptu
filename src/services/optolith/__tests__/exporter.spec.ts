@@ -28,6 +28,7 @@ describe("exportToOptolithCharacter", () => {
     expect(hero.sex).toBe("m");
     expect(hero.pers.family).toBe("Unbekannt");
     expect(warnings.length).toBeGreaterThanOrEqual(0);
+    expect(hero.ct).toBeDefined();
   });
 
   it("includes resolved weapons, armor, and equipment in belongings", async () => {
@@ -71,5 +72,48 @@ describe("exportToOptolithCharacter", () => {
         ),
       ).toBe(true);
     }
+
+    expect(hero.ct["CT_9"]).toBeGreaterThanOrEqual(6);
+  });
+
+  it("derives combat technique values from weapon stats", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Kopfgeldjäger
+MU 14 KL 12 IN 14 CH 11
+FF 13 GE 14 KO 14 KK 13
+LeP 36 AsP
+- KaP
+- INI 14+1W6
+AW 7 SK 2 ZK 2 GS 7
+Waffenlos: AT 16 PA 9 TP 1W6 RW kurz
+Mengbilar: AT 16 PA 7 TP 1W6+1* RW kurz
+Sklaventod: AT 16 PA 9 TP 1W6+4 RW mittel
+Schwere Armbrust: FK 15 LZ 15 TP 2W6+6*
+RW 20/100/160
+RS/BE: 3/1 (Lederrüstung) (Modifikatoren durch Rüstungen bereits eingerechnet)
+Vorteile/Nachteile: Schlechte Eigenschaft (Goldgier)`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero, warnings } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(warnings).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("specialAbilities"),
+        expect.stringContaining("talents"),
+      ]),
+    );
+    expect(hero.ct).toMatchObject({
+      CT_1: 14,
+      CT_3: 14,
+      CT_9: 14,
+      CT_12: 14,
+    });
   });
 });

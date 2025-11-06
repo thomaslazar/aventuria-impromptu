@@ -4,6 +4,7 @@ import type {
   AttributeKey,
   ParseResult,
 } from "../../types/optolith/stat-block";
+import { deriveCombatTechniques } from "./combatTechniques";
 
 const DEFAULT_CLIENT_VERSION = "1.5.1";
 const DEFAULT_PHASE = 3;
@@ -143,6 +144,8 @@ export function exportToOptolithCharacter({
   const liturgies = buildRatedMap(resolved.liturgies);
   const rituals = buildRatedMap(resolved.rituals);
 
+  const ctResult = deriveCombatTechniques(parsed, resolved, dataset);
+
   const hero: OptolithExport = {
     clientVersion: DEFAULT_CLIENT_VERSION,
     dateCreated: now,
@@ -172,13 +175,13 @@ export function exportToOptolithCharacter({
     blessings: buildBlessings(resolved),
     cantrips: buildCantrips(resolved),
     rituals,
-    ct: {},
+    ct: ctResult.values,
     belongings: buildBelongings(resolved),
     rules: buildRules(),
     pets: {},
   };
 
-  const warnings = collectWarningMessages(parsed, resolved);
+  const warnings = collectWarningMessages(parsed, resolved, ctResult.warnings);
 
   return {
     hero,
@@ -351,6 +354,7 @@ function buildBlessings(resolved: ResolutionResult): string[] {
 function collectWarningMessages(
   parsed: ParseResult,
   resolved: ResolutionResult,
+  additional: readonly string[] = [],
 ): string[] {
   const warnings: string[] = [];
   for (const warning of parsed.warnings) {
@@ -382,6 +386,7 @@ function collectWarningMessages(
       `[Exporter] armor: Rüstung "${armorLabel}" konnte nicht exportiert werden (keine Zuordnung).`,
     );
   }
+  additional.forEach((message) => warnings.push(message));
   return warnings;
 }
 
