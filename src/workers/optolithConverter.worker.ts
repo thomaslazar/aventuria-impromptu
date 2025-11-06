@@ -7,6 +7,7 @@ import type {
   ConversionErrorMessage,
   ConversionRequestMessage,
   ConversionSuccessMessage,
+  EquipmentSummary,
 } from "../types/optolith/converter";
 
 let cachedDataset: ReturnType<typeof createDatasetLookups> | undefined;
@@ -29,6 +30,7 @@ self.addEventListener(
         parsed,
         resolved,
       });
+      const equipmentSummary = buildEquipmentSummary(resolved);
 
       const response: ConversionSuccessMessage = {
         type: "result",
@@ -40,6 +42,7 @@ self.addEventListener(
           parserWarnings: parsed.warnings,
           resolverWarnings: resolved.warnings,
           unresolved: resolved.unresolved,
+          equipmentSummary,
         },
       };
 
@@ -105,6 +108,50 @@ async function loadDataset(baseUrl: string) {
   cachedDataset = createDatasetLookups(dataset);
   cachedManifestPath = manifestUrl;
   return cachedDataset;
+}
+
+function buildEquipmentSummary(
+  resolved: ReturnType<typeof resolveStatBlock>,
+): EquipmentSummary {
+  const weapons = resolved.weapons.map((weapon) => ({
+    name: weapon.source.name,
+    templateId: weapon.match?.id,
+    combatTechniqueId: weapon.combatTechnique?.id,
+    fallback: weapon.fallback,
+    unresolved: !weapon.match,
+  }));
+
+  const armor = resolved.armor
+    ? {
+        name:
+          resolved.armor.source.description ??
+          resolved.armor.source.notes ??
+          resolved.armor.source.raw ??
+          "Unknown armor",
+        templateId: resolved.armor.match?.id,
+        protection:
+          typeof resolved.armor.datasetProtection === "number"
+            ? resolved.armor.datasetProtection
+            : null,
+        encumbrance:
+          typeof resolved.armor.datasetEncumbrance === "number"
+            ? resolved.armor.datasetEncumbrance
+            : null,
+        unresolved: !resolved.armor.match,
+      }
+    : null;
+
+  const gear = resolved.equipment.map((entry) => ({
+    name: entry.source,
+    templateId: entry.match?.id,
+    unresolved: !entry.match,
+  }));
+
+  return {
+    weapons,
+    armor,
+    gear,
+  };
 }
 
 function findSectionFile(

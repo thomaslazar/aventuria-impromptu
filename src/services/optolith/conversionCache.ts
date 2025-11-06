@@ -9,7 +9,7 @@ import type {
   WarningSummary,
 } from "@/types/optolith/cache";
 
-const CACHE_SCHEMA_VERSION = 1;
+const CACHE_SCHEMA_VERSION = 2;
 const MAX_ENTRIES = 10;
 
 const DB_NAME = "optolith-converter";
@@ -59,13 +59,14 @@ async function openDatabase(): Promise<IDBDatabase> {
   });
 }
 
-async function readAllIndexedDbEntries(
+async function readIndexedDbEntries(
   db: IDBDatabase,
-): Promise<StoredEntry[]> {
+): Promise<{ entries: StoredEntry[]; hasLegacy: boolean }> {
   const transaction = db.transaction(STORE_NAME, "readonly");
   const store = transaction.objectStore(STORE_NAME);
   const index = store.index("createdAt");
   const entries: StoredEntry[] = [];
+  let hasLegacy = false;
 
   await new Promise<void>((resolve, reject) => {
     const request = index.openCursor(null, "prev");
@@ -78,6 +79,8 @@ async function readAllIndexedDbEntries(
       const value = cursor.value as StoredEntry;
       if (value.version === CACHE_SCHEMA_VERSION) {
         entries.push(value);
+      } else {
+        hasLegacy = true;
       }
       cursor.continue();
     };
@@ -85,7 +88,7 @@ async function readAllIndexedDbEntries(
       reject(request.error ?? new Error("Failed to iterate IndexedDB cursor"));
   });
 
-  return entries;
+  return { entries, hasLegacy };
 }
 
 function awaitTransactionCompletion(
@@ -294,7 +297,13 @@ class OptolithConversionCache extends EventTarget {
       const db = await openDatabase();
       this.db = db;
       this.backend = "indexedDB";
-      this.entries = normalizeEntries(await readAllIndexedDbEntries(db));
+      const { entries, hasLegacy } = await readIndexedDbEntries(db);
+      if (hasLegacy) {
+        await clearIndexedDb(db);
+        this.entries = [];
+      } else {
+        this.entries = normalizeEntries(entries);
+      }
       this.setState("available");
     } catch {
       try {
@@ -338,7 +347,8 @@ class OptolithConversionCache extends EventTarget {
         ...entry,
         version: CACHE_SCHEMA_VERSION,
       });
-      this.entries = normalizeEntries(await readAllIndexedDbEntries(this.db));
+      const { entries } = await readIndexedDbEntries(this.db);
+      this.entries = normalizeEntries(entries);
     } else if (this.backend === "localStorage") {
       const entries = readFromLocalStorage();
       const next = [entry, ...entries].slice(0, MAX_ENTRIES);
@@ -354,7 +364,8 @@ class OptolithConversionCache extends EventTarget {
     }
     if (this.backend === "indexedDB" && this.db) {
       await deleteIndexedDbEntry(this.db, id);
-      this.entries = normalizeEntries(await readAllIndexedDbEntries(this.db));
+      const { entries } = await readIndexedDbEntries(this.db);
+      this.entries = normalizeEntries(entries);
     } else if (this.backend === "localStorage") {
       const entries = readFromLocalStorage().filter((entry) => entry.id !== id);
       writeToLocalStorage(entries);

@@ -10,10 +10,10 @@ As a converter maintainer I want resolved equipment to appear in the Optolith ex
 ## Acceptance Criteria
 | Criterion | Gherkin phrasing | Status |
 | --- | --- | --- |
-| AC1 | Given resolved equipment When the exporter runs Then weapons and armor populate the Optolith JSON `belongings` section | open |
-| AC2 | Given the cache controller saves conversions When schema version differs Then the controller clears or migrates entries to avoid stale structures | open |
-| AC3 | Given resolved warnings When the recent conversions list renders Then warning counts and breakdowns match the detailed list | open |
-| AC4 | (Optional) Given equipment data exists When the UI displays conversion results Then key equipment details are visible for validation | open |
+| AC1 | Given resolved equipment When the exporter runs Then weapons and armor populate the Optolith JSON `belongings` section | done |
+| AC2 | Given the cache controller saves conversions When schema version differs Then the controller clears or migrates entries to avoid stale structures | done |
+| AC3 | Given resolved warnings When the recent conversions list renders Then warning counts and breakdowns match the detailed list | done |
+| AC4 | (Optional) Given equipment data exists When the UI displays conversion results Then key equipment details are visible for validation | done |
 
 ## Dependencies
 - Parser and resolver equipment stories.
@@ -25,3 +25,4 @@ As a converter maintainer I want resolved equipment to appear in the Optolith ex
 - Prepare cache schema migration notes (documented in PR/README) and include helper to clear history with user-facing message.
 - Groomed 2025-10-22 (ref: `planning/runs/2025-10-22T12-00-00-weapon-armor-grooming/grooming-2025-10-22T12-00-00.md`).
 - Groomed 2025-10-22 (ref: `planning/runs/2025-10-22T12-00-00-weapon-armor-grooming/grooming-2025-10-22T12-00-00.md`).
+- QA sweep: `planning/runs/2025-10-16T12-00-00-dsa5-optolith-converter/sample-analysis-2025-11-06T08-27-27.md`.

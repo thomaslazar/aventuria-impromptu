@@ -366,6 +366,22 @@ function collectWarningMessages(
       warnings.push(`[Resolver] ${section}: unverarbeitet "${value}"`);
     }
   }
+  resolved.weapons.forEach((weapon) => {
+    if (!weapon.match && weapon.fallback !== "unarmed") {
+      warnings.push(
+        `[Exporter] weapons: Waffe "${weapon.source.name}" konnte nicht exportiert werden (keine Zuordnung).`,
+      );
+    }
+  });
+  if (resolved.armor && !resolved.armor.match) {
+    const armorLabel =
+      resolved.armor.source.description ??
+      resolved.armor.source.notes ??
+      resolved.armor.source.raw;
+    warnings.push(
+      `[Exporter] armor: Rüstung "${armorLabel}" konnte nicht exportiert werden (keine Zuordnung).`,
+    );
+  }
   return warnings;
 }
 
@@ -402,16 +418,61 @@ function buildPersonalData(parsed: ParseResult): PersonalData {
 function buildBelongings(
   resolved: ResolutionResult,
 ): OptolithExport["belongings"] {
-  const items: Record<string, unknown> = {};
-  resolved.equipment.forEach((entry, index) => {
+  const itemEntries: Array<Record<string, unknown>> = [];
+
+  const addItem = (entry: Record<string, unknown>) => {
+    itemEntries.push(entry);
+  };
+
+  resolved.weapons.forEach((weapon) => {
+    if (!weapon.match) {
+      return;
+    }
+    const item: Record<string, unknown> = {
+      template: weapon.match.id,
+      amount: 1,
+      name: weapon.source.name,
+    };
+    if (weapon.combatTechnique?.id) {
+      item.combatTechnique = weapon.combatTechnique.id;
+    }
+    addItem(item);
+  });
+
+  if (resolved.armor?.match) {
+    const armorEntry: Record<string, unknown> = {
+      template: resolved.armor.match.id,
+      amount: 1,
+      name:
+        resolved.armor.source.description ??
+        resolved.armor.source.notes ??
+        resolved.armor.source.raw,
+    };
+    if (typeof resolved.armor.datasetProtection === "number") {
+      armorEntry.pro = resolved.armor.datasetProtection;
+    }
+    if (typeof resolved.armor.datasetEncumbrance === "number") {
+      armorEntry.enc = resolved.armor.datasetEncumbrance;
+    }
+    addItem(armorEntry);
+  }
+
+  resolved.equipment.forEach((entry) => {
     if (!entry.match) {
       return;
     }
-    items[`ITEM_${index + 1}`] = {
+    addItem({
       template: entry.match.id,
       amount: 1,
-    };
+      name: entry.source,
+    });
   });
+
+  const items: Record<string, unknown> = {};
+  itemEntries.forEach((item, index) => {
+    items[`ITEM_${index + 1}`] = item;
+  });
+
   return {
     items,
     armorZones: {},
