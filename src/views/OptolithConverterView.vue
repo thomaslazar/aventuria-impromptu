@@ -203,13 +203,15 @@
         </details>
 
         <details class="optolith-details" open>
-          <summary>{{ t("views.optolithConverter.jsonHeading") }}</summary>
-          <div class="optolith-json-actions">
+          <summary class="optolith-details__summary">
+            <span class="optolith-details__summary-text">
+              {{ t("views.optolithConverter.jsonHeading") }}
+            </span>
             <button
               type="button"
               class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
               :title="t('views.optolithConverter.buttons.copyJson')"
-              @click="copyJson"
+              @click.stop.prevent="copyJson"
             >
               <svg
                 class="optolith-json-actions__icon"
@@ -227,7 +229,7 @@
                 {{ t("views.optolithConverter.buttons.copyJson") }}
               </span>
             </button>
-          </div>
+          </summary>
           <pre>{{ formattedJson }}</pre>
         </details>
       </article>
@@ -1034,6 +1036,16 @@ onBeforeUnmount(() => {
   color: rgba(47, 36, 18, 0.85);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.optolith-details__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.optolith-details__summary-text {
+  flex: 1;
 }
 
 .optolith-details summary:focus-visible {
