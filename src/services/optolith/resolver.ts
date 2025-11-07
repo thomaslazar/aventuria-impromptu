@@ -663,11 +663,13 @@ function resolveArmor(
       trimmedDescription || `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
     if (likelyNaturalArmor) {
       const statsSummary =
-        trimmedDescription || `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
+        trimmedDescription.length > 0
+          ? trimmedDescription
+          : `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
       const condensedStats =
         trimmedDescription.length > 0
           ? trimmedDescription
-          : `${armor.rs ?? "-"} / ${armor.be ?? "-"}`;
+          : `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
       pushWarning(
         {
           type: "fuzzy-match",
