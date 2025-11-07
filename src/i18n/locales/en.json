@@ -101,7 +101,8 @@
         "reset": "Reset",
         "loadLast": "Load Last Result",
         "download": "Download JSON",
-        "copyWarnings": "Copy warnings"
+        "copyWarnings": "Copy warnings",
+        "copyJson": "Copy JSON"
       },
       "loading": "Converting… please wait.",
       "datasetInfo": "Dataset schema {schema} · Source checksum {checksum}…",

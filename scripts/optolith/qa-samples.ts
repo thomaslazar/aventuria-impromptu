@@ -3,10 +3,14 @@ import path from "node:path";
 
 import { createDatasetLookups } from "../../src/services/optolith/dataset";
 import { exportToOptolithCharacter } from "../../src/services/optolith/exporter";
+import { deriveCombatTechniques } from "../../src/services/optolith/combatTechniques";
 import { resolveStatBlock } from "../../src/services/optolith/resolver";
 import { parseStatBlock } from "../../src/services/optolith/statBlockParser";
 import type { OptolithDataset } from "../../src/services/optolith/dataset";
-import type { ConversionResultPayload } from "../../src/types/optolith/converter";
+import type {
+  ConversionResultPayload,
+  EquipmentSummary,
+} from "../../src/types/optolith/converter";
 
 const DATASET_DIR = path.resolve(process.cwd(), "public/data/optolith");
 const SAMPLE_MD = path.resolve(
@@ -39,6 +43,7 @@ interface SampleBlock {
 interface SampleReport {
   readonly sample: SampleBlock;
   readonly result: ConversionResultPayload;
+  readonly combatTechniques: ReturnType<typeof deriveCombatTechniques>;
 }
 
 async function main(): Promise<void> {
@@ -59,6 +64,12 @@ async function main(): Promise<void> {
         parsed,
         resolved,
       });
+      const equipmentSummary = buildEquipmentSummary(resolved);
+      const combatTechniques = deriveCombatTechniques(
+        parsed,
+        resolved,
+        lookups,
+      );
 
       reports.push({
         sample,
@@ -70,7 +81,9 @@ async function main(): Promise<void> {
           parserWarnings: parsed.warnings,
           resolverWarnings: resolved.warnings,
           unresolved: resolved.unresolved,
+          equipmentSummary,
         },
+        combatTechniques,
       });
     } catch (error) {
       failures.push({
@@ -135,6 +148,50 @@ async function loadSamples(filePath: string): Promise<SampleBlock[]> {
   });
 }
 
+function buildEquipmentSummary(
+  resolved: ReturnType<typeof resolveStatBlock>,
+): EquipmentSummary {
+  const weapons = resolved.weapons.map((weapon) => ({
+    name: weapon.source.name,
+    templateId: weapon.match?.id,
+    combatTechniqueId: weapon.combatTechnique?.id,
+    fallback: weapon.fallback,
+    unresolved: !weapon.match,
+  }));
+
+  const armor = resolved.armor
+    ? {
+        name:
+          resolved.armor.source.description ??
+          resolved.armor.source.notes ??
+          resolved.armor.source.raw ??
+          "Unknown armor",
+        templateId: resolved.armor.match?.id,
+        protection:
+          typeof resolved.armor.datasetProtection === "number"
+            ? resolved.armor.datasetProtection
+            : null,
+        encumbrance:
+          typeof resolved.armor.datasetEncumbrance === "number"
+            ? resolved.armor.datasetEncumbrance
+            : null,
+        unresolved: !resolved.armor.match,
+      }
+    : null;
+
+  const gear = resolved.equipment.map((entry) => ({
+    name: entry.source,
+    templateId: entry.match?.id,
+    unresolved: !entry.match,
+  }));
+
+  return {
+    weapons,
+    armor,
+    gear,
+  };
+}
+
 async function writeReport(
   reports: SampleReport[],
   failures: Array<{ sample: SampleBlock; error: string }>,
@@ -153,7 +210,7 @@ async function writeReport(
   }
 
   for (const report of reports) {
-    const { sample, result } = report;
+    const { sample, result, combatTechniques } = report;
     lines.push(`## ${sample.name}`);
     lines.push("");
     lines.push("### Parser Warnings");
@@ -191,6 +248,26 @@ async function writeReport(
         ? result.exportedWarnings.map((warning) => `- ${warning}`).join("\n")
         : "- None",
     );
+    lines.push("");
+
+    lines.push("### Combat Techniques");
+    if (Object.keys(combatTechniques.values).length === 0) {
+      lines.push("- None");
+    } else {
+      for (const detail of combatTechniques.details) {
+        const ctLabel = detail.combatTechniqueName ?? detail.combatTechniqueId;
+        const baseInfo =
+          detail.sourceAttack !== null && detail.sourceAttack !== undefined
+            ? `AT ${detail.sourceAttack}`
+            : detail.sourceRangedAttack !== null &&
+                detail.sourceRangedAttack !== undefined
+              ? `FK ${detail.sourceRangedAttack}`
+              : "Keine AT/FK-Angabe";
+        lines.push(
+          `- ${detail.weaponName} → ${ctLabel}: CT ${detail.derivedValue} (${baseInfo}, Attribut-Bonus ${detail.attributeBonus}, Waffenmodifikator ${detail.weaponModifier})`,
+        );
+      }
+    }
     lines.push("");
   }
 

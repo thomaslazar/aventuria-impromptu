@@ -2,6 +2,13 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.0 — Optolith Equipment & Techniques (2025-11-07)
+
+- Added a multi-line weapon/armor parser that understands hyphenated names, plural quantities, attribute abbreviations, and inline notes so exotic stat blocks (“Tauchspeer”, “Immanschläger, den er als Knüppel nutzt”, etc.) can be normalized without manual cleanup.
+- Expanded the resolver + exporter to match parsed equipment against the Optolith dataset, emit hydrated belongings (template IDs, RS/BE, encumbrance), surface clearer warnings for natural armor or adjusted loads, and keep the recent-conversions cache schema in sync.
+- Introduced combat technique inference: derived base CT values from weapon AT/PA/FK, MU/FF modifiers, and weapon-specific attack modifiers, then wrote the values into Optolith JSON so NPC imports arrive with correct melee and ranged proficiencies.
+- Polished the converter UI with a dedicated “Recent conversions” tab, slimmer result cards, a JSON copy button, and accessible warning callouts so large histories stay scannable even when results are collapsed.
+
 ## 0.3.2 — GitHub Issue Reporting (2025-11-05)
 
 - Added a GitHub issues link in the Optolith converter to help users report stat block conversion bugs, including localized guidance in German and English for submitting problematic stat blocks.

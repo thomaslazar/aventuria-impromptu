@@ -101,7 +101,8 @@
         "reset": "Zurücksetzen",
         "loadLast": "Letztes Ergebnis laden",
         "download": "JSON herunterladen",
-        "copyWarnings": "Warnungen kopieren"
+        "copyWarnings": "Warnungen kopieren",
+        "copyJson": "JSON kopieren"
       },
       "loading": "Konvertierung läuft … bitte warten.",
       "datasetInfo": "Datensatzschema {schema} · Quellen-Prüfsumme {checksum}…",

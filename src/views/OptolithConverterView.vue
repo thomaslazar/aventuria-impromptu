@@ -203,7 +203,31 @@
         </details>
 
         <details class="optolith-details" open>
-          <summary>{{ t("views.optolithConverter.jsonHeading") }}</summary>
+          <summary class="optolith-details__summary">
+            {{ t("views.optolithConverter.jsonHeading") }}
+            <button
+              type="button"
+              class="aventuria-button aventuria-button--ghost optolith-json-actions__button optolith-json-actions__button--inline"
+              :title="t('views.optolithConverter.buttons.copyJson')"
+              @click.stop.prevent="copyJson"
+            >
+              <svg
+                class="optolith-json-actions__icon"
+                viewBox="0 0 24 24"
+                role="img"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  fill="currentColor"
+                  d="M8 3h9a2 2 0 0 1 2 2v13h-2V5H8zm-3 4h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m0 2v10h9V9z"
+                />
+              </svg>
+              <span class="visually-hidden">
+                {{ t("views.optolithConverter.buttons.copyJson") }}
+              </span>
+            </button>
+          </summary>
           <pre>{{ formattedJson }}</pre>
         </details>
       </article>
@@ -314,6 +338,32 @@
                   <h3 class="optolith-history__section-title">
                     {{ t("views.optolithConverter.recent.labels.json") }}
                   </h3>
+                  <div
+                    class="optolith-json-actions optolith-json-actions--history"
+                  >
+                    <button
+                      type="button"
+                      class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
+                      :title="t('views.optolithConverter.buttons.copyJson')"
+                      @click="copyEntryJson(entry.json)"
+                    >
+                      <svg
+                        class="optolith-json-actions__icon"
+                        viewBox="0 0 24 24"
+                        role="img"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M8 3h9a2 2 0 0 1 2 2v13h-2V5H8zm-3 4h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m0 2v10h9V9z"
+                        />
+                      </svg>
+                      <span class="visually-hidden">
+                        {{ t("views.optolithConverter.buttons.copyJson") }}
+                      </span>
+                    </button>
+                  </div>
                   <pre class="optolith-history__pre">{{ entry.json }}</pre>
                 </section>
               </div>
@@ -627,18 +677,30 @@ function downloadJson() {
   URL.revokeObjectURL(url);
 }
 
-async function copyWarnings() {
-  if (displayWarnings.value.length === 0) {
+async function writeToClipboard(text: string, context: string) {
+  if (!text) {
     return;
   }
   try {
     if (!navigator?.clipboard?.writeText) {
       throw new Error("Clipboard API not available");
     }
-    await navigator.clipboard.writeText(displayWarnings.value.join("\n"));
+    await navigator.clipboard.writeText(text);
   } catch (err) {
-    console.error("Failed to copy warnings", err);
+    console.error(`Failed to copy ${context}`, err);
   }
+}
+
+async function copyWarnings() {
+  await writeToClipboard(displayWarnings.value.join("\n"), "warnings");
+}
+
+async function copyJson() {
+  await writeToClipboard(formattedJson.value, "JSON");
+}
+
+async function copyEntryJson(json: string) {
+  await writeToClipboard(json, "cached JSON");
 }
 
 function reset() {
@@ -974,6 +1036,12 @@ onBeforeUnmount(() => {
   text-transform: uppercase;
 }
 
+.optolith-details__summary {
+  position: relative;
+  padding-right: 2.25rem;
+  margin: 0;
+}
+
 .optolith-details summary:focus-visible {
   outline: 2px solid var(--aventuria-accent);
   outline-offset: 4px;
@@ -992,6 +1060,40 @@ onBeforeUnmount(() => {
     monospace;
   font-size: 0.85rem;
   line-height: 1.6;
+}
+
+.optolith-json-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.optolith-json-actions--history {
+  margin-bottom: 0.35rem;
+}
+
+.optolith-json-actions__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.optolith-json-actions__button--inline {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.optolith-json-actions__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgba(47, 36, 18, 0.85);
 }
 
 .optolith-history {
@@ -1157,7 +1259,7 @@ onBeforeUnmount(() => {
   line-height: 1.45;
 }
 
-@media (max-width: 768px) {
+. @media (max-width: 768px) {
   .optolith-result__header {
     flex-direction: column;
     align-items: flex-start;

@@ -3,7 +3,11 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createDatasetLookups } from "../dataset";
 import type { OptolithDatasetLookups } from "../dataset";
 import { resolveStatBlock } from "../resolver";
-import type { ParsedStatBlock } from "../../../types/optolith/stat-block";
+import type {
+  ArmorStats,
+  ParsedStatBlock,
+  WeaponStats,
+} from "../../../types/optolith/stat-block";
 
 import { loadDataset } from "./helpers";
 
@@ -35,6 +39,35 @@ function createStatBlock(overrides: Partial<ParsedStatBlock>): ParsedStatBlock {
     extras: [],
     ...overrides,
   } as ParsedStatBlock;
+}
+
+function createWeapon(overrides: Partial<WeaponStats>): WeaponStats {
+  return {
+    name: "Testwaffe",
+    category: "melee",
+    attack: null,
+    parry: null,
+    rangedAttack: null,
+    damage: null,
+    range: null,
+    load: null,
+    reach: null,
+    notes: null,
+    raw: {},
+    rawInput: "",
+    ...overrides,
+  } as WeaponStats;
+}
+
+function createArmor(overrides: Partial<ArmorStats>): ArmorStats {
+  return {
+    rs: null,
+    be: null,
+    description: null,
+    notes: null,
+    raw: "",
+    ...overrides,
+  } as ArmorStats;
 }
 
 describe("resolveStatBlock", () => {
@@ -115,22 +148,30 @@ describe("resolveStatBlock", () => {
     expect(resolved.warnings).toHaveLength(0);
   });
 
-  it("maps Dämmerungssicht to Dunkelsicht advantages only", () => {
+  it("maps Dämmerungssicht and Dunkesicht variants to Dunkelsicht advantages only", () => {
     const statBlock = createStatBlock({
-      advantages: ["Dämmerungssicht II"],
+      advantages: ["Dämmerungssicht II", "Dunkesicht"],
     });
 
     const resolved = resolveStatBlock(statBlock, lookups);
 
-    expect(resolved.advantages).toHaveLength(1);
+    expect(resolved.advantages).toHaveLength(2);
     expect(resolved.disadvantages).toHaveLength(0);
-    const advantage = resolved.advantages[0];
-    expect(advantage).toBeDefined();
-    if (!advantage) {
+    const daemmerung = resolved.advantages.find((entry) =>
+      entry.source.startsWith("Dunkelsicht"),
+    );
+    expect(daemmerung).toBeDefined();
+    if (!daemmerung) {
       throw new Error("Expected advantage to resolve");
     }
-    expect(advantage.match?.normalizedName).toBe("dunkelsicht");
-    expect(advantage.source).toBe("Dunkelsicht II");
+    expect(daemmerung.match?.normalizedName).toBe("dunkelsicht");
+    expect(daemmerung.source).toBe("Dunkelsicht II");
+
+    const typoEntry = resolved.advantages.find(
+      (entry) => entry.source === "Dunkelsicht",
+    );
+    expect(typoEntry?.match?.normalizedName).toBe("dunkelsicht");
+
     expect(resolved.warnings).toHaveLength(0);
   });
 
@@ -194,5 +235,426 @@ describe("resolveStatBlock", () => {
           warning.value === "Fährtensuchern",
       ),
     ).toBe(true);
+  });
+
+  it("resolves weapon entries and assigns combat techniques", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Dolch",
+          category: "melee",
+          rawInput: "Dolch: AT 12 PA 8 TP 1W6+1 RW kurz",
+          raw: {
+            AT: "12",
+            PA: "8",
+            TP: "1W6+1",
+            RW: "kurz",
+          },
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.weapons).toHaveLength(1);
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.match?.normalizedName).toBe("dolch");
+    expect(weapon.combatTechnique?.id).toBe("CT_3");
+    expect(resolved.unresolved.weapons ?? []).toHaveLength(0);
+  });
+
+  it("maps unarmed weapons to the Raufen combat technique", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Waffenlos",
+          category: "unarmed",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.weapons).toHaveLength(1);
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.fallback).toBe("unarmed");
+    expect(weapon.combatTechnique?.id).toBe("CT_9");
+    expect(resolved.unresolved.weapons ?? []).toHaveLength(0);
+  });
+
+  it("resolves armor entries and warns on BE mismatches", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 4,
+        be: 3,
+        description: "Kettenhemd",
+        raw: "RS/BE 4/3 (Kettenhemd)",
+      }),
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.match?.normalizedName).toBe("kettenhemd");
+    expect(armor.datasetProtection).toBe(4);
+    expect(armor.datasetEncumbrance).toBe(2);
+    expect(
+      resolved.warnings.some((warning) =>
+        warning.message.includes("BE (3) weicht vom Optolith-Wert (2) ab."),
+      ),
+    ).toBe(true);
+    expect(resolved.unresolved.armor ?? []).toHaveLength(0);
+  });
+
+  it("emits a single warning for natural armor without description", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 1,
+        be: 0,
+        raw: "RS/BE 1/0",
+      }),
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.isNaturalArmor).toBe(true);
+    const armorWarnings = resolved.warnings.filter(
+      (warning) => warning.section === "armor",
+    );
+    expect(armorWarnings).toHaveLength(1);
+    expect(armorWarnings[0]?.message).toContain("natürlicher Rüstungsschutz");
+    expect(resolved.unresolved.armor ?? []).toHaveLength(0);
+  });
+
+  it("deduplicates unresolved warnings for repeated entries", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({ name: "Improvisiertes Werkzeug" }),
+        createWeapon({ name: "Improvisiertes Werkzeug" }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.unresolved.weapons ?? []).toHaveLength(1);
+    const weaponWarnings = resolved.warnings.filter(
+      (warning) =>
+        warning.section === "weapons" && warning.type === "unresolved",
+    );
+    expect(weaponWarnings).toHaveLength(1);
+  });
+
+  it("maps peitsche variants via keyword fallback", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Entdeckerpeitsche",
+          category: "melee",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.weapons).toHaveLength(1);
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.match?.normalizedName).toBe("fuhrmannspeitsche");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "weapons" &&
+          warning.type === "fuzzy-match" &&
+          warning.message.includes('Schlüsselwort "peitsche"'),
+      ),
+    ).toBe(true);
+  });
+
+  it("splits compound weapon names to resolve dataset entries", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Epharit-Speer",
+          category: "melee",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const weapon = resolved.weapons[0];
+    expect(weapon).toBeDefined();
+    if (!weapon) {
+      throw new Error("Expected weapon to resolve");
+    }
+    expect(weapon.match?.normalizedName).toBe("speer");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "weapons" &&
+          warning.type === "fuzzy-match" &&
+          warning.message.includes('Teilbegriff "Speer"'),
+      ),
+    ).toBe(true);
+  });
+
+  it("resolves equipment entries via contained item names", () => {
+    const statBlock = createStatBlock({
+      equipment: ["Immanschläger (Knüppel)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.equipment).toHaveLength(1);
+    const entry = resolved.equipment[0];
+    expect(entry).toBeDefined();
+    if (!entry) {
+      throw new Error("Expected equipment entry to resolve");
+    }
+    expect(entry.match?.normalizedName).toBe("knuppel");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "equipment" &&
+          warning.type === "fuzzy-match" &&
+          warning.message.includes('Teilbegriff "Knüppel"'),
+      ),
+    ).toBe(true);
+  });
+
+  it("suppresses armor BE mismatch when Belastungsgewöhnung applies", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 4,
+        be: 0,
+        description: "Kettenhemd",
+        raw: "RS/BE 4/0 (Kettenhemd)",
+      }),
+      specialAbilities: ["Belastungsgewöhnung I"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.match?.normalizedName).toBe("kettenhemd");
+    expect(armor.datasetEncumbrance).toBe(2);
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "armor" && warning.type === "value-mismatch",
+      ),
+    ).toBe(false);
+  });
+
+  it("handles personality weaknesses, relative clauses, and tradition naming", () => {
+    const statBlock = createStatBlock({
+      disadvantages: [
+        "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
+      ],
+      equipment: ["Immanschläger, den er als Knüppel nutzt"],
+      specialAbilities: ["Tradition (Praiosgeweihte)"],
+      blessings: ["die Zwölf Segnungen"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const disadvantage = resolved.disadvantages[0];
+    expect(disadvantage?.match?.normalizedName).toBe(
+      "personlichkeitsschwachen",
+    );
+
+    const equipment = resolved.equipment[0];
+    expect(equipment?.match?.normalizedName).toBe("knuppel");
+
+    const tradition = resolved.specialAbilities[0];
+    expect(tradition?.match?.normalizedName).toBe("tradition praioskirche");
+
+    expect(resolved.blessings).toHaveLength(1);
+    expect(resolved.unresolved.blessings ?? []).toHaveLength(0);
+  });
+
+  it("matches clothing variants without generating armor warnings", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 0,
+        be: 0,
+        description: "normale Kleidung oder nackt",
+        raw: "RS/BE 0/0 normale Kleidung oder nackt",
+      }),
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.match?.normalizedName).toBe("normale kleidung");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "armor" && warning.type === "unresolved",
+      ),
+    ).toBe(false);
+  });
+
+  it("resolves immunity advantages and personality weakness options", () => {
+    const statBlock = createStatBlock({
+      advantages: ["Immunität gegen Zorganpocken"],
+      disadvantages: ["Arroganz"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const immunity = resolved.advantages.find((entry) =>
+      entry.source.startsWith("Immunität gegen"),
+    );
+    expect(immunity?.match?.normalizedName).toBe("immunitat gegen");
+
+    const weakness = resolved.disadvantages.find((entry) =>
+      entry.source.includes("Arroganz"),
+    );
+    expect(weakness?.source).toBe("Persönlichkeitsschwächen (Arroganz)");
+    expect(weakness?.match?.normalizedName).toBe("personlichkeitsschwachen");
+  });
+
+  it("interprets hyphenated ability tiers and option splits", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: ["Beidhändiger Kampf I-II", "Finte I-II"],
+      combatSpecialAbilities: [
+        "Wuchtschlag I-III (Waffenlos, Yeti-Keule)",
+        "Verbessertes Ausweichen I-III",
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const dualWield = resolved.specialAbilities.find((entry) =>
+      entry.source.startsWith("Beidhändiger Kampf"),
+    );
+    expect(dualWield?.level).toBe(2);
+
+    const finte = resolved.specialAbilities.find((entry) =>
+      entry.source.startsWith("Finte"),
+    );
+    expect(finte?.level).toBe(2);
+
+    const wuchtschlag = resolved.combatSpecialAbilities.find((entry) =>
+      entry.source.startsWith("Wuchtschlag"),
+    );
+    expect(wuchtschlag?.level).toBe(3);
+
+    const ausweichen = resolved.combatSpecialAbilities.find((entry) =>
+      entry.source.startsWith("Verbessertes Ausweichen"),
+    );
+    expect(ausweichen?.level).toBe(3);
+  });
+
+  it("splits Angst vor entries with nested lists", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Angst vor (… (Feuer, Luchsen))"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(
+      resolved.disadvantages.some(
+        (entry) => entry.source === "Angst vor (Feuer)",
+      ),
+    ).toBe(true);
+    expect(
+      resolved.disadvantages.some(
+        (entry) => entry.source === "Angst vor (Luchsen)",
+      ),
+    ).toBe(true);
+  });
+
+  it("normalizes shorthand spells to canonical entries", () => {
+    const statBlock = createStatBlock({
+      spells: [
+        { name: "Analys", value: 12 },
+        { name: "Odem", value: 10 },
+        { name: "Zauberklinge", value: 7 },
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+    const spellNames = resolved.spells
+      .map((spell) => spell.match?.normalizedName)
+      .filter((name): name is string => Boolean(name));
+
+    expect(spellNames).toContain("analys arkanstruktur");
+    expect(spellNames).toContain("odem arcanum");
+    expect(spellNames).toContain("zauberklinge geisterspeer");
+  });
+
+  it("maps equipment quantities and keywords to canonical gear", () => {
+    const statBlock = createStatBlock({
+      equipment: [
+        "drei Speere",
+        "vier Wurfkeulen",
+        "Giftdolch",
+        "Shakagra-Krummsäbel (2)",
+        "Leichte Shakagra-Platte",
+        "Shakagra-Langschild",
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const speer = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "speer",
+    );
+    expect(speer?.normalizedSource).toBe("speere");
+
+    const wurfkeule = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "wurfkeule",
+    );
+    expect(wurfkeule?.normalizedSource).toBe("wurfkeulen");
+
+    const dolch = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "dolch",
+    );
+    expect(dolch?.normalizedSource).toBe("giftdolch");
+
+    const saebel = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "sabel",
+    );
+    expect(saebel?.normalizedSource).toBe("shakagra krummsabel");
+
+    const plattenrustung = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "plattenrustung",
+    );
+    expect(plattenrustung?.normalizedSource).toBe("leichte shakagra platte");
+
+    const grossschild = resolved.equipment.find(
+      (entry) => entry.match?.normalizedName === "gro schild",
+    );
+    expect(grossschild?.normalizedSource).toBe("shakagra langschild");
   });
 });
