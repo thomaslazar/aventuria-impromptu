@@ -204,12 +204,10 @@
 
         <details class="optolith-details" open>
           <summary class="optolith-details__summary">
-            <span class="optolith-details__summary-text">
-              {{ t("views.optolithConverter.jsonHeading") }}
-            </span>
+            {{ t("views.optolithConverter.jsonHeading") }}
             <button
               type="button"
-              class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
+              class="aventuria-button aventuria-button--ghost optolith-json-actions__button optolith-json-actions__button--inline"
               :title="t('views.optolithConverter.buttons.copyJson')"
               @click.stop.prevent="copyJson"
             >
@@ -1039,28 +1037,10 @@ onBeforeUnmount(() => {
 }
 
 .optolith-details__summary {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  list-style: none;
-  padding-left: 0;
+  position: relative;
+  padding-right: 2.25rem;
   margin: 0;
-}
-
-.optolith-details__summary::before {
-  content: "\25B8";
-  font-size: 0.85rem;
-  color: rgba(47, 36, 18, 0.7);
-  transition: transform 0.2s ease;
-  margin-right: 0.35rem;
-}
-
-details[open] .optolith-details__summary::before {
-  transform: rotate(90deg);
-}
-
-.optolith-details__summary-text {
-  flex: 1;
+  display: block;
 }
 
 .optolith-details summary:focus-visible {
@@ -1102,6 +1082,13 @@ details[open] .optolith-details__summary::before {
   height: 2rem;
   padding: 0;
   border-radius: 999px;
+}
+
+.optolith-json-actions__button--inline {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
 }
 
 .optolith-json-actions__icon {
