@@ -15,6 +15,7 @@ As a converter maintainer I want the converter to infer combat technique base va
 | AC3 | Given unarmed attacks (“Waffenlos”) When the converter processes the stat block Then the combat technique `CT_9` (Raufen) is populated with the inferred value | open |
 | AC4 | Given multiple weapons mapping to the same combat technique When their derived values differ Then the converter keeps the highest inferred combat technique score and logs exporter warnings for inconsistent inputs | open |
 | AC5 | Given derived combat techniques When the Optolith export is generated Then the `hero.ct` map contains the computed values (even if they were absent in the original stat block) | open |
+| AC6 | Given derived combat techniques and weapons When the Optolith JSON is imported Then the `belongings` entries include the full template payload (weight, price, modifiers, etc.) so the Optolith desktop app matches the in-app re-addition | open |
 
 ## Domain Rules
 - Base combat technique starts at 6 for every character (per DSA5).
@@ -40,6 +41,6 @@ As a converter maintainer I want the converter to infer combat technique base va
   2. Remove stat-mod bonuses (MU/FF) and item adjustments to back-solve the base CT.
   3. Clamp to minimum 6 unless evidence supports lower.
   4. Keep highest derived value per technique; emit warning for contradictory data.
-- Update exporter to populate `hero.ct` with derived scores while preserving any existing dataset defaults.
+- Update exporter to populate `hero.ct` with derived scores while preserving existing defaults and hydrate belongings with the full template metadata rather than minimal references.
 - Provide localized warnings when inference is impossible (missing attributes or conflicting modifiers).
 - Extend unit tests covering paired AT/FK examples (e.g., Mengbilar, Richtschwert, Schwere Armbrust, Waffenlos).

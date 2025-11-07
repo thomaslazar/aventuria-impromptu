@@ -73,6 +73,13 @@ describe("exportToOptolithCharacter", () => {
       ).toBe(true);
     }
 
+    const firstItem = hero.belongings.items["ITEM_1"] as Record<
+      string,
+      unknown
+    >;
+    expect(firstItem?.isTemplateLocked).toBe(true);
+    expect(firstItem?.template).toBeDefined();
+    expect(firstItem?.name).toBeDefined();
     expect(hero.ct["CT_9"]).toBeGreaterThanOrEqual(6);
   });
 
