@@ -2,6 +2,13 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.1 — Optolith UX Polish (2025-11-07)
+
+- Seeded the converter textarea with a full “Horasische Hafenwache” sample stat block placeholder so first-time users immediately see the expected format without pasting anything.
+- Added clipboard success feedback for both the main JSON result and each cached history entry, making copy actions obvious in long sessions.
+- Updated the Roll20 callout to clarify that humanoid NSC stat blocks provide the best results and that FoundryVTT usage is possible but still untested.
+- Hardened the Optolith parser/resolver: weapon lines are detected anywhere in the stat block, explicit “Kampftechniken” ratings feed combat-tech inference, and script sections now map to SA_27 entries like Kusliker Zeichen alongside standard languages.
+
 ## 0.4.0 — Optolith Equipment & Techniques (2025-11-07)
 
 - Added a multi-line weapon/armor parser that understands hyphenated names, plural quantities, attribute abbreviations, and inline notes so exotic stat blocks (“Tauchspeer”, “Immanschläger, den er als Knüppel nutzt”, etc.) can be normalized without manual cleanup.

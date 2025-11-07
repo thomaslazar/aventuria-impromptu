@@ -1,6 +1,7 @@
 import type { OptolithDatasetLookups } from "./dataset";
 import type { ResolutionResult, ResolvedWeapon } from "./resolver";
 import type { ParseResult } from "../../types/optolith/stat-block";
+import { normalizeLabel } from "../../utils/optolith/normalizer";
 
 interface EquipmentBaseSpecial {
   readonly combatTechnique?: string;
@@ -165,6 +166,21 @@ export function deriveCombatTechniques(
       fallback: weapon.fallback,
     });
     registerValue(ctId, ctName, derived, weapon.source.name);
+  }
+
+  for (const entry of parsed.model.combatTechniques ?? []) {
+    const normalized = normalizeLabel(entry.name);
+    if (!normalized) {
+      continue;
+    }
+    const ct = lookups.combatTechniques.byName.get(normalized);
+    if (!ct) {
+      warnings.push(
+        `[Exporter] combatTechniques: Kampftechnik "${entry.name}" konnte nicht aufgelöst werden.`,
+      );
+      continue;
+    }
+    registerValue(ct.id, ct.name, entry.value, entry.name);
   }
 
   return {

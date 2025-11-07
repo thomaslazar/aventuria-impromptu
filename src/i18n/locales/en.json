@@ -69,7 +69,9 @@
       "roll20Note": {
         "prefix": "The converter’s main purpose is to produce an import file for the DSA5 character sheet on ",
         "linkText": "Roll20.net",
-        "suffix": " so you can spin up NPCs there faster."
+        "suffix": " so you can spin up NPCs there faster.",
+        "humanoid": "It works best with humanoid NPC stat blocks that could exist in Optolith; monsters usually only yield attributes and talents but you are welcome to try.",
+        "foundry": "The JSON export might also be reusable in FoundryVTT, but that path is currently untested."
       },
       "languageNote": "Only German stat blocks are supported. Adjust the source material before converting other languages.",
       "bugReportNote": {
@@ -92,9 +94,9 @@
       },
       "input": {
         "label": "Stat block",
-        "placeholder": "Paste the stat block here",
         "help": "Maximum length {max} characters. Current: {current}.",
-        "tooLong": "The stat block exceeds the supported length."
+        "tooLong": "The stat block exceeds the supported length.",
+        "sample": "Horasische Hafenwache\nMU 13 KL 11 IN 12 CH 10\nFF 11 GE 13 KO 12 KK 13\nLeP 34 AsP – KaP – INI 13+1W6\nAW 7 SK 2 ZK 2 GS 7\nWaffenlos: AT 14 PA 10 TP 1W6 RW kurz\nSäbel: AT 15 PA 11 TP 1W6+2 RW mittel\nArmbrust: FK 13 LZ 13 TP 1W6+6 RW 30/150/300\nRS/BE: 3/2 (Kettenhemd, Lederarmschienen)\nVorteile/Nachteile: Pflichtbewusstsein 6, Schlechte Eigenschaft (Arroganz)\nSonderfertigkeiten: Finte I (Säbel), Wuchtschlag I (Säbel), Aufmerksamkeit\nTalente: Einschüchtern 8, Körperbeherrschung 9, Menschenkenntnis 8, Selbstbeherrschung 8, Sinnesschärfe 9, Überreden 7, Verbergen 6\nKampfverhalten: Patrouilliert den Hafen und greift Eindringlinge mit Säbel und Armbrust an.\nFlucht: Verlust von 50 % der LeP\nSchmerz +1 bei: 26 LeP, 17 LeP, 9 LeP, 5 LeP oder weniger"
       },
       "buttons": {
         "convert": "Convert Stat Block",
@@ -104,6 +106,7 @@
         "copyWarnings": "Copy warnings",
         "copyJson": "Copy JSON"
       },
+      "copySuccess": "Copied to clipboard",
       "loading": "Converting… please wait.",
       "datasetInfo": "Dataset schema {schema} · Source checksum {checksum}…",
       "warnings": {
@@ -144,7 +147,7 @@
       "intro": "Details about the Aventuria toolbox and the current build version.",
       "body": {
         "paragraph1": "Aventuria Impromptu is a lean toolkit for GMs in Aventuria. The tables rely on classic random rolls and deliver flavourful results for improvised scenes.",
-        "paragraph2": "The app stays deliberately lightweight: no servers, just Vue 3, Vite, and a touch of Bootstrap."
+        "paragraph2": "The app stays deliberately lightweight: no servers, just Vue 3, Vite, and a touch of Bootstrap. Everything runs entirely in your browser, no data leaves your device, and there is no account, tracking, telemetry, or analytics involved."
       },
       "releaseNotesTitle": "Release Notes"
     }

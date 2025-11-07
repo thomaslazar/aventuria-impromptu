@@ -67,11 +67,13 @@ export interface ParsedStatBlock {
   readonly armor?: ArmorStats | null;
   readonly actions?: number | null;
   readonly weapons: readonly WeaponStats[];
+  readonly combatTechniques: readonly RatedEntry[];
   readonly advantages: readonly string[];
   readonly disadvantages: readonly string[];
   readonly specialAbilities: readonly string[];
   readonly combatSpecialAbilities: readonly string[];
   readonly languages: readonly string[];
+  readonly scripts: readonly string[];
   readonly spells: readonly RatedEntry[];
   readonly liturgies: readonly RatedEntry[];
   readonly rituals: readonly RatedEntry[];

@@ -141,6 +141,7 @@ export interface ResolutionResult {
   readonly specialAbilities: readonly ResolvedReference[];
   readonly combatSpecialAbilities: readonly ResolvedReference[];
   readonly languages: readonly ResolvedLanguage[];
+  readonly scripts: readonly ResolvedLanguage[];
   readonly talents: readonly ResolvedTalent[];
   readonly spells: readonly ResolvedRatedReference[];
   readonly liturgies: readonly ResolvedRatedReference[];
@@ -176,6 +177,7 @@ export function resolveStatBlock(
     lookups,
   );
   const languageAccumulator = new Set(normalizedAdvDisadv.languages);
+  const scriptAccumulator = new Set<string>();
 
   const specialAbilityEntries = extractLanguageEntries(
     [
@@ -183,11 +185,13 @@ export function resolveStatBlock(
       ...extractSpecialAbilitiesFromNotes(statBlock.notes),
     ],
     languageAccumulator,
+    scriptAccumulator,
     lookups,
   );
   const combatSpecialAbilityEntries = extractLanguageEntries(
     statBlock.combatSpecialAbilities,
     languageAccumulator,
+    scriptAccumulator,
     lookups,
   );
 
@@ -218,7 +222,9 @@ export function resolveStatBlock(
   );
 
   const allLanguages = [...statBlock.languages, ...languageAccumulator];
+  const allScripts = [...statBlock.scripts, ...scriptAccumulator];
   const languages = resolveLanguages(allLanguages, context);
+  const scripts = resolveScripts(allScripts, context);
 
   const talents = resolveTalents(statBlock.talents, context);
   const spells = resolveRatedSection(
@@ -272,6 +278,7 @@ export function resolveStatBlock(
     specialAbilities,
     combatSpecialAbilities,
     languages,
+    scripts,
     talents,
     spells,
     liturgies,
@@ -732,6 +739,33 @@ function resolveLanguages(
         match: option.ability,
         option,
         level: parsed.level ?? undefined,
+      };
+    });
+}
+
+function resolveScripts(
+  scripts: readonly string[],
+  context: ResolutionContext,
+): ResolvedLanguage[] {
+  return scripts
+    .map((raw) => sanitizeResolvableValue(raw))
+    .filter((value) => value.length > 0)
+    .map((value) => {
+      const normalized = normalizeLabel(value);
+      const option = context.lookups.scripts.get(normalized);
+      if (!option) {
+        registerUnresolved("scripts", value, context);
+        return {
+          source: value,
+          normalizedSource: normalized,
+          rawOption: value,
+        };
+      }
+      return {
+        source: value,
+        normalizedSource: normalized,
+        match: option.ability,
+        option,
       };
     });
 }
@@ -1330,6 +1364,7 @@ function levenshteinDistanceWithin(
 function extractLanguageEntries(
   entries: readonly string[],
   languages: Set<string>,
+  scripts: Set<string>,
   lookups: OptolithDatasetLookups,
 ): string[] {
   const remaining: string[] = [];
@@ -1341,9 +1376,7 @@ function extractLanguageEntries(
     }
     const components = parseEntryComponents(sanitized);
     const normalizedBase = normalizeLabel(components.baseName);
-    const languageOption =
-      lookups.languages.get(normalizedBase) ??
-      lookups.scripts.get(normalizedBase);
+    const languageOption = lookups.languages.get(normalizedBase);
     if (languageOption) {
       if (components.level !== undefined) {
         languages.add(
@@ -1352,6 +1385,11 @@ function extractLanguageEntries(
       } else {
         languages.add(components.baseName);
       }
+      continue;
+    }
+    const scriptOption = lookups.scripts.get(normalizedBase);
+    if (scriptOption) {
+      scripts.add(components.baseName);
       continue;
     }
     remaining.push(entry);

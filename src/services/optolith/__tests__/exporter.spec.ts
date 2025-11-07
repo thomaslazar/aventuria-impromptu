@@ -123,4 +123,34 @@ Vorteile/Nachteile: Schlechte Eigenschaft (Goldgier)`;
       CT_12: 14,
     });
   });
+
+  it("uses manual combat technique entries when available", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Test-Borscher
+MU 12 KL 10 IN 11 CH 9
+FF 10 GE 12 KO 11 KK 12
+LeP 30 AsP - KaP - INI 12+1W6
+AW 6 SK 1 ZK 1 GS 7
+Kampftechniken: Hiebwaffen 14, Raufen 12
+Vorteile: keine
+Nachteile: keine
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.ct).toMatchObject({
+      CT_5: 14,
+      CT_9: 12,
+    });
+  });
 });

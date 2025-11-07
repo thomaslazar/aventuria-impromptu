@@ -69,7 +69,9 @@
       "roll20Note": {
         "prefix": "Das Hauptziel des Konverters ist ein Import für das DSA5-Charakterblatt auf ",
         "linkText": "Roll20.net",
-        "suffix": ", damit neue NSC dort schneller angelegt werden können."
+        "suffix": ", damit neue NSC dort schneller angelegt werden können.",
+        "humanoid": "Am zuverlässigsten funktioniert das Tool mit humanoiden NSC-Statblöcken, die auch in Optolith angelegt werden könnten – Monster-Statblöcke liefern meist nur Attribute und Talente, dürfen aber gerne ausprobiert werden.",
+        "foundry": "Der JSON-Export könnte sich eventuell auch für FoundryVTT eignen, wurde dort aber bislang nicht getestet."
       },
       "languageNote": "Dieses Werkzeug verarbeitet ausschließlich deutsche Statblöcke. Bitte passe andere Sprachen vor der Konvertierung an.",
       "bugReportNote": {
@@ -92,9 +94,9 @@
       },
       "input": {
         "label": "Statblock",
-        "placeholder": "Statblock hier einfügen",
         "help": "Maximale Länge {max} Zeichen. Aktuell: {current}.",
-        "tooLong": "Der Statblock überschreitet die unterstützte Länge."
+        "tooLong": "Der Statblock überschreitet die unterstützte Länge.",
+        "sample": "Horasische Hafenwache\nMU 13 KL 11 IN 12 CH 10\nFF 11 GE 13 KO 12 KK 13\nLeP 34 AsP – KaP – INI 13+1W6\nAW 7 SK 2 ZK 2 GS 7\nWaffenlos: AT 14 PA 10 TP 1W6 RW kurz\nSäbel: AT 15 PA 11 TP 1W6+2 RW mittel\nArmbrust: FK 13 LZ 13 TP 1W6+6 RW 30/150/300\nRS/BE: 3/2 (Kettenhemd, Lederarmschienen)\nVorteile/Nachteile: Pflichtbewusstsein 6, Schlechte Eigenschaft (Arroganz)\nSonderfertigkeiten: Finte I (Säbel), Wuchtschlag I (Säbel), Aufmerksamkeit\nTalente: Einschüchtern 8, Körperbeherrschung 9, Menschenkenntnis 8, Selbstbeherrschung 8, Sinnesschärfe 9, Überreden 7, Verbergen 6\nKampfverhalten: Patrouilliert den Hafen und greift Eindringlinge mit Säbel und Armbrust an.\nFlucht: Verlust von 50 % der LeP\nSchmerz +1 bei: 26 LeP, 17 LeP, 9 LeP, 5 LeP oder weniger"
       },
       "buttons": {
         "convert": "Statblock konvertieren",
@@ -104,6 +106,7 @@
         "copyWarnings": "Warnungen kopieren",
         "copyJson": "JSON kopieren"
       },
+      "copySuccess": "In Zwischenablage kopiert",
       "loading": "Konvertierung läuft … bitte warten.",
       "datasetInfo": "Datensatzschema {schema} · Quellen-Prüfsumme {checksum}…",
       "warnings": {
@@ -144,7 +147,7 @@
       "intro": "Hintergründe zur Aventuria-Toolbox und der aktuellen Build-Version.",
       "body": {
         "paragraph1": "Aventuria Impromptu ist ein schlanker Werkzeugkasten für Spielleitungen in Aventurien. Die Tabellen basieren auf klassischen Zufallswürfen und liefern dir stimmige Ergebnisse für improvisierte Szenen.",
-        "paragraph2": "Die Anwendung ist bewusst leichtgewichtig gehalten: keine Server-Abhängigkeiten, nur Vue 3, Vite und ein Hauch Bootstrap."
+        "paragraph2": "Die Anwendung ist bewusst leichtgewichtig gehalten: keine Server-Abhängigkeiten, nur Vue 3, Vite und ein Hauch Bootstrap. Alles läuft lokal im Browser, es werden keine Daten übertragen und es gibt weder Konten noch Tracking oder Telemetrie."
       },
       "releaseNotesTitle": "Release Notes"
     }
