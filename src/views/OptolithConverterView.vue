@@ -203,34 +203,32 @@
         </details>
 
         <details class="optolith-details" open>
-          <summary>
-            <span class="optolith-details__summary">
-              <span class="optolith-details__summary-text">
-                {{ t("views.optolithConverter.jsonHeading") }}
-              </span>
-              <button
-                type="button"
-                class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
-                :title="t('views.optolithConverter.buttons.copyJson')"
-                @click.stop.prevent="copyJson"
-              >
-                <svg
-                  class="optolith-json-actions__icon"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M8 3h9a2 2 0 0 1 2 2v13h-2V5H8zm-3 4h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m0 2v10h9V9z"
-                  />
-                </svg>
-                <span class="visually-hidden">
-                  {{ t("views.optolithConverter.buttons.copyJson") }}
-                </span>
-              </button>
+          <summary class="optolith-details__summary">
+            <span class="optolith-details__summary-text">
+              {{ t("views.optolithConverter.jsonHeading") }}
             </span>
+            <button
+              type="button"
+              class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
+              :title="t('views.optolithConverter.buttons.copyJson')"
+              @click.stop.prevent="copyJson"
+            >
+              <svg
+                class="optolith-json-actions__icon"
+                viewBox="0 0 24 24"
+                role="img"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  fill="currentColor"
+                  d="M8 3h9a2 2 0 0 1 2 2v13h-2V5H8zm-3 4h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m0 2v10h9V9z"
+                />
+              </svg>
+              <span class="visually-hidden">
+                {{ t("views.optolithConverter.buttons.copyJson") }}
+              </span>
+            </button>
           </summary>
           <pre>{{ formattedJson }}</pre>
         </details>
@@ -1044,7 +1042,21 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  min-height: 1.5rem;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.optolith-details__summary::before {
+  content: "\25B8";
+  font-size: 0.85rem;
+  color: rgba(47, 36, 18, 0.7);
+  transition: transform 0.2s ease;
+  margin-right: 0.35rem;
+}
+
+details[open] .optolith-details__summary::before {
+  transform: rotate(90deg);
 }
 
 .optolith-details__summary-text {
