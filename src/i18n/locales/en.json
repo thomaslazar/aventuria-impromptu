@@ -101,7 +101,8 @@
         "reset": "Reset",
         "loadLast": "Load Last Result",
         "download": "Download JSON",
-        "copyWarnings": "Copy warnings"
+        "copyWarnings": "Copy warnings",
+        "copyJson": "Copy JSON"
       },
       "loading": "Converting… please wait.",
       "datasetInfo": "Dataset schema {schema} · Source checksum {checksum}…",
@@ -114,23 +115,7 @@
         }
       },
       "normalizedHeading": "Normalized stat block",
-  "jsonHeading": "Optolith JSON preview",
-  "result": {
-    "equipment": {
-      "heading": "Equipment Summary",
-      "weapons": "Weapons",
-      "armor": "Armor",
-      "gear": "Other Equipment",
-      "notLinked": "not linked",
-      "noTechnique": "no technique",
-      "unarmed": "unarmed",
-      "noProtection": "RS n/a",
-      "noEncumbrance": "BE n/a",
-      "protectionValue": "RS {value}",
-      "encumbranceValue": "BE {value}",
-      "unresolved": "not exported"
-    }
-  },
+      "jsonHeading": "Optolith JSON preview",
       "recent": {
         "title": "Recent conversions",
         "empty": "No conversions cached yet. Run a conversion to populate this list.",
@@ -150,8 +135,7 @@
         "storedAt": "Saved {date}",
         "labels": {
           "statBlock": "Stat block",
-          "json": "Cached JSON",
-          "equipment": "Equipment Summary"
+          "json": "Cached JSON"
         }
       }
     },

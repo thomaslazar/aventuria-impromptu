@@ -1,9 +1,11 @@
 import type { OptolithDatasetLookups, SelectOptionReference } from "./dataset";
+import type { DerivedEntity } from "../../types/optolith/manifest";
 import type { ResolutionResult } from "./resolver";
 import type {
   AttributeKey,
   ParseResult,
 } from "../../types/optolith/stat-block";
+import { deriveCombatTechniques } from "./combatTechniques";
 
 const DEFAULT_CLIENT_VERSION = "1.5.1";
 const DEFAULT_PHASE = 3;
@@ -143,6 +145,8 @@ export function exportToOptolithCharacter({
   const liturgies = buildRatedMap(resolved.liturgies);
   const rituals = buildRatedMap(resolved.rituals);
 
+  const ctResult = deriveCombatTechniques(parsed, resolved, dataset);
+
   const hero: OptolithExport = {
     clientVersion: DEFAULT_CLIENT_VERSION,
     dateCreated: now,
@@ -172,13 +176,13 @@ export function exportToOptolithCharacter({
     blessings: buildBlessings(resolved),
     cantrips: buildCantrips(resolved),
     rituals,
-    ct: {},
+    ct: ctResult.values,
     belongings: buildBelongings(resolved),
     rules: buildRules(),
     pets: {},
   };
 
-  const warnings = collectWarningMessages(parsed, resolved);
+  const warnings = collectWarningMessages(parsed, resolved, ctResult.warnings);
 
   return {
     hero,
@@ -351,6 +355,7 @@ function buildBlessings(resolved: ResolutionResult): string[] {
 function collectWarningMessages(
   parsed: ParseResult,
   resolved: ResolutionResult,
+  additional: readonly string[] = [],
 ): string[] {
   const warnings: string[] = [];
   for (const warning of parsed.warnings) {
@@ -382,6 +387,7 @@ function collectWarningMessages(
       `[Exporter] armor: Rüstung "${armorLabel}" konnte nicht exportiert werden (keine Zuordnung).`,
     );
   }
+  additional.forEach((message) => warnings.push(message));
   return warnings;
 }
 
@@ -428,49 +434,45 @@ function buildBelongings(
     if (!weapon.match) {
       return;
     }
-    const item: Record<string, unknown> = {
-      template: weapon.match.id,
-      amount: 1,
+    const hydrated = hydrateTemplateItem(weapon.match, {
       name: weapon.source.name,
-    };
+    });
     if (weapon.combatTechnique?.id) {
-      item.combatTechnique = weapon.combatTechnique.id;
+      hydrated.combatTechnique = weapon.combatTechnique.id;
     }
-    addItem(item);
+    addItem(hydrated);
   });
 
   if (resolved.armor?.match) {
-    const armorEntry: Record<string, unknown> = {
-      template: resolved.armor.match.id,
-      amount: 1,
-      name:
-        resolved.armor.source.description ??
-        resolved.armor.source.notes ??
-        resolved.armor.source.raw,
-    };
-    if (typeof resolved.armor.datasetProtection === "number") {
-      armorEntry.pro = resolved.armor.datasetProtection;
-    }
-    if (typeof resolved.armor.datasetEncumbrance === "number") {
-      armorEntry.enc = resolved.armor.datasetEncumbrance;
-    }
-    addItem(armorEntry);
+    addItem(
+      hydrateTemplateItem(resolved.armor.match, {
+        name:
+          resolved.armor.source.description ??
+          resolved.armor.source.notes ??
+          resolved.armor.source.raw ??
+          resolved.armor.match.name,
+      }),
+    );
   }
 
   resolved.equipment.forEach((entry) => {
     if (!entry.match) {
       return;
     }
-    addItem({
-      template: entry.match.id,
-      amount: 1,
-      name: entry.source,
-    });
+    addItem(
+      hydrateTemplateItem(entry.match, {
+        name: entry.source,
+      }),
+    );
   });
 
   const items: Record<string, unknown> = {};
   itemEntries.forEach((item, index) => {
-    items[`ITEM_${index + 1}`] = item;
+    const itemId = `ITEM_${index + 1}`;
+    items[itemId] = {
+      id: itemId,
+      ...item,
+    };
   });
 
   return {
@@ -483,6 +485,77 @@ function buildBelongings(
       k: "0",
     },
   };
+}
+
+function hydrateTemplateItem(
+  match: DerivedEntity,
+  overrides: Record<string, unknown> = {},
+): Record<string, unknown> {
+  const base = (match.base ?? {}) as Record<string, unknown>;
+  const special = (base.special ?? {}) as Record<string, unknown>;
+  const hydrated: Record<string, unknown> = {
+    template: match.id,
+    amount: 1,
+    name: match.name,
+    isTemplateLocked: true,
+    ...overrides,
+  };
+
+  for (const [key, value] of Object.entries(base)) {
+    if (key === "special" || key === "id" || value === undefined) {
+      continue;
+    }
+    hydrated[key] = value;
+  }
+
+  const rangeParts: { close?: number; medium?: number; far?: number } = {};
+  for (const [key, value] of Object.entries(special ?? {})) {
+    if (value === undefined || value === null) {
+      continue;
+    }
+    switch (key) {
+      case "protection":
+        hydrated.pro = value;
+        break;
+      case "encumbrance":
+        hydrated.enc = value;
+        break;
+      case "closeRange":
+        rangeParts.close = Number(value);
+        break;
+      case "mediumRange":
+        rangeParts.medium = Number(value);
+        break;
+      case "farRange":
+        rangeParts.far = Number(value);
+        break;
+      default:
+        hydrated[key] = value;
+        break;
+    }
+  }
+
+  const rangeValues = [
+    rangeParts.close,
+    rangeParts.medium,
+    rangeParts.far,
+  ].filter(
+    (part): part is number => typeof part === "number" && Number.isFinite(part),
+  );
+  if (rangeValues.length > 0) {
+    hydrated.range = rangeValues;
+  }
+
+  if (overrides.name) {
+    hydrated.name = overrides.name;
+  } else {
+    hydrated.name = match.name;
+  }
+  if (overrides.amount) {
+    hydrated.amount = overrides.amount;
+  }
+
+  return hydrated;
 }
 
 export function describeSelectOption(option: SelectOptionReference): string {
