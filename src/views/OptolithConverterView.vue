@@ -47,6 +47,8 @@
             </a>
             {{ t("views.optolithConverter.roll20Note.suffix") }}
           </span>
+          <span>{{ t("views.optolithConverter.roll20Note.humanoid") }}</span>
+          <span>{{ t("views.optolithConverter.roll20Note.foundry") }}</span>
           <span>
             {{ t("views.optolithConverter.languageNote") }}
           </span>
@@ -86,7 +88,7 @@
             class="optolith-textarea"
             :class="{ 'is-invalid': inputTooLong }"
             rows="14"
-            :placeholder="t('views.optolithConverter.input.placeholder')"
+            :placeholder="statBlockPlaceholder"
           ></textarea>
           <div class="optolith-helper">
             {{
@@ -227,6 +229,14 @@
                 {{ t("views.optolithConverter.buttons.copyJson") }}
               </span>
             </button>
+            <span
+              v-if="clipboardFeedback?.target === 'result'"
+              class="optolith-copy-feedback"
+              role="status"
+              aria-live="polite"
+            >
+              {{ t("views.optolithConverter.copySuccess") }}
+            </span>
           </summary>
           <pre>{{ formattedJson }}</pre>
         </details>
@@ -345,7 +355,7 @@
                       type="button"
                       class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
                       :title="t('views.optolithConverter.buttons.copyJson')"
-                      @click="copyEntryJson(entry.json)"
+                      @click="copyEntryJson(entry)"
                     >
                       <svg
                         class="optolith-json-actions__icon"
@@ -363,6 +373,17 @@
                         {{ t("views.optolithConverter.buttons.copyJson") }}
                       </span>
                     </button>
+                    <span
+                      v-if="
+                        clipboardFeedback?.target === 'history' &&
+                        clipboardFeedback.entryId === entry.id
+                      "
+                      class="optolith-copy-feedback optolith-copy-feedback--history"
+                      role="status"
+                      aria-live="polite"
+                    >
+                      {{ t("views.optolithConverter.copySuccess") }}
+                    </span>
                   </div>
                   <pre class="optolith-history__pre">{{ entry.json }}</pre>
                 </section>
@@ -409,6 +430,13 @@ const cacheActionPending = ref(false);
 const activeTab = ref<"convert" | "recent">("convert");
 const expandedEntryId = ref<string | null>(null);
 
+const clipboardFeedback = ref<{
+  target: "result" | "history";
+  entryId?: string;
+} | null>(null);
+let clipboardFeedbackTimer: number | null = null;
+const COPY_FEEDBACK_DURATION_MS = 2000;
+
 const inputTooLong = computed(() => input.value.length > MAX_LENGTH);
 const disableConvert = computed(
   () =>
@@ -422,6 +450,9 @@ const hasStoredResult = computed(
 );
 const formattedJson = computed(() =>
   result.value ? JSON.stringify(result.value.exported, null, 2) : "",
+);
+const statBlockPlaceholder = computed(() =>
+  t("views.optolithConverter.input.sample"),
 );
 const cacheDateFormatter = computed(
   () =>
@@ -677,17 +708,33 @@ function downloadJson() {
   URL.revokeObjectURL(url);
 }
 
-async function writeToClipboard(text: string, context: string) {
+function showClipboardFeedback(target: "result" | "history", entryId?: string) {
+  clipboardFeedback.value = { target, entryId };
+  if (clipboardFeedbackTimer) {
+    window.clearTimeout(clipboardFeedbackTimer);
+  }
+  clipboardFeedbackTimer = window.setTimeout(() => {
+    clipboardFeedback.value = null;
+    clipboardFeedbackTimer = null;
+  }, COPY_FEEDBACK_DURATION_MS);
+}
+
+async function writeToClipboard(
+  text: string,
+  context: string,
+): Promise<boolean> {
   if (!text) {
-    return;
+    return false;
   }
   try {
     if (!navigator?.clipboard?.writeText) {
       throw new Error("Clipboard API not available");
     }
     await navigator.clipboard.writeText(text);
+    return true;
   } catch (err) {
     console.error(`Failed to copy ${context}`, err);
+    return false;
   }
 }
 
@@ -696,11 +743,17 @@ async function copyWarnings() {
 }
 
 async function copyJson() {
-  await writeToClipboard(formattedJson.value, "JSON");
+  const success = await writeToClipboard(formattedJson.value, "JSON");
+  if (success) {
+    showClipboardFeedback("result");
+  }
 }
 
-async function copyEntryJson(json: string) {
-  await writeToClipboard(json, "cached JSON");
+async function copyEntryJson(entry: CacheEntryViewModel) {
+  const success = await writeToClipboard(entry.json, "cached JSON");
+  if (success) {
+    showClipboardFeedback("history", entry.id);
+  }
 }
 
 function reset() {
@@ -757,6 +810,10 @@ onBeforeUnmount(() => {
   if (worker.value) {
     worker.value.terminate();
     worker.value = null;
+  }
+  if (clipboardFeedbackTimer) {
+    window.clearTimeout(clipboardFeedbackTimer);
+    clipboardFeedbackTimer = null;
   }
 });
 </script>
@@ -890,6 +947,11 @@ onBeforeUnmount(() => {
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
+}
+
+.optolith-textarea::placeholder {
+  color: rgba(47, 36, 18, 0.45);
+  white-space: pre-line;
 }
 
 .optolith-textarea:focus {
@@ -1094,6 +1156,16 @@ onBeforeUnmount(() => {
   width: 1.25rem;
   height: 1.25rem;
   color: rgba(47, 36, 18, 0.85);
+}
+
+.optolith-copy-feedback {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(47, 36, 18, 0.75);
+}
+
+.optolith-copy-feedback--history {
+  margin-left: 0.35rem;
 }
 
 .optolith-history {

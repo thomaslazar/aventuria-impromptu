@@ -24,6 +24,8 @@ function createStatBlock(overrides: Partial<ParsedStatBlock>): ParsedStatBlock {
     attributes: {},
     pools: {},
     weapons: [],
+    combatTechniques: [],
+    scripts: [],
     advantages: [],
     disadvantages: [],
     specialAbilities: [],

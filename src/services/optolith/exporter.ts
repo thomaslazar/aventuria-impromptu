@@ -313,6 +313,25 @@ function buildActivatable(
     addInstance(language.match.id, instance);
   });
 
+  resolved.scripts?.forEach((script) => {
+    if (!script.match) {
+      return;
+    }
+    const instance: Record<string, unknown> = {};
+    if (script.option) {
+      instance.sid = script.option.optionId;
+    }
+    if (!script.option && script.rawOption?.trim()) {
+      instance.options = [
+        {
+          type: "Custom",
+          value: script.rawOption.trim(),
+        },
+      ];
+    }
+    addInstance(script.match.id, instance);
+  });
+
   return entries;
 }
 

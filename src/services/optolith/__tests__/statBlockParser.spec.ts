@@ -216,4 +216,30 @@ Ausrüstung: Immanschläger, den er als Knüppel nutzt, drei Speere, vier Wurfke
       "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
     );
   });
+
+  it("captures combat technique ratings when present", () => {
+    const raw = `Arn Knokenbreeker
+MU 13 KL 9 IN 13 CH 13
+FF 12 GE 15 KO 14 KK 16
+LeP 40 SK 1 AsP – ZK 3
+KaP – AW 7 GS 8 INI 14+1W6
+Schriften: Kusliker Zeichen
+Kampftechniken: Hiebwaffen 14, Raufen 14
+Waffenlos: AT 15 PA 9 TP 1W6+2 RW kurz
+Knüppel: AT 15 PA 7 TP 1W6+4 RW mittel
+RS/BE 0/ 0
+Vorteile: Zäher Hund
+Nachteile: Schlechte Eigenschaft (Jähzorn)
+Talente: Körperbeherrschung 11, Kraftakt 13`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.combatTechniques).toEqual(
+      expect.arrayContaining([
+        { name: "Hiebwaffen", value: 14 },
+        { name: "Raufen", value: 14 },
+      ]),
+    );
+    expect(result.model.scripts).toContain("Kusliker Zeichen");
+  });
 });

@@ -16,6 +16,8 @@ type SectionKey =
   | "disadvantages"
   | "specialAbilities"
   | "combatSpecialAbilities"
+  | "combatTechniques"
+  | "scripts"
   | "languages"
   | "talents"
   | "armor"
@@ -57,6 +59,7 @@ const SECTION_NORMALIZATION_MAP: Record<
   kampfsonderfertigkeiten: "combatSpecialAbilities",
   kampfsonderfertigkeit: "combatSpecialAbilities",
   sprachen: "languages",
+  schriften: "scripts",
   talente: "talents",
   rsbe: "armor",
   aktionen: "actions",
@@ -71,6 +74,7 @@ const SECTION_NORMALIZATION_MAP: Record<
   gegenstände: "equipment",
   inventar: "equipment",
   segnungen: "blessings",
+  kampftechniken: "combatTechniques",
   kampfverhalten: "notes",
   kampfverhaltenundflucht: "notes",
   flucht: "notes",
@@ -174,30 +178,49 @@ export function parseStatBlock(raw: string): ParseResult {
   consumeAdditionalResourceLines(workingLines, pools);
 
   const weapons: WeaponStats[] = [];
-  while (workingLines.length > 0) {
-    const candidate = workingLines[0];
-    if (!candidate || !isWeaponStartLine(candidate)) {
-      break;
+  let lineIndex = 0;
+  while (lineIndex < workingLines.length) {
+    const candidate = workingLines[lineIndex];
+    if (candidate && isWeaponStartLine(candidate)) {
+      const aggregatedParts = [candidate];
+      workingLines.splice(lineIndex, 1);
+      while (
+        lineIndex < workingLines.length &&
+        shouldContinueWeaponLine(workingLines[lineIndex])
+      ) {
+        const continuation = workingLines[lineIndex];
+        if (!continuation) {
+          break;
+        }
+        aggregatedParts.push(continuation);
+        workingLines.splice(lineIndex, 1);
+      }
+      const weaponLine = aggregatedParts.join(" ").replace(/\s+/g, " ").trim();
+      const weapon = parseWeaponLine(weaponLine, warnings);
+      if (weapon) {
+        weapons.push(weapon);
+      }
+      continue;
     }
-    workingLines.shift();
-    const aggregatedParts = [candidate];
-    while (
-      workingLines.length > 0 &&
-      shouldContinueWeaponLine(workingLines[0])
-    ) {
-      aggregatedParts.push(workingLines.shift()!);
-    }
-    const weaponLine = aggregatedParts.join(" ").replace(/\s+/g, " ").trim();
-    const weapon = parseWeaponLine(weaponLine, warnings);
-    if (weapon) {
-      weapons.push(weapon);
-    }
+    lineIndex += 1;
   }
 
   const residualLines = [...workingLines];
+  for (let i = 0; i < residualLines.length; i += 1) {
+    const line = residualLines[i];
+    if (!line) {
+      continue;
+    }
+    if (/^RS\s*\/\s*BE\b/i.test(line) && !/^RS\s*\/\s*BE\s*:/i.test(line)) {
+      const remainder = line.replace(/^RS\s*\/\s*BE\s*/i, "").trim();
+      residualLines[i] = `RS/BE: ${remainder}`;
+    }
+  }
   const { sections, extras } = collectSections(residualLines);
 
   const sectionBuckets: {
+    combatTechniques: string[];
+    scripts: string[];
     advantages: string[];
     disadvantages: string[];
     specialAbilities: string[];
@@ -210,6 +233,8 @@ export function parseStatBlock(raw: string): ParseResult {
     blessings: string[];
     equipment: string[];
   } = {
+    combatTechniques: [],
+    scripts: [],
     advantages: [],
     disadvantages: [],
     specialAbilities: [],
@@ -262,6 +287,12 @@ export function parseStatBlock(raw: string): ParseResult {
       }
       case "combatSpecialAbilities":
         appendAbilityList(sectionBuckets.combatSpecialAbilities, content);
+        break;
+      case "scripts":
+        appendList(sectionBuckets.scripts, content);
+        break;
+      case "combatTechniques":
+        appendList(sectionBuckets.combatTechniques, content);
         break;
       case "languages":
         appendList(sectionBuckets.languages, content);
@@ -319,11 +350,17 @@ export function parseStatBlock(raw: string): ParseResult {
     armor,
     actions: actions ?? null,
     weapons,
+    combatTechniques: parseRatedEntries(
+      sectionBuckets.combatTechniques,
+      "combatTechniques",
+      warnings,
+    ),
     advantages: sanitizeList(sectionBuckets.advantages),
     disadvantages: sanitizeList(sectionBuckets.disadvantages),
     specialAbilities: sanitizeList(sectionBuckets.specialAbilities),
     combatSpecialAbilities: sanitizeList(sectionBuckets.combatSpecialAbilities),
     languages: sanitizeList(sectionBuckets.languages),
+    scripts: sanitizeList(sectionBuckets.scripts),
     spells: parseRatedEntries(sectionBuckets.spells, "spells", warnings),
     liturgies: parseRatedEntries(
       sectionBuckets.liturgies,
@@ -1080,6 +1117,8 @@ function createEmptyModel(): ParsedStatBlock {
     armor: null,
     actions: null,
     weapons: [],
+    combatTechniques: [],
+    scripts: [],
     advantages: [],
     disadvantages: [],
     specialAbilities: [],
