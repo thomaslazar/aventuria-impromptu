@@ -378,7 +378,11 @@ function collectWarningMessages(
       );
     }
   });
-  if (resolved.armor && !resolved.armor.match) {
+  if (
+    resolved.armor &&
+    !resolved.armor.match &&
+    !resolved.armor.isNaturalArmor
+  ) {
     const armorLabel =
       resolved.armor.source.description ??
       resolved.armor.source.notes ??

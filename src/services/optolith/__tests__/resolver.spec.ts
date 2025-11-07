@@ -318,6 +318,31 @@ describe("resolveStatBlock", () => {
     expect(resolved.unresolved.armor ?? []).toHaveLength(0);
   });
 
+  it("emits a single warning for natural armor without description", () => {
+    const statBlock = createStatBlock({
+      armor: createArmor({
+        rs: 1,
+        be: 0,
+        raw: "RS/BE 1/0",
+      }),
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const armor = resolved.armor;
+    expect(armor).not.toBeNull();
+    if (!armor) {
+      throw new Error("Expected armor to resolve");
+    }
+    expect(armor.isNaturalArmor).toBe(true);
+    const armorWarnings = resolved.warnings.filter(
+      (warning) => warning.section === "armor",
+    );
+    expect(armorWarnings).toHaveLength(1);
+    expect(armorWarnings[0]?.message).toContain("natürlicher Rüstungsschutz");
+    expect(resolved.unresolved.armor ?? []).toHaveLength(0);
+  });
+
   it("deduplicates unresolved warnings for repeated entries", () => {
     const statBlock = createStatBlock({
       weapons: [

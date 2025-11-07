@@ -53,6 +53,7 @@ export interface ResolvedArmor {
   readonly match?: DerivedEntity;
   readonly datasetProtection?: number | null;
   readonly datasetEncumbrance?: number | null;
+  readonly isNaturalArmor?: boolean;
 }
 
 export interface ResolutionWarning {
@@ -564,10 +565,15 @@ function resolveArmor(
   const description = armor.description ?? "";
   const trimmedDescription = description.trim();
   const descriptionLower = trimmedDescription.toLowerCase();
+  const noteLower = (armor.notes ?? "").toLowerCase();
   const indicatesNoArmor =
     descriptionLower.includes("keine") || descriptionLower.includes("ohne");
   const hasStats =
     (armor.rs ?? 0) > 0 || (armor.be ?? 0) > 0 || trimmedDescription.length > 0;
+  const likelyNaturalArmor =
+    trimmedDescription.length === 0 ||
+    descriptionLower.includes("natürlicher rüstungsschutz") ||
+    noteLower.includes("natürlicher rüstungsschutz");
 
   if (
     !hasStats ||
@@ -655,17 +661,24 @@ function resolveArmor(
   } else {
     const label =
       trimmedDescription || `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
-    registerUnresolved("armor", label, context);
-    if (!trimmedDescription) {
+    if (likelyNaturalArmor) {
+      const statsSummary =
+        trimmedDescription || `RS ${armor.rs ?? "-"} / BE ${armor.be ?? "-"}`;
+      const condensedStats =
+        trimmedDescription.length > 0
+          ? trimmedDescription
+          : `${armor.rs ?? "-"} / ${armor.be ?? "-"}`;
       pushWarning(
         {
           type: "fuzzy-match",
           section: "armor",
-          value: label,
-          message: `RS/BE-Angabe ohne Beschreibung (möglicherweise natürlicher Rüstungsschutz).`,
+          value: statsSummary,
+          message: `Eintrag "${condensedStats}" ohne Rüstungsbeschreibung; vermutlich natürlicher Rüstungsschutz.`,
         },
         context,
       );
+    } else {
+      registerUnresolved("armor", label, context);
     }
   }
 
@@ -675,6 +688,7 @@ function resolveArmor(
     match,
     datasetProtection: datasetProtection ?? null,
     datasetEncumbrance: datasetEncumbrance ?? null,
+    isNaturalArmor: !match && likelyNaturalArmor,
   };
 }
 
