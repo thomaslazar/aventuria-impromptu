@@ -1042,10 +1042,25 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  list-style: none;
+  padding-left: 0;
+  position: relative;
 }
 
 .optolith-details__summary-text {
   flex: 1;
+}
+
+.optolith-details__summary::before {
+  content: "\25B8";
+  font-size: 0.85rem;
+  color: rgba(47, 36, 18, 0.7);
+  transition: transform 0.2s ease;
+  margin-right: 0.25rem;
+}
+
+details[open] .optolith-details__summary::before {
+  transform: rotate(90deg);
 }
 
 .optolith-details summary:focus-visible {
@@ -1083,8 +1098,8 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   padding: 0;
   border-radius: 999px;
 }
