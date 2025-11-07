@@ -195,116 +195,6 @@
           </ul>
         </div>
 
-        <section v-if="hasEquipmentSummary" class="optolith-result__equipment">
-          <h3 class="optolith-result__equipment-title">
-            {{ t("views.optolithConverter.result.equipment.heading") }}
-          </h3>
-
-          <div class="optolith-equipment">
-            <div
-              v-if="equipmentSummary.weapons.length > 0"
-              class="optolith-equipment__group"
-            >
-              <h4 class="optolith-equipment__group-title">
-                {{ t("views.optolithConverter.result.equipment.weapons") }}
-              </h4>
-              <ul class="optolith-equipment__list">
-                <li
-                  v-for="(weapon, index) in equipmentSummary.weapons"
-                  :key="`weapon-${index}-${weapon.name}`"
-                  class="optolith-equipment__item"
-                >
-                  <span class="optolith-equipment__name">{{
-                    weapon.name
-                  }}</span>
-                  <div class="optolith-equipment__badges">
-                    <code class="optolith-equipment__badge">
-                      {{ displayTemplateId(weapon.templateId) }}
-                    </code>
-                    <code class="optolith-equipment__badge">
-                      {{ displayWeaponTechnique(weapon) }}
-                    </code>
-                    <span
-                      v-if="weapon.unresolved"
-                      class="optolith-equipment__badge optolith-equipment__badge--warning"
-                    >
-                      {{
-                        t("views.optolithConverter.result.equipment.unresolved")
-                      }}
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div
-              v-if="equipmentSummary.armor"
-              class="optolith-equipment__group"
-            >
-              <h4 class="optolith-equipment__group-title">
-                {{ t("views.optolithConverter.result.equipment.armor") }}
-              </h4>
-              <ul class="optolith-equipment__list">
-                <li class="optolith-equipment__item">
-                  <span class="optolith-equipment__name">
-                    {{ equipmentSummary.armor.name }}
-                  </span>
-                  <div class="optolith-equipment__badges">
-                    <code class="optolith-equipment__badge">
-                      {{ displayTemplateId(equipmentSummary.armor.templateId) }}
-                    </code>
-                    <code class="optolith-equipment__badge">
-                      {{ displayArmorProtection(equipmentSummary.armor) }}
-                    </code>
-                    <code class="optolith-equipment__badge">
-                      {{ displayArmorEncumbrance(equipmentSummary.armor) }}
-                    </code>
-                    <span
-                      v-if="equipmentSummary.armor.unresolved"
-                      class="optolith-equipment__badge optolith-equipment__badge--warning"
-                    >
-                      {{
-                        t("views.optolithConverter.result.equipment.unresolved")
-                      }}
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div
-              v-if="equipmentSummary.gear.length > 0"
-              class="optolith-equipment__group"
-            >
-              <h4 class="optolith-equipment__group-title">
-                {{ t("views.optolithConverter.result.equipment.gear") }}
-              </h4>
-              <ul class="optolith-equipment__list">
-                <li
-                  v-for="(gear, index) in equipmentSummary.gear"
-                  :key="`gear-${index}-${gear.name}`"
-                  class="optolith-equipment__item"
-                >
-                  <span class="optolith-equipment__name">{{ gear.name }}</span>
-                  <div class="optolith-equipment__badges">
-                    <code class="optolith-equipment__badge">
-                      {{ displayTemplateId(gear.templateId) }}
-                    </code>
-                    <span
-                      v-if="gear.unresolved"
-                      class="optolith-equipment__badge optolith-equipment__badge--warning"
-                    >
-                      {{
-                        t("views.optolithConverter.result.equipment.unresolved")
-                      }}
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
         <details class="optolith-details">
           <summary>
             {{ t("views.optolithConverter.normalizedHeading") }}
@@ -314,6 +204,30 @@
 
         <details class="optolith-details" open>
           <summary>{{ t("views.optolithConverter.jsonHeading") }}</summary>
+          <div class="optolith-json-actions">
+            <button
+              type="button"
+              class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
+              :title="t('views.optolithConverter.buttons.copyJson')"
+              @click="copyJson"
+            >
+              <svg
+                class="optolith-json-actions__icon"
+                viewBox="0 0 24 24"
+                role="img"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  fill="currentColor"
+                  d="M8 3h9a2 2 0 0 1 2 2v13h-2V5H8zm-3 4h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m0 2v10h9V9z"
+                />
+              </svg>
+              <span class="visually-hidden">
+                {{ t("views.optolithConverter.buttons.copyJson") }}
+              </span>
+            </button>
+          </div>
           <pre>{{ formattedJson }}</pre>
         </details>
       </article>
@@ -424,143 +338,33 @@
                   <h3 class="optolith-history__section-title">
                     {{ t("views.optolithConverter.recent.labels.json") }}
                   </h3>
-                  <pre class="optolith-history__pre">{{ entry.json }}</pre>
-                </section>
-                <section
-                  v-if="entryHasEquipment(entry)"
-                  class="optolith-history__section"
-                >
-                  <h3 class="optolith-history__section-title">
-                    {{ t("views.optolithConverter.recent.labels.equipment") }}
-                  </h3>
-                  <div class="optolith-equipment optolith-equipment--compact">
-                    <div
-                      v-if="entry.equipmentSummary.weapons.length > 0"
-                      class="optolith-equipment__group"
+                  <div
+                    class="optolith-json-actions optolith-json-actions--history"
+                  >
+                    <button
+                      type="button"
+                      class="aventuria-button aventuria-button--ghost optolith-json-actions__button"
+                      :title="t('views.optolithConverter.buttons.copyJson')"
+                      @click="copyEntryJson(entry.json)"
                     >
-                      <h4 class="optolith-equipment__group-title">
-                        {{
-                          t("views.optolithConverter.result.equipment.weapons")
-                        }}
-                      </h4>
-                      <ul class="optolith-equipment__list">
-                        <li
-                          v-for="(weapon, index) in entry.equipmentSummary
-                            .weapons"
-                          :key="`history-weapon-${entry.id}-${index}`"
-                          class="optolith-equipment__item"
-                        >
-                          <span class="optolith-equipment__name">
-                            {{ weapon.name }}
-                          </span>
-                          <div class="optolith-equipment__badges">
-                            <code class="optolith-equipment__badge">
-                              {{ displayTemplateId(weapon.templateId) }}
-                            </code>
-                            <code class="optolith-equipment__badge">
-                              {{ displayWeaponTechnique(weapon) }}
-                            </code>
-                            <span
-                              v-if="weapon.unresolved"
-                              class="optolith-equipment__badge optolith-equipment__badge--warning"
-                            >
-                              {{
-                                t(
-                                  "views.optolithConverter.result.equipment.unresolved",
-                                )
-                              }}
-                            </span>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div
-                      v-if="entry.equipmentSummary.armor"
-                      class="optolith-equipment__group"
-                    >
-                      <h4 class="optolith-equipment__group-title">
-                        {{
-                          t("views.optolithConverter.result.equipment.armor")
-                        }}
-                      </h4>
-                      <ul class="optolith-equipment__list">
-                        <li class="optolith-equipment__item">
-                          <span class="optolith-equipment__name">
-                            {{ entry.equipmentSummary.armor.name }}
-                          </span>
-                          <div class="optolith-equipment__badges">
-                            <code class="optolith-equipment__badge">
-                              {{
-                                displayTemplateId(
-                                  entry.equipmentSummary.armor.templateId,
-                                )
-                              }}
-                            </code>
-                            <code class="optolith-equipment__badge">
-                              {{
-                                displayArmorProtection(
-                                  entry.equipmentSummary.armor,
-                                )
-                              }}
-                            </code>
-                            <code class="optolith-equipment__badge">
-                              {{
-                                displayArmorEncumbrance(
-                                  entry.equipmentSummary.armor,
-                                )
-                              }}
-                            </code>
-                            <span
-                              v-if="entry.equipmentSummary.armor.unresolved"
-                              class="optolith-equipment__badge optolith-equipment__badge--warning"
-                            >
-                              {{
-                                t(
-                                  "views.optolithConverter.result.equipment.unresolved",
-                                )
-                              }}
-                            </span>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div
-                      v-if="entry.equipmentSummary.gear.length > 0"
-                      class="optolith-equipment__group"
-                    >
-                      <h4 class="optolith-equipment__group-title">
-                        {{ t("views.optolithConverter.result.equipment.gear") }}
-                      </h4>
-                      <ul class="optolith-equipment__list">
-                        <li
-                          v-for="(gear, index) in entry.equipmentSummary.gear"
-                          :key="`history-gear-${entry.id}-${index}`"
-                          class="optolith-equipment__item"
-                        >
-                          <span class="optolith-equipment__name">
-                            {{ gear.name }}
-                          </span>
-                          <div class="optolith-equipment__badges">
-                            <code class="optolith-equipment__badge">
-                              {{ displayTemplateId(gear.templateId) }}
-                            </code>
-                            <span
-                              v-if="gear.unresolved"
-                              class="optolith-equipment__badge optolith-equipment__badge--warning"
-                            >
-                              {{
-                                t(
-                                  "views.optolithConverter.result.equipment.unresolved",
-                                )
-                              }}
-                            </span>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                      <svg
+                        class="optolith-json-actions__icon"
+                        viewBox="0 0 24 24"
+                        role="img"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M8 3h9a2 2 0 0 1 2 2v13h-2V5H8zm-3 4h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m0 2v10h9V9z"
+                        />
+                      </svg>
+                      <span class="visually-hidden">
+                        {{ t("views.optolithConverter.buttons.copyJson") }}
+                      </span>
+                    </button>
                   </div>
+                  <pre class="optolith-history__pre">{{ entry.json }}</pre>
                 </section>
               </div>
             </div>
@@ -579,9 +383,6 @@ import type {
   ConversionRequestMessage,
   ConversionResultPayload,
   ConverterWorkerMessage,
-  EquipmentSummary,
-  EquipmentSummaryArmor,
-  EquipmentSummaryWeapon,
 } from "@/types/optolith/converter";
 import { conversionCache } from "@/services/optolith/conversionCache";
 import type {
@@ -630,34 +431,6 @@ const cacheDateFormatter = computed(
     }),
 );
 
-function createEmptyEquipmentSummary(): EquipmentSummary {
-  return {
-    weapons: [],
-    armor: null,
-    gear: [],
-  };
-}
-
-function normalizeEquipmentSummary(
-  summary?: EquipmentSummary,
-): EquipmentSummary {
-  return summary ?? createEmptyEquipmentSummary();
-}
-
-function hasSummary(summary: EquipmentSummary): boolean {
-  return (
-    summary.weapons.length > 0 ||
-    summary.gear.length > 0 ||
-    summary.armor !== null
-  );
-}
-
-const equipmentSummary = computed<EquipmentSummary>(() =>
-  normalizeEquipmentSummary(result.value?.equipmentSummary),
-);
-
-const hasEquipmentSummary = computed(() => hasSummary(equipmentSummary.value));
-
 interface CacheEntryViewModel {
   readonly id: string;
   readonly name: string;
@@ -666,7 +439,6 @@ interface CacheEntryViewModel {
   readonly statBlock: string;
   readonly json: string;
   readonly warningSummary: WarningSummary;
-  readonly equipmentSummary: EquipmentSummary;
 }
 
 const recentEntries = computed<CacheEntryViewModel[]>(() =>
@@ -678,7 +450,6 @@ const recentEntries = computed<CacheEntryViewModel[]>(() =>
     statBlock: entry.statBlock,
     json: JSON.stringify(entry.payload.exported, null, 2),
     warningSummary: entry.warningSummary,
-    equipmentSummary: normalizeEquipmentSummary(entry.payload.equipmentSummary),
   })),
 );
 
@@ -729,42 +500,6 @@ const displayWarnings = computed(() => {
   );
   return Array.from(warnings);
 });
-
-function displayTemplateId(templateId?: string): string {
-  return templateId ?? t("views.optolithConverter.result.equipment.notLinked");
-}
-
-function displayWeaponTechnique(weapon: EquipmentSummaryWeapon): string {
-  if (weapon.combatTechniqueId) {
-    return weapon.combatTechniqueId;
-  }
-  if (weapon.fallback === "unarmed") {
-    return t("views.optolithConverter.result.equipment.unarmed");
-  }
-  return t("views.optolithConverter.result.equipment.noTechnique");
-}
-
-function displayArmorProtection(armor: EquipmentSummaryArmor): string {
-  if (armor.protection == null) {
-    return t("views.optolithConverter.result.equipment.noProtection");
-  }
-  return t("views.optolithConverter.result.equipment.protectionValue", {
-    value: armor.protection,
-  });
-}
-
-function displayArmorEncumbrance(armor: EquipmentSummaryArmor): string {
-  if (armor.encumbrance == null) {
-    return t("views.optolithConverter.result.equipment.noEncumbrance");
-  }
-  return t("views.optolithConverter.result.equipment.encumbranceValue", {
-    value: armor.encumbrance,
-  });
-}
-
-function entryHasEquipment(entry: CacheEntryViewModel): boolean {
-  return hasSummary(entry.equipmentSummary);
-}
 
 function ensureWorker(): Worker {
   if (worker.value) {
@@ -942,18 +677,30 @@ function downloadJson() {
   URL.revokeObjectURL(url);
 }
 
-async function copyWarnings() {
-  if (displayWarnings.value.length === 0) {
+async function writeToClipboard(text: string, context: string) {
+  if (!text) {
     return;
   }
   try {
     if (!navigator?.clipboard?.writeText) {
       throw new Error("Clipboard API not available");
     }
-    await navigator.clipboard.writeText(displayWarnings.value.join("\n"));
+    await navigator.clipboard.writeText(text);
   } catch (err) {
-    console.error("Failed to copy warnings", err);
+    console.error(`Failed to copy ${context}`, err);
   }
+}
+
+async function copyWarnings() {
+  await writeToClipboard(displayWarnings.value.join("\n"), "warnings");
+}
+
+async function copyJson() {
+  await writeToClipboard(formattedJson.value, "JSON");
+}
+
+async function copyEntryJson(json: string) {
+  await writeToClipboard(json, "cached JSON");
 }
 
 function reset() {
@@ -1309,6 +1056,33 @@ onBeforeUnmount(() => {
   line-height: 1.6;
 }
 
+.optolith-json-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.optolith-json-actions--history {
+  margin-bottom: 0.35rem;
+}
+
+.optolith-json-actions__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.optolith-json-actions__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgba(47, 36, 18, 0.85);
+}
+
 .optolith-history {
   display: grid;
   gap: clamp(1rem, 2vw, 1.5rem);
@@ -1472,87 +1246,7 @@ onBeforeUnmount(() => {
   line-height: 1.45;
 }
 
-.optolith-result__equipment {
-  border-top: 1px solid rgba(47, 36, 18, 0.16);
-  padding-top: 1rem;
-  display: grid;
-  gap: 1rem;
-}
-
-.optolith-result__equipment-title {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: rgba(47, 36, 18, 0.9);
-}
-
-.optolith-equipment {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.optolith-equipment__group {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.optolith-equipment__group-title {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: rgba(47, 36, 18, 0.85);
-}
-
-.optolith-equipment__list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.35rem;
-}
-
-.optolith-equipment__item {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: baseline;
-}
-
-.optolith-equipment__name {
-  font-weight: 600;
-  color: rgba(47, 36, 18, 0.95);
-}
-
-.optolith-equipment__badges {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.optolith-equipment__badge {
-  display: inline-block;
-  background: rgba(47, 36, 18, 0.08);
-  color: rgba(47, 36, 18, 0.8);
-  border-radius: 0.25rem;
-  padding: 0.1rem 0.4rem;
-  font-size: 0.75rem;
-  font-family: var(--aventuria-font-mono, "Fira Code", monospace);
-}
-
-.optolith-equipment__badge--warning {
-  background: rgba(179, 71, 62, 0.18);
-  color: #5a1d18;
-}
-
-.optolith-equipment--compact .optolith-equipment__group-title {
-  font-size: 0.9rem;
-}
-
-.optolith-equipment--compact .optolith-equipment__badge {
-  font-size: 0.7rem;
-}
-
-@media (max-width: 768px) {
+. @media (max-width: 768px) {
   .optolith-result__header {
     flex-direction: column;
     align-items: flex-start;
