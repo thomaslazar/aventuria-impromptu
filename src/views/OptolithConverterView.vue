@@ -1040,7 +1040,6 @@ onBeforeUnmount(() => {
   position: relative;
   padding-right: 2.25rem;
   margin: 0;
-  display: block;
 }
 
 .optolith-details summary:focus-visible {
