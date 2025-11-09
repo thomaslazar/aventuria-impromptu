@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "generatorVersion": "optolith-extractor@0.2.0",
-  "generatedAt": "2025-10-16T17:50:01.472Z",
-  "sourceChecksum": "fd579cb49dc9dd86fcdbefb2fede48ff2878b1c03c6f57eac7bb5c598f551651",
+  "generatorVersion": "optolith-extractor@0.4.2",
+  "generatedAt": "2025-11-09T21:46:59.344Z",
+  "sourceChecksum": "5637e8bddd0a948d07668c16751d5fbceca8cfe215f05648d770dca2adceab66",
   "sourceFileName": "optolith-data.zip",
-  "sourceModifiedAt": "2025-10-14T18:51:33.300Z",
+  "sourceModifiedAt": "2025-11-09T20:31:11.226Z",
   "locale": "de-DE",
   "sections": [
     {
@@ -39,7 +39,7 @@
       "key": "specialAbilities",
       "label": "Special Abilities",
       "file": "specialAbilities.json",
-      "entryCount": 1437,
+      "entryCount": 1447,
       "description": "Sonderfertigkeiten including leveled and selectable options (languages, scripts, blessings)."
     },
     {
