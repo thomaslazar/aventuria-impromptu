@@ -1,57 +1,89 @@
 # Planning Workflow Playbook
 
-All agents use this playbook to coordinate work items stored under
-`planning/work-items/`.
+All agents now coordinate work through the GitHub Projects Kanban board
+**aventuria-impromptu** (`https://github.com/users/thomaslazar/projects/2`,
+Project ID `PVT_kwHOAAizhM4BHrU0`). File-based folders in `planning/work-items/`
+are retained only as historical artefacts.
 
-## States and Owners
+## Board States and Owners
 
-| State | Primary Owner | Entry Criteria | Exit Criteria |
+| Status (Project column) | Primary Owner | Entry Criteria | Exit Criteria |
 | --- | --- | --- | --- |
-| `new/` | Product Owner | Idea captured using story template; open questions documented. | Grooming session scheduled and completed. |
-| `backlog/` | Product Owner + Planning Agent | Story groomed, acceptance criteria agreed, dependencies noted. | Await maintainer scheduling; no agent moves items forward. |
-| `to-do/` | Maintainer (human) | Maintainer selects a backlog item for the next development cycle and confirms prerequisites. | Developer agent moves the item to `in-progress/` when work begins. |
-| `in-progress/` | Developer | Maintainer-provided branch or workspace in place; implementation underway. | Local lint/typecheck/test/build complete and change summary recorded for review. |
-| `in-code-review/` | Code Review Agent | Developer supplied local diff summary and verification notes. | Findings recorded; on approval the reviewer or maintainer signals readiness for QA, otherwise return to `in-progress/`. |
-| `in-qa-testing/` | QA Agent | Code review accepted; QA instructions and build steps documented. | QA passes and evidence logged (move to `done/`) or defects logged and item returned to `in-progress/`. |
-| `done/` | Maintainer or QA | Acceptance criteria satisfied, QA complete, maintainer confirms merge/readiness. | Only move out if regression discovered (return to `in-progress/`). |
+| Backlog | Product Owner + Planning Agent | Story groomed, acceptance criteria agreed, dependencies noted. | Await maintainer scheduling; no agent moves items forward. |
+| Ready | Maintainer (human) | Maintainer selects a backlog item for the next development cycle and confirms prerequisites. | Developer agent pulls the item when work begins. |
+| In progress | Developer | Maintainer-provided branch or workspace in place; implementation underway. | Local lint/typecheck/test/build complete and change summary recorded for review. |
+| In review | Code Review Agent | Developer supplied local diff summary and verification notes. | Findings recorded; on approval the reviewer or maintainer signals readiness for QA, otherwise return to In progress. |
+| Done | QA Agent + Maintainer | Acceptance criteria satisfied, QA evidence logged, maintainer confirms merge/readiness. | Only move out if regression discovered (return to In progress). |
+
+Status field metadata (needed for `gh project item-edit`):
+
+| Status | Option ID |
+| --- | --- |
+| Backlog | `f75ad846` |
+| Ready | `61e4505c` |
+| In progress | `47fc9ee4` |
+| In review | `df73e18b` |
+| Done | `98236657` |
+
+Project field ID for Status: `PVTSSF_lAHOAAizhM4BHrU0zg4XGK4`.
 
 ## Transition Responsibilities
 
-1. **`new/` → `backlog/` (Grooming)**
-   - Planning or product owner agent leads the session.
-   - Capture decisions and remaining risks directly in the item; skip story points/estimates.
-   - Document unresolved actions; leave the item in `new/` if blockers remain.
+1. **Intake → Backlog (Grooming)**
+   - Planning or product owner agent drafts the story using `planning/templates/story.md`.
+   - Create a draft item via `gh project item-create 2 --owner thomaslazar --title "<story>" --body "$(cat draft.md)"`.
+   - Capture decisions and remaining risks directly in the item body; leave it in Backlog until blockers are cleared.
 
-2. **`backlog/` → `to-do/` (Maintainer Selection)**
-   - Maintainer chooses which vetted items should run next and moves them manually.
-   - Note any branch names or local workspace instructions in the item.
-   - Notify the developer agent once the item is in `to-do/`.
+2. **Backlog → Ready (Maintainer Selection)**
+   - Maintainer moves vetted items by updating the Status option to `61e4505c`.
+   - Note any branch names or local workspace instructions in the item body or comments.
 
-3. **`to-do/` → `in-progress/` (Kickoff)**
-   - Developer claims ownership inside the story.
-   - Reference the maintainer-supplied branch or confirm the local workspace being used; agents must not create branches.
-   - Keep acceptance criteria up to date as implementation details emerge.
+3. **Ready → In progress (Kickoff)**
+   - Developer documents ownership in the item (comment or body update) before changing Status to `47fc9ee4`.
+   - Keep acceptance criteria and scope synchronized with implementation notes.
 
-4. **`in-progress/` → `in-code-review/` (Handoff)**
-   - Developer ensures local lint/typecheck/test/build commands pass.
-   - Provide a concise local diff summary, verification notes, and outstanding concerns in the story.
-   - If review returns actionable feedback, reviewer moves the item back to `in-progress/` with comments.
+4. **In progress → In review (Handoff)**
+   - Developer ensures `npm run lint && npm run typecheck && npm run test:unit && npm run build` pass locally.
+   - Update the item body with a diff summary plus verification commands, then set Status to `df73e18b`.
+   - Reviewers return actionable feedback by commenting and, if needed, switching Status back to In progress.
 
-5. **`in-code-review/` → `in-qa-testing/` (Approval)**
-   - Reviewer documents approval and highlights any follow-up for the maintainer (e.g. rebase, additional manual checks).
-   - Developer or reviewer notes build artefacts or environment instructions for QA; no GitHub PRs are involved.
-
-6. **`in-qa-testing/` → `done/` (Validation)**
-   - QA agent executes documented scenarios, recording results within the story.
-   - Failures push the item back to `in-progress/` with findings listed.
-   - On pass, QA moves the item to `done/` and references the executed checklist; maintainer handles any merge or release actions.
+5. **In review → Done (Approval + QA)**
+   - Reviewer records findings; on approval, QA executes the documented checks.
+   - QA adds evidence (logs, commands, screenshots) and moves the Status to `98236657`.
+   - Regressions move the item back to In progress with explicit defects.
 
 ## General Guidance
 
-- Store each work item as a Markdown file or folder containing story context, acceptance criteria, and links to specs or runs.
-- Use ISO 8601 timestamps with time (`YYYY-MM-DDTHH-mm-ss`) in run folder names and generated artefacts to avoid overwriting earlier sessions.
-- When moving items, prefer `git mv` or equivalent so history follows the file.
-- Update cross-links inside the item (e.g. local diff summaries, test evidence) when state changes.
-- Keep supporting assets (specs, questions, run logs) under `planning/intake/` and `planning/runs/`; reference them relative to the repository root.
+- Store each work item as Markdown content inside the project item body; attach links to specs, runs, or assets within the repository.
+- Use ISO 8601 timestamps (`YYYY-MM-DDTHH-mm-ss`) for run folders and reference them from the project item.
+- Update cross-links and verification notes directly inside the GitHub project item whenever the status changes.
+- Keep supporting artefacts (specs, questions, run logs) under `planning/intake/` and `planning/runs/`; link to them rather than duplicating content.
+
+## GitHub CLI Reference
+
+```bash
+# Authenticate (one-time)
+gh auth login   # or export GH_TOKEN/GITHUB_TOKEN in ~/.bash_profile
+
+# List items on the board
+gh project item-list 2 --owner thomaslazar --format json
+
+# Create a draft item from a local story file
+gh project item-create 2 --owner thomaslazar \
+  --title "Story: Optolith cache UI" \
+  --body "$(cat planning/templates/story.md)"
+
+# Move an item to a new status
+gh project item-edit \
+  --id <item-id> \
+  --project-id PVT_kwHOAAizhM4BHrU0 \
+  --field-id PVTSSF_lAHOAAizhM4BHrU0zg4XGK4 \
+  --single-select-option-id 47fc9ee4   # In progress
+
+# Delete an obsolete draft item
+gh project item-delete 2 --owner thomaslazar --id <item-id>
+```
+
+Use `gh project item-edit --field-id <Priority/Size field>` to manage optional sizing data (see `gh project field-list 2 --owner thomaslazar --format json` for IDs).
 
 Following this playbook ensures every agent understands the current status of planning artefacts and how to progress them responsibly.

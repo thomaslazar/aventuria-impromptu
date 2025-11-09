@@ -4,7 +4,7 @@ Use this directory for optional maintainer summaries (release notes, coordinatio
 
 Suggested sections:
 - Scope overview and goals
-- Linked stories (reference filenames from `planning/work-items/`)
+- Linked stories (reference GitHub project item URLs or IDs)
 - Timeline or checklist
 - Risks and mitigation actions
 

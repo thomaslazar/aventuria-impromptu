@@ -61,10 +61,22 @@ The repository root is now the application root; avoid moving `.codex/`, `.devco
    - Update this playbook or README when workflow changes.
 
 2. **Commit Style**
-   - Conventional, short prefix (`feat:`, `fix:`, `chore:`). Example: `chore: upgrade Vue stack`.
-   - Do not bundle unrelated features and formatting in the same commit.
-   - Include a brief body (one or two bullets) when committing to describe key changes.
-   - Agents may run `git commit` and/or `git push` only when the user explicitly prompts for it; otherwise surface ready-to-review changes for a human maintainer. Never merge branches directly.
+   - Use `type(scope): summary` (≤72 chars, imperative). Allowed types: `feat`, `fix`, `chore`, `docs`, `test`, `build`, `refactor`, `perf`, `ci`, `revert`. The `scope` is optional but descriptive (e.g. `sync`, `teleporter-client`).
+   - Commit bodies must include:
+     ```
+     Changes:
+     - <granular edit 1>
+     - <granular edit 2>
+
+     Validation:
+     - `npm run lint`
+     - `npm run test:unit`
+
+     Refs: #123   # optional when issues apply
+     ```
+   - Write commit messages via a file/heredoc and pass it with `git commit -F path/to/msg` (or `-F -` with `cat <<'EOF'`). Avoid stacking multiple `-m` flags so the template renders exactly as shown above.
+   - Keep unrelated changes out of the same commit. Agents may run `git commit`/`git push` only when explicitly instructed; never merge branches directly.
+   - PRs must ship with: a concise summary, validation evidence (logs/screenshots for tooling), and a secrets checklist that confirms API keys/configs exclude real tokens. Request review from `@maintainers` once CI is green, and annotate any new configuration knobs in the release-notes draft.
 
 3. **Review Expectations**
    - Document change summaries and verification commands in the associated work item before handing off for review.

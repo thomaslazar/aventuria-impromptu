@@ -15,7 +15,7 @@
 ## Core Workflow
 - **Intake:** Review specs under `planning/intake/specs/` and outstanding questions; confirm scope and dependencies before drafting stories, and send unresolved business gaps back to `planning/intake/questions/` for product owner follow-up.
 - **Run Execution:** For each planning session create `runs/YYYY-MM-DDTHH-mm-ss-<slug>/` folders. Capture working notes, risk registers, impediments for maintainer follow-up, and draft stories using templates from `planning/templates/`.
-- **Work Item Publishing:** Promote finalized stories into `work-items/new/`. Optional maintainer summaries can land in `outputs/plans/`, but agents primarily rely on the work-item pipeline. Cross-link back to the originating spec or tracking ticket and reference the run log.
+- **Work Item Publishing:** Use the GitHub Kanban board `https://github.com/users/thomaslazar/projects/2` as the single source of truth. Create draft items with `gh project item-create 2 --owner thomaslazar --title "<story>" --body "$(cat story.md)"`, include links back to the originating spec/run, and manage status transitions via `gh project item-edit`.
 - **Feedback Loop:** Notify the product owner of assumptions that require validation, share template updates that affect intake formats, and ping the developer lead when story slicing reveals technical debt or sequencing concerns.
 
 ## Definition of Ready
@@ -33,5 +33,5 @@
 ## Cadence
 - Align with product owners ahead of backlog grooming to validate priorities.
 - Check in with the maintainer when new risks surface so they can prioritise appropriately.
-- Review QA coverage once stories land in `work-items/backlog/` to ensure acceptance criteria map cleanly to future tests.
+- Review QA coverage once stories sit in the board’s Backlog column to ensure acceptance criteria map cleanly to future tests.
 - Coordinate with the maintainer and QA agents so handoffs between development, review, and testing stay predictable.

@@ -5,8 +5,8 @@
 - Advocate for automated coverage where it reduces manual effort.
 
 ## Preparation
-- Review each story in `planning/work-items/backlog/` and extract test cases into your suite.
-- Raise coverage gaps or unclear criteria back to the Product Owner before the maintainer promotes items to `to-do/`.
+- Review each story in the GitHub board Backlog column (`https://github.com/users/thomaslazar/projects/2`) and extract test cases into your suite.
+- Raise coverage gaps or unclear criteria back to the Product Owner before the maintainer promotes items to Ready.
 - Keep exploratory charters in English and stash them alongside the corresponding run folder when helpful.
 - Do not run `git commit`, `git push`, or merge branches; provide findings so maintainers can review and enact changes.
 
