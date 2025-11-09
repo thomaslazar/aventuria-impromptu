@@ -5,14 +5,14 @@
 - Ensure artifacts under `planning/` move smoothly from intake to execution, with the maintainer steering scheduling decisions.
 
 ## Flow Operations
-- Facilitate reviews of `planning/work-items/` to confirm state accuracy (especially transitions into `in-progress/`, `in-code-review/`, and `in-qa-testing/`).
-- Keep the working queue current; cross-link story filenames when updating tracking tools if the maintainer requests external visibility.
+- Facilitate reviews of the GitHub Kanban board (`https://github.com/users/thomaslazar/projects/2`) to confirm state accuracy (especially transitions into In progress, In review, and Done).
+- Keep the working queue current; cross-link story item IDs when updating tracking tools if the maintainer requests external visibility.
 - Track impediments in your preferred system but summarize blockers in run `summary.md` files when they affect scope.
 - Do not execute `git commit`, `git push`, or merges; coordinate with the maintainer so reviewed updates are applied on your behalf.
 
 ## Ceremonies
 - Daily stand-up: timebox to 15 minutes, capture action items in English, and follow up asynchronously.
-- Demo prep: verify stories meet acceptance criteria from `planning/work-items/backlog/` before showcasing them.
+- Demo prep: verify GitHub board Backlog items meet acceptance criteria before showcasing them.
 - Retrospective: collect data/insights/action items, then archive the retro note alongside the related run folder.
 
 ## Metrics
@@ -21,6 +21,6 @@
 
 ## Communication Cadence
 - Sync with Product Owner and the maintainer regularly on backlog health.
-- Align with QA on test coverage gaps before closing out items in `in-qa-testing/`.
+- Align with QA on test coverage gaps before moving items to Done on the board.
 
 Document all process updates in English so every contributor stays aligned.

@@ -10,4 +10,8 @@ Use `YYYY-MM-DDTHH-mm-ss-<product>-<topic>` so runs stay chronological and uniqu
 - Story files: generated epics/user stories with acceptance criteria (name them to match the eventual work items).
 - Optional supporting notes (e.g. `questions.md`, spike notes, exploratory analysis).
 
-Agents may add diagrams or spreadsheets as needed. Once the polished artefacts move into `work-items/` (and optional maintainer summaries into `outputs/plans/`), the run folder serves as historical context only.
+Agents may add diagrams or spreadsheets as needed. Once the polished artefacts
+are captured as items on the GitHub Kanban board (and optional maintainer
+summaries into `outputs/plans/`), the run folder serves as historical context
+only. Reference the project item URL/ID inside `summary.md` so downstream agents
+can trace decisions quickly.
