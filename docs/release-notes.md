@@ -2,6 +2,10 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.2 — Optolith Dataset Refresh (2025-11-09)
+
+- Updated the Optolith dataset to the newest upstream release, adding 10 new special abilities so converter imports stay in sync with the latest lore.
+
 ## 0.4.1 — Optolith UX Polish (2025-11-07)
 
 - Seeded the converter textarea with a full “Horasische Hafenwache” sample stat block placeholder so first-time users immediately see the expected format without pasting anything.
