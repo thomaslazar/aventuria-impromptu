@@ -16,12 +16,12 @@ GitHub Projects Kanban board **aventuria-impromptu**
 ## Canonical Kanban Board
 - **Location:** `https://github.com/users/thomaslazar/projects/2`
 - **Columns:** Backlog → Ready → In progress → In review → Done
-- **Authentication:** Run `gh auth login` or export a `GH_TOKEN`/`GITHUB_TOKEN` before issuing GitHub CLI commands (the Codex harness exposes `GITHUB_MCP_PAT` for this purpose).
+- **Authentication:** Run `gh auth login` or export `GH_TOKEN`/`GITHUB_TOKEN` once in your shell profile (e.g. `~/.bash_profile`) so every command inherits it. Codex automatically exposes `GITHUB_MCP_PAT` if you need a token value.
 - **Quick actions:**
-  - List items: `GH_TOKEN=$GITHUB_MCP_PAT gh project item-list 2 --owner thomaslazar --format json`
-  - Create draft item: `GH_TOKEN=$GITHUB_MCP_PAT gh project item-create 2 --owner thomaslazar --title "Story title" --body "$(cat path/to/story.md)"`
-  - Move item: `GH_TOKEN=$GITHUB_MCP_PAT gh project item-edit --id <item-id> --project-id PVT_kwHOAAizhM4BHrU0 --field-id PVTSSF_lAHOAAizhM4BHrU0zg4XGK4 --single-select-option-id <status-option-id>`
-  - Delete item: `GH_TOKEN=$GITHUB_MCP_PAT gh project item-delete --id <item-id>`
+  - List items: `gh project item-list 2 --owner thomaslazar --format json`
+  - Create draft item: `gh project item-create 2 --owner thomaslazar --title "Story title" --body "$(cat path/to/story.md)"`
+  - Move item: `gh project item-edit --id <item-id> --project-id PVT_kwHOAAizhM4BHrU0 --field-id PVTSSF_lAHOAAizhM4BHrU0zg4XGK4 --single-select-option-id <status-option-id>`
+  - Delete item: `gh project item-delete 2 --owner thomaslazar --id <item-id>`
 
 Status option IDs (needed for moves) are documented in `PLAYBOOK.md`.
 

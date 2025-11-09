@@ -10,6 +10,8 @@
 - Run `npm run lint`, `npm run typecheck`, `npm run test:unit`, and `npm run build` before handing off for review.
 - Update the project item body with implementation notes, verification commands, and diff summaries before switching the Status to In review (`df73e18b`) or Done (`98236657`).
 - Do not run `git commit`, `git push`, or merge branches yourself; flag your ready work so the maintainer can review and land it.
+- If the maintainer asks you to commit, follow the global template (`type(scope): summary` with `Changes:`/`Validation:` sections and optional `Refs:`) so history stays consistent.
+- Capture commit messages via a heredoc/file (e.g. `cat <<'EOF' > /tmp/commitmsg ...` then `git commit -F /tmp/commitmsg`) rather than stacking `-m` flags. This keeps the multiline template formatting intact.
 
 ## Collaboration
 - Join backlog refinement to surface technical constraints early.

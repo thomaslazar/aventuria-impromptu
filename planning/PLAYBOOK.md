@@ -63,25 +63,25 @@ Project field ID for Status: `PVTSSF_lAHOAAizhM4BHrU0zg4XGK4`.
 
 ```bash
 # Authenticate (one-time)
-gh auth login   # or export GH_TOKEN/GITHUB_TOKEN (Codex exposes GITHUB_MCP_PAT)
+gh auth login   # or export GH_TOKEN/GITHUB_TOKEN in ~/.bash_profile
 
 # List items on the board
-GH_TOKEN=$GITHUB_MCP_PAT gh project item-list 2 --owner thomaslazar --format json
+gh project item-list 2 --owner thomaslazar --format json
 
 # Create a draft item from a local story file
-GH_TOKEN=$GITHUB_MCP_PAT gh project item-create 2 --owner thomaslazar \
+gh project item-create 2 --owner thomaslazar \
   --title "Story: Optolith cache UI" \
   --body "$(cat planning/templates/story.md)"
 
 # Move an item to a new status
-GH_TOKEN=$GITHUB_MCP_PAT gh project item-edit \
+gh project item-edit \
   --id <item-id> \
   --project-id PVT_kwHOAAizhM4BHrU0 \
   --field-id PVTSSF_lAHOAAizhM4BHrU0zg4XGK4 \
   --single-select-option-id 47fc9ee4   # In progress
 
 # Delete an obsolete draft item
-GH_TOKEN=$GITHUB_MCP_PAT gh project item-delete --id <item-id>
+gh project item-delete 2 --owner thomaslazar --id <item-id>
 ```
 
 Use `gh project item-edit --field-id <Priority/Size field>` to manage optional sizing data (see `gh project field-list 2 --owner thomaslazar --format json` for IDs).
