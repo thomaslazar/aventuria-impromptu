@@ -392,9 +392,7 @@ function collectWarningMessages(
     warnings.push(message);
   };
   for (const warning of parsed.warnings) {
-    pushUnique(
-      `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
-    );
+    pushUnique(`[Parser] ${warning.section ?? "general"}: ${warning.message}`);
   }
   for (const warning of resolved.warnings) {
     pushUnique(`[Resolver] ${warning.section}: ${warning.message}`);

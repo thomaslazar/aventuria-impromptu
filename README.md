@@ -55,10 +55,14 @@ npm run lint
 ### Regenerate Optolith Dataset
 
 ```sh
-npm run optolith:extract -- --diff
+npm run optolith:extract
 ```
 
 See `docs/optolith/extraction.md` for details on the required Optolith archive and output format (outputs land in `public/data/optolith/`).
+
+The extractor automatically walks every `Data/<locale>/*.yaml` inside the Optolith archive (except `UI.yaml`, which only contains Optolith application strings), emitting derived sections (ID-based entities) and raw payloads (localization/metadata dictionaries). Inspect `public/data/optolith/manifest.json` for the authoritative section list; each entry advertises a `type` flag (`derived` or `raw`) so downstream tooling can decide how to load it.
+
+Spellcasting data from `AnimistForces`, `Curses`, `DominationRituals`, `ElvenMagicalSongs`, `GeodeRituals`, `MagicalDances`, `MagicalMelodies`, `RogueSpells`, `Spells`, and `ZibiljaRituals` is folded into `spells.json` during extraction so the parser only needs to read a single lookup table.
 
 ### Parse Stat Blocks (CLI Harness)
 

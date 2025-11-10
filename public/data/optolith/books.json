@@ -1,0 +1,526 @@
+[
+  {
+    "id": "US25001",
+    "name": "Regelwerk",
+    "normalizedName": "regelwerk",
+    "base": {},
+    "locale": {
+      "id": "US25001",
+      "short": "RGW",
+      "name": "Regelwerk",
+      "isCore": true,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Regelwerk"
+    ]
+  },
+  {
+    "id": "US25002",
+    "name": "Aventurischer Almanach",
+    "normalizedName": "aventurischer almanach",
+    "base": {},
+    "locale": {
+      "id": "US25002",
+      "short": "AAL",
+      "name": "Aventurischer Almanach",
+      "isCore": true,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurischer Almanach"
+    ]
+  },
+  {
+    "id": "US25003",
+    "name": "Aventurisches Kompendium I",
+    "normalizedName": "aventurisches kompendium i",
+    "base": {},
+    "locale": {
+      "id": "US25003",
+      "short": "AKOI",
+      "name": "Aventurisches Kompendium I",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurisches Kompendium I"
+    ]
+  },
+  {
+    "id": "US25004",
+    "name": "Aventurische Magie I",
+    "normalizedName": "aventurische magie i",
+    "base": {},
+    "locale": {
+      "id": "US25004",
+      "short": "AMAI",
+      "name": "Aventurische Magie I",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurische Magie I"
+    ]
+  },
+  {
+    "id": "US25005",
+    "name": "Aventurisches Götterwirken I",
+    "normalizedName": "aventurisches gotterwirken i",
+    "base": {},
+    "locale": {
+      "id": "US25005",
+      "short": "AGÖI",
+      "name": "Aventurisches Götterwirken I",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurisches Götterwirken I"
+    ]
+  },
+  {
+    "id": "US25006",
+    "name": "Aventurische Magie II",
+    "normalizedName": "aventurische magie ii",
+    "base": {},
+    "locale": {
+      "id": "US25006",
+      "short": "AMAII",
+      "name": "Aventurische Magie II",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurische Magie II"
+    ]
+  },
+  {
+    "id": "US25007",
+    "name": "Aventurisches Kompendium II",
+    "normalizedName": "aventurisches kompendium ii",
+    "base": {},
+    "locale": {
+      "id": "US25007",
+      "short": "AKOII",
+      "name": "Aventurisches Kompendium II",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurisches Kompendium II"
+    ]
+  },
+  {
+    "id": "US25008",
+    "name": "Aventurische Magie III",
+    "normalizedName": "aventurische magie iii",
+    "base": {},
+    "locale": {
+      "id": "US25008",
+      "short": "AMAIII",
+      "name": "Aventurische Magie III",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Aventurische Magie III"
+    ]
+  },
+  {
+    "id": "US25008X",
+    "name": "Aventurische Magie III Bonusmaterial",
+    "normalizedName": "aventurische magie iii bonusmaterial",
+    "base": {},
+    "locale": {
+      "id": "US25008X",
+      "short": "AMAIII+",
+      "name": "Aventurische Magie III Bonusmaterial",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Aventurische Magie III Bonusmaterial"
+    ]
+  },
+  {
+    "id": "US25101",
+    "name": "Die Streitenden Königreiche",
+    "normalizedName": "die streitenden konigreiche",
+    "base": {},
+    "locale": {
+      "id": "US25101",
+      "short": "SKR",
+      "name": "Die Streitenden Königreiche",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Die Streitenden Königreiche"
+    ]
+  },
+  {
+    "id": "US25102",
+    "name": "Die Siebenwindküste",
+    "normalizedName": "die siebenwindkuste",
+    "base": {},
+    "locale": {
+      "id": "US25102",
+      "short": "SWK",
+      "name": "Die Siebenwindküste",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Die Siebenwindküste"
+    ]
+  },
+  {
+    "id": "US25103",
+    "name": "Die Flusslande",
+    "normalizedName": "die flusslande",
+    "base": {},
+    "locale": {
+      "id": "US25103",
+      "short": "FLU",
+      "name": "Die Flusslande",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Die Flusslande"
+    ]
+  },
+  {
+    "id": "US25114",
+    "name": "Havena – Versunkene Geheimnisse",
+    "normalizedName": "havena versunkene geheimnisse",
+    "base": {},
+    "locale": {
+      "id": "US25114",
+      "short": "HAV",
+      "name": "Havena – Versunkene Geheimnisse",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Havena – Versunkene Geheimnisse"
+    ]
+  },
+  {
+    "id": "US25201",
+    "name": "Aventurisches Bestiarium I",
+    "normalizedName": "aventurisches bestiarium i",
+    "base": {},
+    "locale": {
+      "id": "US25201",
+      "short": "ABEI",
+      "name": "Aventurisches Bestiarium I",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurisches Bestiarium I"
+    ]
+  },
+  {
+    "id": "US25206",
+    "name": "Rüstkammer der Streitenden Königreiche",
+    "normalizedName": "rustkammer der streitenden konigreiche",
+    "base": {},
+    "locale": {
+      "id": "US25206",
+      "short": "RÜSKR",
+      "name": "Rüstkammer der Streitenden Königreiche",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Rüstkammer der Streitenden Königreiche"
+    ]
+  },
+  {
+    "id": "US25208",
+    "name": "Aventurische Rüstkammer I",
+    "normalizedName": "aventurische rustkammer i",
+    "base": {},
+    "locale": {
+      "id": "US25208",
+      "short": "ARÜI",
+      "name": "Aventurische Rüstkammer I",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurische Rüstkammer I"
+    ]
+  },
+  {
+    "id": "US25210",
+    "name": "Rüstkammer der Siebenwindküste",
+    "normalizedName": "rustkammer der siebenwindkuste",
+    "base": {},
+    "locale": {
+      "id": "US25210",
+      "short": "RÜSWK",
+      "name": "Rüstkammer der Siebenwindküste",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Rüstkammer der Siebenwindküste"
+    ]
+  },
+  {
+    "id": "US25213",
+    "name": "Wege der Vereinigungen",
+    "normalizedName": "wege der vereinigungen",
+    "base": {},
+    "locale": {
+      "id": "US25213",
+      "short": "WDV",
+      "name": "Wege der Vereinigungen",
+      "isCore": false,
+      "isAdultContent": true,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Wege der Vereinigungen"
+    ]
+  },
+  {
+    "id": "US25216",
+    "name": "Aventurische Rüstkammer II",
+    "normalizedName": "aventurische rustkammer ii",
+    "base": {},
+    "locale": {
+      "id": "US25216",
+      "short": "ARÜII",
+      "name": "Aventurische Rüstkammer II",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Aventurische Rüstkammer II"
+    ]
+  },
+  {
+    "id": "US25219",
+    "name": "Aventurisches Bestiarium II",
+    "normalizedName": "aventurisches bestiarium ii",
+    "base": {},
+    "locale": {
+      "id": "US25219",
+      "short": "ABEII",
+      "name": "Aventurisches Bestiarium II",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Aventurisches Bestiarium II"
+    ]
+  },
+  {
+    "id": "US25224",
+    "name": "Lustschlösser & Zauberwesen",
+    "normalizedName": "lustschlosser zauberwesen",
+    "base": {},
+    "locale": {
+      "id": "US25224",
+      "short": "L&Z",
+      "name": "Lustschlösser & Zauberwesen",
+      "isCore": false,
+      "isAdultContent": true,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Lustschlösser & Zauberwesen"
+    ]
+  },
+  {
+    "id": "US25225",
+    "name": "Aventurische Tiergefährten",
+    "normalizedName": "aventurische tiergefahrten",
+    "base": {},
+    "locale": {
+      "id": "US25225",
+      "short": "ATI",
+      "name": "Aventurische Tiergefährten",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Aventurische Tiergefährten"
+    ]
+  },
+  {
+    "id": "US25228",
+    "name": "Unendlichkeit & Tiefenrausch",
+    "normalizedName": "unendlichkeit tiefenrausch",
+    "base": {},
+    "locale": {
+      "id": "US25228",
+      "short": "U&T",
+      "name": "Unendlichkeit & Tiefenrausch",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Unendlichkeit & Tiefenrausch"
+    ]
+  },
+  {
+    "id": "US25238",
+    "name": "Aventurisches Pandämonium",
+    "normalizedName": "aventurisches pandamonium",
+    "base": {},
+    "locale": {
+      "id": "US25238",
+      "short": "APA",
+      "name": "Aventurisches Pandämonium",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Aventurisches Pandämonium"
+    ]
+  },
+  {
+    "id": "US25261",
+    "name": "Geisterwald & Knochenklippen",
+    "normalizedName": "geisterwald knochenklippen",
+    "base": {},
+    "locale": {
+      "id": "US25261",
+      "short": "G&K",
+      "name": "Geisterwald & Knochenklippen",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Geisterwald & Knochenklippen"
+    ]
+  },
+  {
+    "id": "US25407",
+    "name": "Kurtisanen & Bordelle",
+    "normalizedName": "kurtisanen bordelle",
+    "base": {},
+    "locale": {
+      "id": "US25407",
+      "short": "K&B",
+      "name": "Kurtisanen & Bordelle",
+      "isCore": false,
+      "isAdultContent": true,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Kurtisanen & Bordelle"
+    ]
+  },
+  {
+    "id": "US25514",
+    "name": "Kneipen & Tavernen",
+    "normalizedName": "kneipen tavernen",
+    "base": {},
+    "locale": {
+      "id": "US25514",
+      "short": "K&T",
+      "name": "Kneipen & Tavernen",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Kneipen & Tavernen"
+    ]
+  },
+  {
+    "id": "US25526",
+    "name": "Aventurische Namen",
+    "normalizedName": "aventurische namen",
+    "base": {},
+    "locale": {
+      "id": "US25526",
+      "short": "ANA",
+      "name": "Aventurische Namen",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Aventurische Namen"
+    ]
+  },
+  {
+    "id": "US25562",
+    "name": "Rüstkammer der Flusslande",
+    "normalizedName": "rustkammer der flusslande",
+    "base": {},
+    "locale": {
+      "id": "US25562",
+      "short": "RÜFLU",
+      "name": "Rüstkammer der Flusslande",
+      "isCore": false,
+      "isAdultContent": false,
+      "isMissingImplementation": true
+    },
+    "synonyms": [
+      "Rüstkammer der Flusslande"
+    ]
+  },
+  {
+    "id": "US25594",
+    "name": "Katakomben & Ruinen",
+    "normalizedName": "katakomben ruinen",
+    "base": {},
+    "locale": {
+      "id": "US25594",
+      "short": "K&R",
+      "name": "Katakomben & Ruinen",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Katakomben & Ruinen"
+    ]
+  },
+  {
+    "id": "US25603",
+    "name": "Glaube, Macht und Heldenmut: Die Streitenden Königreiche",
+    "normalizedName": "glaube macht und heldenmut die streitenden konigreiche",
+    "base": {},
+    "locale": {
+      "id": "US25603",
+      "short": "SKRX",
+      "name": "Glaube, Macht und Heldenmut: Die Streitenden Königreiche",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Glaube, Macht und Heldenmut: Die Streitenden Königreiche"
+    ]
+  },
+  {
+    "id": "US25608",
+    "name": "Glaube, Macht und Heldenmut: Die Siebenwindküste",
+    "normalizedName": "glaube macht und heldenmut die siebenwindkuste",
+    "base": {},
+    "locale": {
+      "id": "US25608",
+      "short": "SWKX",
+      "name": "Glaube, Macht und Heldenmut: Die Siebenwindküste",
+      "isCore": false,
+      "isAdultContent": false
+    },
+    "synonyms": [
+      "Glaube, Macht und Heldenmut: Die Siebenwindküste"
+    ]
+  }
+]

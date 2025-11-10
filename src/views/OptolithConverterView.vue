@@ -526,9 +526,7 @@ const displayWarnings = computed(() => {
     ([section, entries]) => {
       entries.forEach((entry) =>
         warnings.add(
-          localizeWarning(
-            `[Resolver] ${section}: unverarbeitet "${entry}"`,
-          ),
+          localizeWarning(`[Resolver] ${section}: unverarbeitet "${entry}"`),
         ),
       );
     },

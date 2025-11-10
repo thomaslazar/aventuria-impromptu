@@ -1,0 +1,580 @@
+[
+  {
+    "id": "EPKG_1",
+    "name": "Reisepaket",
+    "normalizedName": "reisepaket",
+    "base": {
+      "id": "EPKG_1",
+      "items": [
+        {
+          "id": "ITEMTPL_144"
+        },
+        {
+          "id": "ITEMTPL_145"
+        },
+        {
+          "id": "ITEMTPL_150"
+        },
+        {
+          "id": "ITEMTPL_177"
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_200"
+        },
+        {
+          "id": "ITEMTPL_219",
+          "amount": 10
+        },
+        {
+          "id": "ITEMTPL_205"
+        },
+        {
+          "id": "ITEMTPL_5"
+        },
+        {
+          "id": "ITEMTPL_167"
+        },
+        {
+          "id": "ITEMTPL_182"
+        },
+        {
+          "id": "ITEMTPL_181",
+          "amount": 3
+        },
+        {
+          "id": "ITEMTPL_159"
+        },
+        {
+          "id": "ITEMTPL_197"
+        },
+        {
+          "id": "ITEMTPL_93"
+        },
+        {
+          "id": "ITEMTPL_216"
+        },
+        {
+          "id": "ITEMTPL_224"
+        },
+        {
+          "id": "ITEMTPL_191"
+        },
+        {
+          "id": "ITEMTPL_192"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_1",
+      "name": "Reisepaket",
+      "src": [
+        {
+          "id": "US25001",
+          "firstPage": 364
+        }
+      ]
+    },
+    "synonyms": [
+      "Reisepaket"
+    ]
+  },
+  {
+    "id": "EPKG_2",
+    "name": "Wildnispaket",
+    "normalizedName": "wildnispaket",
+    "base": {
+      "id": "EPKG_2",
+      "items": [
+        {
+          "id": "ITEMTPL_145"
+        },
+        {
+          "id": "ITEMTPL_177"
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_219",
+          "amount": 10
+        },
+        {
+          "id": "ITEMTPL_205"
+        },
+        {
+          "id": "ITEMTPL_5"
+        },
+        {
+          "id": "ITEMTPL_167"
+        },
+        {
+          "id": "ITEMTPL_182"
+        },
+        {
+          "id": "ITEMTPL_181",
+          "amount": 5
+        },
+        {
+          "id": "ITEMTPL_159"
+        },
+        {
+          "id": "ITEMTPL_197"
+        },
+        {
+          "id": "ITEMTPL_216",
+          "amount": 2
+        },
+        {
+          "id": "ITEMTPL_224"
+        },
+        {
+          "id": "ITEMTPL_179"
+        },
+        {
+          "id": "ITEMTPL_191"
+        },
+        {
+          "id": "ITEMTPL_192"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_2",
+      "name": "Wildnispaket",
+      "src": [
+        {
+          "id": "US25001",
+          "firstPage": 364
+        }
+      ]
+    },
+    "synonyms": [
+      "Wildnispaket"
+    ]
+  },
+  {
+    "id": "EPKG_3",
+    "name": "Stadtpaket",
+    "normalizedName": "stadtpaket",
+    "base": {
+      "id": "EPKG_3",
+      "items": [
+        {
+          "id": "ITEMTPL_201"
+        },
+        {
+          "id": "ITEMTPL_284"
+        },
+        {
+          "id": "ITEMTPL_190"
+        },
+        {
+          "id": "ITEMTPL_5"
+        },
+        {
+          "id": "ITEMTPL_167"
+        },
+        {
+          "id": "ITEMTPL_186"
+        },
+        {
+          "id": "ITEMTPL_286"
+        },
+        {
+          "id": "ITEMTPL_197"
+        },
+        {
+          "id": "ITEMTPL_191"
+        },
+        {
+          "id": "ITEMTPL_192"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_3",
+      "name": "Stadtpaket",
+      "src": [
+        {
+          "id": "US25001",
+          "firstPage": 364
+        }
+      ]
+    },
+    "synonyms": [
+      "Stadtpaket"
+    ]
+  },
+  {
+    "id": "EPKG_4",
+    "name": "Abenteurerpaket (Havena)",
+    "normalizedName": "abenteurerpaket havena",
+    "base": {
+      "id": "EPKG_4",
+      "items": [
+        {
+          "id": "ITEMTPL_145"
+        },
+        {
+          "id": "ITEMTPL_2"
+        },
+        {
+          "id": "ITEMTPL_31"
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_202"
+        },
+        {
+          "id": "ITEMTPL_415"
+        },
+        {
+          "id": "ITEMTPL_139",
+          "amount": 2
+        },
+        {
+          "id": "ITEMTPL_219",
+          "amount": 10
+        },
+        {
+          "id": "ITEMTPL_238"
+        },
+        {
+          "id": "ITEMTPL_190"
+        },
+        {
+          "id": "ITEMTPL_185"
+        },
+        {
+          "id": "ITEMTPL_205"
+        },
+        {
+          "id": "ITEMTPL_299",
+          "amount": 4
+        },
+        {
+          "id": "ITEMTPL_216"
+        },
+        {
+          "id": "ITEMTPL_224"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_4",
+      "name": "Abenteurerpaket (Havena)",
+      "src": [
+        {
+          "id": "US25228",
+          "firstPage": 11
+        }
+      ]
+    },
+    "synonyms": [
+      "Abenteurerpaket (Havena)"
+    ]
+  },
+  {
+    "id": "EPKG_5",
+    "name": "Bürgerpaket (Havena)",
+    "normalizedName": "burgerpaket havena",
+    "base": {
+      "id": "EPKG_5",
+      "items": [
+        {
+          "id": "ITEMTPL_2"
+        },
+        {
+          "id": "ITEMTPL_738"
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_200"
+        },
+        {
+          "id": "ITEMTPL_739"
+        },
+        {
+          "id": "ITEMTPL_339"
+        },
+        {
+          "id": "ITEMTPL_139"
+        },
+        {
+          "id": "ITEMTPL_167"
+        },
+        {
+          "id": "ITEMTPL_186"
+        },
+        {
+          "id": "ITEMTPL_286"
+        },
+        {
+          "id": "ITEMTPL_740"
+        },
+        {
+          "id": "ITEMTPL_740"
+        },
+        {
+          "id": "ITEMTPL_348"
+        },
+        {
+          "id": "ITEMTPL_197"
+        },
+        {
+          "id": "ITEMTPL_191"
+        },
+        {
+          "id": "ITEMTPL_192"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_5",
+      "name": "Bürgerpaket (Havena)",
+      "src": [
+        {
+          "id": "US25228",
+          "firstPage": 11
+        }
+      ]
+    },
+    "synonyms": [
+      "Bürgerpaket (Havena)"
+    ]
+  },
+  {
+    "id": "EPKG_6",
+    "name": "Charyptorothkultistenpaket",
+    "normalizedName": "charyptorothkultistenpaket",
+    "base": {
+      "id": "EPKG_6",
+      "items": [
+        {
+          "id": "ITEMTPL_730"
+        },
+        {
+          "id": "ITEMTPL_31"
+        },
+        {
+          "id": "ITEMTPL_139"
+        },
+        {
+          "id": "ITEMTPL_238"
+        },
+        {
+          "id": "ITEMTPL_731"
+        },
+        {
+          "id": "ITEMTPL_108"
+        },
+        {
+          "id": "ITEMTPL_325"
+        },
+        {
+          "id": "ITEMTPL_216"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_6",
+      "name": "Charyptorothkultistenpaket",
+      "src": [
+        {
+          "id": "US25228",
+          "firstPage": 11
+        }
+      ]
+    },
+    "synonyms": [
+      "Charyptorothkultistenpaket"
+    ]
+  },
+  {
+    "id": "EPKG_7",
+    "name": "Schatzsucherpaket",
+    "normalizedName": "schatzsucherpaket",
+    "base": {
+      "id": "EPKG_7",
+      "items": [
+        {
+          "id": "ITEMTPL_187"
+        },
+        {
+          "id": "ITEMTPL_143"
+        },
+        {
+          "id": "ITEMTPL_145"
+        },
+        {
+          "id": "ITEMTPL_2"
+        },
+        {
+          "id": "ITEMTPL_31"
+        },
+        {
+          "id": "ITEMTPL_182"
+        },
+        {
+          "id": "ITEMTPL_237"
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_741"
+        },
+        {
+          "id": "ITEMTPL_153"
+        },
+        {
+          "id": "ITEMTPL_155"
+        },
+        {
+          "id": "ITEMTPL_139"
+        },
+        {
+          "id": "ITEMTPL_219",
+          "amount": 10
+        },
+        {
+          "id": "ITEMTPL_238"
+        },
+        {
+          "id": "ITEMTPL_190"
+        },
+        {
+          "id": "ITEMTPL_174"
+        },
+        {
+          "id": "ITEMTPL_214"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_7",
+      "name": "Schatzsucherpaket",
+      "src": [
+        {
+          "id": "US25228",
+          "firstPage": 12
+        }
+      ]
+    },
+    "synonyms": [
+      "Schatzsucherpaket"
+    ]
+  },
+  {
+    "id": "EPKG_8",
+    "name": "Leichtes Gardistenpaket (Havena)",
+    "normalizedName": "leichtes gardistenpaket havena",
+    "base": {
+      "id": "EPKG_8",
+      "items": [
+        {
+          "id": "ITEMTPL_2"
+        },
+        {
+          "id": "ITEMTPL_217",
+          "amount": 5
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_41"
+        },
+        {
+          "id": "ITEMTPL_34"
+        },
+        {
+          "id": "ITEMTPL_190"
+        },
+        {
+          "id": "ITEMTPL_185"
+        },
+        {
+          "id": "ITEMTPL_60"
+        },
+        {
+          "id": "ITEMTPL_325"
+        },
+        {
+          "id": "ITEMTPL_82"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_8",
+      "name": "Leichtes Gardistenpaket (Havena)",
+      "src": [
+        {
+          "id": "US25228",
+          "firstPage": 12
+        }
+      ]
+    },
+    "synonyms": [
+      "Leichtes Gardistenpaket (Havena)"
+    ]
+  },
+  {
+    "id": "EPKG_9",
+    "name": "Schweres Gardistenpaket (Havena)",
+    "normalizedName": "schweres gardistenpaket havena",
+    "base": {
+      "id": "EPKG_9",
+      "items": [
+        {
+          "id": "ITEMTPL_2"
+        },
+        {
+          "id": "ITEMTPL_217",
+          "amount": 5
+        },
+        {
+          "id": "ITEMTPL_188"
+        },
+        {
+          "id": "ITEMTPL_41"
+        },
+        {
+          "id": "ITEMTPL_85"
+        },
+        {
+          "id": "ITEMTPL_190"
+        },
+        {
+          "id": "ITEMTPL_185"
+        },
+        {
+          "id": "ITEMTPL_37"
+        },
+        {
+          "id": "ITEMTPL_325"
+        }
+      ]
+    },
+    "locale": {
+      "id": "EPKG_9",
+      "name": "Schweres Gardistenpaket (Havena)",
+      "src": [
+        {
+          "id": "US25228",
+          "firstPage": 12
+        }
+      ]
+    },
+    "synonyms": [
+      "Schweres Gardistenpaket (Havena)"
+    ]
+  }
+]

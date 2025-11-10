@@ -1,74 +1,377 @@
 {
   "schemaVersion": "1.0.0",
   "generatorVersion": "optolith-extractor@0.4.2",
-  "generatedAt": "2025-11-09T21:46:59.344Z",
+  "generatedAt": "2025-11-10T14:26:11.794Z",
   "sourceChecksum": "5637e8bddd0a948d07668c16751d5fbceca8cfe215f05648d770dca2adceab66",
   "sourceFileName": "optolith-data.zip",
-  "sourceModifiedAt": "2025-11-09T20:31:11.226Z",
+  "sourceModifiedAt": "2025-11-09T22:02:38.660Z",
   "locale": "de-DE",
   "sections": [
     {
-      "key": "combatTechniques",
-      "label": "Combat Techniques",
-      "file": "combatTechniques.json",
-      "entryCount": 21,
-      "description": "Includes base data and localized labels for all combat techniques."
-    },
-    {
-      "key": "skills",
-      "label": "Talents & Skills",
-      "file": "skills.json",
-      "entryCount": 59,
-      "description": "Comprehensive skill catalogue with check attributes and applications."
-    },
-    {
       "key": "advantages",
+      "type": "derived",
       "label": "Advantages",
       "file": "advantages.json",
       "entryCount": 135,
       "description": "All advantages with localized rules text and prerequisites."
     },
     {
-      "key": "disadvantages",
-      "label": "Disadvantages",
-      "file": "disadvantages.json",
-      "entryCount": 83,
-      "description": "All disadvantages with localized rules text and prerequisites."
+      "key": "arcaneBardTraditions",
+      "type": "raw",
+      "label": "Arcane Bard Traditions",
+      "file": "arcaneBardTraditions.json",
+      "entryCount": 3
     },
     {
-      "key": "specialAbilities",
-      "label": "Special Abilities",
-      "file": "specialAbilities.json",
-      "entryCount": 1447,
-      "description": "Sonderfertigkeiten including leveled and selectable options (languages, scripts, blessings)."
+      "key": "arcaneDancerTraditions",
+      "type": "raw",
+      "label": "Arcane Dancer Traditions",
+      "file": "arcaneDancerTraditions.json",
+      "entryCount": 4
     },
     {
-      "key": "spells",
-      "label": "Spells",
-      "file": "spells.json",
-      "entryCount": 330,
-      "description": "Magical spells with effect text, tradition metadata, and select options."
+      "key": "armorTypes",
+      "type": "raw",
+      "label": "Armor Types",
+      "file": "armorTypes.json",
+      "entryCount": 10
     },
     {
-      "key": "liturgies",
-      "label": "Liturgical Chants",
-      "file": "liturgies.json",
-      "entryCount": 227,
-      "description": "Liturgies and blessings handled by the karma ruleset."
+      "key": "aspects",
+      "type": "raw",
+      "label": "Aspects",
+      "file": "aspects.json",
+      "entryCount": 39
+    },
+    {
+      "key": "attributes",
+      "type": "derived",
+      "label": "Attributes",
+      "file": "attributes.json",
+      "entryCount": 8
+    },
+    {
+      "key": "blessedTraditions",
+      "type": "derived",
+      "label": "Blessed Traditions",
+      "file": "blessedTraditions.json",
+      "entryCount": 20
     },
     {
       "key": "blessings",
+      "type": "derived",
       "label": "Blessings",
       "file": "blessings.json",
       "entryCount": 12,
       "description": "Standalone blessings and miracle effects."
     },
     {
+      "key": "books",
+      "type": "derived",
+      "label": "Books",
+      "file": "books.json",
+      "entryCount": 32
+    },
+    {
+      "key": "brews",
+      "type": "raw",
+      "label": "Brews",
+      "file": "brews.json",
+      "entryCount": 4
+    },
+    {
+      "key": "cantrips",
+      "type": "derived",
+      "label": "Cantrips",
+      "file": "cantrips.json",
+      "entryCount": 97
+    },
+    {
+      "key": "combatSpecialAbilityGroups",
+      "type": "raw",
+      "label": "Combat Special Ability Groups",
+      "file": "combatSpecialAbilityGroups.json",
+      "entryCount": 3
+    },
+    {
+      "key": "combatTechniqueGroups",
+      "type": "raw",
+      "label": "Combat Technique Groups",
+      "file": "combatTechniqueGroups.json",
+      "entryCount": 2
+    },
+    {
+      "key": "combatTechniques",
+      "type": "derived",
+      "label": "Combat Techniques",
+      "file": "combatTechniques.json",
+      "entryCount": 21,
+      "description": "Includes base data and localized labels for all combat techniques."
+    },
+    {
+      "key": "conditions",
+      "type": "derived",
+      "label": "Conditions",
+      "file": "conditions.json",
+      "entryCount": 14
+    },
+    {
+      "key": "cultures",
+      "type": "derived",
+      "label": "Cultures",
+      "file": "cultures.json",
+      "entryCount": 33
+    },
+    {
+      "key": "derivedCharacteristics",
+      "type": "derived",
+      "label": "Derived Characteristics",
+      "file": "derivedCharacteristics.json",
+      "entryCount": 9
+    },
+    {
+      "key": "disadvantages",
+      "type": "derived",
+      "label": "Disadvantages",
+      "file": "disadvantages.json",
+      "entryCount": 83,
+      "description": "All disadvantages with localized rules text and prerequisites."
+    },
+    {
+      "key": "elements",
+      "type": "raw",
+      "label": "Elements",
+      "file": "elements.json",
+      "entryCount": 6
+    },
+    {
       "key": "equipment",
+      "type": "derived",
       "label": "Equipment",
       "file": "equipment.json",
       "entryCount": 875,
       "description": "Gear catalogue covering mundane equipment templates."
+    },
+    {
+      "key": "equipmentGroups",
+      "type": "raw",
+      "label": "Equipment Groups",
+      "file": "equipmentGroups.json",
+      "entryCount": 30
+    },
+    {
+      "key": "equipmentPackages",
+      "type": "derived",
+      "label": "Equipment Packages",
+      "file": "equipmentPackages.json",
+      "entryCount": 9
+    },
+    {
+      "key": "experienceLevels",
+      "type": "derived",
+      "label": "Experience Levels",
+      "file": "experienceLevels.json",
+      "entryCount": 7
+    },
+    {
+      "key": "eyeColors",
+      "type": "raw",
+      "label": "Eye Colors",
+      "file": "eyeColors.json",
+      "entryCount": 20
+    },
+    {
+      "key": "focusRules",
+      "type": "derived",
+      "label": "Focus Rules",
+      "file": "focusRules.json",
+      "entryCount": 13
+    },
+    {
+      "key": "hairColors",
+      "type": "raw",
+      "label": "Hair Colors",
+      "file": "hairColors.json",
+      "entryCount": 25
+    },
+    {
+      "key": "liturgicalChantEnhancements",
+      "type": "raw",
+      "label": "Liturgical Chant Enhancements",
+      "file": "liturgicalChantEnhancements.json",
+      "entryCount": 213
+    },
+    {
+      "key": "liturgicalChantGroups",
+      "type": "raw",
+      "label": "Liturgical Chant Groups",
+      "file": "liturgicalChantGroups.json",
+      "entryCount": 2
+    },
+    {
+      "key": "liturgies",
+      "type": "derived",
+      "label": "Liturgical Chants",
+      "file": "liturgies.json",
+      "entryCount": 227,
+      "description": "Liturgies and blessings handled by the karma ruleset."
+    },
+    {
+      "key": "magicalTraditions",
+      "type": "derived",
+      "label": "Magical Traditions",
+      "file": "magicalTraditions.json",
+      "entryCount": 16
+    },
+    {
+      "key": "optionalRules",
+      "type": "derived",
+      "label": "Optional Rules",
+      "file": "optionalRules.json",
+      "entryCount": 30
+    },
+    {
+      "key": "pacts",
+      "type": "raw",
+      "label": "Pacts",
+      "file": "pacts.json",
+      "entryCount": 2
+    },
+    {
+      "key": "patronCategories",
+      "type": "raw",
+      "label": "Patron Categories",
+      "file": "patronCategories.json",
+      "entryCount": 4
+    },
+    {
+      "key": "patrons",
+      "type": "raw",
+      "label": "Patrons",
+      "file": "patrons.json",
+      "entryCount": 47
+    },
+    {
+      "key": "professions",
+      "type": "derived",
+      "label": "Professions",
+      "file": "professions.json",
+      "entryCount": 259
+    },
+    {
+      "key": "professionVariants",
+      "type": "derived",
+      "label": "Profession Variants",
+      "file": "professionVariants.json",
+      "entryCount": 297
+    },
+    {
+      "key": "properties",
+      "type": "raw",
+      "label": "Properties",
+      "file": "properties.json",
+      "entryCount": 12
+    },
+    {
+      "key": "races",
+      "type": "derived",
+      "label": "Races",
+      "file": "races.json",
+      "entryCount": 4
+    },
+    {
+      "key": "raceVariants",
+      "type": "derived",
+      "label": "Race Variants",
+      "file": "raceVariants.json",
+      "entryCount": 10
+    },
+    {
+      "key": "reaches",
+      "type": "raw",
+      "label": "Reaches",
+      "file": "reaches.json",
+      "entryCount": 4
+    },
+    {
+      "key": "skillGroups",
+      "type": "raw",
+      "label": "Skill Groups",
+      "file": "skillGroups.json",
+      "entryCount": 5
+    },
+    {
+      "key": "skills",
+      "type": "derived",
+      "label": "Talents & Skills",
+      "file": "skills.json",
+      "entryCount": 59,
+      "description": "Comprehensive skill catalogue with check attributes and applications."
+    },
+    {
+      "key": "socialStatuses",
+      "type": "raw",
+      "label": "Social Statuses",
+      "file": "socialStatuses.json",
+      "entryCount": 5
+    },
+    {
+      "key": "specialAbilities",
+      "type": "derived",
+      "label": "Special Abilities",
+      "file": "specialAbilities.json",
+      "entryCount": 1447,
+      "description": "Sonderfertigkeiten including leveled and selectable options (languages, scripts, blessings)."
+    },
+    {
+      "key": "specialAbilityGroups",
+      "type": "raw",
+      "label": "Special Ability Groups",
+      "file": "specialAbilityGroups.json",
+      "entryCount": 46
+    },
+    {
+      "key": "spellEnhancements",
+      "type": "raw",
+      "label": "Spell Enhancements",
+      "file": "spellEnhancements.json",
+      "entryCount": 330
+    },
+    {
+      "key": "spellGroups",
+      "type": "raw",
+      "label": "Spell Groups",
+      "file": "spellGroups.json",
+      "entryCount": 11
+    },
+    {
+      "key": "spells",
+      "type": "derived",
+      "label": "Spells",
+      "file": "spells.json",
+      "entryCount": 480,
+      "description": "Magical spells with effect text, tradition metadata, and select options."
+    },
+    {
+      "key": "states",
+      "type": "derived",
+      "label": "States",
+      "file": "states.json",
+      "entryCount": 25
+    },
+    {
+      "key": "subjects",
+      "type": "raw",
+      "label": "Subjects",
+      "file": "subjects.json",
+      "entryCount": 10
+    },
+    {
+      "key": "tribes",
+      "type": "raw",
+      "label": "Tribes",
+      "file": "tribes.json",
+      "entryCount": 6
     }
   ]
 }

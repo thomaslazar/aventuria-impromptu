@@ -385,7 +385,10 @@ export function resolveStatBlock(
 function resolveSection(
   values: readonly string[],
   section: string,
-  lookup: { byName: Map<string, DerivedEntity>; byId?: Map<string, DerivedEntity> },
+  lookup: {
+    byName: Map<string, DerivedEntity>;
+    byId?: Map<string, DerivedEntity>;
+  },
   context: ResolutionContext,
 ): ResolvedReference[] {
   const preliminaryValues: string[] = [];
@@ -420,118 +423,116 @@ function resolveSection(
       : preliminaryValues;
 
   return expandedValues.map((value) => {
-      const components = parseEntryComponents(value);
-      let normalized = normalizeLabel(components.baseName);
-      let match = lookup.byName.get(normalized);
-      let usedOptionForNormalization: string | undefined;
-      let selectOption: { id: number; name: string } | undefined;
-      let rawOption: string | undefined;
-      let optionNameForLabel: string | undefined;
+    const components = parseEntryComponents(value);
+    let normalized = normalizeLabel(components.baseName);
+    let match = lookup.byName.get(normalized);
+    let usedOptionForNormalization: string | undefined;
+    let selectOption: { id: number; name: string } | undefined;
+    let rawOption: string | undefined;
+    let optionNameForLabel: string | undefined;
 
-      if (!match && components.options.length > 0) {
-        for (const candidate of components.options) {
-          const candidateName = `${components.baseName} (${candidate})`;
-          const candidateNormalized = normalizeLabel(candidateName);
-          const candidateMatch = lookup.byName.get(candidateNormalized);
-          if (candidateMatch) {
-            match = candidateMatch;
-            normalized = candidateNormalized;
-            usedOptionForNormalization = candidate;
-            break;
-          }
+    if (!match && components.options.length > 0) {
+      for (const candidate of components.options) {
+        const candidateName = `${components.baseName} (${candidate})`;
+        const candidateNormalized = normalizeLabel(candidateName);
+        const candidateMatch = lookup.byName.get(candidateNormalized);
+        if (candidateMatch) {
+          match = candidateMatch;
+          normalized = candidateNormalized;
+          usedOptionForNormalization = candidate;
+          break;
         }
       }
+    }
 
-      if (match && hasSelectOptions(match) && components.options.length > 0) {
-        for (const candidate of components.options) {
-          const option = findSelectOption(match, candidate);
-          if (option) {
-            selectOption = option;
-            optionNameForLabel = option.name;
-            break;
-          }
-          if (!rawOption) {
-            rawOption = candidate;
-          }
+    if (match && hasSelectOptions(match) && components.options.length > 0) {
+      for (const candidate of components.options) {
+        const option = findSelectOption(match, candidate);
+        if (option) {
+          selectOption = option;
+          optionNameForLabel = option.name;
+          break;
         }
-      } else if (components.options.length > 0) {
-        optionNameForLabel =
-          usedOptionForNormalization ?? components.options[0];
-      }
-
-      if (!optionNameForLabel && components.options.length > 0) {
-        optionNameForLabel =
-          usedOptionForNormalization ?? components.options[0];
-      }
-
-      if (!optionNameForLabel && usedOptionForNormalization) {
-        optionNameForLabel = usedOptionForNormalization;
-      }
-
-      if (
-        match &&
-        match.normalizedName === "begabung" &&
-        components.options.length > 0
-      ) {
-        const targetDetail = components.options[0];
-        const resolvedTarget = resolveBegabungTarget(targetDetail, context);
-        if (resolvedTarget) {
-          rawOption = resolvedTarget.name;
-          optionNameForLabel = optionNameForLabel ?? resolvedTarget.name;
-        } else {
-          rawOption = targetDetail;
+        if (!rawOption) {
+          rawOption = candidate;
         }
       }
+    } else if (components.options.length > 0) {
+      optionNameForLabel = usedOptionForNormalization ?? components.options[0];
+    }
 
-      if (!match && section === "equipment") {
-        const fallbackMatch = resolveEquipmentFallbackMatch(
-          value,
-          "equipment",
-          context,
-          components.options,
-        );
-        if (fallbackMatch) {
-          match = fallbackMatch;
-        }
+    if (!optionNameForLabel && components.options.length > 0) {
+      optionNameForLabel = usedOptionForNormalization ?? components.options[0];
+    }
+
+    if (!optionNameForLabel && usedOptionForNormalization) {
+      optionNameForLabel = usedOptionForNormalization;
+    }
+
+    if (
+      match &&
+      match.normalizedName === "begabung" &&
+      components.options.length > 0
+    ) {
+      const targetDetail = components.options[0]!;
+      const resolvedTarget = resolveBegabungTarget(targetDetail, context);
+      if (resolvedTarget) {
+        rawOption = resolvedTarget.name;
+        optionNameForLabel = optionNameForLabel ?? resolvedTarget.name;
+      } else {
+        rawOption = targetDetail;
       }
+    }
 
-      let sourceLabel = buildResolvedLabel(
-        components.baseName,
-        components.level,
-        optionNameForLabel,
+    if (!match && section === "equipment") {
+      const fallbackMatch = resolveEquipmentFallbackMatch(
+        value,
+        "equipment",
+        context,
+        components.options,
       );
-      if (section === "equipment" && components.quantityToken) {
-        sourceLabel = `${sourceLabel} ${components.quantityToken}`.trim();
+      if (fallbackMatch) {
+        match = fallbackMatch;
       }
+    }
 
-      if (
-        !match &&
-        section === "blessings" &&
-        isStandardBlessingsAggregate(sourceLabel)
-      ) {
-        return {
-          source: sourceLabel,
-          normalizedSource: normalized,
-          match: undefined,
-          selectOption,
-          level: components.level ?? undefined,
-          rawOption,
-        };
-      }
+    let sourceLabel = buildResolvedLabel(
+      components.baseName,
+      components.level,
+      optionNameForLabel,
+    );
+    if (section === "equipment" && components.quantityToken) {
+      sourceLabel = `${sourceLabel} ${components.quantityToken}`.trim();
+    }
 
-      if (!match) {
-        registerUnresolved(section, sourceLabel, context);
-      }
+    if (
+      !match &&
+      section === "blessings" &&
+      isStandardBlessingsAggregate(sourceLabel)
+    ) {
       return {
         source: sourceLabel,
         normalizedSource: normalized,
-        match,
+        match: undefined,
         selectOption,
         level: components.level ?? undefined,
         rawOption,
-        quantityHint: components.quantity,
       };
-    });
+    }
+
+    if (!match) {
+      registerUnresolved(section, sourceLabel, context);
+    }
+    return {
+      source: sourceLabel,
+      normalizedSource: normalized,
+      match,
+      selectOption,
+      level: components.level ?? undefined,
+      rawOption,
+      quantityHint: components.quantity,
+    };
+  });
 }
 
 function resolveRatedSection(
@@ -1276,12 +1277,13 @@ function isStandardBlessingsAggregate(value: string): boolean {
 
 function expandBlessingAggregates(
   entries: readonly string[],
-  lookup: { byName: Map<string, DerivedEntity>; byId?: Map<string, DerivedEntity> },
+  lookup: {
+    byName: Map<string, DerivedEntity>;
+    byId?: Map<string, DerivedEntity>;
+  },
 ): string[] {
   const expanded: string[] = [];
-  const blessingEntries = lookup.byId
-    ? Array.from(lookup.byId.values())
-    : [];
+  const blessingEntries = lookup.byId ? Array.from(lookup.byId.values()) : [];
   for (const entry of entries) {
     if (isStandardBlessingsAggregate(entry) && blessingEntries.length > 0) {
       blessingEntries.forEach((blessing) => {
@@ -1460,8 +1462,11 @@ function parseEntryComponents(value: string): {
   let quantityValue: number | undefined;
   if (quantityMatch?.[0]) {
     quantityToken = quantityMatch[0].trim();
-    const numeric = Number.parseInt(quantityMatch[1], 10);
-    quantityValue = Number.isNaN(numeric) ? undefined : numeric;
+    const numericSource = quantityMatch[1];
+    if (numericSource) {
+      const numeric = Number.parseInt(numericSource, 10);
+      quantityValue = Number.isNaN(numeric) ? undefined : numeric;
+    }
   }
   working = stripTrailingQuantityToken(stripLeadingQuantityToken(working));
   working = working.replace(/([IVX]+)\s*-\s*([IVX]+)/gi, "$1+$2");
@@ -1689,7 +1694,8 @@ function normalizeAdvantageDisadvantageLists(
 
         const attemptResolve = () => {
           let advantageMatch = lookups.advantages.byName.get(normalizedKey);
-          let disadvantageMatch = lookups.disadvantages.byName.get(normalizedKey);
+          let disadvantageMatch =
+            lookups.disadvantages.byName.get(normalizedKey);
 
           if (!advantageMatch && !disadvantageMatch && variantDetail) {
             const combinedKey = normalizeLabel(
@@ -1860,9 +1866,10 @@ function expandAngstVorEntry(entry: string): string[] {
   });
 }
 
-function extractDetailAndLevel(
-  value: string,
-): { detail: string; level?: string } {
+function extractDetailAndLevel(value: string): {
+  detail: string;
+  level?: string;
+} {
   const match = value.match(/\s+([IVX\d]+)$/i);
   if (match?.[1]) {
     const detail = value.slice(0, match.index).trim();
@@ -1878,9 +1885,7 @@ function mapAngstVorDetail(detail: string): string {
 
 function expandPrinzipientreueEntry(entry: string): string[] {
   const match =
-    entry.match(
-      /^Prinzipientreue(?:\s+([IVX\d]+))?\s*(?:\(([^)]+)\))?/i,
-    ) ?? [];
+    entry.match(/^Prinzipientreue(?:\s+([IVX\d]+))?\s*(?:\(([^)]+)\))?/i) ?? [];
   const [, levelToken, detailToken] = match;
   if (!detailToken) {
     return [entry];
@@ -1896,9 +1901,7 @@ function expandPrinzipientreueEntry(entry: string): string[] {
 
 function expandVerpflichtungenEntry(entry: string): string[] {
   const match =
-    entry.match(
-      /^Verpflichtungen(?:\s+([IVX\d]+))?\s*(?:\(([^)]+)\))?/i,
-    ) ?? [];
+    entry.match(/^Verpflichtungen(?:\s+([IVX\d]+))?\s*(?:\(([^)]+)\))?/i) ?? [];
   const [, levelToken, detailToken] = match;
   if (!detailToken) {
     return [entry];

@@ -805,10 +805,7 @@ function stripTalentCategoryPrefix(value: string): string {
 }
 
 function isTalentCategoryHeading(value: string): boolean {
-  const normalized = value
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/-+/g, "");
+  const normalized = value.toLowerCase().replace(/\s+/g, "").replace(/-+/g, "");
   return TALENT_CATEGORY_MARKERS.some((marker) =>
     normalized.startsWith(marker.replace(/\s+/g, "")),
   );
@@ -1016,13 +1013,15 @@ function stripLeadingQuantity(value: string): string {
   const measurementMatch = working.match(LENGTH_MEASUREMENT_PATTERN);
   if (measurementMatch && measurementMatch[3]) {
     const [, amount, rawUnit, remainder] = measurementMatch;
-    const restRaw = remainder.trim();
-    if (restRaw) {
-      const rest =
-        restRaw.toLowerCase() === "seil" ? "Kletterseil, pro Schritt" : restRaw;
-      const unitLower = rawUnit.toLowerCase();
-      const displayUnit = unitLower.startsWith("schritt") ? "m" : rawUnit;
-      return `${rest} (${amount} ${displayUnit})`.trim();
+    if (rawUnit && remainder) {
+      const restRaw = remainder.trim();
+      if (restRaw) {
+        const rest =
+          restRaw.toLowerCase() === "seil" ? "Kletterseil, pro Schritt" : restRaw;
+        const unitLower = rawUnit.toLowerCase();
+        const displayUnit = unitLower.startsWith("schritt") ? "m" : rawUnit;
+        return `${rest} (${amount} ${displayUnit})`.trim();
+      }
     }
   }
 
