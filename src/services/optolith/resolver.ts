@@ -23,6 +23,7 @@ export interface ResolvedReference {
   };
   readonly level?: number;
   readonly rawOption?: string;
+  readonly quantityHint?: number;
 }
 
 export interface ResolvedLanguage extends ResolvedReference {
@@ -62,7 +63,8 @@ export interface ResolutionWarning {
     | "level-out-of-range"
     | "unresolved-option"
     | "fuzzy-match"
-    | "value-mismatch";
+    | "value-mismatch"
+    | "split";
   readonly section: string;
   readonly value: string;
   readonly message: string;
@@ -92,7 +94,65 @@ const EQUIPMENT_KEYWORD_FALLBACKS: Record<string, string> = {
   krummsabel: "sabel",
   krummsaebel: "sabel",
   platte: "plattenrustung",
+  dietrichsets: "dietrich",
+  dietrichset: "dietrich",
+  seil: "kletterseil pro schritt",
 };
+
+const MORALKODEX_OVERRIDES: Record<string, string> = {
+  phexkirche: "Moralkodex der Phexkirche",
+  hesindekirche: "Moralkodex der Hesindekirche",
+  perainekirche: "Moralkodex der Perainekirche",
+  boronkirche: "Moralkodex der Boronkirche",
+  praioskirche: "Moralkodex der Praioskirche",
+  rondrakirche: "Moralkodex der Rondrakirche",
+  efferdkirche: "Moralkodex der Efferdkirche",
+  traviakirche: "Moralkodex der Traviakirche",
+  firunkirche: "Moralkodex der Firunkirche",
+  tsakirche: "Moralkodex der Tsakirche",
+  ingerimmkirche: "Moralkodex der Ingerimmkirche",
+  rahjakirche: "Moralkodex der Rahjakirche",
+  aveskirche: "Moralkodex der Aveskirche",
+  ifirnkirche: "Moralkodex der Ifirnkirche",
+  korkirche: "Moralkodex der Korkirche",
+  nanduskirche: "Moralkodex der Nanduskirche",
+  swafnirkirche: "Moralkodex der Swafnirkirche",
+};
+
+const VERPFLICHTUNGEN_OVERRIDES: Record<string, string> = {
+  tempel: "Geweihter gegenüber seinem Tempel",
+  kirche: "Geweihter gegenüber seiner Kirche",
+  "geweihter gegenüber seinem tempel": "Geweihter gegenüber seinem Tempel",
+  "geweihter gegenüber seiner kirche": "Geweihter gegenüber seiner Kirche",
+  "magier gegenüber seinem lehrmeister": "Magier gegenüber seinem Lehrmeister",
+  "magier gegenüber seiner akademie": "Magier gegenüber seiner Akademie",
+  "magier gegenüber seiner gilde": "Magier gegenüber seiner Gilde",
+};
+
+const ANGST_VOR_DETAIL_OVERRIDES: Record<string, string> = {
+  toten: "Toten und Untoten",
+  tote: "Toten und Untoten",
+  "toten und untoten": "Toten und Untoten",
+  untoten: "Toten und Untoten",
+};
+
+const SCRIPT_NAME_OVERRIDES: Record<string, string> = {
+  isdira: "Isdira- und Asdharia-Zeichen",
+  asdharia: "Isdira- und Asdharia-Zeichen",
+  rogolan: "Rogolan-Runen",
+};
+
+const SECTIONS_SUPPORTING_CONJUNCTION_SPLIT = new Set([
+  "specialAbilities",
+  "combatSpecialAbilities",
+]);
+
+const DETAIL_SPLIT_BASES = new Set([
+  "schlechte eigenschaft",
+  "schlechte eigenschaften",
+  "schlechte angewohnheit",
+  "schlechte angewohnheiten",
+]);
 
 const LOAD_ADAPTATION_NORMALIZED_NAME = "belastungsgewohnung";
 
@@ -133,6 +193,13 @@ const NUMBER_WORDS = new Set(
     "zwölf",
   ].map((value) => value.toLowerCase()),
 );
+
+const LENGTH_MEASUREMENT_PATTERN =
+  /^(\d+)\s+(schritte?|schritt|meter|metern|m)\b\s*(.*)$/iu;
+
+const TALENT_NAME_OVERRIDES: Record<string, string> = {
+  lebensmittelverarbeitung: "Lebensmittelbearbeitung",
+};
 
 export interface ResolutionResult {
   readonly name: string;
@@ -271,6 +338,29 @@ export function resolveStatBlock(
     unresolvedRecord[section] = Array.from(values.values());
   }
 
+  const hasZaubererAdvantage = advantages.some(
+    (entry) =>
+      entry.match?.normalizedName === "zauberer" ||
+      entry.normalizedSource === "zauberer",
+  );
+  const hasAsp =
+    typeof statBlock.pools.asp === "number" && statBlock.pools.asp > 0;
+  const hasTradition = specialAbilities.some((entry) =>
+    entry.match?.normalizedName?.startsWith("tradition"),
+  );
+  if ((hasZaubererAdvantage || hasAsp) && !hasTradition) {
+    pushWarning(
+      {
+        type: "unresolved",
+        section: "specialAbilities",
+        value: "Tradition",
+        message:
+          "Statblock weist AsP/Zauberer auf, aber keine Tradition. Bitte Tradition manuell ergänzen.",
+      },
+      context,
+    );
+  }
+
   return {
     name: statBlock.name,
     advantages,
@@ -295,13 +385,41 @@ export function resolveStatBlock(
 function resolveSection(
   values: readonly string[],
   section: string,
-  lookup: { byName: Map<string, DerivedEntity> },
+  lookup: { byName: Map<string, DerivedEntity>; byId?: Map<string, DerivedEntity> },
   context: ResolutionContext,
 ): ResolvedReference[] {
-  return values
-    .map((raw) => sanitizeResolvableValue(raw))
-    .filter((value) => value.length > 0)
-    .map((value) => {
+  const preliminaryValues: string[] = [];
+  for (const raw of values) {
+    const sanitized = sanitizeResolvableValue(raw);
+    if (!sanitized) {
+      continue;
+    }
+    if (SECTIONS_SUPPORTING_CONJUNCTION_SPLIT.has(section)) {
+      const { parts, usedOrConnector } = splitConjoinedEntry(sanitized);
+      if (parts.length > 1) {
+        if (usedOrConnector) {
+          pushWarning(
+            {
+              type: "split",
+              section,
+              value: sanitized,
+              message: `Eintrag "${sanitized}" enthielt "oder"; alle Varianten wurden übernommen.`,
+            },
+            context,
+          );
+        }
+        parts.forEach((part) => preliminaryValues.push(part));
+        continue;
+      }
+    }
+    preliminaryValues.push(sanitized);
+  }
+  const expandedValues =
+    section === "blessings"
+      ? expandBlessingAggregates(preliminaryValues, lookup)
+      : preliminaryValues;
+
+  return expandedValues.map((value) => {
       const components = parseEntryComponents(value);
       let normalized = normalizeLabel(components.baseName);
       let match = lookup.byName.get(normalized);
@@ -350,6 +468,21 @@ function resolveSection(
         optionNameForLabel = usedOptionForNormalization;
       }
 
+      if (
+        match &&
+        match.normalizedName === "begabung" &&
+        components.options.length > 0
+      ) {
+        const targetDetail = components.options[0];
+        const resolvedTarget = resolveBegabungTarget(targetDetail, context);
+        if (resolvedTarget) {
+          rawOption = resolvedTarget.name;
+          optionNameForLabel = optionNameForLabel ?? resolvedTarget.name;
+        } else {
+          rawOption = targetDetail;
+        }
+      }
+
       if (!match && section === "equipment") {
         const fallbackMatch = resolveEquipmentFallbackMatch(
           value,
@@ -362,11 +495,14 @@ function resolveSection(
         }
       }
 
-      const sourceLabel = buildResolvedLabel(
+      let sourceLabel = buildResolvedLabel(
         components.baseName,
         components.level,
         optionNameForLabel,
       );
+      if (section === "equipment" && components.quantityToken) {
+        sourceLabel = `${sourceLabel} ${components.quantityToken}`.trim();
+      }
 
       if (
         !match &&
@@ -393,6 +529,7 @@ function resolveSection(
         selectOption,
         level: components.level ?? undefined,
         rawOption,
+        quantityHint: components.quantity,
       };
     });
 }
@@ -430,8 +567,13 @@ function resolveTalents(
   context: ResolutionContext,
 ): ResolvedTalent[] {
   return talents.map((talent) => {
-    const normalized = normalizeLabel(talent.name);
-    let match = context.lookups.skills.byName.get(normalized);
+    const { baseName } = splitTalentApplication(talent.name);
+    const normalized = normalizeLabel(baseName);
+    const override = TALENT_NAME_OVERRIDES[normalized];
+    const lookupKey = override ? normalizeLabel(override) : normalized;
+    let match =
+      context.lookups.skills.byName.get(lookupKey) ??
+      context.lookups.skills.byName.get(normalized);
     if (!match) {
       const fuzzy = findNearestLookupEntry(
         normalized,
@@ -458,6 +600,21 @@ function resolveTalents(
       match,
     };
   });
+}
+
+function splitTalentApplication(name: string): {
+  baseName: string;
+  application?: string;
+} {
+  const trimmed = name.trim();
+  const match = trimmed.match(/^(.*?)(?:\s*\(([^)]+)\))$/u);
+  if (match && match[1]) {
+    return {
+      baseName: match[1].trim(),
+      application: match[2]?.trim(),
+    };
+  }
+  return { baseName: trimmed };
 }
 
 function getLoadAdaptationLevel(
@@ -581,11 +738,19 @@ function resolveArmor(
     trimmedDescription.length === 0 ||
     descriptionLower.includes("natürlicher rüstungsschutz") ||
     noteLower.includes("natürlicher rüstungsschutz");
+  const isClothingWithoutProtection =
+    (armor.rs ?? 0) === 0 &&
+    (armor.be ?? 0) === 0 &&
+    /kleidung|gewand|robe|tracht/.test(descriptionLower);
 
   if (
     !hasStats ||
     ((armor.rs ?? 0) === 0 && (armor.be ?? 0) === 0 && indicatesNoArmor)
   ) {
+    return null;
+  }
+
+  if (isClothingWithoutProtection) {
     return null;
   }
 
@@ -751,14 +916,20 @@ function resolveScripts(
     .map((raw) => sanitizeResolvableValue(raw))
     .filter((value) => value.length > 0)
     .map((value) => {
-      const normalized = normalizeLabel(value);
-      const option = context.lookups.scripts.get(normalized);
+      const parsed = parseLevelledValue(value);
+      const normalized = normalizeLabel(parsed.baseName);
+      const override = SCRIPT_NAME_OVERRIDES[normalized];
+      const option =
+        context.lookups.scripts.get(normalized) ??
+        (override
+          ? context.lookups.scripts.get(normalizeLabel(override))
+          : undefined);
       if (!option) {
         registerUnresolved("scripts", value, context);
         return {
           source: value,
           normalizedSource: normalized,
-          rawOption: value,
+          rawOption: parsed.baseName,
         };
       }
       return {
@@ -766,6 +937,7 @@ function resolveScripts(
         normalizedSource: normalized,
         match: option.ability,
         option,
+        level: parsed.level ?? undefined,
       };
     });
 }
@@ -789,6 +961,21 @@ function parseLevelledValue(input: string): {
     baseName,
     level: level ?? undefined,
   };
+}
+
+function resolveBegabungTarget(
+  detail: string,
+  context: ResolutionContext,
+): { id: string; name: string } | undefined {
+  const normalizedDetail = normalizeLabel(detail);
+  const match =
+    context.lookups.skills.byName.get(normalizedDetail) ??
+    context.lookups.spells.byName.get(normalizedDetail) ??
+    context.lookups.liturgies.byName.get(normalizedDetail);
+  if (match) {
+    return { id: match.id, name: match.name };
+  }
+  return undefined;
 }
 
 function romanToInteger(value: string): number | null {
@@ -878,19 +1065,7 @@ function registerUnresolved(
     context.unresolved.set(section, new Set());
   }
   const entries = context.unresolved.get(section)!;
-  const sizeBefore = entries.size;
   entries.add(value);
-  if (entries.size !== sizeBefore) {
-    pushWarning(
-      {
-        type: "unresolved",
-        section,
-        value,
-        message: `Eintrag "${value}" konnte im Abschnitt ${section} nicht aufgelöst werden.`,
-      },
-      context,
-    );
-  }
 }
 
 function pushWarning(
@@ -1099,6 +1274,39 @@ function isStandardBlessingsAggregate(value: string): boolean {
   );
 }
 
+function expandBlessingAggregates(
+  entries: readonly string[],
+  lookup: { byName: Map<string, DerivedEntity>; byId?: Map<string, DerivedEntity> },
+): string[] {
+  const expanded: string[] = [];
+  const blessingEntries = lookup.byId
+    ? Array.from(lookup.byId.values())
+    : [];
+  for (const entry of entries) {
+    if (isStandardBlessingsAggregate(entry) && blessingEntries.length > 0) {
+      blessingEntries.forEach((blessing) => {
+        expanded.push(getDerivedEntityLabel(blessing));
+      });
+    } else {
+      expanded.push(entry);
+    }
+  }
+  return expanded;
+}
+
+function getDerivedEntityLabel(entry: DerivedEntity): string {
+  const locale = entry.locale as Record<string, unknown> | undefined;
+  const localeName =
+    locale && typeof locale.name === "string" ? String(locale.name) : null;
+  if (localeName && localeName.length > 0) {
+    return localeName;
+  }
+  if (entry.name && entry.name.length > 0) {
+    return entry.name;
+  }
+  return entry.id;
+}
+
 function extractCombatTechniqueId(entry: DerivedEntity): string | undefined {
   const base = entry.base as Record<string, unknown> | undefined;
   if (!base || typeof base !== "object") {
@@ -1210,6 +1418,10 @@ function applyLabelOverrides(label: string): string {
 
 function stripLeadingQuantityToken(value: string): string {
   const working = value.trim();
+  const measurementMatch = working.match(LENGTH_MEASUREMENT_PATTERN);
+  if (measurementMatch && measurementMatch[3]) {
+    return measurementMatch[3].trim();
+  }
   const numericMatch = working.match(/^(\d+)\s+(.*)$/u);
   if (numericMatch && numericMatch[2]) {
     return numericMatch[2].trim();
@@ -1227,15 +1439,30 @@ function stripLeadingQuantityToken(value: string): string {
 }
 
 function stripTrailingQuantityToken(value: string): string {
-  return value.replace(/\(\s*(?:x\s*)?\d+\s*\)\s*$/iu, "").trim();
+  return value
+    .replace(/\(\s*(?:x\s*)?\d+\s*\)\s*$/iu, "")
+    .replace(/\(\s*\d+\s*(?:m|meter|metern|schritte?|schritt)\s*\)\s*$/iu, "")
+    .trim();
 }
 
 function parseEntryComponents(value: string): {
   baseName: string;
   options: readonly string[];
   level?: number;
+  quantity?: number;
+  quantityToken?: string;
 } {
   let working = value.trim();
+  const quantityMatch = working.match(
+    /\((\d+)\s*(m|meter|metern|schritte?|schritt)\s*\)\s*$/iu,
+  );
+  let quantityToken: string | undefined;
+  let quantityValue: number | undefined;
+  if (quantityMatch?.[0]) {
+    quantityToken = quantityMatch[0].trim();
+    const numeric = Number.parseInt(quantityMatch[1], 10);
+    quantityValue = Number.isNaN(numeric) ? undefined : numeric;
+  }
   working = stripTrailingQuantityToken(stripLeadingQuantityToken(working));
   working = working.replace(/([IVX]+)\s*-\s*([IVX]+)/gi, "$1+$2");
   let levelToken: string | undefined;
@@ -1286,6 +1513,8 @@ function parseEntryComponents(value: string): {
     baseName: working,
     options,
     level: level ?? undefined,
+    quantity: quantityValue,
+    quantityToken,
   };
 }
 
@@ -1444,48 +1673,67 @@ function normalizeAdvantageDisadvantageLists(
 
     const variants = preprocessAdvDisadvEntry(sanitized);
     for (const variant of variants) {
-      const { label, baseLabel, detail } = normalizeAdvDisadvEntry(variant);
-      const normalizedKey = normalizeLabel(baseLabel);
-      let advantageMatch = lookups.advantages.byName.get(normalizedKey);
-      let disadvantageMatch = lookups.disadvantages.byName.get(normalizedKey);
+      const entryInfo = normalizeAdvDisadvEntry(variant);
+      const normalizedKey = normalizeLabel(entryInfo.baseLabel);
+      const detailVariants = expandDetailValues(
+        entryInfo.baseLabel,
+        entryInfo.detail,
+      );
 
-      if (!advantageMatch && !disadvantageMatch && detail) {
-        const combinedKey = normalizeLabel(`${baseLabel} (${detail})`);
-        advantageMatch = lookups.advantages.byName.get(combinedKey);
-        disadvantageMatch = lookups.disadvantages.byName.get(combinedKey);
-      }
+      for (const variantDetail of detailVariants) {
+        const label = buildAdvDisadvLabel(
+          entryInfo.baseLabel,
+          entryInfo.level,
+          variantDetail,
+        );
 
-      if (advantageMatch && !disadvantageMatch) {
-        advantages.add(label);
-        continue;
-      }
-      if (disadvantageMatch && !advantageMatch) {
-        disadvantages.add(label);
-        continue;
-      }
-      if (advantageMatch && disadvantageMatch) {
-        if (suggested === "advantage") {
-          advantages.add(label);
-        } else {
-          disadvantages.add(label);
-        }
-        continue;
-      }
+        const attemptResolve = () => {
+          let advantageMatch = lookups.advantages.byName.get(normalizedKey);
+          let disadvantageMatch = lookups.disadvantages.byName.get(normalizedKey);
 
-      const hint = classifyAdvDisadvantageHint(label);
-      if (hint === "advantage") {
-        advantages.add(label);
-        continue;
-      }
-      if (hint === "disadvantage") {
-        disadvantages.add(label);
-        continue;
-      }
+          if (!advantageMatch && !disadvantageMatch && variantDetail) {
+            const combinedKey = normalizeLabel(
+              `${entryInfo.baseLabel} (${variantDetail})`,
+            );
+            advantageMatch = lookups.advantages.byName.get(combinedKey);
+            disadvantageMatch = lookups.disadvantages.byName.get(combinedKey);
+          }
 
-      if (suggested === "advantage") {
-        advantages.add(label);
-      } else {
-        disadvantages.add(label);
+          if (advantageMatch && !disadvantageMatch) {
+            advantages.add(label);
+            return;
+          }
+          if (disadvantageMatch && !advantageMatch) {
+            disadvantages.add(label);
+            return;
+          }
+          if (advantageMatch && disadvantageMatch) {
+            if (suggested === "advantage") {
+              advantages.add(label);
+            } else {
+              disadvantages.add(label);
+            }
+            return;
+          }
+
+          const hint = classifyAdvDisadvantageHint(label);
+          if (hint === "advantage") {
+            advantages.add(label);
+            return;
+          }
+          if (hint === "disadvantage") {
+            disadvantages.add(label);
+            return;
+          }
+
+          if (suggested === "advantage") {
+            advantages.add(label);
+          } else {
+            disadvantages.add(label);
+          }
+        };
+
+        attemptResolve();
       }
     }
   };
@@ -1505,7 +1753,10 @@ function normalizeAdvantageDisadvantageLists(
 }
 
 function preprocessAdvDisadvEntry(entry: string): string[] {
-  const expanded = expandAngstVorEntry(entry);
+  let expanded = expandAngstVorEntry(entry);
+  expanded = expanded.flatMap(expandPrinzipientreueEntry);
+  expanded = expanded.flatMap(expandVerpflichtungenEntry);
+  expanded = expanded.flatMap((value) => splitConjoinedEntry(value).parts);
   const results: string[] = [];
   for (const candidate of expanded) {
     const personality = tryConvertPersonalityWeakness(candidate);
@@ -1601,13 +1852,132 @@ function expandAngstVorEntry(entry: string): string[] {
     return [`Angst vor (${inner})`];
   }
 
-  return parts.map((part) => `Angst vor (${part})`);
+  return parts.map((part) => {
+    const { detail, level } = extractDetailAndLevel(part);
+    const mappedDetail = mapAngstVorDetail(detail);
+    const suffix = level ? ` ${level}` : "";
+    return `Angst vor (${mappedDetail})${suffix}`.trim();
+  });
+}
+
+function extractDetailAndLevel(
+  value: string,
+): { detail: string; level?: string } {
+  const match = value.match(/\s+([IVX\d]+)$/i);
+  if (match?.[1]) {
+    const detail = value.slice(0, match.index).trim();
+    return { detail, level: match[1].trim() };
+  }
+  return { detail: value.trim() };
+}
+
+function mapAngstVorDetail(detail: string): string {
+  const normalized = detail.toLowerCase();
+  return ANGST_VOR_DETAIL_OVERRIDES[normalized] ?? detail;
+}
+
+function expandPrinzipientreueEntry(entry: string): string[] {
+  const match =
+    entry.match(
+      /^Prinzipientreue(?:\s+([IVX\d]+))?\s*(?:\(([^)]+)\))?/i,
+    ) ?? [];
+  const [, levelToken, detailToken] = match;
+  if (!detailToken) {
+    return [entry];
+  }
+  const normalizedDetail = detailToken.trim().toLowerCase();
+  const override = MORALKODEX_OVERRIDES[normalizedDetail];
+  if (!override) {
+    return [entry];
+  }
+  const suffix = levelToken ? ` ${levelToken.trim()}` : "";
+  return [`Prinzipientreue (${override})${suffix}`.trim()];
+}
+
+function expandVerpflichtungenEntry(entry: string): string[] {
+  const match =
+    entry.match(
+      /^Verpflichtungen(?:\s+([IVX\d]+))?\s*(?:\(([^)]+)\))?/i,
+    ) ?? [];
+  const [, levelToken, detailToken] = match;
+  if (!detailToken) {
+    return [entry];
+  }
+  const details = detailToken
+    .split(/[,;]/)
+    .map((value) => value.trim())
+    .filter((value) => value.length > 0);
+  if (details.length === 0) {
+    return [entry];
+  }
+  const suffix = levelToken ? ` ${levelToken.trim()}` : "";
+  return details.map((detail) => {
+    const normalized = detail.toLowerCase();
+    const override = VERPFLICHTUNGEN_OVERRIDES[normalized] ?? detail;
+    return `Verpflichtungen (${override})${suffix}`.trim();
+  });
+}
+
+function splitConjoinedEntry(entry: string): {
+  parts: string[];
+  usedOrConnector: boolean;
+} {
+  if (!/\b(?:und|oder|bzw\.)\b/i.test(entry) && !entry.includes("/")) {
+    return { parts: [entry], usedOrConnector: false };
+  }
+  const normalizedEntry = entry.replace(/\//g, " / ");
+  const tokens = normalizedEntry.split(/\s+/);
+  const connectors = new Set(["und", "oder", "bzw.", "bzw", "/"]);
+  const parts: string[] = [];
+  let buffer = "";
+  let depth = 0;
+  let usedOr = false;
+  const flush = () => {
+    const trimmed = buffer.trim();
+    if (trimmed.length > 0) {
+      parts.push(trimmed);
+    }
+    buffer = "";
+  };
+
+  for (const token of tokens) {
+    if (!token) {
+      continue;
+    }
+    const normalized = token.toLowerCase();
+    const openCount = (token.match(/\(/g) ?? []).length;
+    const closeCount = (token.match(/\)/g) ?? []).length;
+    const isConnector = depth === 0 && connectors.has(normalized);
+    if (isConnector) {
+      if (
+        normalized === "oder" ||
+        normalized === "bzw." ||
+        normalized === "bzw" ||
+        normalized === "/"
+      ) {
+        usedOr = true;
+      }
+      flush();
+    } else {
+      if (buffer.length > 0) {
+        buffer += " ";
+      }
+      buffer += token;
+    }
+    depth = Math.max(0, depth + openCount - closeCount);
+  }
+  flush();
+  if (parts.length <= 1) {
+    return { parts: [entry], usedOrConnector: false };
+  }
+  return { parts, usedOrConnector: usedOr };
 }
 
 function normalizeAdvDisadvEntry(value: string): {
   label: string;
   baseLabel: string;
   detail?: string;
+  level?: number;
 } {
   let working = value.trim();
   working = working.replace(/([IVX]+)\s*-\s*([IVX]+)/gi, "$1+$2");
@@ -1657,7 +2027,44 @@ function normalizeAdvDisadvEntry(value: string): {
     label,
     baseLabel: canonicalBase,
     detail,
+    level: levelNumber,
   };
+}
+
+function buildAdvDisadvLabel(
+  baseLabel: string,
+  level?: number,
+  detail?: string,
+): string {
+  let result = baseLabel;
+  if (level) {
+    result = `${result} ${integerToRoman(level)}`.trim();
+  }
+  if (detail) {
+    result = `${result} (${detail})`.trim();
+  }
+  return result;
+}
+
+function expandDetailValues(
+  baseLabel: string,
+  detail?: string,
+): (string | undefined)[] {
+  if (!detail) {
+    return [undefined];
+  }
+  const normalizedBase = normalizeLabel(baseLabel);
+  if (!DETAIL_SPLIT_BASES.has(normalizedBase)) {
+    return [detail];
+  }
+  const candidates = detail
+    .split(/[,;/]/)
+    .flatMap((segment) =>
+      segment.split(/\b(?:und|oder)\b/i).map((part) => part.trim()),
+    )
+    .map((value) => value.replace(/^\(+|\)+$/g, "").trim())
+    .filter((value) => value.length > 0);
+  return candidates.length > 1 ? candidates : [detail];
 }
 
 function normalizeMutterspracheEntry(value: string): string {

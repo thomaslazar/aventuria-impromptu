@@ -217,6 +217,50 @@ Ausrüstung: Immanschläger, den er als Knüppel nutzt, drei Speere, vier Wurfke
     );
   });
 
+  it("parses categorized talents, blessings, and equipment measurements", () => {
+    const raw = `Fildorn von den Inseln
+MU 13 KL 12 IN 14 CH 13
+FF 14 GE 14 KO 10 KK 10
+LeP 25 SK 2 AsP – ZK 0
+KaP 34 AW 8 GS 8 INI 14+1W6
+Sprachen: Bosparano II, Garethi III, Tulamidya I
+Schriften: Kusliker Zeichen
+Vorteile: Geweihter
+Talente:
+Körper: Klettern (Fassadenklettern) 7, Körperbeherrschung 6
+Gesellschaft: Gassenwissen 6, Überreden 7
+Handwerk: Schlösserknacken 8
+Segnungen: Zwölf Segnungen
+Ausrüstung: Dietrichsets, 10 Schritt Seil, Wurfhaken
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.languages).toEqual([
+      "Bosparano II",
+      "Garethi III",
+      "Tulamidya I",
+    ]);
+    expect(result.model.scripts).toEqual(["Kusliker Zeichen"]);
+    expect(result.model.advantages).toContain("Geweihter");
+    const talentNames = result.model.talents.map((entry) => entry.name);
+    expect(talentNames).toEqual(
+      expect.arrayContaining([
+        "Klettern (Fassadenklettern)",
+        "Körperbeherrschung",
+        "Gassenwissen",
+        "Überreden",
+        "Schlösserknacken",
+      ]),
+    );
+    const klettern = result.model.talents.find(
+      (talent) => talent.name === "Klettern (Fassadenklettern)",
+    );
+    expect(klettern?.value).toBe(7);
+    expect(result.model.blessings).toContain("Zwölf Segnungen");
+    expect(result.model.equipment).toContain("Kletterseil, pro Schritt (10 m)");
+  });
+
   it("captures combat technique ratings when present", () => {
     const raw = `Arn Knokenbreeker
 MU 13 KL 9 IN 13 CH 13

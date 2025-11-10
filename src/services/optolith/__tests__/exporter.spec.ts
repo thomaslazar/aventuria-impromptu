@@ -14,6 +14,7 @@ describe("exportToOptolithCharacter", () => {
     const raw = await loadSample("notia-botero-montez");
     const parsed = parseStatBlock(raw);
     const resolved = resolveStatBlock(parsed.model, lookups);
+    // console.log(resolved.equipment);
 
     const { hero, warnings } = exportToOptolithCharacter({
       dataset: lookups,
@@ -152,5 +153,29 @@ Talente: Klettern 5
       CT_5: 14,
       CT_9: 12,
     });
+  });
+
+  it("derives equipment quantity from measurement annotations", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Kletterer
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 SK 0 AsP - ZK 0
+KaP - AW 6 GS 6 INI 12+1W6
+Ausrüstung: 10 Schritt Seil
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+    const rope = Object.values(hero.belongings.items).find(
+      (item) => (item as { template?: string }).template === "ITEMTPL_219",
+    ) as { amount?: number } | undefined;
+    expect(rope?.amount).toBe(10);
   });
 });

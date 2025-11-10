@@ -123,6 +123,37 @@ const NUMBER_WORDS = new Set(
   ].map((value) => value.toLowerCase()),
 );
 
+const TALENT_CATEGORY_MARKERS = [
+  "körper",
+  "körperlich",
+  "gesellschaft",
+  "natur",
+  "wissen",
+  "handwerk",
+  "sprachen",
+  "sprachlich",
+];
+
+const TALENT_CATEGORY_PREFIX_PATTERN = new RegExp(
+  `^(?:${TALENT_CATEGORY_MARKERS.join("|")})\\s*:\\s*`,
+  "i",
+);
+
+const TALENT_CATEGORY_DELIMITER_PATTERN = new RegExp(
+  `\\b(${TALENT_CATEGORY_MARKERS.join("|")})\\s*:\\s*`,
+  "gi",
+);
+
+const LENGTH_MEASUREMENT_PATTERN =
+  /^(\d+)\s+(schritte?|schritt|meter|metern|m)\b\s*(.*)$/iu;
+
+const EQUIPMENT_ENTRY_OVERRIDES: Record<string, string> = {
+  dietrichset: "Dietrich",
+  dietrichsets: "Dietrich",
+  dietrich: "Dietrich",
+  seil: "Kletterseil, pro Schritt",
+};
+
 export function parseStatBlock(raw: string): ParseResult {
   const warnings: ParserWarning[] = [];
   const normalizedSource = normalizeInput(raw);
@@ -677,8 +708,17 @@ function collectSections(lines: string[]): {
     }
     const headingMatch = line.match(HEADING_PATTERN);
     if (headingMatch) {
-      flush();
       const headingValue = headingMatch[1]?.trim();
+      if (
+        currentHeading &&
+        currentHeading.toLowerCase().startsWith("talente") &&
+        headingValue &&
+        isTalentCategoryHeading(headingValue)
+      ) {
+        currentContent.push(line);
+        continue;
+      }
+      flush();
       currentHeading =
         headingValue && headingValue.length > 0 ? headingValue : null;
       const remainder = headingMatch[2]?.trim();
@@ -738,9 +778,40 @@ function appendTalentList(target: string[], content: string): void {
   if (!content || content.toLowerCase() === "keine") {
     return;
   }
-  for (const item of splitList(content)) {
-    target.push(item);
+  const normalizedContent = insertTalentCategoryDelimiters(content);
+  for (const rawItem of splitList(normalizedContent)) {
+    const item = stripTalentCategoryPrefix(rawItem);
+    if (item) {
+      target.push(item);
+    }
   }
+}
+
+function insertTalentCategoryDelimiters(content: string): string {
+  return content.replace(
+    TALENT_CATEGORY_DELIMITER_PATTERN,
+    (match: string, prefix: string, offset: number) => {
+      if (!isTalentCategoryHeading(prefix)) {
+        return match;
+      }
+      const separator = offset === 0 ? "" : "; ";
+      return `${separator}${prefix}: `;
+    },
+  );
+}
+
+function stripTalentCategoryPrefix(value: string): string {
+  return value.replace(TALENT_CATEGORY_PREFIX_PATTERN, "");
+}
+
+function isTalentCategoryHeading(value: string): boolean {
+  const normalized = value
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/-+/g, "");
+  return TALENT_CATEGORY_MARKERS.some((marker) =>
+    normalized.startsWith(marker.replace(/\s+/g, "")),
+  );
 }
 
 function splitList(content: string): string[] {
@@ -785,10 +856,23 @@ function mergeRelativeClauses(entries: string[]): string[] {
 
 function sanitizeEquipmentList(values: string[]): string[] {
   return sanitizeList(values)
-    .map((value) =>
-      stripTrailingQuantityAnnotation(stripLeadingQuantity(value)),
-    )
+    .map((value) => rewriteEquipmentEntry(value))
     .filter((value) => value.length > 0);
+}
+
+function rewriteEquipmentEntry(value: string): string {
+  const stripped = stripTrailingQuantityAnnotation(stripLeadingQuantity(value));
+  const measurementMatch = stripped.match(/\(\s*[^)]+\)\s*$/u);
+  const measurement = measurementMatch ? measurementMatch[0] : "";
+  const base =
+    measurement && stripped.endsWith(measurement)
+      ? stripped.slice(0, stripped.length - measurement.length).trim()
+      : stripped;
+  const override = EQUIPMENT_ENTRY_OVERRIDES[base.toLowerCase()];
+  if (!override) {
+    return stripped;
+  }
+  return measurement ? `${override} ${measurement}`.trim() : override;
 }
 
 function splitCompositeAbilityEntry(value: string): string[] {
@@ -874,7 +958,9 @@ function sanitizeList(values: string[]): string[] {
         lower !== "keine" &&
         lower !== "keiner" &&
         lower !== "keinen" &&
-        lower !== "entfällt"
+        lower !== "entfällt" &&
+        lower !== "-" &&
+        lower !== "—"
       );
     });
 }
@@ -926,6 +1012,20 @@ function expandAttributeAbbreviations(value: string): string {
 
 function stripLeadingQuantity(value: string): string {
   const working = value.trim();
+
+  const measurementMatch = working.match(LENGTH_MEASUREMENT_PATTERN);
+  if (measurementMatch && measurementMatch[3]) {
+    const [, amount, rawUnit, remainder] = measurementMatch;
+    const restRaw = remainder.trim();
+    if (restRaw) {
+      const rest =
+        restRaw.toLowerCase() === "seil" ? "Kletterseil, pro Schritt" : restRaw;
+      const unitLower = rawUnit.toLowerCase();
+      const displayUnit = unitLower.startsWith("schritt") ? "m" : rawUnit;
+      return `${rest} (${amount} ${displayUnit})`.trim();
+    }
+  }
+
   const numericMatch = working.match(/^(\d+)\s+(.*)$/u);
   if (numericMatch && numericMatch[2]) {
     return numericMatch[2].trim();
