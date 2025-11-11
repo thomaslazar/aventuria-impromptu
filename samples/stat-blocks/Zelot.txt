@@ -1,0 +1,19 @@
+Zelot
+MU 15 KL 10 IN 12 CH 14
+FF 9 GE 15 KO 12 KK 13
+LeP 26 AsP 35 KaP 0 INI 15+1W6
+SK 2 ZK 0 AW 8 GS 8
+Shakagra-Krummsäbel: AT 12 PA 7 TP 1W6+4 RW
+mittel
+RS/BE 4/2 (Kettenrüstung) (Modifikatoren durch Rüs-
+tungen bereits eingerechnet)
+Sonderfertigkeiten: Beidhändiger Kampf I-II, Sturman-
+griff, Tradition (Nachtalben), Vorstoß, Wuchtschlag I
+Vorteile/Nachteile: Kälteresistenz, Zauberer, Zweistim-
+miger Gesang / Hitzeempfindlich, Lichtempfindlich
+Talente: Einschüchtern 10, Klettern 3, Körperbeherr-
+schung 9, Kraftakt 7, Menschenkenntnis 6, Schwim-
+men 3, Selbstbeherrschung 12, Sinnesschärfe 8, Über-
+reden 4, Verbergen 2, Willenskraft 12
+Zauber: Attributo (Körperkraft) 12, Axxeleratus 10, Cor-
+pofrigo 7 (10/14/12), Schlachtlied 11

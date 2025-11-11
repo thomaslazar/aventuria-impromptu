@@ -1,0 +1,94 @@
+ungavik, die Vielfache Zunge
+MU 14 KL 11 (t) IN 14 CH 8
+FF 8 GE 12 KO 30 KK 35
+LeP 400 AsP – KaP – INI 16+1W6
+VW 4 SK 2 ZK 5 GS 6/10/20 (an Land / im Wasser /
+fliegend)
+Maul: AT 16 TP 2W6+5 RW lang
+Tentakel: AT 12 TP 1W6+8 RW lang
+Hals: AT 14 TP 1W6+6 RW mittel
+Wanst: AT 8 TP 3W6+3 RW kurz
+RS/BE 2/0
+Aktionen: 4 (1 x Hals oder Maul 1 x Wanst 2 x Tentakel)
+Vorteile/Nachteile: Wasserlebewesen / Angst vor Feu-
+er, Hitzeempfindlich
+Sonderfertigkeiten:
+• Flugangriff (Wanst)
+• Klammerangriff (Tentakel; Dem Wesen muss eine
+AT mit seinem Fangarm gelingen. Kann der Gegner
+sich nicht verteidigen, hält der Angreifer ihn fest.
+Solange der Gegner festgehalten wird, leidet er un-
+ter den Status Fixiert und Eingeengt. Ab der nächs-
+ten KR muss das Wesen keine AT mehr würfeln,
+sondern erzeugt durch Quetschen SP in Höhe der
+ausgewürfelten TP des Angriffs. Alternativ kann das
+Wesen 1 Aktion aufwenden, um das Opfer zu seinem
+Maul zu heben. In der folgenden KR kann das We-
+sen dann zubeißen. Diese Biss-Attacke gelingt gegen
+einen festgehaltenen Gegner. Die Verteidigung des
+Angreifers sinkt für den Rest der KR, in welcher der
+Biss stattfindet, auf 0. Der Klammergriff kann nur
+gegen Gegner kleinerer Größenkategorien einge-
+setzt werden. Um sich aus dem Klammergriff zu lö-
+sen, ist eine gelungene Vergleichsprobe auf Kraftakt
+(Ziehen & Zerren) nötig. Mittels einer freien Aktion
+kann der Klammernde den Gehaltenen loslassen.
+Sollte der Klammernde sein Opfer angehoben ha-
+ben, stürzt es und erleidet den Status Liegend, sofern
+ihm nicht eine Probe auf Körperbeherrschung (Kampf-
+manöver) gelingt. Der Angriff ist um 4 erschwert.)
+• Mächtiger Schlag (Wanst, Tentakel, Hals)
+• Tentakelschwung (Tentakel, Hals; Ist das angreifen-
+de Wesen mindestens eine Größenkategorie größer
+als seine Ziele, kann es mit einem Tentakelschwung
+mehrere Gegner zu Fall bringen. Diesem Angriff
+kann man nur ausweichen. Ist die Verteidigung
+misslungen, stürzt der Gegner und erleidet den Sta-
+tus Liegend. Durch den Fall erleidet man 1W3 SP. Ein
+solcher Angriff kann nur gegen Ziele vor dem an-
+greifenden Wesen ausgeführt werden. Die Attacke
+ist um 2 pro Ziel erschwert.)
+• Unterwasserkampf (Erschwernisse im Kampf unter
+Wassergelten nicht (siehe Regelwerk Seite 239).
+• Verbeißen (Maul)
+Talente: Einschüchtern 13, Fliegen 11, Körperbeherr-
+schung 11, Kraftakt 12, Schwimmen 12, Selbstbeherr-
+schung 9, Sinnesschärfe 7, Verbergen 8, Willenskraft 7
+Größenkategorie: riesig
+Typus: Chimäre, nicht humanoid
+Kampfverhalten: Schon mit dem ersten Angriff, entwe-
+der durch das Eis brechend oder mit einem gewalti-
+gen Satz in die Gruppe seiner Gegner, nutzt das Tun-
+gavik seine Masse. Auch im weiteren Kampfverlauf
+versucht es, mit seinem Wanst Gegner abzudrängen
+und zu zerquetschen, während zwei Tentakel und der
+Kopf gezielter angreifen. Besonders hat die Chimäre
+es auf Feinde abgesehen, die sie bereits verletzt ha-
+ben. Dabei meidet sie jedoch Gegner, die offenes Feu-
+er bei sich tragen oder stark danach riechen, solange
+noch andere Beute zu haben ist.
+Flucht: Bei Schmerz II fliegt das Tungavik soweit es kann
+davon, um bald darauf mit neuer Wut anzugreifen.
+Schmerz +1 bei: 300 LeP, 200 LeP, 100 LeP, 5 LeP oder weniger
+Magiekunde (Magische Wesen):
+• QS 1: Diese einzigartige Chimäre aus Krakenmolch,
+Riesenalk und Muräne kann sich unter Wasser, am
+Boden und in der Luft bewegen.
+• QS 2: Auf den zungenartigen Tentakeln, die zu dick
+sind, um sie mit einem einfachen Schwerthiebe zu
+durchtrennen, läuft das Tungavik wie auf Beinen.
+Dafür sind die Flügel zu schwach, um es für längere
+Zeit in der Luft zu halten. Es erhebt sich nur für re-
+lativ kurze Sprünge in die Luft.
+• QS 3+: Die Chimäre ist besonders empfindlich gegen
+Hitze und Feuer, das sie auch fürchtet.
+Sonderregeln:
+Knochenlos: Die Chimäre kann sich dank ihres gallertar-
+tigen Körpers trotz ihrer enormen Größe selbst durch
+Öffnungen von 1 Schritt Durchmesser zwängen.
+Überschwer: Ihre Flügel vermögen die schwergewichtige
+Bestie nicht lange zu tragen. Für jeden Flugversuch ist
+eine Probe auf Fliegen notwendig. Die Chimäre kann
+nur für QS Aktionen in der Luft bleiben und danach
+erst nach 10 Kampfrunden wieder abheben.
+Empfindlichkeit gegen Feuer: Feuer richtet doppelte SP an.

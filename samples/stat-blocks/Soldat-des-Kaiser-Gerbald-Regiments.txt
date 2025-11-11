@@ -1,0 +1,25 @@
+Soldat des Kaiser-Gerbald-Regiments
+MU 11 KL 10 IN 13 CH 11
+FF 11 GE 13 KO 13 KK 13
+LeP 31 AsP – KaP – INI 11+1W6
+SK 1 ZK 2 AW 7 GS 7
+Waffenlos: AT 9 PA 5 TP 1W6 RW kurz
+Säbel: AT 10 PA 6 TP 1W6+3 RW mittel
+Hellebarde: AT 11 PA 4 TP 1W6+6 RW lang
+Leichte Armbrust: FK 11 LZ 8 Akt TP 1W6+6 RW
+10/50/80
+RS/BE 3/1 (Lederrüstung) (Modifikatoren durch Rüs-
+tungen bereits eingerechnet)
+Sonderfertigkeiten: Finte I, Wuchtschlag I
+Vorteile/Nachteile: Schlechte Eigenschaft (Goldgier)
+Talente: Einschüchtern 7, Körperbeherrschung 5,
+Kraftakt 5, Selbstbeherrschung 3, Sinnesschärfe 5,
+Verbergen 6, Wildnisleben 6, Willenskraft 6
+Kampfverhalten: Diese Gesellen meiden einen fairen
+Kampf und halten ihre Gegner lieber mit Armbrüs-
+ten und Hellebarden auf Distanz und stellen eine
+Überzahl her. Wenn es hart auf hart kommt, ist der
+Haufen aber unkoordiniert und ein jeder sich selbst
+der Nächste.
+Flucht: bei Schmerz I
+Schmerz +1 bei: 23 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger

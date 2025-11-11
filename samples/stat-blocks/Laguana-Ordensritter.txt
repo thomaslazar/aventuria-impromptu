@@ -1,0 +1,44 @@
+Laguana-Ordensritter
+MU 15 KL 12 IN 13 CH 12
+FF 12 GE 15 KO 15 KK 15
+LeP 40 AsP
+– KaP
+– INI 15+1W6
+AW 6 SK 2 ZK 3 GS 7
+Waffenlos: AT 15 PA 8 TP 1W6+1 RW kurz
+Dolch: AT 15 PA 8 TP 1W6+2 RW kurz
+Anderthalbhänder (2H): AT 16 PA 9 TP 1W6+6 RW mittel
+Boronsichel (2H): AT 16 PA 7 TP 2W6+4 RW mittel
+Brabakbengel: AT 15 PA 7 TP 1W6+6 RW mittel
+Langschwert: AT 16 PA 9 TP 1W6+4 RW mittel
+Kriegsbogen: FK 15 LZ 2 TP 1W6+8 RW 25/50/100
+RS/BE: 6/1 (Plattenrüstung) (Modifikatoren durch
+Rüstungen bereits eingerechnet)
+Vorteile/Nachteile: Krankheitsresistenz I / Persön-
+lichkeitsschwächen (vor allem Arroganz)
+Sonderfertigkeiten: Aufmerksamkeit, Belastungs-
+gewöhnung I+II, Finte I+II (Waffenlos, Dolch, Ander-
+thalbhänder, Boronsichel, Brabakbengel, Streitkolben),
+Kampfreflexe I, Muttersprache Garethi III, Ortskennt-
+nis (Heimatdorf), Präziser Schuss/Wurf I (Kriegsbogen),
+Rundumschlag I (Anderthalbhänder, Boronsichel, Bra-
+bakbengel, Langschwert), Sturmangriff (Anderthalb-
+händer, Boronsichel, Brabakbengel, Langschwert), Vor-
+stoß (Anderthalbhänder, Boronsichel, Brabakbengel,
+Langschwert), Wuchtschlag I+II (Waffenlos, Anderthalb-
+händer, Boronsichel, Brabakbengel, Langschwert)
+Talente: Einschüchtern 12, Gassenwissen 6, Handel 6,
+Körperbeherrschung 13, Kraftakt 14, Menschen-
+kenntnis 7, Selbstbeherrschung 13, Sinnesschärfe 10,
+Überreden 5, Verbergen 6, Willenskraft 13
+Kampfverhalten: Ritter des Laguan-Ordens auf beiden
+Seiten verwenden im Kampf ein reichhaltiges Repertoire
+an Sonderfertigkeiten. Gegen einzelne Gegner nutzen sie
+Finten und Wuchtschläge, gegen mehr als einen Gegner den
+Rundumschlag. Auch ein Vorstoß oder Sturmangriff wird häu-
+fig eingesetzt. Wenn sie mehrere Stufen Schmerz erlitten
+haben, setzen sie kaum noch Manöver ein. Aus der Distanz
+beschießen sie ihre Gegner gerne mit ihrem Kriegsbogen
+und nutzen dabei auch das Manöver Präziser Schuss/Wurf.
+Flucht: Laguana-Ordensritter fliehen nicht.
+Schmerz +1 bei: 30 LeP, 20 LeP, 10 LeP, 5 LeP oder weniger

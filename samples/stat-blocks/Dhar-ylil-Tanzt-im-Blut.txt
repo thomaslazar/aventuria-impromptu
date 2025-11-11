@@ -1,0 +1,36 @@
+Dhar’ylil Tanzt-im-Blut
+MU 17 KL 13 IN 17 CH 13
+FF 11 GE 18 KO 12 KK 14
+LeP 26 SK 4 AsP 37 ZK 0
+KaP 0 AW 12 GS 8 INI 21+1W6
+Schip 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Aufmerksamkeit, Beidhändiger
+Kampf I-II, Feindgespür, Finte I-III, Kampfreflexe
+I-III, Vorstoß, Wuchtschlag I, Verbessertes Auswei-
+chen I-III
+Sprachen: Asdharia III, Zhayad
+Schriften: Isdira- und Asdharia-Zeichen, Zhayad-Zeichen
+Vorteile: Beidhändig, Herausragende Kampftech-
+nik (Schwerter), Kälteresistenz, Waffenbegabung
+(Schwerter), Zauberer, Zweistimmiger Gesang
+Nachteile: Arroganz, Hitzeempfindlich,
+Lichtempfindlich
+Kampftechniken: Schwerter 21
+Schakagra-Krummsäbel: AT 24 PA 14 TP 1W6+8
+RW mittel
+RS/BE 5/2 (Leichte Shakagra-Platte) (Modifikatoren
+durch Rüstungen bereits eingerechnet)
+Talente:
+Klettern 7, Körperbeherrschung 17, Kraftakt 5,
+Schwimmen 10, Selbstbeherrschung 15, Sinnes-
+schärfe 14, Verbergen 9, Einschüchtern 15, Men-
+schenkenntnis 13, Überreden 14, Willenskraft 18,
+Götter & Kulte 13
+Zauber: Attributo (Körperkraft) 15, Axxeleratus 16,
+Chamaelioni 16, Corpofrigo 10, Eigne Ängste 10,
+Gletscherform 12, Fulminictus 8, Horriphobus 7
+Verzerrte Elfenlieder: Schlachtlied 14
+Ausrüstung: Leichte Shakagra-Platte, Shakag-
+ra-Krummsäbel (2)
+Schmerz +1 bei: 20 LeP, 13 LeP, 7 LeP, 5 oder weniger LeP

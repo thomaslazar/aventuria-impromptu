@@ -1,0 +1,39 @@
+Chr’ho
+MU 16 KL 11 IN 13 CH 10
+FF 8 GE 14 KO 16 KK 16
+LeP 42 AsP – KaP – INI 15+1W6
+AW 9 SK 1 ZK 3 GS 7
+Waffenlos: AT 16 PA 8 TP 1W6+2 RW kurz
+Biss: AT 13 PA – TP 2W6+2 RW kurz
+Schwanz: AT 13 PA – TP 1W6+3 RW mittel
+Maru-Säbel*: AT 16 PA 8 TP 1W6+5 RW mittel
+RS/BE: 4/0
+Vorteile/Nachteile: Beidhändig, Dämmerungssicht II,
+Zäher Hund / Blutrausch, Kälteempfindlich, Schlech-
+te Eigenschaft (Jähzorn)
+Sonderfertigkeiten: Anführer, Belastungsgewöhnung
+I, Beidhändiger Kampf I, Finte I (Waffenlos, Biss,
+Schwanz, Maru-Säbel), Kampfreflexe I, Schmerzen
+unterdrücken, Wuchtschlag I+II (Waffenlos, Biss,
+Schwanz, Maru-Säbel), Zu Fall bringen (Schwanz)
+Talente: Einschüchtern 12, Handel 3, Klettern 2, Kör-
+perbeherrschung 8, Kraftakt 11, Kriegskunst 8, Men-
+schenkenntnis 1, Schwimmen 8, Selbstbeherrschung
+8, Sinnesschärfe 7, Überreden 2, Verbergen 2, Wil-
+lenskraft 10
+Kampfverhalten: Chr’ho sucht sich den am schwers-
+ten gerüsteten Gegner aus und macht ihn mit Wucht-
+schlägen nieder. Verliert er seine Waffe, versucht er,
+seinen Gegner mit dem Schwanz zu Fall zu bringen
+und ihm dann mit Bissen den Rest zu geben.
+Flucht: Chr’ho flieht nicht
+Schmerz +1 bei: 32 LeP, 21 LeP, 10 LeP, 5 LeP oder weniger
+Sonderregeln:
+*) Schwache Arme: Nach jeder 5. KR, die Chr’ho ununter-
+brochen kämpft, muss er eine Probe auf Kraftakt be-
+stehen, um seine Waffen nicht fallenzulassen. Er
+kämpft dann ohne Waffen weiter. Die Probe ist beim
+zweiten Mal um –1 erschwert, beim dritten Mal um
+–2 usw. Alternativ kann er, wenn er nur eine Ein-
+handwaffe führt, diese auch in die andere Hand neh-
+men. Der Wechsel der Hand kostet 1 Aktion.

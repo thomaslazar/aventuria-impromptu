@@ -1,0 +1,57 @@
+Aswa-Djalihd
+MU 23 KL 16 IN 17 CH 14
+FF 13 GE 25 KO 25 KK 20
+LeP 180 AsP 100 KaP – INI 18+1W6
+VW 8 SK 5 ZK 5 GS 10 (am Boden oder fliegend)
+Schwarzer Frosthauch: FK 15 TP 2W6 RW 13 Schritt*
+Krallen aus Eis: AT 17 TP 2W6+8 RW lang
+Schwanz: AT 13 TP 2W6+13 RW lang
+Maul: AT 13 TP 3W6+13 RW nah
+RS/BE 5/0
+Aktionen: 3 (nicht zweimal dieselbe in einer Runde)
+Sonderfertigkeiten: Finte I-II, Mächtiger Schlag
+(Krallen, Schwanz)
+Talente: Bekehren & Überzeugen 12, Einschüchtern
+14, Körperbeherrschung 18, Kraftakt 18, Menschen-
+kenntnis 12, Selbstbeherrschung – (gelingt automa-
+tisch), Sinnesschärfe 16, Verbergen 0, Willenskraft 18
+Zauber: Bannbaladin 15, Corpofrigo 11, Dunkelheit 10,
+Eigne Ängste 9, Gletscherform 12, Horriphobus 9,
+Nebelwand 11
+Größenkategorie: groß
+Typus: Dämon (gehörnter, Namenloser), nich
+humanoid
+Kampfverhalten: Aswa-Djalihd bricht als pervertierte
+Naturgewalt über das Schlachtfeld herein und ver-
+wandelt alles, was er berührt, in eine Fläche aus wi-
+dernatürlichem Eis. Während er mit Zoneneffekten
+seinen Feinden das Leben nimmt, nimmt er ihnen mit
+seinen Zaubern auch die Hoffnung. So zieht er mit
+Bannbaladin Anführer auf seine Seite oder versetzt sie
+in Angst. Der Dämon ist klug genug zu erkennen, wel-
+che Helden ihm am gefährlichsten werden können.
+Flucht: Aswa-Djalihd flieht nicht, außer er wird
+gebannt.
+Sonderregeln:
+*) Der Einsatz des Odems kostet 10 AsP und gilt als
+Fernkampfangriff. Getroffene erhalten außerdem
+eine Stufe des Zustands Paralyse.
+Zone der Kälte: In unmittelbarer Nähe von Aswa-Djalihd
+überzieht sich alles mit schwarzem Raureif. Die Eis-
+schicht wirkt wie Feuer-/Säure-Schaden am ganzen
+Körper (Regelwerk Seite 341, Status Brennend, 2W6
+SP pro KR, Probe auf Körperbeherrschung –2 zum Been-
+den). Wer in mittlere Reichweite tritt, setzt sich dem
+Effekt aus. Der Aswa-Djalihd muss jede Runde 1 AsP
+ausgeben, um den Effekt aufrecht zu halten.
+Verzagen: Statt anzugreifen, kann der Dämon mit ei-
+ner Probe auf Einschüchtern erschwert um die SK ei-
+nem Opfer seine Hoffnung nehmen. Hat der Dämon
+Erfolg, erhält das Opfer eine Stufe Furcht, die drei
+Kampfrunden lang anhält.
+Empfindlichkeit gegenüber Feuerschaden: Schaden durch
+Feuer wird gegen Aswa-Djalihd verdoppelt.
+Extrem Lichtempfindlich: Ist der Aswa-Djalihd direktem
+Sonnenlicht ausgesetzt, erleidet er 1 SP pro KR.
+Dämonen-Regeln: Für den Aswa-Djalihd gelten die allge-
+meinen Dämonen-Regeln.

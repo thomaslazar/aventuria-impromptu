@@ -1,0 +1,26 @@
+Bannstrahler
+MU 13 KL 12 IN 11 CH 12
+FF 11 GE 12 KO 14 KK 13
+LeP 33 AsP – KaP – INI 12+1W6
+SK 1 ZK 2 AW 6 GS 7
+Waffenlos: AT 9 PA 5 TP 1W6 RW kurz
+Speer: AT 11 PA 6 TP 1W6+4 RW lang
+Streitkolben: AT 11 PA 5 TP 1W6+4 RW mittel
+RS/BE 2/0 (Stoffrüstung) (Modifikatoren durch Rüs-
+tungen sind bereits eingerechnet)
+Sonderfertigkeiten: Belastungsgewöhnung I, Schmer-
+zen unterdrücken, Wuchtschlag I
+Vorteile/Nachteile: Persönlichkeitsschwäche (Vorur-
+teile gegen Nichtzwölfgöttergläubige), Schlechte Ei-
+genschaft (Autoritätsglaube)
+Talente: Bekehren & Überzeugen 4, Einschüchtern 7,
+Klettern 2, Körperbeherrschung 6, Kraftakt 6, Selbst-
+beherrschung 7, Sinnesschärfe 4, Verbergen 0, Wil-
+lenskraft 4
+Kampfverhalten: Selbstlos folgen die Bannstrahler
+den Befehlen ihrer Anführer. Auf sich allein gestellt,
+stürzen sie sich oft wild auf die ihnen am götterläs-
+terlichsten erscheinenden Gegner.
+Flucht: Die Bannstrahler kämpfen fanatisch und zie-
+hen sich erst bei Schmerz III zurück.
+Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger

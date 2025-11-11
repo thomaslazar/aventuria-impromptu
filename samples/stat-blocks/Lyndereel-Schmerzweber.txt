@@ -1,0 +1,33 @@
+Lyndereel Schmerzweber
+MU 16 KL 17 IN 15 CH 14
+FF 13 GE 11 KO 10 KK 9
+LeP 22 SK 4 AsP 43 ZK -1
+KaP 0 AW 6 GS 8 INI 14+1W6
+Schip 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Verbotene Pforten
+Sprachen: Asdharia III, Zhayad
+Schriften: Isdira- und Asdharia-Zeichen,
+Zhayad-Zeichen
+Vorteile: Hohe Astralkraft VII , Kälteresistenz, Zaube-
+rer, Zweistimmiger Gesang
+Nachteile: Hitzeempfindlich, Lichtempfindlich
+Kampftechniken: Dolche 7
+Shakagra-Giftdolch: AT 9 PA 5 TP 1W6+1 RW kurz
+RS/BE 0/0
+Talente: Klettern 2, Körperbeherrschung 6, Kraftakt 1,
+Schwimmen 3, Selbstbeherrschung 11, Sinnesschär-
+fe 7, Verbergen 5 , Einschüchtern 13, Menschen-
+kenntnis 15, Überreden 12, Willenskraft 17, Magie-
+kunde 16, Sphärenkunde 14, Heilkunde Wunden 12
+Zauber: Analys Arkanstruktur 15, Bannbaladin 11,
+Blick in die Gedanken 9, Corpofesso 17, Corpofrigo 7,
+Disruptivo 6, Dunkelheit 11, Eigne Ängste 16, Höllen-
+pein 17, Horriphobus 9, Invocatio Minima 10, Mani-
+festo 10, Odem Arcanum 14, Schwarzer Schrecken 15
+Rituale: Dschinnenruf 8, Elementarer Diener 12, In-
+vocatio Maior 11, Invocatio Minor 12
+Verzerrte Elfenlieder: Lied des Schmerzes 16, Skla-
+venlied 12
+Ausrüstung: Kelmon (3 Portionen, Regelwerk Seite
+243), Shakagra-Giftdolch

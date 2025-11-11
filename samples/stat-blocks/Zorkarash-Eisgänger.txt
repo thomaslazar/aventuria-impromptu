@@ -1,0 +1,33 @@
+Zorkarash Eisgänger
+MU 18 KL 13 IN 14 CH 17
+FF 8 GE 15 KO 11 KK 15
+LeP 24 SK 4 AsP 38 ZK 0
+KaP 38 AW 8 GS 8 INI 18+1W6
+Schip 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Finte I-II, Kampfreflexe I, Rund-
+umschlag I, Sturmangriff, Vorstoß, Wuchtschlag II
+Sprachen: Asdharia III, Zhayad
+Schriften: Isdira-, Asdharia- und Zhayad-Zeichen
+Vorteile: Hohe Karmalkraft VII , Kälteresistenz, Zau-
+berer, Zweistimmiger Gesang
+Nachteile: Hitzeempfindlich, Lichtempfindlich
+Kampftechniken: Hiebwaffen 17, Schilde 16
+Shakara-Hammer: AT 20 PA 14 TP 1W6+5 RW mittel
+Shakara-Langschild: AT 11 PA 16 TP 1W6+2 RW kurz
+RS/BE 5/2 (Leichte Shakagra-Platte) (Modifikatoren
+durch Rüstungen bereits eingerechnet)
+Talente: Klettern 5, Körperbeherrschung 11, Kraftakt
+9, Schwimmen 4, Selbstbeherrschung 15, Sinnes-
+schärfe 11, Verbergen 4, Einschüchtern 16,
+Menschenkenntnis 13, Überreden 5, Willenskraft
+20, Götter & Kulte 15
+Zauber: Attributo (Körperkraft) 16, Chamaelioni 12,
+Corpofrigo 9, Dunkelheit 13, Firnlauf 11, Karnifilo 12
+Verzerrte Elfenlieder: Schlachtlied 11
+Liturgien: Namenlose Kälte 14, Namenlose Raserei 17,
+Namenlose Zweifel 7, Namenloses Vergessen 9, Pech
+und Schwefel 14
+Ausrüstung: Leichte Shakagra-Platte, Shakagra-Lang-
+schild, Shakagra-Hammer
+Schmerz +1 bei: 18 LeP, 12 LeP, 6 LeP, 5 oder weniger LeP

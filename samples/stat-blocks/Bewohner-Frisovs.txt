@@ -1,0 +1,33 @@
+Bewohner Frisovs
+MU 12 KL 11 IN 13 CH 11
+FF 13 GE 12 KO 13 KK 13
+LeP 31 AsP – KaP – INI 11
+SK 1 ZK 2 AW 6 GS 7
+Holzspeer: AT 10 PA 6 TP 1W6+2 RW lang
+Knüppel: AT 10 PA 4 TP 1W6+2 RW mittel
+Messer: AT 10 PA 4 TP 1W6+1 RW kurz
+Waffenlos: AT 10 PA 6 TP 1W6 RW kurz
+Kurzbogen: FK 10 LZ 1 TP 1W6+4 RW 10/50/80
+Wurfspeer: FK 10 LZ 2 TP 2W6+2 RW 5/25/40
+RS/BE 1/0 (Winterkleidung) (Modifikatoren durch
+Rüstungen bereits eingerechnet)
+Sonderfertigkeiten: Ortskenntnis (Frisov)
+Vorteile/Nachteile: keine
+Talente: Einschüchtern 3, Klettern 4, Körperbeherr-
+schung 5, Kraftakt 4, Schwimmen 3, Selbstbeherr-
+schung 2, Sinnesschärfe 3, Verbergen 4, Wildnisle-
+ben 6, Willenskraft 2, ein Talent, das er für seinen
+Beruf nutzt 10 (etwa Fischen & Angeln, Tierkunde,
+Fährtensuchen oder ein Handwerkstalent)
+Kampfverhalten: Im Hohen Norden geht es rau zu,
+aber die Bewohner Frisovs sind dennoch Kämpfe
+auf Leben und Tod nicht gewohnt. Wenn es über
+eine Kneipenschlägerei hinausgeht, versuchen sie
+ihre Gegner mit Jagdwaffen auf Distanz zu halten.
+In größter Not greifen sie aber zu jeder improvi-
+sierten Waffe.
+Flucht: bei Schmerz I
+Schmerz +1 bei: 23 LeP, 15 LeP, 7 LeP, 5 LeP oder weniger
+Anmerkungen: Jäger zusätzlich bzw. alternativ FK 12,
+Sonderfertigkeit Jäger, Sinnesschärfe 5, Verbergen 7,
+Wildnisleben 9

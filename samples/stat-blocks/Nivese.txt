@@ -1,0 +1,26 @@
+Nivese
+MU 12 KL 11 IN 13 CH 11
+FF 13 GE 13 KO 13 KK 12
+LeP 31 AsP – KaP – INI 12+1W6
+SK 1 ZK 1 AW 7 GS 7
+Waffenlos: AT 9 PA 5 TP 1W6 RW kurz
+Keule: AT 10 PA 5 TP 1W6+3 RW mittel
+Speer: AT 10 PA 6 TP 1W6+4 RW lang
+Wurfkeule: FK 11 LZ 1 TP 1W6+2 RW 2/10/15
+Wurfspeer: FK 11 LZ 2 TP 2W6+2 RW 5/25/40
+RS/BE 1/0
+Sonderfertigkeiten: Geländekunde (Steppe)
+Vorteile/Nachteile: Angst vor engen Räumen, Angst
+vor Toten und Untoten
+Talente: Einschüchtern 2, Klettern 4, Körperbeherr-
+schung 6, Kraftakt 4, Orientierung 7, Schwimmen 3,
+Selbstbeherrschung 3, Sinnesschärfe 8, Tierkunde
+10, Verbergen 7, Wildnisleben 8, Willenskraft 2
+Kampfverhalten: Nivesen sind im Herzen friedlie-
+bend und vermeiden Kämpfe. Wenn es um Leben
+und Tod ihrer Sippe und Herde geht, verteidigen sie
+sich aber tapfer. Zunächst empfangen sie die Gegner
+mit einem Hagel aus Wurfgeschossen, bevor sie sich
+dem Nahkampf stellen.
+Flucht: bei Schmerz I
+Schmerz +1 bei: 23 LeP, 15 LeP, 7 LeP, 5 LeP oder weniger

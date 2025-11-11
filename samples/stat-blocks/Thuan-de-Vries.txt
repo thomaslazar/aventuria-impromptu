@@ -1,0 +1,32 @@
+Thuan de Vries
+MU 13 KL 13 IN 13 CH 13
+FF 12 GE 13 KO 12 KK 13
+LeP 30 SK 2 AsP – ZK 1
+KaP – AW 7 GS 8 INI 13+1W6
+Schip 3
+Sozialstatus: frei
+Sonderfertigkeiten: Finte I, Wachsamkeit
+Sprachen: Garethi III, Thorwalsch I
+Schriften: Kusliker Zeichen
+Vorteile: Gutaussehend 1
+Nachteile: Persönlichkeitsschwächen (Verwöhnt),
+Schlechte Eigenschaften (Neugier, Spielsucht)
+Kampftechniken: Raufen 12
+Waffenlos: AT 13 PA 7 TP 1W6 RW kurz
+Dolch: AT 13 PA 7 TP 1W6+1 RW kurz
+RS/BE 0/ 0
+Talente:
+Körper: Klettern 6, Körperbeherrschung 6, Kraftakt 5,
+Verbergen 10, Zechen 9
+Gesellschaft: Bekehren & Überzeugen 5, Betören 7,
+Etikette 6, Gassenwissen 10, Menschenkenntnis 4,
+Überreden 7, Verkleiden 6, Willenskraft 6
+Natur: Orientierung 7
+Wissen: Götter & Kulte 4
+Handwerk: Boote & Schiffe 7, Fahrzeuge 7, Handel 6
+Ausrüstung: Dolch
+Kampfverhalten: versucht Kämfe zu vermeiden; ist er
+gewzungen zu kämpfen, nutzt er seine Fäuste und
+Finten; den Dolch nutzt er nur in äußerter Not
+Flucht: bei Schmerz I
+Schmerz +1 bei: 23 LeP, 15 LeP, 8 LeP, 5 LeP oder weniger

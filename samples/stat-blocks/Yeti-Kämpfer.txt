@@ -1,0 +1,39 @@
+Yeti-Kämpfer
+MU 12 KL 8 IN 11 CH 11
+FF 9 GE 11 KO 18 KK 18
+LeP 70 AsP - KaP - INI 6+1W6
+SK 1 ZK 4 AW 7 GS 8
+Waffenlos: AT 12 PA 6 TP 1W6+4 RW mittel
+Yeti-Keule*: AT 12 PA 4 TP 2W6+7 RW lang
+RS/BE 2/0
+Aktionen: 1
+Sonderfertigkeiten: Geländekunde (Eis- & Schnee-
+kundig), Schildspalter (Yeti-Keule), Wuchtschlag I+II
+(Waffenlos, Yeti-Keule)
+Vorteile/Nachteile: Dämmerungssicht I, Kälteresis-
+tenz, Richtungssinn / Hitzeempfindlich
+Talente: Einschüchtern 12, Klettern 5, Körperbeherr-
+schung 8, Kraftakt 12, Menschenkenntnis 5, Schwim-
+men 4, Selbstbeherrschung 7, Sinnesschärfe 8, Ver-
+bergen 8**, Wildnisleben 12, Willenskraft 10
+Größenkategorie: groß
+Typus: Kulturschaffender, humanoid
+Kampfverhalten: Die Yetis sind prinzipiell friedlich.
+Im Kampf setzen sie sich mit ihren Keulen zur Wehr
+und greifen im Pulk an. Sie gehen taktisch nur wenig
+sinnvoll vor, sondern schlagen wild auf ihre Gegner
+ein. Allerdings gehorchen sie Mroms (einfachen!)
+Befehlen, sodass ihre Angriffe zumindest ansatzwei-
+se koordiniert werden können. Beispielsweise kön-
+nen sie Hinterhalte in Schnee und Eis legen oder ge-
+zielt bestimmte Gegner angreifen.
+Flucht: Verlust von 25 % der LeP
+Schmerz +1 bei: 45 LeP, 30 LeP, 10 LeP, 5 LeP oder weniger
+Sonderregeln:
+*) Yeti-Keule: Die Yeti-Keule kann nur von Wesen mit
+einer Größenkategorie von groß oder riesig benutzt
+werden.
+**) Tarnung: Durch die Farbe des Fells kann der Yeti sich
+in entsprechender Umgebung (Eis, Schnee) gut tarnen.
+Proben auf Sinnesschärfe (Hinterhalt entdecken, Wahrneh-
+men), um ihn zu entdecken, sind dort um 2 erschwert.

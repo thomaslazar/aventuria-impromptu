@@ -1,0 +1,31 @@
+Lynx
+MU 14 KL 14 (t) IN 13 CH 12
+FF 12 GE 15 KO 14 KK 15
+LeP 30 AsP – KaP – INI 15+1W6
+VW 7 SK 3 ZK 7 GS 14 (gehend oder schwebend)
+Pranken: AT 16 TP 1W6+6 RW kurz
+Biss: AT 14 TP 2W6+4 RW kurz
+RS/BE 3/0
+Aktionen: 2 (max. 1 x Biss)
+Sonderfertigkeiten: Verbeißen (Biss)
+Talente: Einschüchtern 10, Körperbeherrschung 10,
+Kraftakt 8, Selbstbeherrschung 11, Sinnesschärfe 12,
+Verbergen 10, Willenskraft 8
+Größenkategorie: mittel
+Typus: Geist, nicht humanoid
+Kampfverhalten: Der Lynx verfolgt einen Grabräu-
+ber und greift diesen plötzlich an, egal wie weit er
+sich vom bestohlenen Grab entfernt hat. Erst da-
+nach konzentriert er sich auf den nächsten Frevler
+an Zerzal.
+Flucht: Der Lynx lässt sich nicht in die Flucht schlagen.
+Schmerz +1 bei: immun gegen Schmerz
+Sonderregeln:
+Geister-Regeln: Für den Lynx gelten die allgemeinen
+Geister-Regeln (siehe Seite 111).
+Unsichtbarkeit: Der Lynx hat den Status Unsichtbar, Aus-
+nahme ist das Ziel seiner Jagd. Es können jedoch alle
+das unheimliche Knurren und Fauchen der Bestie
+hören.
+Raubtiergeruch: Der Geruch eines Lynx lässt Hunde
+aufheulen.

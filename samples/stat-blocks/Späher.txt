@@ -1,0 +1,19 @@
+Späher
+MU 10 KL 10 IN 13 CH 11
+FF 15 GE 15 KO 12 KK 12
+LeP 24 AsP 0 KaP 0 INI 13+1W6
+SK 0 ZK 0 AW 8 GS 9
+Shakagra-Krummsäbel: AT 9 PA 6
+TP 1W6+4 RW mittel
+RS/BE 2/1
+Sonderfertigkeiten: Aufmerksamkeit, Finte I
+Vorteile/Nachteile: Dunkelsicht I, Herausragender
+Sinn (Gehör), Kälteresistenz
+Talente: Einschüchtern 3, Klettern 11, Körperbe-
+herrschung 10, Kraftakt 3, Menschenkenntnis 2 ,
+Schwimmen 7, Selbstbeherrschung 2 , Sinnesschärfe
+11, Überreden 3, Verbergen 10, Willenskraft 2
+Schmerz +1 bei: 18 LeP, 12 LeP, 6 LeP, 5 LeP oder weniger
+Sonderregeln:
+Daimoniden-Regeln: Für Späher gelten die allgemeinen
+Daimoniden-Regeln (siehe Seite 112).

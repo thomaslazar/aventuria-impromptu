@@ -1,0 +1,37 @@
+Stammeskrieger der Tschopukikuha
+MU 14 KL 10 IN 12 CH 10
+FF 13 GE 14 KO 14 KK 13
+LeP 36 AsP
+– KaP
+– INI 14+1W6
+AW 9 SK 1 ZK 2 GS 8
+Waffenlos: AT 14 PA 8 TP 1W6 RW kurz
+Holzspeer (2H): AT 14 PA 8 TP 1W6+2 RW lang
+Stachelkeule der Tschopukikuha (Tscho-Bakura):
+AT 12 PA 5 TP 1W6+4* RW mittel
+Blasrohr: FK 13 LZ 2 TP 1W2* RW 2/20/40
+Kurzbogen: FK 13 LZ 1 TP 1W6+4* RW 10/50/80
+RS/BE: 0/0 (normale Kleidung oder nackt)
+Vorteile/Nachteile: Entfernungssinn, Richtungssinn
+/ Schlechte Eigenschaft (Aberglaube)
+Sonderfertigkeiten: Finte I (Waffenlos, Holzspeer,
+Stachelkeule), Geländekunde (Dschungelkundig),
+HruruzatAKO158, Muttersprache Mohisch III, Orts-
+kenntnis (Heimatdorf), Präziser Schuss/Wurf I (Blas-
+rohr, Kurzbogen), Verbessertes Ausweichen I+II,
+Wuchtschlag I (Waffenlos, Holzspeer, Stachelkeule)
+Talente: Einschüchtern 7, Handel 6, Körperbeherr-
+schung 10, Kraftakt 8, Menschenkenntnis 7, Selbst-
+beherrschung 9, Sinnesschärfe 10, Überreden 5, Ver-
+bergen 9, Wildnisleben 9, Willenskraft 7
+Kampfverhalten: Die Stammeskrieger werden versu-
+chen, mit ihren Fernkampfwaffen anzugreifen und
+dann die geschwächten Heldinnen in Nahkämpfe ver-
+wickeln. Die Krieger setzen dabei häufig Finten ein.
+Flucht: Verlust von 50 % der LeP; sind die Hälfte aller
+Stammeskrieger geflohen oder handlungsunfähig,
+flieht der Rest
+Schmerz +1 bei: 27 LeP, 18 LeP, 9 LeP, 5 LeP oder weniger
+*) Gift: Die Pfeile der Fernkampfwaffen und die Sta-
+cheln der Nahkampfwaffe sind fast immer vergiftet,
+vor allem mit Wurara (siehe Regelwerk Seite 342).

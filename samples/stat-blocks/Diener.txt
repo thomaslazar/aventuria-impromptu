@@ -1,0 +1,14 @@
+Diener
+Wichtige Werte: Einschüchtern 2 (12/13/12), Etiket-
+te 7 (12/13/12), Körperbeherrschung 4 (12/12/12),
+Kraftakt 3 (12/12/12), Menschenkenntnis 5 (12/13/12),
+Selbstbeherrschung 3 (12/12/12), Sinnesschärfe 2
+(12/13/13), Überreden 4 (12/13/12), Verbergen 3
+(12/13/12), Willenskraft 4 (12/13/12), SK 1, ZK 1
+Kampfverhalten: Die in der Regel unbewaffneten An-
+gestellten versuchen Kämpfe zu vermeiden, ergeben
+sich, ergreifen die Flucht oder rufen um Hilfe.
+Eigenheit (2W6): schweigsam (2) / unzufrieden (3) / ge-
+schwätzig (4) / gründlich bis pedantisch (5) / nachläs-
+sig (6) / würdevoll (7) / frivol (8) / fröhlich (9) / einfäl-
+tig (10) / aufmerksam (11) / streitsüchtig (12)

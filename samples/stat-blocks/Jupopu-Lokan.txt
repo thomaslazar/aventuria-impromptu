@@ -1,0 +1,29 @@
+Jupopu-Lokan
+MU 12 KL 14 IN 15 CH 11
+FF 11 GE 13 KO 15 KK 13
+LeP 38 AsP 30 KaP – INI 12+1W6
+AW 5 SK 2 ZK 2 GS 7
+Waffenlos: AT 11 PA 5 TP 1W6 RW kurz
+Epharit-Schild: AT 9 PA 7 TP 1W6+3 RW kurz
+Epharit-Speer: AT 13 PA 5 TP 1W6+4 RW lang
+RS/BE: 6/0
+Vorteile/Nachteile: Beidhändig, Herausragender Sinn
+(Gehör), Richtungssinn, Zauberer / Blind, Schlechte
+Eigenschaft (Aberglaube)
+Sonderfertigkeiten: Belastungsgewöhnung I+II,
+Blindkampf IAKO152, Finte I, Geländekunde (Höhlen-
+kundig), Wuchtschlag I
+Talente: Klettern 5, Körperbeherrschung 7, Orientie-
+rung 12, Schwimmen 0, Selbstbeherrschung 5, Sin-
+esschärfe 12, Verbergen 10, Willenskraft 4
+Zauber/Magische Handlungen: Balsam Salabunde 8,
+Blick in die Gedanken 12, Gedankenbilder 12AMA129;
+Animistenkräfte: Kampffähigkeiten verbessern 5,
+Schneller Angriff 5, Talentverbesserung 7
+Kampfverhalten: Jupopu-Lokan bewegt sich umsich-
+tig durch die Kavernen unter dem Regengebirge, de-
+ren Gefahren er trotz seines fehlenden Augenlichts
+gut kennt. Kommt es zu einem Kampf, verteidigt er
+sich mit seinem Speer, bis sich die Gelegenheit oder
+Notwendigkeit zur Flucht bietet.
+Schmerz +1: 29 LeP, 19 LeP, 10 LeP, 5 LeP oder weniger

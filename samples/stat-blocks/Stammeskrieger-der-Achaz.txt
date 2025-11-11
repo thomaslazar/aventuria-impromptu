@@ -1,0 +1,43 @@
+Stammeskrieger der Achaz
+MU 12 KL 12 IN 16 CH 11
+FF 12 GE 13 KO 15 KK 13
+LeP 40 AsP – KaP
+– INI 13+1W6
+AW 7 SK 3 ZK 3 GS 8
+Waffenlos: AT 13 PA 7 TP 1W6 RW kurz
+Rimkur: AT 13 PA 5 TP 1W6+5 RW lang
+Speer: AT 13 PA 7 TP 1W6+4 RW lang
+Wurfspeer: FK 14 LZ 2 TP 2W6+2 RW 5/25/40
+RS/BE: 1/0
+Aktionen: 1
+Vorteile/Nachteile: Begabung (Schwimmen), Beid-
+händig, Dunkelsicht I, Natürlicher Rüstungsschutz
+(RS 1), Richtungssinn / Angst vor Dunkelheit I, Ein-
+geschränkter Sinn (Gehör), Unfähig (Singen und
+Musizieren)
+Sonderfertigkeiten: Aufmerksamkeit, Finte I (Waffen-
+los, Rimkur, Speer), Muttersprache Rssahh, Mohisch I,
+Ortskenntnis (Heimatdorf), Präziser Schuss/Wurf I+II
+(Wurfspeer), Wuchtschlag I (Waffenlos, Rimkur,
+Speer), Zu Fall bringen (Rimkur, Speer)
+Talente: Einschüchtern 8, Handel 3, Klettern 3, Kör-
+perbeherrschung 8, Kraftakt 8, Menschenkenntnis 3,
+Schwimmen 14, Selbstbeherrschung 11, Sinnesschär-
+fe 10, Überreden 3, Verbergen 8, Willenskraft 10
+Kampfverhalten: Achaz kämpfen nur, wenn sie dazu ge-
+zwungen werden, ziehen sich aber bei der erstbesten Ge-
+legenheit zurück, es sei denn, sie sehen keinen anderen
+Ausweg. Dann sind sie durchaus bereit, länger zu kämp-
+fen und ihre Wurfspeere aus dem Hinterhalt einzusetzen.
+Flucht: Verlust von 50 % der LeP
+Schmerz +1 bei: 30 LeP, 20 LeP, 10 LeP, 5 LeP oder weniger
+Sonderregeln:
+Kältestarre: Statt Kälteschaden zu erleiden, versetzt sich
+der Körper eines Achaz automatisch in eine Kälte-
+starre. Er bekommt jede Minute bei Temperaturen, in
+denen er Kälteschaden erleiden würde, 1 Stufe Paraly-
+se und bei Stufe IV zusätzlich den Status Bewusstlos. In
+der Kältestarre kann er 1W20 Jahre überleben. Gelangt
+er wieder in eine wärmere Gegend, so bauen sich die
+Stufen Paralyse alle volle 30 Minuten um 1 Stufe ab. Ab
+Stufe III verliert er den Status Bewusstlos.

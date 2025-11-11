@@ -1,0 +1,40 @@
+Stammeskrieger der Keke-Wanaq
+MU 14 KL 10 IN 12 CH 10
+FF 13 GE 14 KO 14 KK 13
+LeP 36 AsP
+– KaP
+– INI 14+1W6
+AW 9 SK 1 ZK 2 GS 8
+Waffenlos: AT 14 PA 8 TP 1W6 RW kurz
+Holzspeer (2H): AT 14 PA 8 TP 1W6+2
+RW lang
+Katar: AT 14 PA 7 TP 1W6+2 RW kurz
+Blasrohr: FK 13 LZ 2 TP 1W2* RW 2/20/40
+Kurzbogen: FK 13 LZ 1 TP 1W6+4* RW 10/50/80
+Wurfnetz: FK 13 LZ 1 TP keine** RW 1/3/5
+RS/BE: 0/0 (normale Kleidung oder nackt)
+Vorteile/Nachteile: Entfernungssinn, Giftresistenz II,
+Richtungssinn / Schlechte Eigenschaft (Aberglaube)
+Sonderfertigkeiten: Finte I (Waffenlos, Holzspeer, Ka-
+tar), Geländekunde (Dschungelkundig), ­ HruruzatAKO158
+,
+Muttersprache Mohisch III, Ortskenntnis (Heimat-
+dorf), Präziser Schuss/Wurf I (Blasrohr, Kurzbogen),
+Präziser Stich I (Katar), Verbessertes Ausweichen I+II,
+Wuchtschlag I (Waffenlos, Holzspeer)
+Talente: Einschüchtern 7, Handel 6, Körperbeherrschung
+10, Kraftakt 8, Menschenkenntnis 7,
+Selbstbeherrschung 9, Sinnesschärfe 10, ­ Überreden 5,
+Verbergen 9, Wildnisleben 9, Willenskraft 7
+Kampfverhalten: Die Stammeskrieger werden versu-
+chen, mit ihren Fernkampfwaffen anzugreifen und
+dann die geschwächten Helden in Nahkämpfe ver-
+wickeln. Die Krieger setzen dabei häufig Finten ein.
+Flucht: Verlust von 50 % der LeP; sind die Hälfte aller
+Stammeskrieger geflohen oder handlungsunfähig,
+flieht der Rest
+Schmerz +1 bei: 27 LeP, 18 LeP, 9 LeP, 5 LeP oder weniger
+*) Gift: Die Pfeile der Fernkampfwaffen sind fast immer
+vergiftet, vor allem mit Wurara (siehe Regelwerk
+Seite 342).
+**) siehe Anmerkung zur Waffe, unten
