@@ -15,7 +15,7 @@ import type {
 const DATASET_DIR = path.resolve(process.cwd(), "public/data/optolith");
 const SAMPLE_MD = path.resolve(
   process.cwd(),
-  "planning/intake/specs/examples/dsa5-optolith-sample-stat-blocks.md",
+  "samples/collected-stat-blocks.md",
 );
 const DEFAULT_RUN_DIR = path.resolve(
   process.cwd(),
