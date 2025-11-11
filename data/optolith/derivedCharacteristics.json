@@ -1,0 +1,139 @@
+[
+  {
+    "id": "AE",
+    "name": "Astralenergie",
+    "normalizedName": "astralenergie",
+    "base": {},
+    "locale": {
+      "id": "AE",
+      "name": "Astralenergie",
+      "short": "AE",
+      "calc": "(20 durch Zauberer + Leiteigenschaft)",
+      "calcHalfPrimary": "(20 durch Zauberer + Leiteigenschaft/2)",
+      "calcNoPrimary": "(20 durch Zauberer)"
+    },
+    "synonyms": [
+      "Astralenergie"
+    ]
+  },
+  {
+    "id": "DO",
+    "name": "Ausweichen",
+    "normalizedName": "ausweichen",
+    "base": {},
+    "locale": {
+      "id": "DO",
+      "name": "Ausweichen",
+      "short": "AW",
+      "calc": "(GE/2)"
+    },
+    "synonyms": [
+      "Ausweichen"
+    ]
+  },
+  {
+    "id": "INI",
+    "name": "Initiative",
+    "normalizedName": "initiative",
+    "base": {},
+    "locale": {
+      "id": "INI",
+      "name": "Initiative",
+      "short": "INI",
+      "calc": "(MU + GE)/2"
+    },
+    "synonyms": [
+      "Initiative"
+    ]
+  },
+  {
+    "id": "KP",
+    "name": "Karmaenergie",
+    "normalizedName": "karmaenergie",
+    "base": {},
+    "locale": {
+      "id": "KP",
+      "name": "Karmaenergie",
+      "short": "KE",
+      "calc": "(20 durch Geweiht + Leiteigenschaft)"
+    },
+    "synonyms": [
+      "Karmaenergie"
+    ]
+  },
+  {
+    "id": "LP",
+    "name": "Lebensenergie",
+    "normalizedName": "lebensenergie",
+    "base": {},
+    "locale": {
+      "id": "LP",
+      "name": "Lebensenergie",
+      "short": "LE",
+      "calc": "(GW der Spezies + KO + KO)"
+    },
+    "synonyms": [
+      "Lebensenergie"
+    ]
+  },
+  {
+    "id": "MOV",
+    "name": "Geschwindigkeit",
+    "normalizedName": "geschwindigkeit",
+    "base": {},
+    "locale": {
+      "id": "MOV",
+      "name": "Geschwindigkeit",
+      "short": "GS",
+      "calc": "(GW der Spezies, mögl. Einbeinig)"
+    },
+    "synonyms": [
+      "Geschwindigkeit"
+    ]
+  },
+  {
+    "id": "SPI",
+    "name": "Seelenkraft",
+    "normalizedName": "seelenkraft",
+    "base": {},
+    "locale": {
+      "id": "SPI",
+      "name": "Seelenkraft",
+      "short": "SK",
+      "calc": "(GW der Spezies + (MU + KL + IN)/6)"
+    },
+    "synonyms": [
+      "Seelenkraft"
+    ]
+  },
+  {
+    "id": "TOU",
+    "name": "Zähigkeit",
+    "normalizedName": "zahigkeit",
+    "base": {},
+    "locale": {
+      "id": "TOU",
+      "name": "Zähigkeit",
+      "short": "ZK",
+      "calc": "(GW der Spezies + (KO + KO + KK)/6)"
+    },
+    "synonyms": [
+      "Zähigkeit"
+    ]
+  },
+  {
+    "id": "WT",
+    "name": "Wundschwelle",
+    "normalizedName": "wundschwelle",
+    "base": {},
+    "locale": {
+      "id": "WT",
+      "name": "Wundschwelle",
+      "short": "WS",
+      "calc": "(KO/2)"
+    },
+    "synonyms": [
+      "Wundschwelle"
+    ]
+  }
+]

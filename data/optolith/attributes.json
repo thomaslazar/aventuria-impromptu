@@ -1,0 +1,114 @@
+[
+  {
+    "id": "ATTR_1",
+    "name": "Mut",
+    "normalizedName": "mut",
+    "base": {},
+    "locale": {
+      "id": "ATTR_1",
+      "name": "Mut",
+      "short": "MU"
+    },
+    "synonyms": [
+      "Mut"
+    ]
+  },
+  {
+    "id": "ATTR_2",
+    "name": "Klugheit",
+    "normalizedName": "klugheit",
+    "base": {},
+    "locale": {
+      "id": "ATTR_2",
+      "name": "Klugheit",
+      "short": "KL"
+    },
+    "synonyms": [
+      "Klugheit"
+    ]
+  },
+  {
+    "id": "ATTR_3",
+    "name": "Intuition",
+    "normalizedName": "intuition",
+    "base": {},
+    "locale": {
+      "id": "ATTR_3",
+      "name": "Intuition",
+      "short": "IN"
+    },
+    "synonyms": [
+      "Intuition"
+    ]
+  },
+  {
+    "id": "ATTR_4",
+    "name": "Charisma",
+    "normalizedName": "charisma",
+    "base": {},
+    "locale": {
+      "id": "ATTR_4",
+      "name": "Charisma",
+      "short": "CH"
+    },
+    "synonyms": [
+      "Charisma"
+    ]
+  },
+  {
+    "id": "ATTR_5",
+    "name": "Fingerfertigkeit",
+    "normalizedName": "fingerfertigkeit",
+    "base": {},
+    "locale": {
+      "id": "ATTR_5",
+      "name": "Fingerfertigkeit",
+      "short": "FF"
+    },
+    "synonyms": [
+      "Fingerfertigkeit"
+    ]
+  },
+  {
+    "id": "ATTR_6",
+    "name": "Gewandtheit",
+    "normalizedName": "gewandtheit",
+    "base": {},
+    "locale": {
+      "id": "ATTR_6",
+      "name": "Gewandtheit",
+      "short": "GE"
+    },
+    "synonyms": [
+      "Gewandtheit"
+    ]
+  },
+  {
+    "id": "ATTR_7",
+    "name": "Konstitution",
+    "normalizedName": "konstitution",
+    "base": {},
+    "locale": {
+      "id": "ATTR_7",
+      "name": "Konstitution",
+      "short": "KO"
+    },
+    "synonyms": [
+      "Konstitution"
+    ]
+  },
+  {
+    "id": "ATTR_8",
+    "name": "Körperkraft",
+    "normalizedName": "korperkraft",
+    "base": {},
+    "locale": {
+      "id": "ATTR_8",
+      "name": "Körperkraft",
+      "short": "KK"
+    },
+    "synonyms": [
+      "Körperkraft"
+    ]
+  }
+]
