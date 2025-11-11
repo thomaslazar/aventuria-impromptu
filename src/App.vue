@@ -11,8 +11,7 @@ const { t, locale } = useI18n();
 const navigationItems = [
   { to: "/", labelKey: "nav.home", exact: true },
   { to: "/tavern", labelKey: "nav.tavern" },
-  { to: "/npcloot", labelKey: "nav.npcLoot" },
-  { to: "/treasureloot", labelKey: "nav.treasureLoot" },
+  { to: "/loot", labelKey: "nav.loot" },
   { to: "/tools/optolith-converter", labelKey: "nav.optolithConverter" },
   { to: "/about", labelKey: "nav.about" },
 ];

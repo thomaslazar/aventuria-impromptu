@@ -16,8 +16,7 @@
   "nav": {
     "home": "Start",
     "tavern": "Taverne",
-    "npcLoot": "Beute: NSC",
-    "treasureLoot": "Beute: Schatz",
+    "loot": "Beute",
     "optolithConverter": "Optolith Konverter",
     "about": "Über das Projekt",
     "ariaLabel": "Hauptnavigation"
@@ -55,14 +54,21 @@
       "title": "Gaststube & Taverne",
       "intro": "Fülle jede Aventurische Schankstube mit Leben: Würfle Begegnungen, Besonderheiten und Gerüchte für spontane Szenen am Spieltisch."
     },
+    "loot": {
+      "title": "Beute",
+      "intro": "Spontane Fundstücke für NSC oder Schätze – alles Aventurien-konform.",
+      "tabs": {
+        "npc": "NSC",
+        "treasure": "Schatz"
+      }
+    },
     "npcLoot": {
-      "title": "Beute: Nichtspielerfiguren",
       "intro": "Spontane Taschenkontrollen oder Raubzüge? Hol dir passende Fundstücke für Stadtgardisten, Pilger oder zwielichtige Gestalten."
     },
     "treasureLoot": {
-      "title": "Beute: Schatzkiste",
       "intro": "Für verlassene Tempel, geheime Lagerhäuser oder frisch geplünderte Karawanen – hier entstehen Schätze mit aventurischem Flair."
     },
+
     "optolithConverter": {
       "title": "Optolith-Konverter",
       "intro": "Wandle deutschsprachige DSA5-Statblöcke direkt im Browser in Optolith-kompatibles NPC-JSON um.",
