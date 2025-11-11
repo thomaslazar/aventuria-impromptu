@@ -191,6 +191,57 @@ Talente: Klettern 5
     expect(result.model.cantrips).toEqual(["Schlangenhände", "Trocken"]);
   });
 
+  it("parses bullet-separated entries and ignores explicit 'nein' markers", () => {
+    const raw = `Ungavik
+MU 10 KL 10 IN 10 CH 10
+FF 10 GE 10 KO 10 KK 10
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Sonderfertigkeiten: • Aufmerksamkeit • Finte I (Dolch)
+Talente: Klettern 5
+Vorteile: keine
+Nachteile: keine
+Sprachen: Garethi
+Schriften: nein
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.specialAbilities).toEqual([
+      "Aufmerksamkeit",
+      "Finte I (Dolch)",
+    ]);
+    expect(result.model.scripts).toHaveLength(0);
+  });
+
+  it("parses talents with missing spacing and attribute annotations", () => {
+    const raw = `Madalieb
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Talente: Bekehren & Überzeugen8, Einschüchtern14, Willenskraft 4 (15/13/8)
+Vorteile: keine
+Nachteile: keine
+Sonderfertigkeiten: keine
+`;
+
+    const result = parseStatBlock(raw);
+
+    const persuade = result.model.talents.find(
+      (talent) => talent.name === "Bekehren & Überzeugen",
+    );
+    expect(persuade?.value).toBe(8);
+    const intimidate = result.model.talents.find(
+      (talent) => talent.name === "Einschüchtern",
+    );
+    expect(intimidate?.value).toBe(14);
+    const will = result.model.talents.find(
+      (talent) => talent.name === "Willenskraft",
+    );
+    expect(will?.value).toBe(4);
+  });
+
   it("parses relative clauses, composite abilities, and footnote markers", () => {
     const raw = `Testfigur
 MU 10 KL 10 IN 10 CH 10

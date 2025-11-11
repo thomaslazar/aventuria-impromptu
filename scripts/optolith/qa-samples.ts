@@ -270,6 +270,8 @@ async function writeReport(
       }
     }
     lines.push("");
+    lines.push("---");
+    lines.push("");
   }
 
   await fs.mkdir(path.dirname(reportPath), { recursive: true });

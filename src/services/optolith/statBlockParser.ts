@@ -153,7 +153,21 @@ const EQUIPMENT_ENTRY_OVERRIDES: Record<string, string> = {
   dietrichsets: "Dietrich",
   dietrich: "Dietrich",
   seil: "Kletterseil, pro Schritt",
+  "leichte shakagra platte": "Leichte Shakagra-Plattenrüstung",
+  "shakara-hammer": "Kriegshammer",
 };
+
+const LIST_BULLET_PATTERN = /[•●◦‣∙]/g;
+const SPLIT_WORD_EXCLUSIONS = new Set([
+  "und",
+  "oder",
+  "bzw",
+  "talente",
+  "talent",
+  "liturgien",
+  "rituale",
+  "sprach",
+]);
 
 export function parseStatBlock(raw: string): ParseResult {
   const warnings: ParserWarning[] = [];
@@ -824,10 +838,11 @@ function isTalentCategoryHeading(value: string): boolean {
 }
 
 function splitList(content: string): string[] {
+  const sanitizedContent = content.replace(LIST_BULLET_PATTERN, ";");
   const results: string[] = [];
   let current = "";
   let depth = 0;
-  for (const char of content) {
+  for (const char of sanitizedContent) {
     if (char === "(") {
       depth += 1;
     } else if (char === ")") {
@@ -967,6 +982,7 @@ function sanitizeList(values: string[]): string[] {
         lower !== "keine" &&
         lower !== "keiner" &&
         lower !== "keinen" &&
+        lower !== "nein" &&
         lower !== "entfällt" &&
         lower !== "-" &&
         lower !== "—"
@@ -979,7 +995,15 @@ function normalizeWhitespace(value: string): string {
 }
 
 function mergeSplitWords(value: string): string {
-  return value.replace(/([A-Za-zÄÖÜäöüß])-\s+([A-Za-zÄÖÜäöüß])/g, "$1$2");
+  return value.replace(
+    /([A-Za-zÄÖÜäöüß]+)-\s+([A-Za-zÄÖÜäöüß]+)\b/g,
+    (match, left: string, right: string) => {
+      if (SPLIT_WORD_EXCLUSIONS.has(right.toLowerCase())) {
+        return `${left}- ${right}`;
+      }
+      return `${left}${right}`;
+    },
+  );
 }
 
 function stripCitations(value: string): string {
@@ -1120,7 +1144,11 @@ function parseTalentRatings(
 
   for (const entry of rawValues) {
     const cleaned = stripFootnoteMarkers(entry.trim());
-    const match = cleaned.match(/^(.+?)\s+(-?\d+)$/);
+    const spaced = cleaned.replace(
+      /([^\s\d])(-?\d+)(\s*\([^)]*\))?$/,
+      "$1 $2$3",
+    );
+    const match = spaced.match(/^(.+?)\s+(-?\d+)(?:\s*\([^)]*\))?$/);
     if (!match) {
       warnings.push({
         type: "parse-error",

@@ -841,4 +841,38 @@ describe("resolveStatBlock", () => {
       ),
     ).toBe(false);
   });
+
+  it("maps Oloargh entries to the canonical Oloarkh language", () => {
+    const statBlock = createStatBlock({
+      languages: ["Oloargh I"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.languages).toHaveLength(1);
+    expect(resolved.languages[0]?.option?.name).toBe("Oloarkh");
+  });
+
+  it("interprets Shakara-Hammer as Kriegshammer", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Shakara-Hammer",
+          category: "melee",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const weapon = resolved.weapons[0];
+    expect(weapon?.match?.normalizedName).toBe("kriegshammer");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "weapons" &&
+          warning.message.includes("keine Kampftechnik"),
+      ),
+    ).toBe(false);
+  });
 });

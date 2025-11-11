@@ -139,7 +139,19 @@ const ANGST_VOR_DETAIL_OVERRIDES: Record<string, string> = {
 const SCRIPT_NAME_OVERRIDES: Record<string, string> = {
   isdira: "Isdira- und Asdharia-Zeichen",
   asdharia: "Isdira- und Asdharia-Zeichen",
+  "isdira und asdharia zeichen": "Isdira- und Asdharia-Zeichen",
+  "isdiraund asdharia zeichen": "Isdira- und Asdharia-Zeichen",
   rogolan: "Rogolan-Runen",
+};
+
+const LANGUAGE_NAME_OVERRIDES: Record<string, string> = {
+  oloargh: "oloarkh",
+};
+
+const WEAPON_NAME_OVERRIDES: Record<string, string> = {
+  "shakara hammer": "kriegshammer",
+  "shakara-hammer": "kriegshammer",
+  "shakagra hammer": "kriegshammer",
 };
 
 const SECTIONS_SUPPORTING_CONJUNCTION_SPLIT = new Set([
@@ -687,9 +699,10 @@ function resolveWeapons(
     const isUnarmed =
       weapon.category === "unarmed" || normalized === "waffenlos";
 
+    const overrideKey = WEAPON_NAME_OVERRIDES[normalized] ?? normalized;
     let match =
-      normalized.length > 0
-        ? context.lookups.equipment.byName.get(normalized)
+      overrideKey.length > 0
+        ? context.lookups.equipment.byName.get(overrideKey)
         : undefined;
     let combatTechnique: DerivedEntity | undefined;
     let fallback: ResolvedWeapon["fallback"];
@@ -917,7 +930,8 @@ function resolveLanguages(
     .map((value) => {
       const parsed = parseLevelledValue(value);
       const normalized = normalizeLabel(parsed.baseName);
-      const option = context.lookups.languages.get(normalized);
+      const overrideKey = LANGUAGE_NAME_OVERRIDES[normalized] ?? normalized;
+      const option = context.lookups.languages.get(overrideKey);
       if (!option) {
         registerUnresolved("languages", value, context);
         return {
