@@ -125,6 +125,7 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
     skills: await readSection("skills"),
     combatTechniques: await readSection("combatTechniques"),
     spells: await readSection("spells"),
+    cantrips: await readSection("cantrips"),
     liturgies: await readSection("liturgies"),
     blessings: await readSection("blessings"),
     equipment: await readSection("equipment"),

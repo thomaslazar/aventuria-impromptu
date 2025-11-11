@@ -31,6 +31,7 @@ function createStatBlock(overrides: Partial<ParsedStatBlock>): ParsedStatBlock {
     specialAbilities: [],
     combatSpecialAbilities: [],
     languages: [],
+    cantrips: [],
     spells: [],
     liturgies: [],
     rituals: [],
@@ -770,5 +771,74 @@ describe("resolveStatBlock", () => {
       (entry) => entry.match?.normalizedName === "gro schild",
     );
     expect(grossschild?.normalizedSource).toBe("shakagra langschild");
+  });
+
+  it("resolves Zaubertricks via the cantrip lookup", () => {
+    const statBlock = createStatBlock({
+      cantrips: ["Schlangenhände", "Trocken"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.cantrips).toHaveLength(2);
+    const ids = resolved.cantrips
+      .map((entry) => entry.match?.id)
+      .filter((id): id is string => Boolean(id));
+    expect(ids).toContain("CANTRIP_9");
+    expect(ids).toContain("CANTRIP_12");
+  });
+
+  it("resolves slash-based abilities without splitting when a canonical entry exists", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: ["Präziser Schuss/Wurf I (Blasrohr)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.specialAbilities).toHaveLength(1);
+    const ability = resolved.specialAbilities[0];
+    expect(ability?.match).toBeDefined();
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.type === "split" &&
+          warning.value?.includes("Präziser Schuss/Wurf"),
+      ),
+    ).toBe(false);
+  });
+
+  it("warns when KaP is present without Tradition or Geweihter", () => {
+    const statBlock = createStatBlock({
+      pools: { kap: 5 },
+      advantages: [],
+      specialAbilities: [],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(
+      resolved.warnings.some((warning) =>
+        warning.message.includes(
+          "KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it("suppresses KaP warnings when Geweihter advantage is present", () => {
+    const statBlock = createStatBlock({
+      pools: { kap: 5 },
+      advantages: ["Geweihter"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(
+      resolved.warnings.some((warning) =>
+        warning.message.includes(
+          "KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil",
+        ),
+      ),
+    ).toBe(false);
   });
 });

@@ -427,8 +427,8 @@ function collectWarningMessages(
 }
 
 function buildCantrips(resolved: ResolutionResult): string[] {
-  return resolved.specialAbilities
-    .filter((entry) => entry.match?.id.startsWith("CANTRIP_"))
+  return resolved.cantrips
+    .filter((entry) => Boolean(entry.match?.id))
     .map((entry) => entry.match!.id);
 }
 

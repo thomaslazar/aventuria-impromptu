@@ -81,6 +81,9 @@ describe("parseStatBlock", () => {
     expect(
       result.warnings.filter((warning) => warning.section === "languages"),
     ).toHaveLength(0);
+    expect(
+      result.warnings.some((warning) => warning.section === "talents"),
+    ).toBe(false);
   });
 
   it("splits combined advantages/disadvantages and strips citations", async () => {
@@ -167,6 +170,25 @@ Willenskraft 9
       "Sklaventod",
       "Schwere Armbrust",
     ]);
+  });
+
+  it("captures Zaubertricks as cantrips", () => {
+    const raw = `Cantrip Adept
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+RS/BE: 0/0
+Vorteile: keine
+Nachteile: keine
+Zaubertricks: Schlangenhände, Trocken
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.cantrips).toEqual(["Schlangenhände", "Trocken"]);
   });
 
   it("parses relative clauses, composite abilities, and footnote markers", () => {

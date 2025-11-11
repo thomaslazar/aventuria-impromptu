@@ -35,7 +35,7 @@
 
 ## Bonnaro Glitzerglanz
 
-- ⚠️ The Optolith dataset currently does not expose cantrips/Zaubertricks as a dedicated section, so the converter still cannot emit them. We’ll revisit this once the upstream data includes the necessary references.
+- ✅ Zaubertricks are now parsed and resolved via the dedicated cantrip dataset, so exported heroes list the correct Optolith cantrip IDs.
 - ✅ `Schlechte Angewohnheit (Taktlos)` now keeps the custom detail via the new detail-splitting logic.
 - ✅ `Schlechte Eigenschaften (Neugier, Spielsucht)` is covered by the same improvement as Schläger.
 - ✅ If a stat block includes AsP or the `Zauberer` advantage but no `Tradition (…)`, the resolver now surfaces a warning reminding the user to add the tradition manually in Optolith.

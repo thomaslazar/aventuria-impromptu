@@ -211,6 +211,7 @@ export interface ResolutionResult {
   readonly scripts: readonly ResolvedLanguage[];
   readonly talents: readonly ResolvedTalent[];
   readonly spells: readonly ResolvedRatedReference[];
+  readonly cantrips: readonly ResolvedReference[];
   readonly liturgies: readonly ResolvedRatedReference[];
   readonly rituals: readonly ResolvedRatedReference[];
   readonly blessings: readonly ResolvedReference[];
@@ -300,6 +301,12 @@ export function resolveStatBlock(
     context.lookups.spells,
     context,
   );
+  const cantrips = resolveSection(
+    statBlock.cantrips,
+    "cantrips",
+    context.lookups.cantrips,
+    context,
+  );
   const liturgies = resolveRatedSection(
     statBlock.liturgies,
     "liturgies",
@@ -361,6 +368,26 @@ export function resolveStatBlock(
     );
   }
 
+  const hasKap =
+    typeof statBlock.pools.kap === "number" && statBlock.pools.kap > 0;
+  const hasGeweihterAdvantage = advantages.some(
+    (entry) =>
+      entry.match?.normalizedName === "geweihter" ||
+      entry.normalizedSource === "geweihter",
+  );
+  if (hasKap && !hasTradition && !hasGeweihterAdvantage) {
+    pushWarning(
+      {
+        type: "unresolved",
+        section: "specialAbilities",
+        value: "Tradition",
+        message:
+          "Statblock weist KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil. Bitte Tradition manuell ergänzen.",
+      },
+      context,
+    );
+  }
+
   return {
     name: statBlock.name,
     advantages,
@@ -371,6 +398,7 @@ export function resolveStatBlock(
     scripts,
     talents,
     spells,
+    cantrips,
     liturgies,
     rituals,
     blessings,
@@ -391,38 +419,22 @@ function resolveSection(
   },
   context: ResolutionContext,
 ): ResolvedReference[] {
-  const preliminaryValues: string[] = [];
+  const sanitizedValues: string[] = [];
   for (const raw of values) {
     const sanitized = sanitizeResolvableValue(raw);
     if (!sanitized) {
       continue;
     }
-    if (SECTIONS_SUPPORTING_CONJUNCTION_SPLIT.has(section)) {
-      const { parts, usedOrConnector } = splitConjoinedEntry(sanitized);
-      if (parts.length > 1) {
-        if (usedOrConnector) {
-          pushWarning(
-            {
-              type: "split",
-              section,
-              value: sanitized,
-              message: `Eintrag "${sanitized}" enthielt "oder"; alle Varianten wurden übernommen.`,
-            },
-            context,
-          );
-        }
-        parts.forEach((part) => preliminaryValues.push(part));
-        continue;
-      }
-    }
-    preliminaryValues.push(sanitized);
+    sanitizedValues.push(sanitized);
   }
   const expandedValues =
     section === "blessings"
-      ? expandBlessingAggregates(preliminaryValues, lookup)
-      : preliminaryValues;
+      ? expandBlessingAggregates(sanitizedValues, lookup)
+      : sanitizedValues;
 
-  return expandedValues.map((value) => {
+  const results: ResolvedReference[] = [];
+
+  const processValue = (value: string, allowSplit: boolean): void => {
     const components = parseEntryComponents(value);
     let normalized = normalizeLabel(components.baseName);
     let match = lookup.byName.get(normalized);
@@ -510,20 +522,44 @@ function resolveSection(
       section === "blessings" &&
       isStandardBlessingsAggregate(sourceLabel)
     ) {
-      return {
+      results.push({
         source: sourceLabel,
         normalizedSource: normalized,
         match: undefined,
         selectOption,
         level: components.level ?? undefined,
         rawOption,
-      };
+      });
+      return;
+    }
+
+    if (
+      !match &&
+      allowSplit &&
+      SECTIONS_SUPPORTING_CONJUNCTION_SPLIT.has(section)
+    ) {
+      const split = splitConjoinedEntry(value);
+      if (split.parts.length > 1) {
+        if (split.usedOrConnector) {
+          pushWarning(
+            {
+              type: "split",
+              section,
+              value,
+              message: `Eintrag "${value}" enthielt "oder"; alle Varianten wurden übernommen.`,
+            },
+            context,
+          );
+        }
+        split.parts.forEach((part) => processValue(part, false));
+        return;
+      }
     }
 
     if (!match) {
       registerUnresolved(section, sourceLabel, context);
     }
-    return {
+    results.push({
       source: sourceLabel,
       normalizedSource: normalized,
       match,
@@ -531,8 +567,12 @@ function resolveSection(
       level: components.level ?? undefined,
       rawOption,
       quantityHint: components.quantity,
-    };
-  });
+    });
+    return;
+  };
+
+  expandedValues.forEach((value) => processValue(value, true));
+  return results;
 }
 
 function resolveRatedSection(

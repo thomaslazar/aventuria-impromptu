@@ -115,7 +115,10 @@ async function main(): Promise<void> {
 
   const sections = await discoverSections(zip, options.locale);
   const dataset: Record<string, unknown> = {};
-  const manifestEntries: Array<{ order: number; meta: OptolithManifestSection }> = [];
+  const manifestEntries: Array<{
+    order: number;
+    meta: OptolithManifestSection;
+  }> = [];
   const aggregatedSections = new Map<string, AggregatedSectionState>();
 
   for (const section of sections) {

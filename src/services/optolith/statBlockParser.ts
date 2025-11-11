@@ -23,6 +23,7 @@ type SectionKey =
   | "armor"
   | "actions"
   | "spells"
+  | "cantrips"
   | "liturgies"
   | "rituals"
   | "blessings"
@@ -67,7 +68,7 @@ const SECTION_NORMALIZATION_MAP: Record<
   liturgie: "liturgies",
   zauber: "spells",
   zaubersprüche: "spells",
-  zaubertricks: "spells",
+  zaubertricks: "cantrips",
   rituale: "rituals",
   rituellezauber: "rituals",
   ausrüstung: "equipment",
@@ -259,6 +260,7 @@ export function parseStatBlock(raw: string): ParseResult {
     languages: string[];
     talents: string[];
     spells: string[];
+    cantrips: string[];
     liturgies: string[];
     rituals: string[];
     blessings: string[];
@@ -273,6 +275,7 @@ export function parseStatBlock(raw: string): ParseResult {
     languages: [],
     talents: [],
     spells: [],
+    cantrips: [],
     liturgies: [],
     rituals: [],
     blessings: [],
@@ -312,6 +315,7 @@ export function parseStatBlock(raw: string): ParseResult {
         const { primary, trailing } = splitTrailingSection(content, "Talente:");
         appendAbilityList(sectionBuckets.specialAbilities, primary);
         if (trailing) {
+          seenSections.add("talents");
           appendTalentList(sectionBuckets.talents, trailing);
         }
         break;
@@ -333,6 +337,9 @@ export function parseStatBlock(raw: string): ParseResult {
         break;
       case "spells":
         appendList(sectionBuckets.spells, content);
+        break;
+      case "cantrips":
+        appendList(sectionBuckets.cantrips, content);
         break;
       case "liturgies":
         appendList(sectionBuckets.liturgies, content);
@@ -357,6 +364,10 @@ export function parseStatBlock(raw: string): ParseResult {
         notes[section.heading] = content;
         break;
     }
+  }
+
+  if (sectionBuckets.talents.length > 0) {
+    seenSections.add("talents");
   }
 
   for (const requiredSection of [
@@ -393,6 +404,7 @@ export function parseStatBlock(raw: string): ParseResult {
     languages: sanitizeList(sectionBuckets.languages),
     scripts: sanitizeList(sectionBuckets.scripts),
     spells: parseRatedEntries(sectionBuckets.spells, "spells", warnings),
+    cantrips: sanitizeList(sectionBuckets.cantrips),
     liturgies: parseRatedEntries(
       sectionBuckets.liturgies,
       "liturgies",
@@ -1017,7 +1029,9 @@ function stripLeadingQuantity(value: string): string {
       const restRaw = remainder.trim();
       if (restRaw) {
         const rest =
-          restRaw.toLowerCase() === "seil" ? "Kletterseil, pro Schritt" : restRaw;
+          restRaw.toLowerCase() === "seil"
+            ? "Kletterseil, pro Schritt"
+            : restRaw;
         const unitLower = rawUnit.toLowerCase();
         const displayUnit = unitLower.startsWith("schritt") ? "m" : rawUnit;
         return `${rest} (${amount} ${displayUnit})`.trim();
@@ -1224,6 +1238,7 @@ function createEmptyModel(): ParsedStatBlock {
     combatSpecialAbilities: [],
     languages: [],
     spells: [],
+    cantrips: [],
     liturgies: [],
     rituals: [],
     blessings: [],

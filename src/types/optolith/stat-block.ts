@@ -75,6 +75,7 @@ export interface ParsedStatBlock {
   readonly languages: readonly string[];
   readonly scripts: readonly string[];
   readonly spells: readonly RatedEntry[];
+  readonly cantrips: readonly string[];
   readonly liturgies: readonly RatedEntry[];
   readonly rituals: readonly RatedEntry[];
   readonly blessings: readonly string[];

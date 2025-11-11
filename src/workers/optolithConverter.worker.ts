@@ -100,6 +100,7 @@ async function loadDataset(baseUrl: string) {
       findSectionFile(manifest, "combatTechniques"),
     ),
     spells: await readSection(findSectionFile(manifest, "spells")),
+    cantrips: await readSection(findSectionFile(manifest, "cantrips")),
     liturgies: await readSection(findSectionFile(manifest, "liturgies")),
     blessings: await readSection(findSectionFile(manifest, "blessings")),
     equipment: await readSection(findSectionFile(manifest, "equipment")),
