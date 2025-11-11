@@ -264,6 +264,7 @@ function buildActivatable(
     selectOption?: { id: number };
     level?: number;
     rawOption?: string;
+    source?: string;
   }) => {
     if (!reference.match) {
       return;
@@ -282,6 +283,9 @@ function buildActivatable(
     }
     if (reference.level) {
       instance.tier = reference.level;
+    }
+    if (reference.source) {
+      instance.label = reference.source;
     }
     addInstance(reference.match.id, instance);
   };
@@ -310,6 +314,7 @@ function buildActivatable(
     if (language.level) {
       instance.tier = language.level;
     }
+    instance.label = language.source;
     addInstance(language.match.id, instance);
   });
 
@@ -329,6 +334,7 @@ function buildActivatable(
         },
       ];
     }
+    instance.label = script.source;
     addInstance(script.match.id, instance);
   });
 
@@ -377,22 +383,28 @@ function collectWarningMessages(
   additional: readonly string[] = [],
 ): string[] {
   const warnings: string[] = [];
+  const seen = new Set<string>();
+  const pushUnique = (message: string) => {
+    if (seen.has(message)) {
+      return;
+    }
+    seen.add(message);
+    warnings.push(message);
+  };
   for (const warning of parsed.warnings) {
-    warnings.push(
-      `[Parser] ${warning.section ?? "general"}: ${warning.message}`,
-    );
+    pushUnique(`[Parser] ${warning.section ?? "general"}: ${warning.message}`);
   }
   for (const warning of resolved.warnings) {
-    warnings.push(`[Resolver] ${warning.section}: ${warning.message}`);
+    pushUnique(`[Resolver] ${warning.section}: ${warning.message}`);
   }
   for (const [section, values] of Object.entries(resolved.unresolved)) {
     for (const value of values) {
-      warnings.push(`[Resolver] ${section}: unverarbeitet "${value}"`);
+      pushUnique(`[Resolver] ${section}: unverarbeitet "${value}"`);
     }
   }
   resolved.weapons.forEach((weapon) => {
     if (!weapon.match && weapon.fallback !== "unarmed") {
-      warnings.push(
+      pushUnique(
         `[Exporter] weapons: Waffe "${weapon.source.name}" konnte nicht exportiert werden (keine Zuordnung).`,
       );
     }
@@ -406,17 +418,17 @@ function collectWarningMessages(
       resolved.armor.source.description ??
       resolved.armor.source.notes ??
       resolved.armor.source.raw;
-    warnings.push(
+    pushUnique(
       `[Exporter] armor: Rüstung "${armorLabel}" konnte nicht exportiert werden (keine Zuordnung).`,
     );
   }
-  additional.forEach((message) => warnings.push(message));
+  additional.forEach((message) => pushUnique(message));
   return warnings;
 }
 
 function buildCantrips(resolved: ResolutionResult): string[] {
-  return resolved.specialAbilities
-    .filter((entry) => entry.match?.id.startsWith("CANTRIP_"))
+  return resolved.cantrips
+    .filter((entry) => Boolean(entry.match?.id))
     .map((entry) => entry.match!.id);
 }
 
@@ -482,11 +494,14 @@ function buildBelongings(
     if (!entry.match) {
       return;
     }
-    addItem(
-      hydrateTemplateItem(entry.match, {
-        name: entry.source,
-      }),
-    );
+    const quantity = entry.quantityHint ?? extractItemQuantity(entry.source);
+    const overrides: Record<string, unknown> = {
+      name: entry.source,
+    };
+    if (typeof quantity === "number") {
+      overrides.amount = quantity;
+    }
+    addItem(hydrateTemplateItem(entry.match, overrides));
   });
 
   const items: Record<string, unknown> = {};
@@ -508,6 +523,17 @@ function buildBelongings(
       k: "0",
     },
   };
+}
+
+function extractItemQuantity(source: string): number | undefined {
+  const match = source.match(
+    /\((\d+)\s*(?:m|meter|metern|schritte?|schritt)\s*\)$/i,
+  );
+  if (match?.[1]) {
+    const quantity = Number.parseInt(match[1], 10);
+    return Number.isNaN(quantity) ? undefined : quantity;
+  }
+  return undefined;
 }
 
 function hydrateTemplateItem(

@@ -12,6 +12,7 @@ export interface OptolithDataset {
   readonly skills: readonly DerivedEntity[];
   readonly combatTechniques: readonly DerivedEntity[];
   readonly spells: readonly DerivedEntity[];
+  readonly cantrips: readonly DerivedEntity[];
   readonly liturgies: readonly DerivedEntity[];
   readonly blessings: readonly DerivedEntity[];
   readonly equipment: readonly DerivedEntity[];
@@ -38,6 +39,7 @@ export interface OptolithDatasetLookups {
   readonly skills: DerivedLookup;
   readonly combatTechniques: DerivedLookup;
   readonly spells: DerivedLookup;
+  readonly cantrips: DerivedLookup;
   readonly liturgies: DerivedLookup;
   readonly blessings: DerivedLookup;
   readonly equipment: DerivedLookup;
@@ -57,6 +59,7 @@ export function createDatasetLookups(
     skills: buildLookup(dataset.skills),
     combatTechniques: buildLookup(dataset.combatTechniques),
     spells: buildLookup(dataset.spells),
+    cantrips: buildLookup(dataset.cantrips),
     liturgies: buildLookup(dataset.liturgies),
     blessings: buildLookup(dataset.blessings),
     equipment: buildLookup(dataset.equipment),

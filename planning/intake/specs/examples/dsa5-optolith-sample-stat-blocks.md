@@ -2266,3 +2266,420 @@ schließend fallen und der Held muss sich mit dem Fall
 
 ---
 
+Fildorn von den Inseln
+MU 13 KL 12 IN 14 CH 13
+FF 14 GE 14 KO 10 KK 10
+LeP 25 SK 2 AsP – ZK 0
+KaP 34 AW 8 GS 8 INI 14+1W6
+SchiP 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Tradition (Phexkirche), Verbes-
+sertes Ausweichen I
+Sprachen: Bosparano II, Garethi III, Tulamidya I
+Schriften: Kusliker Zeichen
+Vorteile: Geweihter
+Nachteile: Angst vor Toten II, Prinzipientreue I (Phex-
+kirche), Schlechte Eigenschaft (Neugier), Verpflich-
+tungen II (Tempel, Kirche)
+Kampftechniken: Dolche 10
+Dolch: AT 11 PA 7 TP 1W6+1 RW kurz
+RS/BE 0/0 (einfache Kleidung)
+Talente:
+Körper: Klettern (Fassadenklettern) 7, Körperbeherr-
+schung 6, Selbstbeherrschung 2, Sinnesschärfe 6,
+Tanzen 1, Taschendiebstahl 3, Verbergen 7
+Gesellschaft: Bekehren & Überzeugen 4, Betören 1, Eti-
+kette 5, Gassenwissen 6, Menschenkenntnis 3, Über-
+reden 7, Verkleiden 4, Willenskraft 5
+Natur: Orientierung 3
+Wissen: Geographie 1, Geschichtswissen 3, Götter &
+Kulte (Phex) 6, Magiekunde 2, Mechanik 4, Rechnen
+8, Rechtskunde 5, Sagen & Legenden 3, Sternkunde 4
+Handwerk: Boote & Schiffe 1, Handel 7, Schlösserkna-
+cken 8
+Segnungen: Zwölf Segnungen
+Liturgien: Fall ins Nichts 10, Lautlos 9, Mondsicht 7,
+Objektsegen 5, Wieselflink 8
+Ausrüstung: Dietrichsets, 10 Schritt Seil, Wurfhaken
+Kampfverhalten: Fildorn versucht, Kämpfe zu ver-
+meiden, indem er seine Gegner ablenkt und flieht.
+Flucht: bei der ersten Gelegenheit oder spätestens bei
+der ersten Stufe Schmerz
+Schmerz +1 bei: 19 LeP, 13 LeP, 6 LeP, 5 LeP oder weniger
+
+---
+
+Schläger
+MU 14 KL 10 IN 12 CH 11
+FF 12 GE 13 KO 13 KK 13
+LeP 31 AsP – KaP – INI 14+1W6
+SK 1 ZK 2 AW 7 GS 8
+Waffenlos: AT 12 PA 6 TP 1W6 RW kurz
+Dolch: AT 11 PA 6 TP 1W6+1 RW kurz
+Knüppel: AT 10 PA 3 TP 1W6+2 RW mittel
+Wurfdolch: FK 10 LZ 1 TP 1W6+1 RW 2/10/15
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Finte I oder Wuchtschlag I
+Vorteile/Nachteile: Flink / Schlechte Eigenschaft
+(Goldgier, Jähzorn)
+Talente: Einschüchtern 4, Körperbeherrschung 3,
+Kraftakt 5, Selbstbeherrschung 5, Sinnesschärfe 3,
+Verbergen 2, Willenskraft 4, Zechen 6
+Kampfverhalten: Die Schläger greifen gerne gemein-
+sam einen Helden an und nutzen dabei ihre Wurfdol-
+che aus der Entfernung sowie im Nahkampf Angriffe
+mit Finten oder Wuchtschlägen.
+Flucht: individuell; meistens bei der ersten Stufe Schmerz
+Schmerz +1 bei: 23 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Malrizio ya Duridanya
+MU 13 KL 13 IN 14 CH 15
+FF 14 GE 13 KO 13 KK 11
+LeP 31 SK 2 AsP – ZK 1
+KaP – AW 7 GS 8 INI 13+1W6
+SchiP 3
+Sozialstatus: Adel
+Sonderfertigkeiten: Fächersprache,
+Finte I, Präziser Stich I, Verteidigungshaltung
+Sprachen: Aureliani I, Bosparano II, Garethi III,
+Isdira II, Rogolan II, Tulamidya III, Ur-Tulamidya I
+Schriften: Isdira, Kusliker Zeichen, Rogolan, Tula-
+midya-Zeichen
+Vorteile: Adel II, Reich X, Vertrauenerweckend
+Nachteile: Persönlichkeitsschwäche (Eitelkeit), Schlech-
+te Eigenschaften (Spielsucht, Verschwendungssucht)
+Kampftechniken: Dolche 12, Fechtwaffen 14
+Florett: AT 16 PA 8 TP 1W6+2 RW mittel
+Dolch: AT 13 PA 7 TP 1W6+1 RW kurz
+RS/BE 0/0 (einfache Kleidung)
+Talente:
+Körper: Körperbeherrschung 7, Kraftakt 6, Reiten 10,
+Selbstbeherrschung 8, Sinnesschärfe 11, Tanzen 13,
+Verbergen 4, Zechen 11
+Gesellschaft: Betören (Anbändeln, Liebeskünste) 14, Ein-
+schüchtern 8, Etikette (Mode) 12, Überreden (Mani-
+pulieren) 11, Willenskraft 12
+Natur: –
+Wissen: Geschichtswissen (Horasreich) 15
+Handwerk: Handel 14
+Ausrüstung: Malrizio kann sich alles leisten, was er
+deiner Meinung nach besitzen sollte.
+Kampfverhalten: Wenn Malrizio sich verteidigen
+muss, erweist er sich als kompetenter Fechter und
+kann sich auch mit dem Dolch seiner Haut erweh-
+ren. Er bevorzugt einen eleganten Fechtstil mit al-
+lerlei Raffinessen, um den Gegner vorzuführen.
+Flucht: Malrizio ergibt sich spätestens bei der zweiten
+Stufe Schmerz.
+Schmerz +1 bei: 23 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Oresta ya Corcollis
+MU 12 KL 12 IN 13 CH 12
+FF 13 GE 11 KO 12 KK 10
+LeP 29 AsP – KaP – INI 12+1W6
+SK 1 ZK 1 AW 6 GS 8
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Fächersprache
+Vorteile/Nachteile: Adel I / Krankheitsanfällig,
+Persönlichkeitsschwäche (Arroganz)
+Talente: Einschüchtern 5, Etikette 11, Körperbeherr-
+schung 6, Kraftakt 1, Selbstbeherrschung 4, Sinnes-
+schärfe 4, Tanzen 7, Überreden 10, Verbergen 4,
+Willenskraft 11, Zechen 8
+Kampfverhalten: Oresta kämpft nicht.
+Flucht: umgehende Flucht oder Aufgabe
+Schmerz +1 bei: 22 LeP, 15 LeP, 7 LeP, 5 LeP oder weniger
+
+---
+
+Galigoa Ghamotta
+MU 12 KL 12 IN 14 CH 15
+FF 14 GE 13 KO 13 KK 11
+LeP 31 AsP – KaP – INI 13+1W6
+SK 1 ZK 1 AW 7 GS 8
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Fächersprache, Finte I, Füch-
+sisch, Lippenlesen, Ortskenntnis (Belhanka)
+Vorteile/Nachteile: Begabung (Musizieren), Gutaus-
+sehend II, Soziale Anpassungsfähigkeit, Wohlklang
+/ Angst vor Höhe II, Persönlichkeitsschwäche (Eitel-
+keit), Verpflichtungen II (Lyceum Azizel)
+Talente: Betören (Liebeskünste) 13, Einschüchtern
+7, Etikette 11, Gassenwissen 8, Geschichtswissen 9,
+Körperbeherrschung 8, Kraftakt 4, Musizieren (Sai-
+teninstrumente) 13, Selbstbeherrschung 9, Singen
+13, Sinnesschärfe 8, Tanzen 11, Überreden (Manipu-
+lieren) 11, Verbergen, Willenskraft 12, Zechen 9
+Kampfverhalten: Galigoa versucht Kämpfe argumen-
+tativ zu vermeiden. Muss sie sich ihrer Haut erweh-
+ren, versucht sie, sich so zu positionieren, dass sie
+fliehen kann. Sie wird um Hilfe rufen.
+Flucht: bei der ersten Gelegenheit
+Schmerz +1 bei: 23 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Karisia Hyncice
+MU 12 KL 10 IN 12 CH 13
+FF 12 GE 12 KO 12 KK 10
+LeP 29 AsP – KaP – INI 12+1W6
+SK 0 ZK 1 AW 6 GS 8
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Ortskenntnis (Belhanka)
+Vorteile/Nachteile: Begabung (Überreden), Gutaus-
+sehend I, Soziale Anpassungsfähigkeit, Vertrauener-
+weckend / Persönlichkeitsschwäche (Verwöhnt)
+Talente: Betören 8, Einschüchtern 1, Etikette 5, Kör-
+perbeherrschung 4, Kraftakt 1, Menschenkenntnis 4,
+Selbstbeherrschung 5, Sinnesschärfe 6, Tanzen 7,
+Überreden (Manipulieren) 9, Verbergen 5, Verklei-
+den 6, Willenskraft 6
+Kampfverhalten: Wenn sie bedroht wird, täuscht Ka-
+risia übertrieben eine Ohnmacht vor.
+Flucht: bei der ersten Gelegenheit
+Schmerz +1 bei: 22 LeP, 15 LeP, 7 LeP, 5 LeP oder weniger
+
+---
+
+Ildebran Regotis
+MU 11 KL 15 IN 14 CH 12
+FF 10 GE 11 KO 9 KK 10
+LeP 22 AsP – KaP – INI 11+1W6
+SK 2 ZK 0 AW 6 GS 8
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: HauswirtschaftAKO106, Heraldik,
+LeibdienerAKO107
+Vorteile/Nachteile: Unscheinbar, Zeitgefühl / Nied-
+rige Lebenskraft I, Verpflichtungen I (Malrizio),
+Zerbrechlich
+Talente: Einschüchtern 6, Etikette 15, Körperbeherr-
+schung 4, Kraftakt 3, Menschenkenntnis 13, Rech-
+nen 12, Selbstbeherrschung 10, Sinnesschärfe 8,
+Überreden 13, Verbergen 4, Willenskraft 12
+Kampfverhalten: Bei einem Angriff auf seine Person
+zeigt sich Ildebran pikiert und wird den Angreifer
+darauf hinweisen, wie unangemessen dieses Verhal-
+ten ist. Erst danach wird er sich um Hilfe bemühen,
+selbst aber nicht kämpfen.
+Flucht: bei der ersten Gelegenheit
+Schmerz +1 bei: 17 LeP, 11 LeP, 6 LeP, 5 LeP oder weniger
+
+---
+
+Melsine Durenald
+MU 12 KL 14 IN 13 CH 11
+FF 13 GE 11 KO 10 KK 10
+LeP 25 AsP – KaP – INI 12+1W6
+SK 1 ZK 0 AW 6 GS 8
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: HauswirtschaftAKO106, Heraldik
+Vorteile/Nachteile: Begabung (Rechnen), Vertraue-
+nerweckend / Eingeschränkter Sinn (Sicht), Schlech-
+te Eigenschaft (Neugier)
+Talente: Einschüchtern 2, Etikette 9, Körperbeherr-
+schung 2, Kraftakt 3, Rechnen 9, Sagen & Legenden
+6, Selbstbeherrschung 6, Sinnesschärfe 7, Überreden
+10, Verbergen 4, Willenskraft 8
+Kampfverhalten: Melsine ist unbewaffnet und ver-
+meidet Kämpfe. Wird sie bedroht, wird sie sich erge-
+ben – und auf den verwegenen Helden hoffen, der sie
+befreit oder sich in die Gefangene verliebt.
+Flucht: bei der ersten Gelegenheit
+Schmerz +1 bei: 19 LeP, 13 LeP, 6 LeP, 5 LeP oder weniger
+
+---
+
+Siranya Ager
+MU 16 KL 13 IN 14 CH 13
+FF 15 GE 15 KO 14 KK 13
+LeP 33 SK 2 AsP – ZK 2
+KaP – AW 9 GS 8 INI 16+1W6
+SchiP 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Attacke verbessern,
+Aufmerksamkeit, Einhändiger Kampf (bereits einge-
+rechnet), Finte II, Füchsisch, Ortskenntnis (Belhan-
+ka), Präziser Stich I, Riposte, Verbessertes Auswei-
+chen I, Verteidigungshaltung, Wachsamkeit
+Sprachen: Garethi III, Tulamidya I
+Schriften: Kusliker Zeichen
+Vorteile: Begabung (Körperbeherrschung), Fuchs-
+sinn, Unscheinbar, Zeitgefühl
+Nachteile: Persönlichkeitsschwäche (Arroganz), Ver-
+pflichtungen I, Verstümmelt (Einäugig)
+Kampftechniken: Fechtwaffen 14
+Rapier: AT 18 PA 10 TP 1W6+4 RW mittel
+RS/BE 0/0 (einfache Kleidung)
+Talente: Einschüchtern 10, Gassenwissen 11, Körperbe-
+herrschung (Balance) 11, Kraftakt 9, Kriegskunst 10,
+Menschenkenntnis 10, Selbstbeherrschung 13, Sinnes-
+schärfe 10, Überreden 10, Verbergen 9, Willenskraft 12
+Ausrüstung: Da Siranya auf Malrizios Ressourcen zu-
+rückgreifen kann, kannst du sie mit allem ausstat-
+ten, was sie benötigt, um für die Helden eine würdi-
+ge Herausforderung darzustellen.
+Kampfverhalten: Siranya ist ehrgeizig und scheut
+auch den direkten Kampf nicht. Sie setzt auf Kom-
+binationen aus Finte und Präzisem Stich oder über-
+rascht den Kontrahenten mit einer Riposte.
+Flucht: Bei der zweiten Stufe Schmerz wird Sira-
+nya sich zurückziehen, um sich zu sammeln und
+zurückzuschlagen.
+Schmerz +1 bei: 25 LeP, 17 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Bonnaro Glitzerglanz
+MU 12 KL 12 IN 13 CH 13
+FF 14 GE 14 KO 13 KK 12
+LeP 31 AsP 33 KaP – INI 13+1W6
+SK 2 ZK 1 AW 7 GS 8
+Kampftechniken: Dolche 13
+Dolch: AT 14 PA 9 TP 1W6+1 RW kurz
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Aufmerksamkeit
+Vorteile/Nachteile: Magische Einstimmung (Wesen
+der Nacht), Schwer zu verzaubern, Zauberer / Pech-
+magnet, Schlechte Angewohnheit (Taktlos), Schlech-
+te Eigenschaften (Neugier, Spielsucht), Wilde Magie
+Talente: Brett- & Glücksspiel 9, Einschüchtern 11, Eti-
+kette 6, Gaukeleien (Jonglieren) 12, Körperbeherr-
+schung (Akrobatik) 11, Kraftakt 6, Selbstbeherr-
+schung 5, Sinnesschärfe 8, Überreden 10, Verbergen
+(Schleichen) 10, Willenskraft 4
+Zaubertricks: Bauchreden, Glücksgriff, Schnipsen
+Zauber: Axxeleratus 9, Oculus Illusionis 13
+Kampfverhalten: Bonnaro wird zuerst versuchen, mit sei-
+nen Zaubern Verwirrung zu stiften, um dann – möglichst
+mit Hilfe eines AXXELERATUS – die Flucht anzutreten.
+Flucht: Spätestens bei der zweiten Stufe Schmerz er-
+gibt sich Bonnaro.
+Schmerz +1 bei: 23 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Svartjok
+MU 11 KL 9 IN 14 CH 11
+FF 14 GE 12 KO 14 KK 12
+LeP 33 AsP – KaP – INI 12+1W6
+SK –1 ZK 2 AW 6 GS 8
+Kampftechniken: Dolche 10
+Dolch: AT 11 PA 6 TP 1W6+1 RW kurz
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: –
+Vorteile/Nachteile: Herausragender Sinn (Geruch
+& Geschmack) / Behäbig, Schlechte Angewohnheit
+(Leichtgläubig)
+Talente: Körperbeherrschung 3, Kraftakt 5, Lebens-
+mittelverarbeitung (Backen, Braten & Sieden) 13,
+Sagen & Legenden 7, Selbstbeherrschung 4, Sinnes-
+schärfe 12, Verbergen 1, Willenskraft 2
+Kampfverhalten: Svartjok agiert sehr zögerlich.
+Flucht: nach dem ersten schweren Treffer
+Schmerz +1 bei: 25 LeP, 17 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Diener
+Wichtige Werte: Einschüchtern 2 (12/13/12), Etiket-
+te 7 (12/13/12), Körperbeherrschung 4 (12/12/12),
+Kraftakt 3 (12/12/12), Menschenkenntnis 5 (12/13/12),
+Selbstbeherrschung 3 (12/12/12), Sinnesschärfe 2
+(12/13/13), Überreden 4 (12/13/12), Verbergen 3
+(12/13/12), Willenskraft 4 (12/13/12), SK 1, ZK 1
+Kampfverhalten: Die in der Regel unbewaffneten An-
+gestellten versuchen Kämpfe zu vermeiden, ergeben
+sich, ergreifen die Flucht oder rufen um Hilfe.
+Eigenheit (2W6): schweigsam (2) / unzufrieden (3) / ge-
+schwätzig (4) / gründlich bis pedantisch (5) / nachläs-
+sig (6) / würdevoll (7) / frivol (8) / fröhlich (9) / einfäl-
+tig (10) / aufmerksam (11) / streitsüchtig (12)
+
+---
+
+Wache
+MU 14 KL 11 IN 13 CH 11
+FF 10 GE 13 KO 13 KK 13
+LeP 32 AsP – KaP – INI 12+1W6
+SK 1 ZK 2 AW 6 GS 7
+Hellebarde: AT 11 PA 3 TP 1W6+6 RW lang
+Rapier: AT 12 PA 5 TP 1W6+3 RW mittel
+RS/BE 4/1 (Kettenrüstung)
+Sonderfertigkeiten: Finte I, Belastungsgewöhnung I,
+Wuchtschlag I
+Vorteile/Nachteile: Schlechte Eigenschaft (Autori-
+tätsglaube), weitere nach Meisterentscheid
+Talente: Einschüchtern 6, Klettern 2, Körperbeherr-
+schung 5, Kraftakt 5, Menschenkenntnis 4, Selbstbe-
+herrschung 6, Sinnesschärfe 8, Überreden 2, Verber-
+gen 6, Willenskraft 5
+Kampfverhalten: Wächter versuchen zuerst, Geg-
+ner mittels ihrer Autorität zur Aufgabe zu bewegen.
+Haben sie damit keinen Erfolg, stellen sie sich dem
+Kampf. Dabei setzen sie Finten und Wuchtschläge ein.
+Sie versuchen in der Regel, gemeinsam gegen einen
+Gegner zu kämpfen, wenn sich die Gelegenheit bietet.
+Eigenheit (2W6): anfällig für Magie (2) / Toll-
+patsch (3) / besondere Angst, etwa vor einer Tier-
+art, Feuer oder Dunkelheit (4) / abergläubisch (5) /
+leichtgläubig (6) / misstrauisch (7) / ehrenhaft (8) /
+korrupt (9) / nicht aus der Ruhe zu bringen (10) /
+übermüdet (11) / jähzornig (12)
+Flucht: individuell; spätestens nach zwei Stufen
+Schmerz versuchen Wachen zu fliehen.
+Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
+
+---
+
+Knochentisch
+MU 19 KL 8 (t) IN 12 CH 10
+FF 8 GE 14 KO 14 KK 12
+LeP 15 AsP – KaP – INI 16+1W6
+AW 7 SK 0 ZK 0 GS 8
+Rammen: AT 10 PA 4 TP 1W6+2 RW kurz
+RS/BE 0/0
+Aktionen: 1
+Vorteile/Nachteile: Lichtempfindlich
+Sonderfertigkeiten: keine
+Talente: Einschüchtern 6, Klettern 3, Körperbeherr-
+schung 5, Kraftakt 5, Schwimmen 14, Selbstbeherr-
+schung 12, Sinnesschärfe 4, Verbergen 8, Willenskraft 12
+Anzahl: 1
+Größenkategorie: mittel
+Typus: Golem, nicht humanoid
+Beute: Knochen
+Kampfverhalten: Der Tisch greift ohne Unterlass an.
+Flucht: Tische fliehen nicht.
+Magiekunde (Magische Wesen):
+QS 1: Bei dem belebten Tisch handelt es sich um einen
+Knochengolem.
+QS 2: Dolche, Fechtwaffen und Fernkampfwaffen rich-
+ten gegen belebte Tische nur wenig Schaden an.
+QS 3+: Die Beine sind der Schwachpunkt.
+Sonderregeln:
+Unempfindlich gegen Dolche, Fechtwaffen und Fernkampfwaf-
+fen: Dolche, Fechtwaffen und Fernkampfwaffen (außer
+Wurfkeulen und -speere) richten bei Skeletten nur hal-
+be TP an. Totengöttern geweihte Waffen richten in die-
+sem Fall normalen Schaden an (also keinen doppelten).
+Empfindlich gegen Hiebwaffen und Zweihandhiebwaffen:
+Hiebwaffen und Zweihandhiebwaffen richten doppelte
+SP an. Totengöttern geweihte Waffen richten in diesem
+Fall vierfachen Schaden an (statt nur den doppelten).
+Extrem lichtempfindlich: Ist der Knochentisch direktem
+Sonnenlicht ausgesetzt, erleidet er 1 SP pro KR.
+Schwachstelle: Mit einer AT –8 können die Tischbeine er-
+wischt werden. Der Schaden zählt doppelt. Sobald zwei
+Beine zerstört wurden, ist der Tisch handlungsunfähig.
+Untoten-Regeln: Als Golems, die mit Thargunitoths
+Macht erschaffen wurden, gelten für Knochentische
+die allgemeinen Untoten-RegelnABE128
+.
+Schmerz +1 bei: kein Effekt, egal, bei welchem Verlust
+
+---
+

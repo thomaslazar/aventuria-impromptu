@@ -1,8 +1,14 @@
+export type OptolithManifestSectionType = "derived" | "raw";
+
 export interface OptolithManifestSection {
   /**
    * Unique identifier for the section, e.g. `talents`.
    */
   readonly key: string;
+  /**
+   * Indicates whether the payload contains derived entries (with IDs) or raw data.
+   */
+  readonly type: OptolithManifestSectionType;
   /**
    * Human readable label mainly for diagnostics.
    */
@@ -39,24 +45,4 @@ export interface DerivedEntity<BasePayload = unknown, LocalePayload = unknown> {
   readonly base: BasePayload;
   readonly locale: LocalePayload;
   readonly synonyms: readonly string[];
-}
-
-export interface DiffEntryChange<T = unknown> {
-  readonly id: string;
-  readonly before?: T;
-  readonly after?: T;
-}
-
-export interface OptolithDiffReport {
-  readonly generatedAt: string;
-  readonly sourceChecksum: string;
-  readonly previousChecksum?: string;
-  readonly sections: Record<
-    string,
-    {
-      readonly added: readonly DiffEntryChange[];
-      readonly removed: readonly DiffEntryChange[];
-      readonly changed: readonly DiffEntryChange[];
-    }
-  >;
 }

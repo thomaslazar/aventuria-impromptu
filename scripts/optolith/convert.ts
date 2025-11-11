@@ -54,7 +54,9 @@ async function main(): Promise<void> {
     warnings.add(`[Resolver] ${warning.section}: ${warning.message}`);
   }
   Object.entries(resolved.unresolved).forEach(([section, entries]) => {
-    entries.forEach((entry) => warnings.add(`[Resolver] ${section}: ${entry}`));
+    entries.forEach((entry) =>
+      warnings.add(`[Resolver] ${section}: unverarbeitet "${entry}"`),
+    );
   });
 
   if (warnings.size > 0) {
@@ -181,6 +183,7 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
     skills,
     combatTechniques,
     spells,
+    cantrips,
     liturgies,
     blessings,
     equipment,
@@ -191,6 +194,7 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
     readSection("skills"),
     readSection("combatTechniques"),
     readSection("spells"),
+    readSection("cantrips"),
     readSection("liturgies"),
     readSection("blessings"),
     readSection("equipment"),
@@ -204,6 +208,7 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
     skills,
     combatTechniques,
     spells,
+    cantrips,
     liturgies,
     blessings,
     equipment,

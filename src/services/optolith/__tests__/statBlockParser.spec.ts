@@ -81,6 +81,9 @@ describe("parseStatBlock", () => {
     expect(
       result.warnings.filter((warning) => warning.section === "languages"),
     ).toHaveLength(0);
+    expect(
+      result.warnings.some((warning) => warning.section === "talents"),
+    ).toBe(false);
   });
 
   it("splits combined advantages/disadvantages and strips citations", async () => {
@@ -169,6 +172,76 @@ Willenskraft 9
     ]);
   });
 
+  it("captures Zaubertricks as cantrips", () => {
+    const raw = `Cantrip Adept
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+RS/BE: 0/0
+Vorteile: keine
+Nachteile: keine
+Zaubertricks: Schlangenhände, Trocken
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.cantrips).toEqual(["Schlangenhände", "Trocken"]);
+  });
+
+  it("parses bullet-separated entries and ignores explicit 'nein' markers", () => {
+    const raw = `Ungavik
+MU 10 KL 10 IN 10 CH 10
+FF 10 GE 10 KO 10 KK 10
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Sonderfertigkeiten: • Aufmerksamkeit • Finte I (Dolch)
+Talente: Klettern 5
+Vorteile: keine
+Nachteile: keine
+Sprachen: Garethi
+Schriften: nein
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.specialAbilities).toEqual([
+      "Aufmerksamkeit",
+      "Finte I (Dolch)",
+    ]);
+    expect(result.model.scripts).toHaveLength(0);
+  });
+
+  it("parses talents with missing spacing and attribute annotations", () => {
+    const raw = `Madalieb
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Talente: Bekehren & Überzeugen8, Einschüchtern14, Willenskraft 4 (15/13/8)
+Vorteile: keine
+Nachteile: keine
+Sonderfertigkeiten: keine
+`;
+
+    const result = parseStatBlock(raw);
+
+    const persuade = result.model.talents.find(
+      (talent) => talent.name === "Bekehren & Überzeugen",
+    );
+    expect(persuade?.value).toBe(8);
+    const intimidate = result.model.talents.find(
+      (talent) => talent.name === "Einschüchtern",
+    );
+    expect(intimidate?.value).toBe(14);
+    const will = result.model.talents.find(
+      (talent) => talent.name === "Willenskraft",
+    );
+    expect(will?.value).toBe(4);
+  });
+
   it("parses relative clauses, composite abilities, and footnote markers", () => {
     const raw = `Testfigur
 MU 10 KL 10 IN 10 CH 10
@@ -215,6 +288,50 @@ Ausrüstung: Immanschläger, den er als Knüppel nutzt, drei Speere, vier Wurfke
     expect(result.model.disadvantages).toContain(
       "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
     );
+  });
+
+  it("parses categorized talents, blessings, and equipment measurements", () => {
+    const raw = `Fildorn von den Inseln
+MU 13 KL 12 IN 14 CH 13
+FF 14 GE 14 KO 10 KK 10
+LeP 25 SK 2 AsP – ZK 0
+KaP 34 AW 8 GS 8 INI 14+1W6
+Sprachen: Bosparano II, Garethi III, Tulamidya I
+Schriften: Kusliker Zeichen
+Vorteile: Geweihter
+Talente:
+Körper: Klettern (Fassadenklettern) 7, Körperbeherrschung 6
+Gesellschaft: Gassenwissen 6, Überreden 7
+Handwerk: Schlösserknacken 8
+Segnungen: Zwölf Segnungen
+Ausrüstung: Dietrichsets, 10 Schritt Seil, Wurfhaken
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.languages).toEqual([
+      "Bosparano II",
+      "Garethi III",
+      "Tulamidya I",
+    ]);
+    expect(result.model.scripts).toEqual(["Kusliker Zeichen"]);
+    expect(result.model.advantages).toContain("Geweihter");
+    const talentNames = result.model.talents.map((entry) => entry.name);
+    expect(talentNames).toEqual(
+      expect.arrayContaining([
+        "Klettern (Fassadenklettern)",
+        "Körperbeherrschung",
+        "Gassenwissen",
+        "Überreden",
+        "Schlösserknacken",
+      ]),
+    );
+    const klettern = result.model.talents.find(
+      (talent) => talent.name === "Klettern (Fassadenklettern)",
+    );
+    expect(klettern?.value).toBe(7);
+    expect(result.model.blessings).toContain("Zwölf Segnungen");
+    expect(result.model.equipment).toContain("Kletterseil, pro Schritt (10 m)");
   });
 
   it("captures combat technique ratings when present", () => {

@@ -31,6 +31,7 @@ function createStatBlock(overrides: Partial<ParsedStatBlock>): ParsedStatBlock {
     specialAbilities: [],
     combatSpecialAbilities: [],
     languages: [],
+    cantrips: [],
     spells: [],
     liturgies: [],
     rituals: [],
@@ -357,10 +358,9 @@ describe("resolveStatBlock", () => {
 
     expect(resolved.unresolved.weapons ?? []).toHaveLength(1);
     const weaponWarnings = resolved.warnings.filter(
-      (warning) =>
-        warning.section === "weapons" && warning.type === "unresolved",
+      (warning) => warning.section === "weapons",
     );
-    expect(weaponWarnings).toHaveLength(1);
+    expect(weaponWarnings).toHaveLength(0);
   });
 
   it("maps peitsche variants via keyword fallback", () => {
@@ -472,7 +472,7 @@ describe("resolveStatBlock", () => {
     ).toBe(false);
   });
 
-  it("handles personality weaknesses, relative clauses, and tradition naming", () => {
+  it("handles personality weaknesses, relative clauses, tradition naming, and blessing aggregates", () => {
     const statBlock = createStatBlock({
       disadvantages: [
         "Persönlichkeitsschwäche (Vorurteile gegen Nichtzwölfgöttergläubige)",
@@ -495,8 +495,125 @@ describe("resolveStatBlock", () => {
     const tradition = resolved.specialAbilities[0];
     expect(tradition?.match?.normalizedName).toBe("tradition praioskirche");
 
-    expect(resolved.blessings).toHaveLength(1);
+    const expectedBlessingCount = lookups.blessings.byId.size;
+    expect(resolved.blessings).toHaveLength(expectedBlessingCount);
+    const blessingNames = new Set(
+      resolved.blessings
+        .map((entry) => entry.match?.normalizedName)
+        .filter((name): name is string => Boolean(name)),
+    );
+    expect(blessingNames.size).toBe(expectedBlessingCount);
+    expect(blessingNames.has("eidsegen")).toBe(true);
     expect(resolved.unresolved.blessings ?? []).toHaveLength(0);
+  });
+
+  it("normalizes talent applications and equipment aliases", () => {
+    const statBlock = createStatBlock({
+      talents: [
+        { name: "Klettern (Fassadenklettern)", value: 7 },
+        { name: "Götter & Kulte (Phex)", value: 6 },
+      ],
+      equipment: ["Dietrichsets", "Seil (10 m)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const talentNames = resolved.talents
+      .map((talent) => talent.match?.normalizedName)
+      .filter((name): name is string => Boolean(name));
+    expect(talentNames).toEqual(
+      expect.arrayContaining(["klettern", "gotter kulte"]),
+    );
+
+    const equipmentNames = resolved.equipment
+      .map((entry) => entry.match?.normalizedName)
+      .filter((name): name is string => Boolean(name));
+    expect(equipmentNames).toEqual(
+      expect.arrayContaining(["dietrich", "kletterseil pro schritt"]),
+    );
+
+    expect(resolved.unresolved.talents ?? []).toHaveLength(0);
+    expect(resolved.unresolved.equipment ?? []).toHaveLength(0);
+  });
+
+  it("splits special abilities joined by 'oder' and warns about duplication", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: ["Finte I oder Wuchtschlag I"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const names = resolved.specialAbilities
+      .map((entry) => entry.match?.normalizedName)
+      .filter((name): name is string => Boolean(name));
+    expect(names).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("finte"),
+        expect.stringContaining("wuchtschlag"),
+      ]),
+    );
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.type === "split" &&
+          warning.section === "specialAbilities" &&
+          warning.message.includes("Finte I oder Wuchtschlag I"),
+      ),
+    ).toBe(true);
+  });
+
+  it("interprets Angst vor entries with levels and overrides", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Angst vor Toten II"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const phobia = resolved.disadvantages.find(
+      (entry) => entry.match?.normalizedName === "angst vor",
+    );
+    expect(phobia).toBeDefined();
+    expect(phobia?.selectOption?.name).toBe("Toten und Untoten");
+    expect(phobia?.level).toBe(2);
+    expect(resolved.unresolved.disadvantages ?? []).toHaveLength(0);
+  });
+
+  it("maps Prinzipientreue details to Moralkodex entries", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Prinzipientreue I (Phexkirche)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const principle = resolved.disadvantages.find(
+      (entry) => entry.match?.normalizedName === "prinzipientreue",
+    );
+    expect(principle).toBeDefined();
+    expect(principle?.level).toBe(1);
+    expect(principle?.selectOption?.name).toBe("Moralkodex der Phexkirche");
+  });
+
+  it("expands Verpflichtungen entries into canonical obligations", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Verpflichtungen II (Tempel, Kirche)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const obligationOptions = resolved.disadvantages
+      .filter((entry) => entry.match?.normalizedName === "verpflichtungen")
+      .map((entry) => entry.selectOption?.name)
+      .filter((name): name is string => Boolean(name));
+    expect(obligationOptions).toEqual(
+      expect.arrayContaining([
+        "Geweihter gegenüber seinem Tempel",
+        "Geweihter gegenüber seiner Kirche",
+      ]),
+    );
+    resolved.disadvantages
+      .filter((entry) => entry.match?.normalizedName === "verpflichtungen")
+      .forEach((entry) => expect(entry.level).toBe(2));
+    expect(resolved.unresolved.disadvantages ?? []).toHaveLength(0);
   });
 
   it("matches clothing variants without generating armor warnings", () => {
@@ -512,11 +629,7 @@ describe("resolveStatBlock", () => {
     const resolved = resolveStatBlock(statBlock, lookups);
 
     const armor = resolved.armor;
-    expect(armor).not.toBeNull();
-    if (!armor) {
-      throw new Error("Expected armor to resolve");
-    }
-    expect(armor.match?.normalizedName).toBe("normale kleidung");
+    expect(armor).toBeNull();
     expect(
       resolved.warnings.some(
         (warning) =>
@@ -658,5 +771,108 @@ describe("resolveStatBlock", () => {
       (entry) => entry.match?.normalizedName === "gro schild",
     );
     expect(grossschild?.normalizedSource).toBe("shakagra langschild");
+  });
+
+  it("resolves Zaubertricks via the cantrip lookup", () => {
+    const statBlock = createStatBlock({
+      cantrips: ["Schlangenhände", "Trocken"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.cantrips).toHaveLength(2);
+    const ids = resolved.cantrips
+      .map((entry) => entry.match?.id)
+      .filter((id): id is string => Boolean(id));
+    expect(ids).toContain("CANTRIP_9");
+    expect(ids).toContain("CANTRIP_12");
+  });
+
+  it("resolves slash-based abilities without splitting when a canonical entry exists", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: ["Präziser Schuss/Wurf I (Blasrohr)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.specialAbilities).toHaveLength(1);
+    const ability = resolved.specialAbilities[0];
+    expect(ability?.match).toBeDefined();
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.type === "split" &&
+          warning.value?.includes("Präziser Schuss/Wurf"),
+      ),
+    ).toBe(false);
+  });
+
+  it("warns when KaP is present without Tradition or Geweihter", () => {
+    const statBlock = createStatBlock({
+      pools: { kap: 5 },
+      advantages: [],
+      specialAbilities: [],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(
+      resolved.warnings.some((warning) =>
+        warning.message.includes(
+          "KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it("suppresses KaP warnings when Geweihter advantage is present", () => {
+    const statBlock = createStatBlock({
+      pools: { kap: 5 },
+      advantages: ["Geweihter"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(
+      resolved.warnings.some((warning) =>
+        warning.message.includes(
+          "KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil",
+        ),
+      ),
+    ).toBe(false);
+  });
+
+  it("maps Oloargh entries to the canonical Oloarkh language", () => {
+    const statBlock = createStatBlock({
+      languages: ["Oloargh I"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.languages).toHaveLength(1);
+    expect(resolved.languages[0]?.option?.name).toBe("Oloarkh");
+  });
+
+  it("interprets Shakara-Hammer as Kriegshammer", () => {
+    const statBlock = createStatBlock({
+      weapons: [
+        createWeapon({
+          name: "Shakara-Hammer",
+          category: "melee",
+        }),
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const weapon = resolved.weapons[0];
+    expect(weapon?.match?.normalizedName).toBe("kriegshammer");
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "weapons" &&
+          warning.message.includes("keine Kampftechnik"),
+      ),
+    ).toBe(false);
   });
 });

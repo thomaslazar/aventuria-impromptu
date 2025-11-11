@@ -23,6 +23,7 @@ type SectionKey =
   | "armor"
   | "actions"
   | "spells"
+  | "cantrips"
   | "liturgies"
   | "rituals"
   | "blessings"
@@ -67,7 +68,7 @@ const SECTION_NORMALIZATION_MAP: Record<
   liturgie: "liturgies",
   zauber: "spells",
   zaubersprüche: "spells",
-  zaubertricks: "spells",
+  zaubertricks: "cantrips",
   rituale: "rituals",
   rituellezauber: "rituals",
   ausrüstung: "equipment",
@@ -122,6 +123,51 @@ const NUMBER_WORDS = new Set(
     "zwölf",
   ].map((value) => value.toLowerCase()),
 );
+
+const TALENT_CATEGORY_MARKERS = [
+  "körper",
+  "körperlich",
+  "gesellschaft",
+  "natur",
+  "wissen",
+  "handwerk",
+  "sprachen",
+  "sprachlich",
+];
+
+const TALENT_CATEGORY_PREFIX_PATTERN = new RegExp(
+  `^(?:${TALENT_CATEGORY_MARKERS.join("|")})\\s*:\\s*`,
+  "i",
+);
+
+const TALENT_CATEGORY_DELIMITER_PATTERN = new RegExp(
+  `\\b(${TALENT_CATEGORY_MARKERS.join("|")})\\s*:\\s*`,
+  "gi",
+);
+
+const LENGTH_MEASUREMENT_PATTERN =
+  /^(\d+)\s+(schritte?|schritt|meter|metern|m)\b\s*(.*)$/iu;
+
+const EQUIPMENT_ENTRY_OVERRIDES: Record<string, string> = {
+  dietrichset: "Dietrich",
+  dietrichsets: "Dietrich",
+  dietrich: "Dietrich",
+  seil: "Kletterseil, pro Schritt",
+  "leichte shakagra platte": "Leichte Shakagra-Plattenrüstung",
+  "shakara-hammer": "Kriegshammer",
+};
+
+const LIST_BULLET_PATTERN = /[•●◦‣∙]/g;
+const SPLIT_WORD_EXCLUSIONS = new Set([
+  "und",
+  "oder",
+  "bzw",
+  "talente",
+  "talent",
+  "liturgien",
+  "rituale",
+  "sprach",
+]);
 
 export function parseStatBlock(raw: string): ParseResult {
   const warnings: ParserWarning[] = [];
@@ -228,6 +274,7 @@ export function parseStatBlock(raw: string): ParseResult {
     languages: string[];
     talents: string[];
     spells: string[];
+    cantrips: string[];
     liturgies: string[];
     rituals: string[];
     blessings: string[];
@@ -242,6 +289,7 @@ export function parseStatBlock(raw: string): ParseResult {
     languages: [],
     talents: [],
     spells: [],
+    cantrips: [],
     liturgies: [],
     rituals: [],
     blessings: [],
@@ -281,6 +329,7 @@ export function parseStatBlock(raw: string): ParseResult {
         const { primary, trailing } = splitTrailingSection(content, "Talente:");
         appendAbilityList(sectionBuckets.specialAbilities, primary);
         if (trailing) {
+          seenSections.add("talents");
           appendTalentList(sectionBuckets.talents, trailing);
         }
         break;
@@ -302,6 +351,9 @@ export function parseStatBlock(raw: string): ParseResult {
         break;
       case "spells":
         appendList(sectionBuckets.spells, content);
+        break;
+      case "cantrips":
+        appendList(sectionBuckets.cantrips, content);
         break;
       case "liturgies":
         appendList(sectionBuckets.liturgies, content);
@@ -326,6 +378,10 @@ export function parseStatBlock(raw: string): ParseResult {
         notes[section.heading] = content;
         break;
     }
+  }
+
+  if (sectionBuckets.talents.length > 0) {
+    seenSections.add("talents");
   }
 
   for (const requiredSection of [
@@ -362,6 +418,7 @@ export function parseStatBlock(raw: string): ParseResult {
     languages: sanitizeList(sectionBuckets.languages),
     scripts: sanitizeList(sectionBuckets.scripts),
     spells: parseRatedEntries(sectionBuckets.spells, "spells", warnings),
+    cantrips: sanitizeList(sectionBuckets.cantrips),
     liturgies: parseRatedEntries(
       sectionBuckets.liturgies,
       "liturgies",
@@ -677,8 +734,17 @@ function collectSections(lines: string[]): {
     }
     const headingMatch = line.match(HEADING_PATTERN);
     if (headingMatch) {
-      flush();
       const headingValue = headingMatch[1]?.trim();
+      if (
+        currentHeading &&
+        currentHeading.toLowerCase().startsWith("talente") &&
+        headingValue &&
+        isTalentCategoryHeading(headingValue)
+      ) {
+        currentContent.push(line);
+        continue;
+      }
+      flush();
       currentHeading =
         headingValue && headingValue.length > 0 ? headingValue : null;
       const remainder = headingMatch[2]?.trim();
@@ -738,16 +804,45 @@ function appendTalentList(target: string[], content: string): void {
   if (!content || content.toLowerCase() === "keine") {
     return;
   }
-  for (const item of splitList(content)) {
-    target.push(item);
+  const normalizedContent = insertTalentCategoryDelimiters(content);
+  for (const rawItem of splitList(normalizedContent)) {
+    const item = stripTalentCategoryPrefix(rawItem);
+    if (item) {
+      target.push(item);
+    }
   }
 }
 
+function insertTalentCategoryDelimiters(content: string): string {
+  return content.replace(
+    TALENT_CATEGORY_DELIMITER_PATTERN,
+    (match: string, prefix: string, offset: number) => {
+      if (!isTalentCategoryHeading(prefix)) {
+        return match;
+      }
+      const separator = offset === 0 ? "" : "; ";
+      return `${separator}${prefix}: `;
+    },
+  );
+}
+
+function stripTalentCategoryPrefix(value: string): string {
+  return value.replace(TALENT_CATEGORY_PREFIX_PATTERN, "");
+}
+
+function isTalentCategoryHeading(value: string): boolean {
+  const normalized = value.toLowerCase().replace(/\s+/g, "").replace(/-+/g, "");
+  return TALENT_CATEGORY_MARKERS.some((marker) =>
+    normalized.startsWith(marker.replace(/\s+/g, "")),
+  );
+}
+
 function splitList(content: string): string[] {
+  const sanitizedContent = content.replace(LIST_BULLET_PATTERN, ";");
   const results: string[] = [];
   let current = "";
   let depth = 0;
-  for (const char of content) {
+  for (const char of sanitizedContent) {
     if (char === "(") {
       depth += 1;
     } else if (char === ")") {
@@ -785,10 +880,23 @@ function mergeRelativeClauses(entries: string[]): string[] {
 
 function sanitizeEquipmentList(values: string[]): string[] {
   return sanitizeList(values)
-    .map((value) =>
-      stripTrailingQuantityAnnotation(stripLeadingQuantity(value)),
-    )
+    .map((value) => rewriteEquipmentEntry(value))
     .filter((value) => value.length > 0);
+}
+
+function rewriteEquipmentEntry(value: string): string {
+  const stripped = stripTrailingQuantityAnnotation(stripLeadingQuantity(value));
+  const measurementMatch = stripped.match(/\(\s*[^)]+\)\s*$/u);
+  const measurement = measurementMatch ? measurementMatch[0] : "";
+  const base =
+    measurement && stripped.endsWith(measurement)
+      ? stripped.slice(0, stripped.length - measurement.length).trim()
+      : stripped;
+  const override = EQUIPMENT_ENTRY_OVERRIDES[base.toLowerCase()];
+  if (!override) {
+    return stripped;
+  }
+  return measurement ? `${override} ${measurement}`.trim() : override;
 }
 
 function splitCompositeAbilityEntry(value: string): string[] {
@@ -874,7 +982,10 @@ function sanitizeList(values: string[]): string[] {
         lower !== "keine" &&
         lower !== "keiner" &&
         lower !== "keinen" &&
-        lower !== "entfällt"
+        lower !== "nein" &&
+        lower !== "entfällt" &&
+        lower !== "-" &&
+        lower !== "—"
       );
     });
 }
@@ -884,7 +995,15 @@ function normalizeWhitespace(value: string): string {
 }
 
 function mergeSplitWords(value: string): string {
-  return value.replace(/([A-Za-zÄÖÜäöüß])-\s+([A-Za-zÄÖÜäöüß])/g, "$1$2");
+  return value.replace(
+    /([A-Za-zÄÖÜäöüß]+)-\s+([A-Za-zÄÖÜäöüß]+)\b/g,
+    (match, left: string, right: string) => {
+      if (SPLIT_WORD_EXCLUSIONS.has(right.toLowerCase())) {
+        return `${left}- ${right}`;
+      }
+      return `${left}${right}`;
+    },
+  );
 }
 
 function stripCitations(value: string): string {
@@ -926,6 +1045,24 @@ function expandAttributeAbbreviations(value: string): string {
 
 function stripLeadingQuantity(value: string): string {
   const working = value.trim();
+
+  const measurementMatch = working.match(LENGTH_MEASUREMENT_PATTERN);
+  if (measurementMatch && measurementMatch[3]) {
+    const [, amount, rawUnit, remainder] = measurementMatch;
+    if (rawUnit && remainder) {
+      const restRaw = remainder.trim();
+      if (restRaw) {
+        const rest =
+          restRaw.toLowerCase() === "seil"
+            ? "Kletterseil, pro Schritt"
+            : restRaw;
+        const unitLower = rawUnit.toLowerCase();
+        const displayUnit = unitLower.startsWith("schritt") ? "m" : rawUnit;
+        return `${rest} (${amount} ${displayUnit})`.trim();
+      }
+    }
+  }
+
   const numericMatch = working.match(/^(\d+)\s+(.*)$/u);
   if (numericMatch && numericMatch[2]) {
     return numericMatch[2].trim();
@@ -1007,7 +1144,11 @@ function parseTalentRatings(
 
   for (const entry of rawValues) {
     const cleaned = stripFootnoteMarkers(entry.trim());
-    const match = cleaned.match(/^(.+?)\s+(-?\d+)$/);
+    const spaced = cleaned.replace(
+      /([^\s\d])(-?\d+)(\s*\([^)]*\))?$/,
+      "$1 $2$3",
+    );
+    const match = spaced.match(/^(.+?)\s+(-?\d+)(?:\s*\([^)]*\))?$/);
     if (!match) {
       warnings.push({
         type: "parse-error",
@@ -1125,6 +1266,7 @@ function createEmptyModel(): ParsedStatBlock {
     combatSpecialAbilities: [],
     languages: [],
     spells: [],
+    cantrips: [],
     liturgies: [],
     rituals: [],
     blessings: [],

@@ -1,0 +1,373 @@
+[
+  {
+    "id": "SA_1221",
+    "name": "Animisten",
+    "normalizedName": "animisten",
+    "base": {
+      "id": "SA_1221",
+      "numId": 16,
+      "primary": "ATTR_3",
+      "aeMod": 0.5,
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": true,
+      "areDisAdvRequiredApplyToMagActionsOrApps": true
+    },
+    "locale": {
+      "id": "SA_1221",
+      "name": "Animisten"
+    },
+    "synonyms": [
+      "Animisten"
+    ]
+  },
+  {
+    "id": "SA_1255",
+    "name": "Geoden",
+    "normalizedName": "geoden",
+    "base": {
+      "id": "SA_1255",
+      "numId": 13,
+      "primary": "ATTR_4",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_1255",
+      "name": "Geoden"
+    },
+    "synonyms": [
+      "Geoden"
+    ]
+  },
+  {
+    "id": "SA_1293",
+    "name": "Zibilijas",
+    "normalizedName": "zibilijas",
+    "base": {
+      "id": "SA_1293",
+      "numId": 17,
+      "primary": "ATTR_3",
+      "canLearnCantrips": true,
+      "canLearnSpells": false,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_1293",
+      "name": "Zibilijas"
+    },
+    "synonyms": [
+      "Zibilijas"
+    ]
+  },
+  {
+    "id": "SA_1438",
+    "name": "Brobim-Geoden",
+    "normalizedName": "brobim geoden",
+    "base": {
+      "id": "SA_1438",
+      "numId": 18,
+      "primary": "ATTR_4",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_1438",
+      "name": "Brobim-Geoden"
+    },
+    "synonyms": [
+      "Brobim-Geoden"
+    ]
+  },
+  {
+    "id": "SA_255",
+    "name": "Hexen",
+    "normalizedName": "hexen",
+    "base": {
+      "id": "SA_255",
+      "numId": 3,
+      "primary": "ATTR_4",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_255",
+      "name": "Hexen"
+    },
+    "synonyms": [
+      "Hexen"
+    ]
+  },
+  {
+    "id": "SA_345",
+    "name": "Elfen",
+    "normalizedName": "elfen",
+    "base": {
+      "id": "SA_345",
+      "numId": 4,
+      "primary": "ATTR_3",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_345",
+      "name": "Elfen"
+    },
+    "synonyms": [
+      "Elfen"
+    ]
+  },
+  {
+    "id": "SA_346",
+    "name": "Druiden",
+    "normalizedName": "druiden",
+    "base": {
+      "id": "SA_346",
+      "numId": 5,
+      "primary": "ATTR_2",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_346",
+      "name": "Druiden"
+    },
+    "synonyms": [
+      "Druiden"
+    ]
+  },
+  {
+    "id": "SA_676",
+    "name": "Scharlatane",
+    "normalizedName": "scharlatane",
+    "base": {
+      "id": "SA_676",
+      "numId": 6,
+      "primary": "ATTR_4",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_676",
+      "name": "Scharlatane"
+    },
+    "synonyms": [
+      "Scharlatane"
+    ]
+  },
+  {
+    "id": "SA_677",
+    "name": "Zauberbarden",
+    "normalizedName": "zauberbarden",
+    "base": {
+      "id": "SA_677",
+      "numId": 7,
+      "primary": "ATTR_4",
+      "aeMod": 0.5,
+      "canLearnCantrips": true,
+      "canLearnSpells": false,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": true,
+      "areDisAdvRequiredApplyToMagActionsOrApps": true
+    },
+    "locale": {
+      "id": "SA_677",
+      "name": "Zauberbarden"
+    },
+    "synonyms": [
+      "Zauberbarden"
+    ]
+  },
+  {
+    "id": "SA_678",
+    "name": "Zaubertänzer",
+    "normalizedName": "zaubertanzer",
+    "base": {
+      "id": "SA_678",
+      "numId": 8,
+      "primary": "ATTR_4",
+      "aeMod": 0.5,
+      "canLearnCantrips": true,
+      "canLearnSpells": false,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": true,
+      "areDisAdvRequiredApplyToMagActionsOrApps": true
+    },
+    "locale": {
+      "id": "SA_678",
+      "name": "Zaubertänzer"
+    },
+    "synonyms": [
+      "Zaubertänzer"
+    ]
+  },
+  {
+    "id": "SA_679",
+    "name": "Intuitive Zauberer",
+    "normalizedName": "intuitive zauberer",
+    "base": {
+      "id": "SA_679",
+      "numId": 9,
+      "aeMod": 0,
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": true,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_679",
+      "name": "Intuitive Zauberer"
+    },
+    "synonyms": [
+      "Intuitive Zauberer"
+    ]
+  },
+  {
+    "id": "SA_680",
+    "name": "Meistertalentierte",
+    "normalizedName": "meistertalentierte",
+    "base": {
+      "id": "SA_680",
+      "numId": 10,
+      "aeMod": 0,
+      "canLearnCantrips": false,
+      "canLearnSpells": false,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": true,
+      "areDisAdvRequiredApplyToMagActionsOrApps": true
+    },
+    "locale": {
+      "id": "SA_680",
+      "name": "Meistertalentierte"
+    },
+    "synonyms": [
+      "Meistertalentierte"
+    ]
+  },
+  {
+    "id": "SA_681",
+    "name": "Qabalyamagier",
+    "normalizedName": "qabalyamagier",
+    "base": {
+      "id": "SA_681",
+      "numId": 11,
+      "primary": "ATTR_2",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_681",
+      "name": "Qabalyamagier"
+    },
+    "synonyms": [
+      "Qabalyamagier"
+    ]
+  },
+  {
+    "id": "SA_70",
+    "name": "Gildenmagier",
+    "normalizedName": "gildenmagier",
+    "base": {
+      "id": "SA_70",
+      "numId": 2,
+      "primary": "ATTR_2",
+      "canLearnCantrips": true,
+      "canLearnSpells": true,
+      "canLearnRituals": true,
+      "allowMultipleTraditions": true,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": false
+    },
+    "locale": {
+      "id": "SA_70",
+      "name": "Gildenmagier"
+    },
+    "synonyms": [
+      "Gildenmagier"
+    ]
+  },
+  {
+    "id": "SA_726",
+    "name": "Schelme",
+    "normalizedName": "schelme",
+    "base": {
+      "id": "SA_726",
+      "numId": 15,
+      "primary": "ATTR_3",
+      "canLearnCantrips": true,
+      "canLearnSpells": false,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": false,
+      "areDisAdvRequiredApplyToMagActionsOrApps": true
+    },
+    "locale": {
+      "id": "SA_726",
+      "name": "Schelme"
+    },
+    "synonyms": [
+      "Schelme"
+    ]
+  },
+  {
+    "id": "SA_750",
+    "name": "Alchimisten",
+    "normalizedName": "alchimisten",
+    "base": {
+      "id": "SA_750",
+      "primary": "ATTR_2",
+      "aeMod": 0.5,
+      "canLearnCantrips": false,
+      "canLearnSpells": false,
+      "canLearnRituals": false,
+      "allowMultipleTraditions": false,
+      "isDisAdvAPMaxHalved": true,
+      "areDisAdvRequiredApplyToMagActionsOrApps": true
+    },
+    "locale": {
+      "id": "SA_750",
+      "name": "Alchimisten"
+    },
+    "synonyms": [
+      "Alchimisten"
+    ]
+  }
+]
