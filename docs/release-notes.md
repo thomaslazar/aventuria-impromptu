@@ -2,6 +2,11 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.4 — Loot UI Consolidation (2025-11-11)
+
+- Consolidated the separate "Loot: NPC" and "Loot: Treasure" navigation tabs into a single "Loot" tab with sub-tabs for NPC and Treasure loot, streamlining the navigation experience while preserving all existing functionality.
+- Enhanced the loot interface with tabbed navigation that dynamically updates intro text based on the active tab, maintaining the contextual descriptions users expect for each loot type.
+
 ## 0.4.3 — Optolith Cantrip Support (2025-11-11)
 
 - Improved stat block parsing with support for inline talent markers, hardened special ability splitting, and validation warnings for incomplete entries.

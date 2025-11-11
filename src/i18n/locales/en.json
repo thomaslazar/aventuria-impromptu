@@ -16,8 +16,7 @@
   "nav": {
     "home": "Home",
     "tavern": "Tavern",
-    "npcLoot": "Loot: NPC",
-    "treasureLoot": "Loot: Treasure",
+    "loot": "Loot",
     "optolithConverter": "Optolith Converter",
     "about": "About",
     "ariaLabel": "Primary navigation"
@@ -55,14 +54,21 @@
       "title": "Tavern Generator",
       "intro": "Fill Aventurian taprooms with life: roll encounters, quirks, and rumours for spontaneous scenes."
     },
+    "loot": {
+      "title": "Loot Generator",
+      "intro": "Spontaneous finds for NPCs or treasures—always Aventuria-friendly.",
+      "tabs": {
+        "npc": "NPC",
+        "treasure": "Treasure"
+      }
+    },
     "npcLoot": {
-      "title": "Loot: Non-Player Characters",
       "intro": "Pat-downs or raids? Grab fitting finds for city watch, pilgrims, or shady types."
     },
     "treasureLoot": {
-      "title": "Loot: Treasure Chest",
       "intro": "Abandoned temples, secret depots, or freshly plundered caravans—craft treasures with Aventurian flair."
     },
+
     "optolithConverter": {
       "title": "Optolith Converter",
       "intro": "Convert German DSA5 stat blocks into Optolith NPC JSON directly in your browser.",
