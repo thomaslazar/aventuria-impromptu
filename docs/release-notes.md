@@ -2,6 +2,13 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.3 — Optolith Cantrip Support (2025-11-11)
+
+- Improved stat block parsing with support for inline talent markers, hardened special ability splitting, and validation warnings for incomplete entries.
+- Added dedicated cantrip parsing and resolution across the Optolith converter pipeline, enabling stat blocks with cantrip references to be accurately converted into Optolith-compatible JSON.
+- Updated the Optolith dataset extraction to include missing data, ensuring more comprehensive data coverage.
+- Consolidated Optolith spell datasets to improve data consistency and streamline maintenance.
+
 ## 0.4.2 — Optolith Dataset Refresh (2025-11-09)
 
 - Updated the Optolith dataset to the newest upstream release, adding 10 new special abilities so converter imports stay in sync with the latest lore.

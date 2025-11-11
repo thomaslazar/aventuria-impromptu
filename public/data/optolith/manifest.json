@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatorVersion": "optolith-extractor@0.4.2",
+  "generatorVersion": "optolith-extractor@0.4.3",
   "generatedAt": "2025-11-10T14:26:11.794Z",
   "sourceChecksum": "5637e8bddd0a948d07668c16751d5fbceca8cfe215f05648d770dca2adceab66",
   "sourceFileName": "optolith-data.zip",
