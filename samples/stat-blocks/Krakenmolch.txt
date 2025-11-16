@@ -1,0 +1,103 @@
+Krakenmolch
+MU 15 KL 6 (t) IN 13 CH 8
+FF 13 GE 12 KO 35 KK 36
+LeP 350 AsP – KaP – INI 14+1W6
+VW 6 SK 1 ZK 7 GS 2/9 (an Land / im Wasser)
+Fangarm: AT 13 TP 1W6+8 RW lang
+Biss: AT 10 TP 3W6+3 RW kurz
+RS/BE 1/0
+Aktionen: 4 (max.1 x Biss, max. 3 x Fangarm)
+Vorteile/Nachteile: Dunkelsicht II
+Sonderfertigkeiten:
+• Klammergriff (Fangarm; kann der Gegner sich nicht
+erfolgreich verteidigen, hält der Krakenmolch ihn
+fest. Solange der Gegner festgehalten wird, leidet er
+unter den Status Fixiert und Eingeengt. Ab der nächs-
+ten KR muss der Krakenmolch keine AT mehr wür-
+feln, sondern erzeugt durch Quetschen SP in Höhe
+der ausgewürfelten TP des Angriffs. Alternativ kann
+das Wesen 1 Aktion aufwenden, um das Opfer zu sei-
+nem Maul zu heben. In der folgenden KR kann er
+dann zubeißen. Diese Attacke gelingt automatisch.
+Die Verteidigung des Angreifers sinkt während des
+Rests der KR, in der der Biss stattfindet, auf 0. Der
+Klammergriff kann nur gegen Gegner kleinerer
+Größenkategorien verwendet werden. Um sich aus
+dem Klammergriff zu lösen, ist eine gelungene Ver-
+gleichsprobe auf Kraftakt (Ziehen & Zerren) nötig. Der
+Haltegriff kann nur gegen Gegner kleinerer Größen-
+kategorien verwendet werden. Mittels einer freien
+Aktion kann der Krakenmolch den Gehaltenen los-
+lassen. Sollte der Krakenmolch sein Opfer angeho-
+ben haben, erleidet es daraufhin den Status Liegend,
+sofern ihm nicht eine Probe auf Körperbeherrschung
+(Kampfmanöver) gelingt.)
+• Mächtiger Schlag (Fangarm; bei erfolgreichem An-
+griff müssen Gegner der Größenkategorie mittel
+und kleiner eine Probe auf Kraftakt erschwert um
+8 bestehen, sofern sie nicht ausgewichen sind; an-
+sonsten erhalten sie den Status Liegend)
+• Tentakelschwung (Fangarm; ist der Krakenmolch
+mindestens eine Größenkategorie größer als seine
+Ziele, kann er mit einem Tentakelschwung mehre-
+re Ziele zu Fall bringen. Gegen diesen Angriff kann
+man nur ausweichen. Ist die Verteidigung misslun-
+gen, stürzt der Gegner und erleidet den Status Lie-
+gend. Durch den Fall erleidet man 1W3 SP. Ein sol-
+cher Angriff kann nur gegen Ziele neben oder vor
+dem angreifenden Wesen ausgeführt werden. Die
+Attacke ist um 2 pro Ziel erschwert.)
+• Verbeißen (Biss; der Krakenmolch führt einen
+Biss-Angriff aus. Kann der gelungene Angriff nicht
+verteidigt werden, so hat er sich festgebissen. In
+den nachfolgenden KR gelingt die
+Biss-Attacke automatisch, ohne
+dass der Meister würfeln muss.
+Jede KR richtet der Verbeißen-An-
+griff +1 TP an (in der ersten KR noch
+keinen zusätzlichen TP, in der 2. KR
++1TP, in der 3. KR +2 TP usw.). Die TP
+werden wie üblich ausgewürfelt. Der Geg-
+ner erhält den Status Fixiert. Die Verteidigung des
+Molches sinkt, während er beißt, auf 0. Der Kraken-
+molch kann am Ende einer KR entscheiden loszulas-
+sen. Dieser Angriff ist um 2 erschwert.)
+Talente: Klettern 2, Körperbeherrschung 5, Kraftakt 12,
+Schwimmen 9, Selbstbeherrschung 10, Sinnesschär-
+fe 7, Verbergen 10, Einschüchtern 13, Willenskraft 4
+(15/13/8)
+Beute: 90 Rationen Fleisch pro abgetrenntem Tenta-
+kel (zäh), 200 Rationen Rumpffleisch (ungenießbar),
+Treibgut (im Verdauungstrakt; Wert: 1W6x3W20 Sil-
+bertaler), Trophäe (Stirnhörner, 25 Silbertaler)
+Fischen & Angeln (Wasserungeheuer):
+• QS 1: Der Krakenmolch kann sich auch an Land auf-
+halten und bewegen.
+• QS 2: Wenn der Krakenmolch 6 Fangarme verloren
+hat, flieht er üblicherweise.
+• QS 3+: Reibt sich ein Opfer mit Öl oder einer anderen
+glitschigen Substanz ein, kann der Krakenmolch es
+deutlich schwerer festhalten (Klammergriff-Angriff
+für den Krakenmolch um 6 erschwert, die Probe auf
+Kraftakt (Ziehen & Zerren), um den Klammerangriff
+zu lösen, ist zudem um 2 erleichtert).
+Größenkategorie: riesig
+Typus: übernatürliches Wesen, nicht humanoid
+Kampfverhalten: Der Krakenmolch versucht zu
+Kampfbeginn, mit 1W3 Fangarmen ein Opfer zu um-
+klammern und an sein Maul zu führen. Anschlie-
+ßend beißt er es solange, bis es stirbt. Mit den an-
+deren Fangarmen versucht er, die restlichen Gegner
+abzuwehren.
+Flucht: Sobald der Krakenmolch 6 Fangarme oder 50 %
+seiner LeP am Rumpf verloren hat, flieht er.
+Schmerz +1 bei: 263 LeP, 175 LeP, 88 LeP, 5 LeP oder weniger
+Sonderregeln:
+Tentakel abschlagen: Um einem Krakenmolch ein Tenta-
+kel abzuschlagen, muss vor der Attacke ein Angriff auf
+das Tentakel angekündigt werden. Nur Waffen mit ei-
+ner scharfen Klinge können ein Tentakel durchdrin-
+gen. Dazu sind 12 SP notwendig, die innerhalb von 1
+KR erzielt werden müssen, da man nach kurzer Zeit
+die angeschlagene Stelle des Fangarms nicht noch
+einmal treffen kann.

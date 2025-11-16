@@ -1,0 +1,28 @@
+Scherenwächter
+MU 15 KL 8 IN 10 CH 6
+FF 8 GE 10 KO 17 KK 17
+LeP 60 AsP 0 KaP 0 INI 10+1W6
+AW 5 SK 2 ZK 3 GS 9
+Scheren: AT 11 PA 4 TP 2W6+4
+RW mittel
+Shakagra-Kriegshammer: AT 9 PA 1 TP 2W6+7 RW
+mittel
+RS/BE 5/2
+Aktionen: 1
+Sonderfertigkeiten: Hammerschlag, Vorstoß, Wucht-
+schlag I-III
+Vorteile/Nachteile: Kälteresistenz
+Talente: Einschüchtern 8, Klettern 1,
+Körperbeherrschung 3, Kraftakt 13, Schwimmen
+9, Selbstbeherrschung 14, Sinnesschärfe 3, Verber-
+gen 0, Willenskraft 13
+Größenkategorie: groß
+Typus: Daimonid, nicht humanoid
+Schmerz +1 bei: 45 LeP, 30 LeP, 15 LeP, 5 LeP oder
+weniger
+Sonderregeln:
+Erhitzen von Wasser und Eis: Der Wächter kann die Tem-
+peratur von Wasser und Eis durch Berührung um bis
+zu 100 Grad Celsius erhöhen oder senken.
+Daimoniden-Regeln: Für Scherenwächter gelten die all-
+gemeinen Daimoniden-Regeln (siehe Seite 112).

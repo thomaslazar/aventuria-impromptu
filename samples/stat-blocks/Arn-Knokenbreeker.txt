@@ -1,0 +1,36 @@
+Arn Knokenbreeker
+MU 13 KL 9 IN 13 CH 13
+FF 12 GE 15 KO 14 KK 16
+LeP 40 SK 1 AsP – ZK 3
+KaP – AW 7 GS 8 INI 14+1W6
+Schip 1
+Sozialstatus: frei
+Sonderfertigkeiten: Beschützer AKO151
+, Bornländisches
+Raufen AKO157
+, Finte I, Meister der improvisierten Waf-
+fen AKO154, Schwitzkasten AKO155, Tiefschlag AKO166, Wucht-
+schlag I+II
+Sprachen: Garethi III
+Schriften: Kusliker Zeichen
+Vorteile: Zäher Hund
+Nachteile: Schlechte Eigenschaften (Jähzorn)
+Kampftechniken: Hiebwaffen 14, Raufen 14
+Waffenlos: AT 15 PA 9 TP 1W6+2 RW kurz
+Knüppel: AT 15 PA 7 TP 1W6+4 RW mittel
+RS/BE 0/ 0
+Talente:
+Körper: Klettern 8, Körperbeherrschung 11, Kraftakt 13,
+Verbergen 8, Zechen 9
+Gesellschaft: Betören 5, Einschüchtern 14, Etikette 4, Gas-
+senwissen 10, Menschenkenntnis 5, Überreden 7, Wil-
+lenskraft 6
+Natur: Orientierung 6
+Wissen: Götter & Kulte 4
+Handwerk: Boote & Schiffe 8, Fahrzeuge 6, Handel 4
+Ausrüstung: Immanschläger, den er als Knüppel nutzt
+Kampfverhalten: geht gegen seine Gegner brutal mit dem
+Knüppel vor und setzt auf Wuchtschläge. Er muss die Zeu-
+gen aus dem Weg räumen, sonst ist er ein toter Mann.
+Flucht: bei Schmerz III
+Schmerz +1 bei: 30 LeP, 20 LeP, 10 LeP, 5 LeP oder weniger

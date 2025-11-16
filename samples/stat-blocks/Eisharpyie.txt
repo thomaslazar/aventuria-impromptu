@@ -1,0 +1,34 @@
+Eisharpyie
+MU 15 KL 9 IN 14 CH 8
+FF 7 GE 13 KO 12 KK 11
+LeP 28AsP 0 KaP 0 INI 14+1W6
+SK 2 ZK 0 AW 7 GS 8/8
+Klauen: AT 12 PA 6 TP 1W6+3 RW kurz
+RS/BE 0/0
+Sonderfertigkeiten: Flugangriff
+Vorteile/Nachteile: Dunkesicht I, Kälteresistenz
+Talente: Fliegen 10, Klettern 4, Körperbeherrschung 8,
+Kraftakt 2, Schwimmen 1, Selbstbeherrschung 2, Sin-
+nesschärfe 10, Verbergen 5, Einschüchtern 6, Willens-
+kraft 4
+Schmerz +1 bei: 21 LeP, 14 LeP, 7 LeP, 5 LeP oder weniger
+Sonderregeln:
+Hoch in die Luft: Der Meister kann vor einer Attacke der
+Harpyie ansagen, dass sie ihr Opfer in die Lüfte reißen
+will. Dazu muss eine um 4 erschwerte Attacke einge-
+setzt werden, und statt des Schadens kommt es zu ei-
+ner Vergleichsprobe auf Kraftakt (Ziehen & Zerren) zwi-
+schen der Harpyie und dem Opfer. Der Angriff kann
+regulär verteidigt werden. Gewinnt die Harpyie, hat sie
+das Opfer gepackt und 1W3 Schritt in die Höhe gezo-
+gen. Bei 1-3 auf 1W6 hackt sie in der Luft auf ihren Geg-
+ner (+4 AT), bei 4-6 lässt sie das Opfer fallen (sobald sie
+2W6 Schritt hoch ist) und es erleidet Sturzschaden. Bei
+der Verschleppung erhöht sich der Abstand zum Boden
+jede KR um 1W3 Schritt, bis zu einer Höhe von maxi-
+mal 50 Schritt. Der Held gilt als Eingeengt und kann sich
+nur befreien, wenn er eine Stufe Schmerz bei der Harpy-
+ie verursacht (er kann weiter AT schlagen; die Harpyie
+verteidigt in dieser Situation nicht). Sie lässt ihn an-
+schließend fallen und der Held muss sich mit dem Fall
+(und dem Sturzschaden) auseinandersetzen.

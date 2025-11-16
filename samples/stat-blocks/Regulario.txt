@@ -1,0 +1,41 @@
+Regulario
+MU 14 KL 12 IN 13 CH 13
+FF 12 GE 14 KO 14 KK 14
+LeP 36 AsP
+– KaP
+– INI 14+1W6
+AW 6 SK 2 ZK 2 GS 7
+Waffenlos: AT 15 PA 8 TP 1W6 RW kurz
+Dolch: AT 15 PA 8 TP 1W6+1 RW kurz
+Langschwert: AT 15 PA 8 TP 1W6+4 RW mittel
+Streitaxt: AT 15 PA 7 TP 1W6+4 RW mittel
+Streitkolben: AT 15 PA 7 TP 1W6+4 RW mittel
+Kompositbogen: FK 14 LZ 2 TP 1W6+7 RW 20/100/160
+Leichte Armbrust: FK 14 LZ 8 TP 1W6+6 RW 10/50/80
+RS/BE: 4/1 (Kettenrüstung) (Modifikatoren durch
+Rüstungen bereits eingerechnet)
+Vorteile/Nachteile: Krankheitsresistenz I, Verbes-
+serte Regeneration (Lebensenergie) I
+Sonderfertigkeiten: Anführer, Aufmerksamkeit, Be-
+lastungsgewöhnung I, Finte I (Waffenlos, Dolch, Lang-
+schwert, Streitaxt, Streitkolben), ­ Kampfreflexe I,
+Muttersprache Garethi III, Ortskenntnis (Heimat-
+dorf), Sturmangriff (Langschwert, Streitaxt, Streit-
+kolben), Verteidigungshaltung (Waffenlos, Dolche,
+Langschwert, Streitaxt, Streitkolben), Vorstoß (Waf-
+fenlos, Dolch, Langschwert, Streitaxt, Streitkolben),
+Wuchtschlag I (Waffenlos, Langschwert, Streitaxt,
+Streitkolben)
+Talente: Einschüchtern 10, Gassenwissen 8, Handel 8,
+Körperbeherrschung 11, Kraftakt 12, Kriegskunst 10,
+Menschenkenntnis 9, Selbstbeherrschung 11, Sinnes-
+schärfe 12, Überreden 5, Verbergen 6, Willenskraft 10
+Kampfverhalten: Ein Regulario befehligt üblicher-
+weise Milizionäre, aber wenn er in einen Nahkampf
+verwickelt wird, wird er zunächst die SF Anführer ver-
+wenden, um seine Gefährten zu stärken, und dann ab-
+wechselnd mit Finten und Wuchtschlägen seine Gegner
+attackieren. Aus der Ferne verwendet er gerne seine
+Fernkampfwaffe und ruft Befehle.
+Flucht: Verlust von 75 % der LeP;
+Schmerz +1 bei: 27 LeP, 18 LeP, 9 LeP, 5 LeP oder weniger

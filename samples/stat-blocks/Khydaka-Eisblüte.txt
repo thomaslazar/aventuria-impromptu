@@ -1,0 +1,46 @@
+Khydaka Eisblüte
+MU 16 KL 15 IN 15 CH 14
+FF 12 GE 13 KO 10 KK 10
+LeP 22 SK 4 AsP 36 ZK –1
+KaP – AW 7 GS 7 INI 14+1W6
+Schip 3
+Sonderfertigkeiten: Analytiker,
+Eiserner Wille I, Finte I, Schriftstellerei
+(Heilige Schriften), Tradition (Nachtalben)
+Sprachen: Asdharia III, Isdira III, Bosparano II, Garethi
+II, Thorwalsch I, Zhayad
+Schriften: Isdira- und Asdharia-Zeichen, Kusliker Zei-
+chen, Zhayad-Zeichen
+Vorteile: Dunkelsicht I, Soziale Anpassungsfähigkeit,
+Wohlklang, Zauberer, Zweistimmiger Gesang
+Nachteile: Hitzeempfindlich II, Lichtempfindlich II,
+Metallempfindlich, Persönlichkeitsschwäche (Arro-
+ganz, Weltfremd)
+Waffenlos: AT 12 PA 6 TP 1W6 RW nah
+Shakagra-Giftdolch: AT 12 PA 6 TP 1W6+2 RW nah
+RS/BE 1 / 0 (Winterkleidung) (Modifikatoren durch
+Rüstungen bereits eingerechnet)
+Talente:
+Körper: Klettern 2, Körperbeherrschung 4, Kraftakt 3,
+Schwimmen 0, Selbstbeherrschung 12, Singen 7, Sin-
+nesschärfe 6, Taschendiebstahl 5, Verbergen 12
+Gesellschaft: Bekehren & Überzeugen 8, Einschüchtern
+8, Menschenkenntnis 7, Überreden 14, Verkleiden 7,
+Willenskraft 15
+Natur: Orientierung 6, Wildnisleben 6
+Wissen: Geschichtswissen 15, Götter & Kulte 16, Magie-
+kunde 8, Sphärenkunde 11
+Handwerk: Heilkunde Gift 7, Musizieren 7, Schlösser-
+knacken 7
+Zaubertricks: Schlangenhände, Trocken
+Zauber: Analys 8, Attributo (KK) 8, Chamaelioni 12,
+Dunkelheit 12, Exposami 9, Gletscherform 10, In-
+vocatio Minima 12, Odem 5, Visibili 12
+Rituale: Invocatio Maior 7, Invocatio Minor 12
+Elfenlieder: Sklavenlied 10
+Kampfverhalten: Khydaka ist keine Kämpferin, doch
+wenn es dazu kommt, nutzt sie ihre Zauber und
+sticht schnell mit ihrem mit Kelmon (Regelwerk
+Seite 243) vergifteten Dolch zu.
+Flucht: bei Schmerz II
+Schmerz +1 bei: 17 LeP, 11 LeP, 6 LeP, 5 LeP oder weniger

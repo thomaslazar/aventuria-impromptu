@@ -13,9 +13,9 @@ import type {
 } from "../../src/types/optolith/converter";
 
 const DATASET_DIR = path.resolve(process.cwd(), "public/data/optolith");
-const SAMPLE_MD = path.resolve(
+const SAMPLE_DIR = path.resolve(
   process.cwd(),
-  "planning/intake/specs/examples/dsa5-optolith-sample-stat-blocks.md",
+  "samples/stat-blocks",
 );
 const DEFAULT_RUN_DIR = path.resolve(
   process.cwd(),
@@ -49,7 +49,7 @@ interface SampleReport {
 async function main(): Promise<void> {
   const manifest = await loadDataset(DATASET_DIR);
   const lookups = createDatasetLookups(manifest);
-  const samples = await loadSamples(SAMPLE_MD);
+  const samples = await loadSamples(SAMPLE_DIR);
   const reportPath = resolveReportPath();
 
   const reports: SampleReport[] = [];
@@ -132,21 +132,19 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
   };
 }
 
-async function loadSamples(filePath: string): Promise<SampleBlock[]> {
-  const content = await fs.readFile(filePath, "utf8");
-  const blocks = content
-    .split(/\n---\s*\n+/g)
-    .map((block) => block.trim())
-    .filter((block) => block.length > 0);
+async function loadSamples(dirPath: string): Promise<SampleBlock[]> {
+  const files = await fs.readdir(dirPath);
+  const txtFiles = files.filter((file) => file.endsWith(".txt"));
+  const samples: SampleBlock[] = [];
 
-  return blocks.map((block, index) => {
-    const lines = block.split(/\r?\n/).map((line) => line.trim());
-    const name = lines.find((line) => line.length > 0) ?? `Sample ${index + 1}`;
-    return {
-      name,
-      text: block,
-    };
-  });
+  for (const file of txtFiles) {
+    const filePath = path.join(dirPath, file);
+    const text = await fs.readFile(filePath, "utf8");
+    const name = file.replace(/\.txt$/, "");
+    samples.push({ name, text });
+  }
+
+  return samples;
 }
 
 function buildEquipmentSummary(

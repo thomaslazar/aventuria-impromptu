@@ -1,0 +1,31 @@
+Wache
+MU 14 KL 11 IN 13 CH 11
+FF 10 GE 13 KO 13 KK 13
+LeP 32 AsP – KaP – INI 12+1W6
+SK 1 ZK 2 AW 6 GS 7
+Hellebarde: AT 11 PA 3 TP 1W6+6 RW lang
+Rapier: AT 12 PA 5 TP 1W6+3 RW mittel
+RS/BE 4/1 (Kettenrüstung)
+Sonderfertigkeiten: Finte I, Belastungsgewöhnung I,
+Wuchtschlag I
+Vorteile/Nachteile: Schlechte Eigenschaft (Autori-
+tätsglaube), weitere nach Meisterentscheid
+Talente: Einschüchtern 6, Klettern 2, Körperbeherr-
+schung 5, Kraftakt 5, Menschenkenntnis 4, Selbstbe-
+herrschung 6, Sinnesschärfe 8, Überreden 2, Verber-
+gen 6, Willenskraft 5
+Kampfverhalten: Wächter versuchen zuerst, Geg-
+ner mittels ihrer Autorität zur Aufgabe zu bewegen.
+Haben sie damit keinen Erfolg, stellen sie sich dem
+Kampf. Dabei setzen sie Finten und Wuchtschläge ein.
+Sie versuchen in der Regel, gemeinsam gegen einen
+Gegner zu kämpfen, wenn sich die Gelegenheit bietet.
+Eigenheit (2W6): anfällig für Magie (2) / Toll-
+patsch (3) / besondere Angst, etwa vor einer Tier-
+art, Feuer oder Dunkelheit (4) / abergläubisch (5) /
+leichtgläubig (6) / misstrauisch (7) / ehrenhaft (8) /
+korrupt (9) / nicht aus der Ruhe zu bringen (10) /
+übermüdet (11) / jähzornig (12)
+Flucht: individuell; spätestens nach zwei Stufen
+Schmerz versuchen Wachen zu fliehen.
+Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger

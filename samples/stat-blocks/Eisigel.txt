@@ -1,0 +1,57 @@
+Eisigel
+MU 14 KL 10 (t) IN 8 CH 14
+FF 7 GE 3 KO 18 KK 8
+LeP 5 AsP 35 KaP – INI 13#1W6
+VW 0 SK 3 ZK 3 GS 0
+Zersplittern: FK 16 TP 4W6/3W6/2W6/1W6*
+RW 3/6/9/12*
+RS/BE 4/0
+Aktionen: 1
+Sonderfertigkeiten: keine
+Talente: Einschüchtern 15, Selbstbeherrschung 7, Sin-
+nesschärfe 4, Willenskraft 7
+Zauber: Paralysis 18 (Die Opfer fliehen nicht, sondern
+erstarren vor Furcht.)
+Größenkategorie: groß
+Typus: Daimonid, nicht humanoid
+Kampfverhalten: Ein „reifer Eisigel“ lässt sein Opfer
+mittels Paralysis erstarren und zersplittert dann.
+Flucht: bewegt sich nicht
+Magiekunde (Magische Wesen):
+•
+QS 1: Der Igel ist nicht nur ein Geländehindernis,
+sondern ein unbeweglicher Daimonid. Er sendet
+auch Alptraumbilder in den Geist seiner Opfer aus.
+•
+QS 2: Wenn man sich einem ausgewachsenen Ei-
+sigel nähert, zerspringt er. Seine scharfkantigen
+Splitter schießen mehrere Schritt weit in jede
+Richtung. Aus den Splittern wird der wertvolle Al-
+benkristall gewonnen.
+•
+QS 3+: Wird man durch einen Eisigelsplitter ver-
+wundet, muss die Verletzung sofort gereinigt wer-
+den, sonst beginnt daraus ein neuer Eisigel zu wach-
+sen. Kurz vor dem Zerspringen stehende Eisigel
+lassen sich durch Angriffe zum Platzen bringen.
+Schmerz +1 bei: immun gegen Schmerz
+Sonderregeln:
+*) Für je drei Schritt, die ein Ziel vom Eisigel entfernt
+ist, richten die Splitter 1W6 TP weniger an. Die Split-
+ter breiten sich in einem gleichmäßigen Radius um
+den Eisigel aus und gelten als Fernkampfangriff. Der
+Igel muss nur einmal würfeln, um zu zerbersten.
+Fällt die LE eines Eisigels auf 0, zersplittert er
+automatisch.
+Umgehen: Es ist möglich, den Eisigel zu umgehen. Dazu
+würfeln die Helden eine Vergleichsprobe auf Verber-
+gen gegen die Sinnesschärfe des Eisigels. Die Probe ist
+für den Eisigel um die SK seines Opfers erschwert,
+innerhalb von 9 Schritt Radius aber auch um +3
+erleichtert.
+Splitterbefall: Eine Verletzung durch die Splitter führt
+bei 19-20 auf dem W20 zum Befall durch einen Eisi-
+gelkern. Dieser wächst, wenn die Wunde nicht er-
+folgreich behandelt wird, im Körper des Betroffenen.
+Wenn er entfernt wird, richtet er 1W6+Tage des Be-
+falls SP an.

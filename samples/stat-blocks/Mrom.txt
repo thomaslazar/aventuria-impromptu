@@ -1,0 +1,42 @@
+Mrom
+MU 14 KL 9 IN 11 CH 12
+FF 9 GE 11 KO 18 KK 18
+LeP 70 SK 2 AsP – ZK 4
+KaP – AW 7 GS 8 INI 8+1W6
+Schip 3
+Aktionen: 1
+Sonderfertigkeiten: Anführer, Angriff verbessern,
+Geländekunde (Eis- & Schneekundig), Haltegriff
+(Waffenlos) Schildspalter (Yeti-Keule), Wuchtschlag
+I-III (Waffenlos, Yeti-Keule)
+Sprachen: Yetan III, Garethi II, Alaani I
+Vorteile: Dämmerungssicht I, Kälteresistenz,
+Richtungssinn
+Nachteile: Hitzeempfindlich
+Waffenlos: AT 14 PA 7 TP 1W6+4 RW mittel
+Yeti-Keule*: AT 17 PA 6 TP 2W6+7 RW lang
+Eisbrocken: FK 10 LZ 1 TP 2W6 RW 4/10/15
+RS/BE 2 / 0
+Talente: Einschüchtern 12, Klettern 5, Körperbe-
+herrschung 10, Kraftakt 12, Menschenkenntnis 7,
+Schwimmen 4, Selbstbeherrschung 7, Sinnesschärfe
+8, Überreden 7, Verbergen 8**, Wildnisleben 12, Wil-
+lenskraft 10
+Größenkategorie: groß
+Typus: Kulturschaffender, humanoid
+Kampfverhalten: Mrom ist vor allem mutiger als sei-
+ne Stammesmitglieder und weiß dies auf die anderen
+Yetis zu übertragen. Sie gehorchen seinen Befehlen
+und lassen sich von seinen mächtigen Angriffen in-
+spirieren. Meistens steht er ganz vorn im Pulk der
+Yetis.
+Flucht: bei Schmerz II
+Schmerz +1 bei: 45 LeP, 30 LeP, 10 LeP, 5 LeP oder weniger
+Sonderregeln:
+*) Yeti-Keule: Die Yeti-Keule kann nur von Wesen mit
+einer Größenkategorie von groß oder riesig benutzt
+werden.
+**) Tarnung: Durch die Farbe des Fells kann der Yeti sich
+in entsprechender Umgebung (Eis, Schnee) gut tarnen.
+Proben auf Sinnesschärfe (Hinterhalt entdecken, Wahrneh-
+men), um ihn zu entdecken, sind dort um 2 erschwert.

@@ -1,0 +1,37 @@
+Siranya Ager
+MU 16 KL 13 IN 14 CH 13
+FF 15 GE 15 KO 14 KK 13
+LeP 33 SK 2 AsP – ZK 2
+KaP – AW 9 GS 8 INI 16+1W6
+SchiP 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Attacke verbessern,
+Aufmerksamkeit, Einhändiger Kampf (bereits einge-
+rechnet), Finte II, Füchsisch, Ortskenntnis (Belhan-
+ka), Präziser Stich I, Riposte, Verbessertes Auswei-
+chen I, Verteidigungshaltung, Wachsamkeit
+Sprachen: Garethi III, Tulamidya I
+Schriften: Kusliker Zeichen
+Vorteile: Begabung (Körperbeherrschung), Fuchs-
+sinn, Unscheinbar, Zeitgefühl
+Nachteile: Persönlichkeitsschwäche (Arroganz), Ver-
+pflichtungen I, Verstümmelt (Einäugig)
+Kampftechniken: Fechtwaffen 14
+Rapier: AT 18 PA 10 TP 1W6+4 RW mittel
+RS/BE 0/0 (einfache Kleidung)
+Talente: Einschüchtern 10, Gassenwissen 11, Körperbe-
+herrschung (Balance) 11, Kraftakt 9, Kriegskunst 10,
+Menschenkenntnis 10, Selbstbeherrschung 13, Sinnes-
+schärfe 10, Überreden 10, Verbergen 9, Willenskraft 12
+Ausrüstung: Da Siranya auf Malrizios Ressourcen zu-
+rückgreifen kann, kannst du sie mit allem ausstat-
+ten, was sie benötigt, um für die Helden eine würdi-
+ge Herausforderung darzustellen.
+Kampfverhalten: Siranya ist ehrgeizig und scheut
+auch den direkten Kampf nicht. Sie setzt auf Kom-
+binationen aus Finte und Präzisem Stich oder über-
+rascht den Kontrahenten mit einer Riposte.
+Flucht: Bei der zweiten Stufe Schmerz wird Sira-
+nya sich zurückziehen, um sich zu sammeln und
+zurückzuschlagen.
+Schmerz +1 bei: 25 LeP, 17 LeP, 8 LeP, 5 LeP oder weniger

@@ -1,0 +1,32 @@
+Deserteure
+MU 13 KL 11 IN 13 CH 11
+FF 12 GE 13 KO 13 KK 14
+LeP 32 AsP
+– KaP
+– INI 13+1W6
+AW 7 SK 1 ZK 2 GS 7
+Waffenlos: AT 14 PA 9 TP 1W6 RW kurz
+Dolch: AT 14 PA 8 TP 1W6+1 RW kurz
+Kurzschwert: AT 14 PA 9 TP 1W6+2 RW kurz
+Säbel: AT 14 PA 9 TP 1W6+3 RW mittel
+Kurzbogen: FK 13 LZ 8 TP 1W6+6 RW 10/50/80
+RS/BE: 3/0 (Lederrüstung) (Modifikatoren durch Rüs-
+tungen bereits eingerechnet)
+Vorteile/Nachteile: Krankheitsresistenz I
+Sonderfertigkeiten: Aufmerksamkeit, Belastungsge-
+wöhnung I, Finte I (Waffenlos, Dolch, Kurzschwert,
+Säbel), Kampfreflexe I, Muttersprache Garethi III,
+Ortskenntnis (Heimatdorf), Sturmangriff (Säbel,
+Kurzschwert), Vorstoß (Waffenlos, Dolch, Kurz-
+schwert, Säbel), Wuchtschlag I (Waffenlos, Kurz-
+schwert, Säbel)
+Talente: Einschüchtern 8, Gassenwissen 8, Handel
+6, Körperbeherrschung 9, Kraftakt 10, Menschen-
+kenntnis 7, Selbstbeherrschung 9, Sinnesschärfe 10,
+Überreden 5, Verbergen 6, Willenskraft 8
+Kampfverhalten: Die Deserteure benutzen am liebs-
+ten Finten. Einer von ihnen wird allerdings versu-
+chen, aus der Distanz die Heldinnen mit seiner Fern-
+kampfwaffe anzugreifen.
+Flucht: Verlust von 75 % der LeP
+Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger

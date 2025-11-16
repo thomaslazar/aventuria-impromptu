@@ -1,0 +1,34 @@
+Kriegermumie
+MU 22 KL 11 IN 12 CH 12
+FF 8 GE 10 KO 15 KK 20
+LeP 40 AsP – KaP – INI 7+1W6
+AW 5 SK 3 ZK 3 GS 6
+Waffenlos: AT 11 PA 5 TP 1W6+8 RW kurz
+Robbentöter: AT 13 PA 6 TP 1W6+12 RW mittel
+RS/BE 4/1 (Kettenrüstung) (Modifikatoren durch Rüs-
+tungen bereits eingerechnet)
+Aktionen: 1
+Vorteile/Nachteile: Angst vor … (Feuer, Luchsen),
+Lichtempfindlich (wirkt, obwohl Mumien als Un-
+tote ansonsten nicht den Zustand Schmerz erleiden
+können)
+Sonderfertigkeiten: Wuchtschlag I (Waffenlos,
+Robbentöter)
+Talente: Einschüchtern 10, Klettern 4, Körperbeherr-
+schung 4, Kraftakt 12, Schwimmen (keine Probe er-
+laubt; Mumien können nicht schwimmen), Selbstbe-
+herrschung – (gelingt automatisch), Sinnesschärfe 7,
+Verbergen 4, Willenskraft – (gelingt automatisch)
+Größenkategorie: mittel
+Typus: Untoter (Hirnloser), humanoid
+Kampfverhalten: Ein rücksichtloser Lauf auf die Ver-
+teidiger, bei dem die Mumien jeden in ihrem Weg
+mit mächtigen Hieben eindecken.
+Flucht: flieht nicht
+Sonderregeln:
+Empfindlichkeit gegenüber Feuerschaden: Schaden durch
+Feuer wird gegen Mumien verdoppelt.
+Extrem Lichtempfindlich: Ist die Mumie direktem Son-
+nenlicht ausgesetzt, erleidet sie 1 SP pro KR.
+Untoten-Regeln: Für Mumien gelten die allgemeinen
+Untoten-Regeln (siehe Seite 112).

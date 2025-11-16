@@ -1,0 +1,46 @@
+Skelettkrieger
+MU 20 KL 10 (t) IN 10 CH 11
+FF 8 GE 11 KO 11 KK 13
+LeP 19 AsP – KaP – INI 8
+AW 6 SK –1 ZK –1 GS 8
+Waffenlos: AT 10 PA 5 TP 1W6
+RW kurz
+Langschwert: AT 12 PA 7 TP 1W6+6 RW mittel
+RS/BE 3/1 (Lederrüstung) (Modifikatoren durch Rüs-
+tungen bereits eingerechnet)
+Aktionen: 1
+Vorteile/Nachteile: Lichtempfindlich (wirkt, obwohl
+Skelette als Untote ansonsten nicht den Zustand
+Schmerz erleiden können)
+Sonderfertigkeiten: Finte I
+Talente: Klettern 6, Körperbeherrschung 4, Kraftakt 4,
+Schwimmen (keine Probe erlaubt; Skelette können
+nicht schwimmen), Selbstbeherrschung – (gelingt
+automatisch), Sinnesschärfe 4, Verbergen 4, Ein-
+schüchtern 6, Willenskraft – (gelingt automatisch)
+Größenkategorie: mittel
+Typus: Untoter (Hirnloser), humanoid
+Kampfverhalten: rücksichtloser Angriff auf die Be-
+festigung, bei dem die Skelette so viel Schaden wie
+möglich anrichten; Die Skelette werden von der
+Macht der Nephazzim gelenkt und kämpfen grau-
+sam und geradezu heimtückisch.
+Flucht: flieht nicht
+Sonderregeln:
+Unempfindlich gegen Dolche, Fechtwaffen und Fern-
+kampfwaffen: Dolche, Fechtwaffen und Fernkampf-
+waffen (außer Wurfkeulen und -speere) richten bei
+Skeletten nur halbe TP an. Totengöttern geweihte
+Waffen richten in diesem Fall normalen Schaden an
+(also keinen doppelten).
+Empfindlich gegen Hiebwaffen und Zweihandhiebwaffen:
+Hiebwaffen und Zweihandhiebwaffen richten doppelte
+SP an. Totengöttern geweihte Waffen richten in diesem
+Fall vierfachen Schaden an (statt nur den doppelten).
+Extrem Lichtempfindlich: Ist das Skelett direktem Son-
+nenlicht ausgesetzt, erleidet es 1 SP pro KR.
+Meute: Skelette, die gemeinsam einen Gegner angrei-
+fen, erhalten pro Skelett in der Überzahl +1 AT (bis
+zu einem Maximum von +2 AT).
+Untoten-Regeln: Für Skelette gelten die allgemeinen
+Untoten-Regeln (siehe Seite 112)

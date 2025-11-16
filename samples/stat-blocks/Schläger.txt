@@ -1,0 +1,22 @@
+Schläger
+MU 14 KL 10 IN 12 CH 11
+FF 12 GE 13 KO 13 KK 13
+LeP 31 AsP – KaP – INI 14+1W6
+SK 1 ZK 2 AW 7 GS 8
+Waffenlos: AT 12 PA 6 TP 1W6 RW kurz
+Dolch: AT 11 PA 6 TP 1W6+1 RW kurz
+Knüppel: AT 10 PA 3 TP 1W6+2 RW mittel
+Wurfdolch: FK 10 LZ 1 TP 1W6+1 RW 2/10/15
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Finte I oder Wuchtschlag I
+Vorteile/Nachteile: Flink / Schlechte Eigenschaft
+(Goldgier, Jähzorn)
+Talente: Einschüchtern 4, Körperbeherrschung 3,
+Kraftakt 5, Selbstbeherrschung 5, Sinnesschärfe 3,
+Verbergen 2, Willenskraft 4, Zechen 6
+Kampfverhalten: Die Schläger greifen gerne gemein-
+sam einen Helden an und nutzen dabei ihre Wurfdol-
+che aus der Entfernung sowie im Nahkampf Angriffe
+mit Finten oder Wuchtschlägen.
+Flucht: individuell; meistens bei der ersten Stufe Schmerz
+Schmerz +1 bei: 23 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger

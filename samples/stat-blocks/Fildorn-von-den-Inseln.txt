@@ -1,0 +1,40 @@
+Fildorn von den Inseln
+MU 13 KL 12 IN 14 CH 13
+FF 14 GE 14 KO 10 KK 10
+LeP 25 SK 2 AsP – ZK 0
+KaP 34 AW 8 GS 8 INI 14+1W6
+SchiP 3
+Sozialstatus: Frei
+Sonderfertigkeiten: Tradition (Phexkirche), Verbes-
+sertes Ausweichen I
+Sprachen: Bosparano II, Garethi III, Tulamidya I
+Schriften: Kusliker Zeichen
+Vorteile: Geweihter
+Nachteile: Angst vor Toten II, Prinzipientreue I (Phex-
+kirche), Schlechte Eigenschaft (Neugier), Verpflich-
+tungen II (Tempel, Kirche)
+Kampftechniken: Dolche 10
+Dolch: AT 11 PA 7 TP 1W6+1 RW kurz
+RS/BE 0/0 (einfache Kleidung)
+Talente:
+Körper: Klettern (Fassadenklettern) 7, Körperbeherr-
+schung 6, Selbstbeherrschung 2, Sinnesschärfe 6,
+Tanzen 1, Taschendiebstahl 3, Verbergen 7
+Gesellschaft: Bekehren & Überzeugen 4, Betören 1, Eti-
+kette 5, Gassenwissen 6, Menschenkenntnis 3, Über-
+reden 7, Verkleiden 4, Willenskraft 5
+Natur: Orientierung 3
+Wissen: Geographie 1, Geschichtswissen 3, Götter &
+Kulte (Phex) 6, Magiekunde 2, Mechanik 4, Rechnen
+8, Rechtskunde 5, Sagen & Legenden 3, Sternkunde 4
+Handwerk: Boote & Schiffe 1, Handel 7, Schlösserkna-
+cken 8
+Segnungen: Zwölf Segnungen
+Liturgien: Fall ins Nichts 10, Lautlos 9, Mondsicht 7,
+Objektsegen 5, Wieselflink 8
+Ausrüstung: Dietrichsets, 10 Schritt Seil, Wurfhaken
+Kampfverhalten: Fildorn versucht, Kämpfe zu ver-
+meiden, indem er seine Gegner ablenkt und flieht.
+Flucht: bei der ersten Gelegenheit oder spätestens bei
+der ersten Stufe Schmerz
+Schmerz +1 bei: 19 LeP, 13 LeP, 6 LeP, 5 LeP oder weniger

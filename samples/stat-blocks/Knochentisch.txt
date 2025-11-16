@@ -1,0 +1,45 @@
+Knochentisch
+MU 19 KL 8 (t) IN 12 CH 10
+FF 8 GE 14 KO 14 KK 12
+LeP 15 AsP – KaP – INI 16+1W6
+AW 7 SK 0 ZK 0 GS 8
+Rammen: AT 10 PA 4 TP 1W6+2 RW kurz
+RS/BE 0/0
+Aktionen: 1
+Vorteile/Nachteile: Lichtempfindlich
+Sonderfertigkeiten: keine
+Talente: Einschüchtern 6, Klettern 3, Körperbeherr-
+schung 5, Kraftakt 5, Schwimmen 14, Selbstbeherr-
+schung 12, Sinnesschärfe 4, Verbergen 8, Willenskraft 12
+Anzahl: 1
+Größenkategorie: mittel
+Typus: Golem, nicht humanoid
+Beute: Knochen
+Kampfverhalten: Der Tisch greift ohne Unterlass an.
+Flucht: Tische fliehen nicht.
+Magiekunde (Magische Wesen):
+QS 1: Bei dem belebten Tisch handelt es sich um einen
+Knochengolem.
+QS 2: Dolche, Fechtwaffen und Fernkampfwaffen rich-
+ten gegen belebte Tische nur wenig Schaden an.
+QS 3+: Die Beine sind der Schwachpunkt.
+Sonderregeln:
+Unempfindlich gegen Dolche, Fechtwaffen und Fernkampfwaf-
+fen: Dolche, Fechtwaffen und Fernkampfwaffen (außer
+Wurfkeulen und -speere) richten bei Skeletten nur hal-
+be TP an. Totengöttern geweihte Waffen richten in die-
+sem Fall normalen Schaden an (also keinen doppelten).
+Empfindlich gegen Hiebwaffen und Zweihandhiebwaffen:
+Hiebwaffen und Zweihandhiebwaffen richten doppelte
+SP an. Totengöttern geweihte Waffen richten in diesem
+Fall vierfachen Schaden an (statt nur den doppelten).
+Extrem lichtempfindlich: Ist der Knochentisch direktem
+Sonnenlicht ausgesetzt, erleidet er 1 SP pro KR.
+Schwachstelle: Mit einer AT –8 können die Tischbeine er-
+wischt werden. Der Schaden zählt doppelt. Sobald zwei
+Beine zerstört wurden, ist der Tisch handlungsunfähig.
+Untoten-Regeln: Als Golems, die mit Thargunitoths
+Macht erschaffen wurden, gelten für Knochentische
+die allgemeinen Untoten-RegelnABE128
+.
+Schmerz +1 bei: kein Effekt, egal, bei welchem Verlust

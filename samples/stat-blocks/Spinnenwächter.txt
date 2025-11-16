@@ -1,0 +1,22 @@
+Spinnenwächter
+MU 12 KL 11 IN 17 CH 6
+FF 11 GE 17 KO 10 KK 11
+LeP 22 AsP 0 KaP 0 INI 17+1W6
+AW 9 SK 3 ZK –1 GS 11
+Mandibeln: AT 13 PA 8 TP 1W6+2 RW kurz
+RS/BE 2/1
+Aktionen: 1
+Sonderfertigkeiten: Aufmerksamkeit, Feindgespür,
+Finte I-II, Kampfreflexe I-III
+Vorteile/Nachteile: Dunkelsicht I, Kälteresistenz
+Talente: Einschüchtern 3, Klettern 15, Körperbeherr-
+schung 13, Kraftakt 2, Schwimmen 1, Selbstbeherr-
+schung 6, Sinnesschärfe 12, Verbergen 11, Willens-
+kraft 4
+Größenkategorie: groß
+Typus: Daimonid, nicht humanoid
+Schmerz +1 bei: 17 LeP, 11 LeP, 6 LeP, 5 LeP oder
+weniger
+Sonderregeln:
+Daimoniden-Regeln: Für Spinnenwächter gelten die all-
+gemeinen Daimoniden-Regeln (siehe Seite 112).

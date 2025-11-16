@@ -1,0 +1,32 @@
+Djer’kem (Kemi-Späher)
+MU 14 KL 13 IN 15 CH 12
+FF 15 GE 15 KO 13 KK 13
+LeP 34 AsP
+– KaP
+– INI 14+1W6
+AW 8 SK 2 ZK 2 GS 9
+Waffenlos: AT 13 PA 8 TP 1W6+1 RW kurz
+Dolch: AT 13 PA 8 TP 1W6+1 RW kurz
+Kurzbogen: FK 16 LZ 1 TP 1W6+4 RW 10/50/80
+RS/BE: 0/0 (normale Kleidung)
+Vorteile/Nachteile: Flink
+Sonderfertigkeiten: Aufmerksamkeit, Kernschuss
+I+IIAKOII128 (Kurzbogen), Muttersprache Garethi III,
+Präziser Schuss/Wurf I+II (Kurzbogen), Ortskenntnis
+(Menehet), Schnellladen (Bögen) (Kurzbogen), Quer-
+schuss IAKOII130 (Kurzbogen)
+Talente: Einschüchtern 8, Gassenwissen 8, Handel 6,
+Körperbeherrschung 11, Kraftakt 10, Menschen-
+kenntnis 7, Selbstbeherrschung 12, Sinnesschärfe 13,
+Überreden 5, Verbergen 14, Willenskraft 11
+Kampfverhalten: Der Scharfschütze versucht aus dem
+Hinterhalt anzugreifen. Er bevorzugt die weite Ent-
+fernung seiner Waffe (etwa 60 bis 80 Schritt) und
+versucht sich dann wieder zu verbergen. Außerdem
+benutzt er gerne das Manöver Präziser Schuss/Wurf
+I und setzt es bei fast jedem Schuss ein. Die zweite
+Stufe der SF nutzt er nur auf kürzere Entfernungen.
+Zu Beginn des Kampfes setzt er einen Querschuss ein.
+Flucht: Der Scharfschütze flieht nicht.
+Schmerz +1 bei: 26 LeP, 17 LeP, 9 LeP, 5 LeP oder
+weniger

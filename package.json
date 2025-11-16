@@ -10,8 +10,10 @@
     "lint": "eslint . --fix",
     "optolith:build": "tsc -p tsconfig.scripts.json",
     "optolith:extract": "npm run optolith:build --silent && node dist/scripts/scripts/optolith/extract.js",
+    "optolith:extract-stat-blocks": "npm run optolith:build --silent && node dist/scripts/scripts/optolith/extract-stat-blocks.js",
     "optolith:parse": "npm run optolith:build --silent && node dist/scripts/scripts/optolith/parse-stat-block.js",
-    "optolith:convert": "npm run optolith:build --silent && node dist/scripts/scripts/optolith/convert.js"
+    "optolith:convert": "npm run optolith:build --silent && node dist/scripts/scripts/optolith/convert.js",
+    "optolith:qa-samples": "npm run optolith:build --silent && node dist/scripts/scripts/optolith/qa-samples.js"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

@@ -1,0 +1,37 @@
+Maru-Kriegerin
+MU 14 KL 11 IN 13 CH 10
+FF 8 GE 13 KO 15 KK 14
+LeP 36 AsP – KaP – INI 13+1W6
+AW 8 SK 1 ZK 2 GS 7
+Waffenlos: AT 14 PA 7 TP 1W6
+RW kurz
+Biss: AT 12 PA – TP 2W6 RW kurz
+Schwanz: AT 12 PA – TP 1W6+2 RW mittel
+Maru-Säbel*: AT 14 PA 8 TP 1W6+3 RW mittel
+RS/BE: 4/0
+Vorteile/Nachteile: Beidhändig, Dämmerungssicht
+II, Zäher Hund / Blutrausch, Kälteempfindlich,
+Schlechte Eigenschaft (Jähzorn)
+Sonderfertigkeiten: Belastungsgewöhnung I, Beidhän-
+diger Kampf I, Finte I (Waffenlos, Biss, Schwanz, Ma-
+ru-Säbel), Kampfreflexe I, Schmerzen unterdrücken,
+Wuchtschlag I (Waffenlos, Biss, Schwanz, Maru-Säbel)
+Talente: Einschüchtern 10, Handel 5, Klettern 3, Körper-
+beherrschung 7, Kraftakt 9, Kriegskunst 7, Menschen-
+kenntnis 1, Schwimmen 8, Selbstbeherrschung 12, Sin-
+nesschärfe 5, Überreden 2, Verbergen 3, Willenskraft 8
+Kampfverhalten: Die Marus aus Chr’hos Trupp erge-
+ben sich ganz dem Kampfrausch und greifen am liebs-
+ten den nächsten Gegner mit Wuchtschlägen an.
+Flucht: Verlust von 75 % der LeP, sofern Chr’ho nicht
+noch lebt
+Schmerz +1 bei: 27 LeP, 18 LeP, 9 LeP, 5 LeP oder weniger
+Sonderregeln:
+*) Schwache Arme: Nach jeder 5. KR, die eine Maru-Krie-
+gerin ununterbrochen kämpft, muss sie eine Probe
+auf Kraftakt bestehen, um ihre Waffen nicht fallen
+zu lassen. Sie kämpft dann ohne Waffen weiter. Die
+Probe ist beim zweiten Mal um –1 erschwert, beim
+dritten Mal um –2 usw. Alternativ kann sie, wenn sie
+nur eine Einhandwaffe führt, diese auch in die andere
+Hand nehmen. Der Wechsel der Hand kostet 1 Aktion.

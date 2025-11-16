@@ -1,0 +1,23 @@
+Achaz-Krieger
+MU 12 KL 12 IN 14 CH 11
+FF 12 GE 13 KO 14 KK 12
+LeP 33 AsP – KaP – INI 13+1W6
+AW 7 SK 2 ZK 2 GS 8
+Waffenlos: AT 11 PA 6 TP 1W6
+RW kurz
+Rimkur: AT 11 PA 4 TP 1W6+5 RW lang
+Wurfspeer: FK 10 PA 5 TP 2W6+2 RW 5/25/40
+RS/BE: 1/0
+Vorteile/Nachteile: Begabung (Schwimmen), Beid-
+händig, Dunkelsicht I / Angst vor Dunkelheit I, Ein-
+geschränkter Sinn (Gehör)
+Sonderfertigkeiten: Aufmerksamkeit, Finte I (Waf-
+fenlos, Rimkur)
+Talente: Einschüchtern 6, Klettern 3, Körperbeherr-
+schung 8, Kraftakt 4, Schwimmen 8, Selbstbeherr-
+schung 7, Sinnesschärfe 6, Verbergen 4, Willenskraft 6
+Kampfverhalten: Die Achaz-Krieger drängen auf die
+Verteidiger ein und versuchen, ihre Linie zu durch-
+brechen, um die Schamanen anzugreifen.
+Flucht: Verlust von 50 % der LeP
+Schmerz +1 bei: 25 LeP, 17 LeP, 8 LeP, 5 LeP oder weniger

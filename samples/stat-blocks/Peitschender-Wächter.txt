@@ -1,0 +1,21 @@
+Peitschender Wächter
+MU 15 KL 8 IN 13 CH 6
+FF 6 GE 11 KO 12 KK 13
+LeP 32 AsP 0 KaP 0 INI 13+1W6
+AW 6 SK 2 ZK 0 GS 6
+Tentakel: AT 11 PA 5 TP 1W6+3 RW lang
+RS/BE 2/1
+Aktionen: 3
+Sonderfertigkeiten: Haltegriff, Zu Fall bringen
+Vorteile/Nachteile: Kälteresistenz
+Talente: Einschüchtern 6, Klettern 4, Körperbeherr-
+schung 2, Kraftakt 6, Schwimmen 4, Selbstbeherr-
+schung 9 , Sinnesschärfe 7, Verbergen 1, Willens-
+kraft 10
+Größenkategorie: groß
+Typus: Daimonid, nicht humanoid
+Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder
+weniger
+Sonderregeln:
+Daimoniden-Regeln: Für peitschende Wächter gelten die
+allgemeinen Daimoniden-Regeln (siehe Seite 112).

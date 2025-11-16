@@ -1,0 +1,44 @@
+Phanta
+MU 13 KL 12 IN 15 CH 13
+FF 13 GE 14 KO 13 KK 11
+LeP 31 SK 2 AsP – ZK 1
+KaP – AW 7 GS 8 INI 14+1W6
+Schip 1
+Sozialstatus: frei
+Sonderfertigkeiten: Aufmerksamkeit,
+Feindgespür, Geländekunde (Steppenkun-
+dig, Eis- und Schneekundig), Kampfreflexe I, Schnel-
+laden (Wurfwaffen)
+Sprachen: Nujuka III, Garethi III, Alaani II, Isdira I
+Schriften: nein
+Vorteile: Flink, Immunität gegen Zorganpocken
+Nachteile: Schlechte Eigenschaft (Neugier)
+Kampftechniken: Hiebwaffen 10, Raufen 10, Stangen-
+waffen 10, Wurfwaffen 14
+Waffenlos: AT 11 PA 7 TP 1W6 RW kurz
+Speer: AT 11 PA 7 TP 1W6+4 RW lang
+Wurfkeule: FK 15 LZ freie Akt TP 1W6+2 RW 2/10/15
+Wurfspeer: FK 15 LZ 1 TP 2W6+2 RW 5/25/40
+RS/BE 1 / 0 (Winterkleidung) (Modifikatoren durch
+Rüstungen bereits eingerechnet)
+Talente:
+Körper: Klettern 7, Körperbeherrschung 11, Kraftakt 6,
+Schwimmen 7, Selbstbeherrschung 6, Sinnesschärfe
+13, Verbergen 13
+Gesellschaft: Einschüchtern 4, Menschenkenntnis 7,
+Überreden 8, Willenskraft 10
+Natur: Fährtensuchen 13, Fischen & Angeln 9, Orientie-
+rung 10, Tierkunde 9, Wildnisleben 14
+Wissen: Götter & Kulte 7, Sagen & Legenden 9
+Handwerk: Boote & Schiffe 7
+Ausrüstung: Anaurak, drei Speere, vier Wurfkeulen
+Kampfverhalten: Phanta behält den Überblick über
+das Schlachtfeld und nimmt im Zweifel Reißaus, um
+ihre Wurfwaffen einzusetzen. Wenn sie nur noch
+einen Speer hat, nutzt sie diesen im Nahkampf und
+hält ihre Gegner damit auf Distanz, bis sie eine ihrer
+Fernkampfwaffen wieder aufheben kann.
+Flucht: Phanta zieht sich lieber zurück als zu kämpfen,
+auch im Kampf gewinnt sie ständig Abstand von der
+Gefahr.
+Schmerz +1 bei: 23 LeP, 15 LeP, 7 LeP, 5 LeP oder weniger

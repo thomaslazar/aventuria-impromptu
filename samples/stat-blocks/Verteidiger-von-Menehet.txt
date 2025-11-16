@@ -1,0 +1,30 @@
+Verteidiger von Menehet
+MU 12 KL 12 IN 13 CH 11
+FF 12 GE 13 KO 13 KK 12
+LeP 32 AsP
+– KaP
+– INI 13+1W6
+AW 7 SK 1 ZK 2 GS 8
+Waffenlos: AT 13 PA 7 TP 1W6
+RW kurz
+Dolch: AT 12 PA 7 TP 1W6+1 RW kurz
+Keule: AT 12 PA 6 TP 1W6+3 RW mittel
+Kurzbogen: FK 11 LZ 1 TP 1W6+4 RW 10/50/80
+Stein: FK 11 LZ 1 TP 1W6 RW 2/10/15
+RS/BE: 0/0 (normale Kleidung)
+Vorteile/Nachteile: keine (ein paar Bewohner kön-
+nen die SF Finte I beherrschen)
+Sonderfertigkeiten: Muttersprache Garethi III, Orts-
+kenntnis (Menehet)
+Talente: Einschüchtern 3, Gassenwissen 7, Handel 8,
+Körperbeherrschung 6, Kraftakt 6, Menschenkennt-
+nis 7, Selbstbeherrschung 4, Sinnesschärfe 6, Über-
+reden 6, Verbergen 4, Willenskraft 4
+Kampfverhalten: Die Bewohner Menehets sind keine
+ausgebildeten Krieger, wissen sich aber zu wehren
+und haben Kampferfahrung. Üblicherweise versu-
+chen sie zu zweit, einen Söldner oder eine Heldin
+schnell zu besiegen, damit sie sich dem nächsten
+Gegner zuwenden können.
+Flucht: Verlust von 50 % der LeP
+Schmerz +1 bei: 24 LeP, 16 LeP, 8 LeP, 5 LeP oder weniger
