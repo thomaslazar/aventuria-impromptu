@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Gjalsker",
+    "key": "gjalsker",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Gjalsker",
+      "note": "Patronymische/matronymische Namen mit bren/brai, Schamanen mit dur, Sippe (Haerad) und Ehrentitel Gon."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      { "id": "common_f_only", "template": "{given_f}", "usage": ["common"] },
+      { "id": "common_m_only", "template": "{given_m}", "usage": ["common"] },
+
+      {
+        "id": "pat_f_brai",
+        "template": "{given_f} {generic_particle} {given_f}",
+        "usage": ["patronymic", "common"],
+        "allowed_generic_particles": ["brai"]
+      },
+      {
+        "id": "pat_m_bren",
+        "template": "{given_m} {generic_particle} {given_m}",
+        "usage": ["patronymic", "common"],
+        "allowed_generic_particles": ["bren"]
+      },
+
+      {
+        "id": "pat_f_brai_sippe",
+        "template": "{given_f} {generic_particle} {given_f} vom Haerad der {sippe}",
+        "usage": ["patronymic", "tribal"],
+        "allowed_generic_particles": ["brai"]
+      },
+      {
+        "id": "pat_m_bren_sippe",
+        "template": "{given_m} {generic_particle} {given_m} vom Haerad der {sippe}",
+        "usage": ["patronymic", "tribal"],
+        "allowed_generic_particles": ["bren"]
+      },
+
+      {
+        "id": "shaman_dur",
+        "template": "{given} {generic_particle} {given}",
+        "usage": ["shaman"],
+        "allowed_generic_particles": ["dur"]
+      },
+
+      {
+        "id": "hon_gon_f",
+        "template": "{honorific} {given_f}",
+        "usage": ["honorific", "common"]
+      },
+      {
+        "id": "hon_gon_m",
+        "template": "{honorific} {given_m}",
+        "usage": ["honorific", "common"]
+      },
+      {
+        "id": "hon_gon_m_bren",
+        "template": "{honorific} {given_m} {generic_particle} {given_m}",
+        "usage": ["honorific", "patronymic", "common"],
+        "allowed_generic_particles": ["bren"]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_only": 2,
+      "common_m_only": 2,
+      "pat_f_brai": 4,
+      "pat_m_bren": 4,
+      "pat_f_brai_sippe": 2,
+      "pat_m_bren_sippe": 2,
+      "shaman_dur": 1,
+      "hon_gon_f": 1,
+      "hon_gon_m": 1,
+      "hon_gon_m_bren": 1
+    },
+    "particles": {
+      "noble": [],
+      "generic": [
+        "bren",
+        "brai",
+        "dur",
+        "vom Haerad der"
+      ]
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      }
+    },
+    "patronymic": {
+      "enabled": true,
+      "male_patterns": [
+        "pat_m_bren",
+        "pat_m_bren_sippe",
+        "hon_gon_m_bren"
+      ],
+      "female_patterns": [
+        "pat_f_brai",
+        "pat_f_brai_sippe"
+      ]
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Aesa",
+      "Andraga",
+      "Aruleyd",
+      "Bebann",
+      "B!Ot(u)lind",
+      "Borrgach",
+      "Brona",
+      "Brucha",
+      "Caltha",
+      "Cirnach",
+      "Corrja",
+      "Dairdra",
+      "Dundana",
+      "Dunyabra",
+      "Durrcha",
+      "Eirni(r)d",
+      "Frunira",
+      "Froya",
+      "Gardrha",
+      "Gharya",
+      "Gjayka",
+      "Grainne",
+      "Griadhra",
+      "Grimheyd",
+      "Griwer",
+      "Hachwa",
+      "Hagwa",
+      "Harrwa",
+      "Hasda(r)",
+      "Hiltli",
+      "Hjalbeth",
+      "Hjurrgat",
+      "Hulgä",
+      "Ifnar",
+      "Ifrunna",
+      "Irdath",
+      "Irfraid",
+      "Keirnath",
+      "Lurga",
+      "Madhreth",
+      "Margraidh",
+      "Marthai",
+      "Marrwen",
+      "Marzagh",
+      "Megrim",
+      "Milbeth",
+      "Miharra",
+      "Moirya",
+      "Mordag",
+      "Morrga",
+      "Murraya",
+      "Oighred",
+      "Rachnaid",
+      "Saryja",
+      "Savai",
+      "Sidheag",
+      "Shindarr",
+      "Shinnath",
+      "Skrayana",
+      "Sorcha",
+      "Thorhalla",
+      "Thorra",
+      "Thron(a)",
+      "Uthra",
+      "Yrrwa",
+      "Yuchgard",
+      "Yurrgira",
+      "Ywen",
+      "Zurakka"
+    ],
+    "given_m": [
+      "Anargh",
+      "Anchas",
+      "Artach",
+      "Balfoch",
+      "Bartakh",
+      "Barwad",
+      "Bearach",
+      "Bradruch",
+      "Braighdan",
+      "Branchan",
+      "Branduch",
+      "Breac",
+      "Brein",
+      "Caerfynh",
+      "Cainnoch",
+      "Cammru(r)",
+      "Cianu",
+      "Cormach",
+      "Daragh",
+      "Derwech",
+      "Druan",
+      "Donnachadh",
+      "Dundoch",
+      "Etzel",
+      "Firnwär",
+      "Friedu(r)",
+      "Gabran",
+      "Gaschnig",
+      "Gedwed",
+      "Hagwar",
+      "Haru",
+      "Harveg",
+      "Hjalldur",
+      "Ifrunndoch",
+      "Islogh",
+      "Kazan",
+      "Lannach",
+      "Lurasch",
+      "Madadhskoth",
+      "Madhru",
+      "Marzagh",
+      "Meku",
+      "Mjesgold",
+      "Morghinach",
+      "Morro",
+      "Morved",
+      "Murchad",
+      "Murdoch",
+      "Ohdru",
+      "Orunu",
+      "Partach",
+      "Rastar",
+      "Roslagh",
+      "Siegmoch",
+      "Struan",
+      "Strunlog(h)",
+      "Tormud",
+      "Turdoch",
+      "Tsharbak",
+      "Ulf",
+      "Ulraigh",
+      "Wartech",
+      "Wladuch",
+      "Wuran",
+      "Yahrrad",
+      "Yarrodh",
+      "Yorged",
+      "Yuchdan",
+      "Yurrgold"
+    ],
+    "surnames": [],
+    "bynames": [],
+    "tribes": [],
+    "sippen": [
+      "Alrudh",
+      "Dhartaech",
+      "Lyrgach",
+      "Mortakh",
+      "Niellyn",
+      "Rayyadh",
+      "ArryachMur",
+      "Benbhälur",
+      "Benskoth",
+      "Cregg-Yolir",
+      "Ishtar-Barr",
+      "Oshthar-Sloch"
+    ],
+    "honorifics": [
+      "Gon"
+    ],
+    "noble_names": [],
+    "raw_text": "Gjalsker-Abschnitt wie vom Benutzer bereitgestellt (Name, Ahnenkult, bren/brai, dur, Gon, Haerad/Sippe)."
+  }
+}

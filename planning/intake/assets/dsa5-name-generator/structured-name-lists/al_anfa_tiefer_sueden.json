@@ -1,0 +1,430 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Al'Anfa & Tiefer Süden",
+    "key": "al_anfa_tiefer_sueden",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "10 Al' Anf a & Tiefer Süden",
+      "note": ""
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "dim_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common",
+          "diminutive"
+        ],
+        "apply_diminutive_to": [
+          "given_f"
+        ]
+      },
+      {
+        "id": "dim_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common",
+          "diminutive"
+        ],
+        "apply_diminutive_to": [
+          "given_m"
+        ]
+      },
+      {
+        "id": "noble_f",
+        "template": "{given_f} {noble_particle} {surname}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "noble_m",
+        "template": "{given_m} {noble_particle} {surname}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "common_m_surname_from_given",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common",
+          "surname_from_given"
+        ],
+        "derive_surname_from": "given_m"
+      },
+      {
+        "id": "common_f_surname_from_given",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common",
+          "surname_from_given"
+        ],
+        "derive_surname_from": "given_f"
+      }
+    ],
+    "pattern_weights": {
+      "common_f_surname": 4,
+      "common_m_surname": 4,
+      "common_f_only": 1,
+      "common_m_only": 1,
+      "dim_f_surname": 1,
+      "dim_m_surname": 1,
+      "noble_f": 1,
+      "noble_m": 1,
+      "common_m_surname_from_given": 1,
+      "common_f_surname_from_given": 1
+    },
+    "particles": {
+      "noble": [
+        "da",
+        "de",
+        "di",
+        "d'",
+        "ya"
+      ],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [
+          "ela",
+          "ella",
+          "ita"
+        ],
+        "male_suffixes": [
+          "elo",
+          "ito"
+        ]
+      },
+      "surname_from_given": {
+        "suffixes": [
+          "ez",
+          "es",
+          "os",
+          "oz",
+          "uez"
+        ],
+        "drop_final_vowel": true,
+        "vowels": [
+          "a",
+          "e",
+          "i",
+          "o",
+          "u",
+          "á",
+          "é",
+          "í",
+          "ó",
+          "ú"
+        ]
+      }
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Adaque",
+      "Alara",
+      "Amira",
+      "Avessandra",
+      "Balatravis",
+      "Baniatella",
+      "Blanca",
+      "Boronaya",
+      "Calmora",
+      "Carimina",
+      "Cessandra",
+      "Cessaria",
+      "Consuela",
+      "Cortessa",
+      "Corvinia",
+      "Desiderya",
+      "Desmonda",
+      "Diantha",
+      "Dolorita",
+      "Dominga",
+      "Doriana",
+      "Duridanya",
+      "Elodia",
+      "Emerencia",
+      "Emilia",
+      "Esmeralda",
+      "Estrella",
+      "Fiara",
+      "Fiona",
+      "Fiorella",
+      "Folsina",
+      "Galindia",
+      "Gerlita",
+      "Gilia",
+      "Heliantha",
+      "Hevane",
+      "!melde",
+      "Imperia",
+      "Inares",
+      "Iunivera",
+      "Ivarena",
+      "Jesabela",
+      "Jessande",
+      "Joseda",
+      "Karianna",
+      "Katalinya",
+      "Korrass6n",
+      "Leona",
+      "Levita",
+      "Luisina",
+      "Marchesca",
+      "Maryarita",
+      "Mercara",
+      "Merida",
+      "Morisca",
+      "Neva",
+      "Nicolasina",
+      "Olea",
+      "Orelia",
+      "Phelicitas",
+      "Phelippa",
+      "Phranya",
+      "Praiociose",
+      "Querinia",
+      "Rahjades",
+      "Ramira",
+      "Rayades",
+      "Rimiona",
+      "Rosinia",
+      "Sabela",
+      "Salina",
+      "Santilia",
+      "Saranya",
+      "Simiona",
+      "Tomassina",
+      "Ugolines",
+      "Ulembina",
+      "Ursania",
+      "Vadoria",
+      "Valerfa",
+      "Varinella",
+      "Velvenya",
+      "Vida",
+      "Violanda",
+      "Xantilia",
+      "Ximena",
+      "Yvonya",
+      "Zalines",
+      "Zephirina",
+      "Zeradia"
+    ],
+    "given_m": [
+      "Adario",
+      "Agusto",
+      "Alondro",
+      "Alriego",
+      "Alveron",
+      "Amato",
+      "Amir",
+      "Amirato",
+      "Apreno",
+      "Armado",
+      "Assanto",
+      "Boromeo",
+      "Cascado",
+      "Calmano",
+      "Coragon",
+      "Corvo",
+      "Damiano",
+      "Deredan",
+      "Desiderio",
+      "Diago",
+      "Diamantes",
+      "Dirial",
+      "Domingo",
+      "Dorio",
+      "Efferdito",
+      "Egiliano",
+      "Ellio",
+      "Emano",
+      "Emilio",
+      "Enrisco",
+      "Fiorenzo",
+      "Firunando",
+      "Flaminio",
+      "Gaiomo",
+      "Ghonzo",
+      "Ghorio",
+      "Gordo",
+      "Hesindiego",
+      "Iago",
+      "Imaculo",
+      "Imperio",
+      "Ingarin",
+      "Irato",
+      "Irschan",
+      "Jesidoro",
+      "Kalman",
+      "Kamillio",
+      "Khalid",
+      "Lirobal",
+      "Losian",
+      "Lucan",
+      "Lucio",
+      "Luiz",
+      "Mandolo",
+      "Marbio",
+      "Marboso",
+      "Marlo",
+      "Marno",
+      "Massino",
+      "Micirio",
+      "Moralo",
+      "Morisys",
+      "Nestario",
+      "Nostromo",
+      "Nuncio",
+      "Orelio",
+      "Panfilo",
+      "Pedresco",
+      "Praiopio",
+      "Quintilian",
+      "Rahiano",
+      "Rahjadan",
+      "Ramin",
+      "Ramon",
+      "Rayo",
+      "Romero",
+      "Rondrigan",
+      "Rondrigo",
+      "Salpico",
+      "Sandro",
+      "Simodo",
+      "Superbo",
+      "Tarquinio",
+      "Thiago",
+      "Tirato",
+      "Trienco",
+      "Tito",
+      "Ulan",
+      "Unnio",
+      "Vareno",
+      "Vessario",
+      "Vitario",
+      "Vito",
+      "Vittorio",
+      "Wilciano",
+      "Xenofero",
+      "Yorge",
+      "Yuan",
+      "Zurbaran"
+    ],
+    "surnames": [
+      "Acostez",
+      "Albahir",
+      "Almanzar",
+      "Alvarez",
+      "Anthos",
+      "Arragenos",
+      "Barrera",
+      "Belafloros",
+      "Beratas",
+      "Boronez",
+      "Botero",
+      "Brabaker",
+      "Casarez",
+      "Charazzar",
+      "Comitez",
+      "Cornio",
+      "Delazar",
+      "Dominez",
+      "Erabenas",
+      "Fontanez",
+      "Fontanoya",
+      "Fiovarez",
+      "Golgarez",
+      "Gorodez",
+      "Gorralas",
+      "Gredo",
+      "Gutmund",
+      "Hammerfaust",
+      "Immenstatt",
+      "Inezano",
+      "Jacobella",
+      "Kalando",
+      "Klippstein",
+      "Korigez",
+      "Lanistos",
+      "Lupinez",
+      "Madarez",
+      "Malagro",
+      "Marquez",
+      "Meridiana",
+      "Monterey",
+      "Montez",
+      "Morales",
+      "Nirrano",
+      "Oldenport",
+      "Olibantin",
+      "Phelipez",
+      "Piriones",
+      "Queseda",
+      "Quintone",
+      "Ramirez",
+      "Rivito",
+      "Rondriguez",
+      "Salmoranes",
+      "Sandoz",
+      "Santana",
+      "Schönredner",
+      "Sylvaron",
+      "Tannspitz",
+      "Tiamartin",
+      "Treufreund",
+      "Uludaz",
+      "Zalahan"
+    ],
+    "bynames": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "raw_text": "her, Doppelsöldner \n10\nAl' Anf a & Tiefer Süden \n-»Im wilden Süden kannst du sein, wer du willst! Hier\nfragt niemand groß nach Adelsbriefen oder Stammbaum, \nwenn du nur glaubhaft genug auftrittst, das nötige Gold \n. mitbringst und dich durchzusetzen weißt. Ein \nler Name aber ist ein echter Türöffner, wenn du zu den\nGranden vorgelassen werden willst. Firunz Torfstecher\nkommt also schÖnmal nicht in Frage ... wie wäre es mit \nFlaminio Durantez? Das klingt doch nach was, oder?« \n-Carolan Calavanti, Vinsalter Streuner, n,eu;eitlich\n• Die dem Brabaci entstammenden Namen des tiefen Sü­dens, gleich ob in Al'Anfa, Brabak, Mirham oder auf den Waldinseln, sind blumig und klangvoll. Je mehr Ein­druck ein Name macht, desto mehr Achtung bringt man in der Regel auch seinem Träger entgegen. Viele Bewohner Meridianas tragen \ndaher auch mehr als einen Vornamen, von denen zumeist einer zum Rufna­men erklärt wird. Bei den weiblichen Namen gelten sol­che als besonders vornehm, die auf -e oder -is enden. Wer seine Tatkraft besonders betonen will, kürzt seinen Namen ab, meist hinter der ersten Silbe. Berühmte Bei­spiele hierfür sind Balphemor und Tarquinio Honak, die sich als Patriarchen Al'Anfas Ba! und Tar nannten. Auch Koseformen sind weit verbreitet. Diese werden bei Frauen durch das Anfügen von -ela oder -ita gebildet. Aus !melde wird so Imeldela, Dolores wird zu Doloresita oder Dolorita. Bei Männern kommen die Endungen -elooder -ito zum Einsatz. Diamantes wird so zu Diamantelo oder Diamantito. \nWährend Sklaven üblicherweise \nnur einen oder meh­rere Vornamen tragen, führen Freie einen Familien­namen. Dieser wird zumeist von dem Elternteil über­nommen, das mehr Einfluss besitzt oder schlicht den wohlklingenderen Namen hat. Nach Heiraten kommen jedoch auch Doppelnamen vor, etwa wenn eine Allianz zwischen zwei Häusern betont werden soll, beide Fami­lien einander ebenbürtig sind, oder wenn der Träger be­sonders wichtig klingen möchte. Viele, die einst in den Süden kamen, um ihr Glück zu machen, hatten einen guten Grund, ihren alten Namen abzulegen. Es ist da­her auch nicht unüblich, den Nachnamen zu wechseln, wenn man es zu Wohlstand gebracht hat. Es mag aber auch sein, dass der Name nicht eindrucksvoll genug klingt oder man gerade steckbrieflich gesucht wird. Aus vielen Vornamen in der Liste kann durch die Endungen \n-ez, -uez, -es, -os oder -z recht einfach ein Nachname ge­bildet werden. So wird Agusto zu Agustos, Moralo zu Moralez oder Iunivera zu Iuniverez. Auch wenn es nur in wenigen Regionen des Südens überhaupt belehnten oder betitelten Adel gibt, ist doch an Prädikaten und Benamung fast alles üblich -es klingt schließlich gut. Solche Nachnamen werden mit von, von\nund zu oder zum angehängt oder \nsie werden von einem \nda, di, de oder ya eingeleitet. Beispiele für solche Namen sind d'Acostez, da Fontanoya, de Sylphur, de Torresca, di Zeforika, du Berilis, du Shoy'Rina, von Sas'adzz, ya Menario oder (von und) zu Nagra. über den eigentli­chen Stand des Namensträgers verraten derartige Kons­truktionen jedoch wenig .. \nRegionale Besonderheiten \n• In Al'Anfa sind besonders Namen mit Bezug zu Bo­ron (siehe auch Seite 70) verbreitet, der dort als höchster der Götter verehrt wird. Aber auch die anderen Götter und Halbgötter werden je nach per­sönlichen Vorlieben gern als Namenspaten heran­gezogen. Hier gibt es außerdem keinen klassischen Adel. Geld und Macht vereinen sich stattdessen in den Händen der Grandenfamili en: Bonareth, Flo­rios, Honak, Karinor, Kugres, Paligan, Ulfhart, Wil­maan und Zornbrecht. \n• In H'Rabaal und dem Brabaker Sumpfland habenmanche Namen \nzudem dank dem echsischen Erbe der Region eine Besonderheit entwickelt: das ge­hauchte „H\". In der Sprache der Echsenmenschen ist es ein Ehrfurchtslaut und wird besonders bei Göt­tern, Hochrangigen oder übernatürlichem genutzt. Bei Namen wie K'Hestofer, G'Hliatan, Vald'Han oder G'Huizan wird das H also nur leicht gehaucht. Auch der Name einer der wichtigsten Familien aus H'Ra­baal, die Charazzar, klingt ein wenig echsisch, wäh­rend die Königsfamilie von Brabak, die Familie de Sylphur, zumindest auf den ersten \nBlick frei von solchen Einflüssen ist. •Besonders unter Sklaven sind auch fremdländischeNamen gang und gäbe, stammen diese doch aus al­ler Herren Länder. Besonders verbreitet sind neben den hier vorgestellten Namen auch tulamidische Namen (Seite 58) und die der Waldmenschenstäm­me (Seite \n• Seit der 63)Entde. ckung des Südkontinents uthuriaund der Aufnahme erster Handelsbeziehungen wer­den vor allem in Al' Anfa und Brabak vereinzelt auch uthurische Namen (Seite 22) für den Nachwuchs gewählt. \nAussprachehilfeEin ]\" wie in jesabela, Rahjades oder jesidoro „wird weich gesp rochen wie „dsche\". ob das \". „\nhart gesprochen wird oder nicht, kannje nachZ\nName beliebig variiert werden, um ihm einen ei­\ngenen Klang zu geben. Am Namensende spricht\nman es üblicherweise wie ein scharfes „S\". \nHelden & Heilige: Amir Honak (Patriarch und höchs­te Autorität in Glaubensfragen), Ba! Honak (Patriarch, stieg vom Borongeweihten zum Herrscher auf, Erbauer des Labyrinths unter dem Silberberg, Gründer der Ba­saltfaust), Brabacciano (auch: Kapitän Brabak, berüch­tigter Pirat, dessen Schätze bis heute ihrer Entdeckung \n\n11harren), Elida von Salza (fuhr den Namenlosen Tagen zum Trotz mit Efferds Segen eine Schiffsladung Getreide bis nach Brabak), Hamarro ,Der sanfte Pirat' (Herzens­brecher und tollkühner Pfratenkapitän), Manaq (legen­därer Einiger der Waldmenschenstämme, Anführer des Manakus-Aufstandes), Mizirion III. de Sylphur (Braba­ker König, Zeit seines Lebens machtlos und pleite), Ne­mekath (Todesprophet und Visionär, höchster Heiliger des Al'Anfaner Boronkults), Tar Honak (Patriarch, führ­te einen Glaubenskrieg gegen die Novadis unter Malkil­lah III., galt bis zu seinem überraschenden Tod als unbe­siegbar), Velvenya Karinor (erste Matriarchin Al'Anfas, vollzog das Kirchenschisma) \nVornamen (w): Adaque, Alara, Amira, Avessandra, Ba­latravis, Baniatella, Blanca, Boronaya, Calmora, Carimi­na, Cessandra, Cessaria, Consuela, Cortessa, Corvini(d)a, Desiderya, Desmonda, Diantha, Dolorita, Dominga, Dori­ana, Duridanya, Elodia, Emerencia, Emi(g)lia, Esmeralda, Estrella, Fiara, Fiona, Fiorella, Folsina, Galindia, Gerlita, Gilia, Heliantha, Hevane, !melde, Imperia, Inares, Iuni­vera, Ivarena, Jesabela, Jessande, Joseda, Karianna, Ka­talinya, Korrass6n, Leona, Levita, Luisina, Marchesca, Maryarita, Mercara, Merida, Morisca, Neva, Nicolasina, Olea, Orelia, Phelicitas, Phelippa, Phranya, Praiociose, Querinia, Rahjades, Ramira, Rayades, Rimiona, Rosinia, Sabela, Salina, Santilia, Saranya, Simiona, Tomassina, Ugolines, Ulembina, Ursania, Vadoria, Valerfa, Varinel­la, Velvenya, Vida, Violanda, Xantilia, Ximena, Yvonya, Zalines, Zephirina, Zeradia \nVornamen (m): Adario, Agusto, Alondro, Alriego, Alve­ron, Amato, Amir, Amirato, Apreno, Armado, Assanto, Boromeo, Cascado(r), Calmano, Coragon, Corvo, Damia­no, Deredan, Desiderio, Diago, Diamantes, Dirial, Domin­go, Dorio, Efferdito, Egiliano, Ellio, Emano, Emi(g)lio, Enrisco, Fiorenzo, \nFirunando, Flaminio, Gaiomo, Ghon­zo, Ghorio, Gordo, Hesindiego, Iago, Imaculo, Imperio­(so ), Ingarin, Irato, Irschan, Jesidoro, Kalman, Kamil­lio, Khalid, Lirobal, Losian, Lucan, Lucio, Luiz, Mando­lo, Marbi(d)o, Marboso, Marlo, Marno, Massino, Micirio, Moralo, Morisys, Nestario, Nostromo, Nuncio, Orelio, Panfilo, Pedresco, Praiopio, Quintilian, Rahiano, Rahja­dan, Ramin, Ramon, Rayo, Romero, Rondrigan, Rondri­go, Salpico, Sandro, Simodo, Superbo, Tarquinio, Thia­go, Tirato, Trienco, Tito, Ulan, Unnio, Vareno, Vessario, Vitario, Vito, Vittorio, Wilciano, Xenofero, Yorge, Yuan, Zurbaran \nFamiliennamen: Acostez, Albahir, Almanzar, Alvarez, Anthos, Arragenos, Barrera, Belafloros, Beratas, Bo­ronez, Botero, Brabaker, Casarez, Charazzar, Comitez, Cornio, Delazar, Domin(gu)ez, Erabenas, Fontanez, Fon­tanoya, Fiovarez, Golgarez, Gorodez, Gorralas, Gredo, Gutmund, Hammerfaust, Immenstatt, Inezano, Jaco­bella, Kalando, Klippstein, Korig(u)ez, Lanistos, Lupi­nez, Madarez, Malagro, Marquez, Meridiana, Monterey, Montez, Morales, Nirrano, Oldenport, Olibantin, Phe­lipez, Piriones, Queseda, Quintone, Ramirez, Rivito(z), Rondriguez, Salmoran(t)es, Sandoz, Santana, Schönred­ner, Sylvaron, Tannspitz, Tiamartin, Treufreund, Ulu­daz, Zal(d)ahan \n\n12"
+  }
+}

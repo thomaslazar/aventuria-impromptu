@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Kemi",
+    "key": "kemi",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Borongläubiges Dschungelkönigreich der Kemi mit Herkunftsbezeichnung Ni und wenigen alten Familiennamen",
+      "note": "Vornamen erinnern an das Alte Kemi; Familiennamen sind selten. Üblich ist die Herkunftsangabe mit Ni vor dem Ortsnamen. Außerdem gibt es einige alte Familien und Mischformen mit südaventurischen und garethischen Nachnamen."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      {
+        "id": "common_f_1",
+        "template": "{given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_f_2",
+        "template": "{given_f} {given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_1",
+        "template": "{given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_2",
+        "template": "{given_m} {given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "origin_f_ni",
+        "template": "{given_f} {generic_particle} {place}",
+        "usage": ["origin", "common"],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": ["Ni"]
+      },
+      {
+        "id": "origin_m_ni",
+        "template": "{given_m} {generic_particle} {place}",
+        "usage": ["origin", "common"],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": ["Ni"]
+      },
+      {
+        "id": "pseudo_common_f_al",
+        "template": "{given_f} {pseudo_noble_particle} {surname}",
+        "usage": ["pseudo_noble", "common"],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": ["al'"],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      },
+      {
+        "id": "pseudo_common_m_al",
+        "template": "{given_m} {pseudo_noble_particle} {surname}",
+        "usage": ["pseudo_noble", "common"],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": ["al'"],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      }
+    ],
+    "pattern_weights": {
+      "common_f_1": 6,
+      "common_f_2": 2,
+      "common_m_1": 6,
+      "common_m_2": 2,
+      "common_f_surname": 3,
+      "common_m_surname": 3,
+      "origin_f_ni": 5,
+      "origin_m_ni": 5,
+      "pseudo_common_f_al": 2,
+      "pseudo_common_m_al": 2
+    },
+    "particles": {
+      "noble": [],
+      "pseudo_noble": [
+        "al'"
+      ],
+      "regional": [],
+      "patrician": [],
+      "generic": [
+        "Ni"
+      ]
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Â'meset",
+      "Ankhsa",
+      "Djer'kem",
+      "Már'bonefer",
+      "Men'kare",
+      "Merit'ká",
+      "Merut'sát",
+      "Me'wehem",
+      "Neferi",
+      "Quenadya",
+      "Tá'meri",
+      "Uneb'nemes"
+    ],
+    "given_m": [
+      "Abet-ut'yar",
+      "Djer'kem",
+      "Hati'hesá",
+      "Henem'iwen",
+      "Kemet'nechet",
+      "Nebîb",
+      "Pet'nehem",
+      "Sekem'kutary",
+      "Sekem'veser",
+      "Setepen",
+      "Shepses'ká",
+      "Veser'htep"
+    ],
+    "surnames": [
+      "al'Plâne",
+      "Chesaî'ret",
+      "Me'káth",
+      "Mehyem'ká",
+      "Mes'kha-rê",
+      "Nebmes",
+      "Pâestumai",
+      "Sá'kurat",
+      "Sêkemát",
+      "Setepen",
+      "Tem'kat",
+      "Ze'emkha"
+    ],
+    "places": [
+      "Biazzan",
+      "Djáset",
+      "Ireth",
+      "Jem'ka",
+      "Khefu",
+      "Náareb",
+      "Qinsay",
+      "Setepen",
+      "Yleha"
+    ],
+    "patrician_names": [ ],
+    "noble_names": [],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "raw_text": "Im kleinen, sehr borongläubigen Dschungelkönigreich der Kemi sind Familiennamen selten; üblich ist ein Herkunftszusatz mit Ni vor dem Ortsnamen (z. B. Neferi Ni Djáset). Einige alte Familien wie die Pâestumai oder die Königinnenfamilie Setepen tragen feste Familiennamen. Südaventurische und garethische Nachnamen werden in Mischformen ebenfalls verwendet."
+  }
+}

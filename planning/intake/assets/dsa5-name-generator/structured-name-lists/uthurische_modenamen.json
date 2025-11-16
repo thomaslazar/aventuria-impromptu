@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Uthurische Modenamen",
+    "key": "uthurische_modenamen",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Modehafte Übernahme einzelner uthurischer Vornamen in Aventurien",
+      "note": "Exotische Vornamen aus Uthuria (v. a. Xo'Artal, Nanshemu, Jucumagh, Owangi), die vor allem im Horasreich als Modenamen verwendet werden; meist ohne Familiennamen."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      {
+        "id": "common_f_1",
+        "template": "{given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_f_2",
+        "template": "{given_f} {given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_1",
+        "template": "{given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_2",
+        "template": "{given_m} {given_m}",
+        "usage": ["common"]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_1": 6,
+      "common_f_2": 2,
+      "common_m_1": 6,
+      "common_m_2": 2
+    },
+    "particles": {
+      "noble": [],
+      "pseudo_noble": [],
+      "regional": [],
+      "patrician": [],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Acatla",
+      "Asral",
+      "Chiyo",
+      "Hiulaxa",
+      "Hualzin",
+      "Itakall",
+      "Jaxarona",
+      "Lutu",
+      "Mexazin",
+      "Nakaha",
+      "Nathania",
+      "Nidara",
+      "Pachatka",
+      "Pradoru",
+      "Sintarxia",
+      "Tezatia",
+      "Usuthu",
+      "Vylara",
+      "Yolozina",
+      "Zerelka"
+    ],
+    "given_m": [
+      "Anajo",
+      "Atlarax",
+      "Bal'Inda",
+      "Catlaxo",
+      "Haranu",
+      "Honoran",
+      "Jokom",
+      "Kalimba",
+      "Kayulé",
+      "Matlaco",
+      "Merxeras",
+      "Odumboro",
+      "Osarax",
+      "Rayatico",
+      "Sar'Zuko",
+      "Sukaron",
+      "Tarax",
+      "Xatico",
+      "Zokopac"
+    ],
+    "surnames": [],
+    "places": [
+      "Uthuria",
+      "Nova Methumisa",
+      "Belhanka",
+      "Horasreich",
+      "Al'Anfa",
+      "Brabak",
+      "Tapiwakpa"
+    ],
+    "patrician_names": [],
+    "noble_names": [],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "tribes": [
+      "Xo'Artal",
+      "Nanshemu",
+      "Jucumagh",
+      "Owangi"
+    ],
+    "sippen": [],
+    "honorifics": [],
+    "raw_text": "Uthurische Vornamen (v. a. der Xo'Artal, Nanshemu, Jucumagh und Owangi) werden als exotische Modenamen im Horasreich, in Al'Anfa und Brabak übernommen; meist werden nur die Vornamen verwendet."
+  }
+}

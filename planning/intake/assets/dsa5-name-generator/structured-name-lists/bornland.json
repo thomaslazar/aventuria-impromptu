@@ -1,0 +1,415 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Bornland",
+    "key": "bornland",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "14 Bornland",
+      "note": ""
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "noble_f",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "noble_m",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "dim_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common",
+          "diminutive",
+          "petname"
+        ],
+        "apply_diminutive_to": [
+          "given_f"
+        ]
+      },
+      {
+        "id": "dim_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common",
+          "diminutive",
+          "petname"
+        ],
+        "apply_diminutive_to": [
+          "given_m"
+        ]
+      },
+      {
+        "id": "dim_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common",
+          "diminutive",
+          "petname"
+        ],
+        "apply_diminutive_to": [
+          "given_f"
+        ]
+      },
+      {
+        "id": "dim_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common",
+          "diminutive",
+          "petname"
+        ],
+        "apply_diminutive_to": [
+          "given_m"
+        ]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_only": 3,
+      "common_m_only": 3,
+      "common_f_surname": 4,
+      "common_m_surname": 4,
+      "noble_f": 1,
+      "noble_m": 1,
+      "dim_f_only": 1,
+      "dim_m_only": 1,
+      "dim_f_surname": 1,
+      "dim_m_surname": 1
+    },
+    "particles": {
+      "noble": [
+        "von"
+      ],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [
+          "ja",
+          "ka",
+          "scha"
+        ],
+        "male_suffixes": [
+          "ja",
+          "ka",
+          "scha"
+        ]
+      }
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Alinja",
+      "Alwinje",
+      "Baernja",
+      "Bernischa",
+      "Danja",
+      "Dorlin",
+      "Duna",
+      "Dunjascha",
+      "Eljascha",
+      "Elkwine",
+      "Elmjescha",
+      "Firunja",
+      "Frinja",
+      "Gari",
+      "Geertja",
+      "Grimje",
+      "Gritten",
+      "Gudwinja",
+      "Helvja",
+      "Hesinja",
+      "Ifirnja",
+      "Ilmjescha",
+      "Irinja",
+      "Isidra",
+      "Jadvige",
+      "Janne",
+      "Jassia",
+      "Jedwinja",
+      "Jella",
+      "Karinja",
+      "Kundra",
+      "Leudara",
+      "Libussa",
+      "Luta",
+      "Lysminja",
+      "Maline",
+      "Marissja",
+      "Marja",
+      "Moschane",
+      "Nadjescha",
+      "Nadschenka",
+      "Nessa",
+      "Nuschinja",
+      "Olja",
+      "Paale",
+      "Peraenja",
+      "Peranka",
+      "Rabescha",
+      "Rassia",
+      "Rihinja",
+      "Rowena",
+      "Rowinja",
+      "Rudwischa",
+      "Selwine",
+      "Sewjescha",
+      "Sulja",
+      "Tesbinja",
+      "Thesia",
+      "Thila",
+      "Tineke",
+      "Tjeika",
+      "Travjescha",
+      "Turiken",
+      "Ulmjescha",
+      "Urjelke",
+      "Vanjescha",
+      "Verisja",
+      "Vestissja",
+      "Warja",
+      "Winja",
+      "Wolpjane",
+      "Wulfjascha",
+      "Xinja",
+      "Yadwinja",
+      "Yasinde",
+      "Zidon je"
+    ],
+    "given_m": [
+      "Albin",
+      "Anshag",
+      "Arvid",
+      "Baerjan",
+      "Baerow",
+      "Berschin",
+      "Birjew",
+      "Bornjeff",
+      "Bosjew",
+      "Boutsen",
+      "Daanje",
+      "Dabbert",
+      "Damian",
+      "Danow",
+      "Duchjo",
+      "Dulgjew",
+      "Dunjew",
+      "Dunjoscha",
+      "Elkjow",
+      "Elko",
+      "Elkwin",
+      "Ertzel",
+      "Firnjan",
+      "Firunjew",
+      "Fredo",
+      "Galjan",
+      "Goljew",
+      "Grimjan",
+      "Hane",
+      "Helmjew",
+      "Hurdo",
+      "Iber",
+      "Ilmin",
+      "Irjan",
+      "Ischtan",
+      "Jaakon",
+      "Jarlow",
+      "Jasper",
+      "]oost",
+      "Joschin",
+      "]ucho",
+      "Kolkja",
+      "Larjan",
+      "Leomar",
+      "Linjan",
+      "Littjew",
+      "Ljasew",
+      "Ljubow",
+      "Maris",
+      "Matajew",
+      "Meljow",
+      "Mew",
+      "Miljan",
+      "Mjesko",
+      "Nasjan",
+      "Neerjan",
+      "Neesdan",
+      "Olko",
+      "Orschin",
+      "Oswin",
+      "Panek",
+      "Pedder",
+      "Peraenjow",
+      "Pettar",
+      "Pitjow",
+      "Pjerow",
+      "Rowin",
+      "Rudjew",
+      "Semkin",
+      "Stane",
+      "Suschin",
+      "Tannjew",
+      "Thezmar",
+      "Tirulf",
+      "Torjin",
+      "Travin",
+      "Ugo",
+      "Ulmjan",
+      "UlmQ)ew",
+      "Uriel",
+      "Urnislaw",
+      "Vigo",
+      "Vito",
+      "Wassjew",
+      "Wolpje",
+      "Wulfen",
+      "Wulfjew",
+      "Xebbert"
+    ],
+    "surnames": [
+      "Alatzer",
+      "Alwinnen",
+      "Arauken",
+      "Baerensen",
+      "Baerow",
+      "Bornski",
+      "Brinnske",
+      "Dappersjen",
+      "Dobelsteen",
+      "Donsemkin",
+      "Drulgosch",
+      "Ebersen",
+      "Eelkinnen",
+      "Elkensen",
+      "Elmsjen",
+      "Firnske",
+      "Firunkis",
+      "Gartimpski",
+      "Gerbensen",
+      "Gerberow",
+      "Grumpen",
+      "Hinske",
+      "Hollerow",
+      "Ilmensen",
+      "Ilumkis",
+      "Jannerloff",
+      "Jannske",
+      "Juchski",
+      "Karenkis",
+      "Karjensen",
+      "Kruschin",
+      "Kunzke",
+      "Laikis",
+      "Larinow",
+      "Luminoff",
+      "Meskinske",
+      "Miljes",
+      "Muselken",
+      "Nagragski",
+      "Notjes",
+      "Ouvensen",
+      "Parenkis",
+      "Peddersen",
+      "Peddersjepen",
+      "Perschoff",
+      "Puschinske",
+      "Puspersen",
+      "Rodensen",
+      "Ruderow",
+      "Salderken",
+      "Schorkin",
+      "Sewerski",
+      "Surjeloff",
+      "Siveling",
+      "Sjepensen",
+      "Stipkow",
+      "Stoerrebrandt",
+      "Timpski",
+      "Tuljow",
+      "Turjeleff",
+      "Ulmensen",
+      "Ulmski",
+      "Walroder",
+      "Walsareff",
+      "Walsjakow",
+      "Wolpjes",
+      "Wulfski"
+    ],
+    "bynames": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "noble_names": [
+      "Aringen",
+      "Blütenfeld",
+      "Brinbaum",
+      "Dotzen",
+      "Elkauen",
+      "Erbarmen",
+      "Eschenfurt",
+      "Gradnochsjepe ngurken",
+      "Hinzk",
+      "Ilmenstein",
+      "Kirschhausen",
+      "Krempelow",
+      "Larsach",
+      "Notmark",
+      "Plötzingen",
+      "Quelldunkel",
+      "Salderkeim",
+      "Schossko",
+      "Sjepengurken",
+      "Treie",
+      "Wosna"
+    ],
+    "raw_text": "14Bornland \n-»Hast du schon gehört, Yasinde? Die ]annerloffs \n„ haben ihre jüngste Nadschenka genannt. Ist ja ein \nniedliches Ding, noch keinen Mond alt. Aber das \nklingt irgendwie schon sehr ... norbardisch, muss ich \nsagen.« \n-die Krämerin Gari Grumpen zu einer Vertrauten, \nfestum 1037 BF \nIm \nBornland ist das Garethi mal mehr, mal weniger stark von fremden Begriffen durchsetzt, und so sind selbst nivesisch oder norbardisch anmutende Namen keine Seltenheit. üblicherweise trägt man Vor-und Zunamen, eine Ausnahme sind Leibeigene, die übli­cherweise keine Familiennamen tragen. Sie nennen sich meist nur nach ihrem Herkunftsort, wenn sie die­sen überhaupt einmal verlassen und eine genauere Be­zeichnung erforderlich wird. Abkürzungen oder kurze Rufnamen \nwie Danja, Thila, Elko, oder U go sind im Bornland beliebt. Darüber hinaus werden auch eigene Koseformen gebildet, indem der Name so verändert wird, dass er etwa auf -ja, -ka oder \n-scha endet. Aus Matajew wird z. B. Matje-scha, aus Maline wird Malischka und aus Elwine Elwinka oder Elwinje. Die Namen des Adels, der gern auch Dop­pelnamen wählt, schwanken zwischen hochtrabend, bedrohlich und lächer­lich. Jedoch sollte es besser nie­mand wagen, einen Bronnjaren zu verlachen, weil \ner Rondrian von Sjepengurken oder Leo­mar von Schissna-Krempe­low heißt. \nHelden & Heilige: Ans­hag von Glodenhof (letz­ter Marschall der The-aterritter), Festo von Aldyra (Drachentöter, Grün­der Festums und Neersands), Linjan von Elenau (Gewinner des Heiligengangs, Anführer der bornischen Truppen im Haffax-Feldzug), Nadjescha von Leufurten (amtierende Adelsmarschallin), Rondra-gabund von Riedemer (Thea­territterin, Rondras Schutzheilige der Waffen), Thesia von Ilmen­stein (ehemalige Adelsmarschal­lin und Heldin \nim Kampf gegen Borbarad), Urnislaw von Uspiau­nen (Erzmagier) Vornamen (w): Alinja, Alwinje, Baernja, Bernischa, Danja, Dorlin, Duna, Dunjascha, Eljascha, Elkwine, Elm­jescha, Firunja, Frinja, Gari, Geertja, Grimje, Gritten, Gudwinja, Helvja, Hesinja, Ifirnja, Ilmjescha, Irinja, Isid­ra,Jadvige,Janne,Jassia,Jedwinja,Jella, Karinja, Kundra, Leudara, Libussa, Luta, Lysminja, Maline, Marissja, Mar­ja, Moschane, Nadjescha, Nadschenka, Nessa, Nuschinja, Olja, Paale, Peraenja, Peranka, Rabescha, Rassia, Rihinja, Rowena, Rowinja, Rudwischa, Selwine, Sewjescha, Sulja, Tesbinja, Thesia, Thila, Tineke, Tjeika, Travjescha, Tu­riken, Ulmjescha, Urjelke, Vanjescha, Verisja, Vestissja, Warja, Winja, Wolpjane, Wulfjascha, Xinja, Yadwinja, Yasinde, Zidon je \nVornamen (m): Albin, Anshag, Arvid, Baerjan, Baerow, Berschin, Birjew, Bornjeff, Bosjew, Boutsen, Daanje, Dabbert, Damian, Danow, Duchjo, Dulgjew, Dunjew, Dunjoscha, Elkjow, Elko, Elkwin, Ertzel, Firnjan, Firun­jew, Fredo, Galjan, Goljew, Grimjan, Hane, Helmjew, Hurdo, Iber, Ilmin, Irjan, Ischtan, Jaakon, Jarlow, Jas­per, ]oost, Joschin, ]ucho, Kolkja, Larjan, Leomar, Lin­jan, Littjew, Ljasew, Ljubow, Maris, Matajew, Meljow, Mew, Miljan, Mjesko, Nasjan, Neerjan, Neesdan, Olko, Orschin, Oswin, Panek, Pedder, Peraenjow, Pettar, Pit­jow, Pjerow, Rowin, Rudjew, Semkin, Stane, Suschin, Tannjew, Thezmar, Tirulf, Torjin, Travin, Ugo, Ulmjan, UlmQ)ew, Uriel, Urnislaw, Vigo, Vito, Wassjew, \nWolpje, Wulfen, Wulfjew, Xebbert \nFamiliennamen: Alatzer, Alwinnen, Arauken, Baeren­sen, Baerow, Bornski, Brinnske, Dappersjen, Dobelsteen, Donsemkin, Drulgosch, Ebersen, Eelkinnen, Elkensen, Elmsjen, Firnske, Firunkis, Gartimpski, Gerbensen, Ger­berow, Grumpen, Hinske, Hollerow, Ilmensen, Ilumkis, Jannerloff, Jannske, Juchski, Karenkis, Karjensen, Kru­schin, Kunzke, Laikis, Larinow, Luminoff, Meskinske, Miljes, Muselken, Nagragski, Notjes, Ouvensen, Paren­kis, Peddersen, Peddersjepen, Perschoff, Puschinske, Puspersen, Rodensen, Ruderow, Salderken, Schorkin, Sewerski, Surjeloff, Siveling, Sjepensen, Stipkow, Stoer­rebrandt, Timpski, Tuljow, Turjeleff, Ulmensen, Ulmski, Walroder, Walsareff, Walsjakow, Wolpjes, Wulfski \nAdelsnamen: Aringen, Blütenfeld, Brinbaum, Dotzen, Elkauen, Erbarmen, Eschenfurt, Gradnochsjepe\nngur­ken, Hinzk, Ilmenstein, Kirschhausen, Krempelow, Lar­sach, Notmark, Plötzingen, Quelldunkel, Salderkeim, Schossko, Sjepengurken, Treie, Wosna \n\n15Anagramme \n»Hä? Lamertien ist doch der Pfeffersack, der uns erst in die­\nsen verdammten Turm geschickt hat. Warum steht sein Name \nhier drauf? Hier war doch seit Jahrhunderten keiner mehr. \n0 ihr Götter!«\n-letzte Worte einer Abenteurerin, Unterstadt von Havena, \n1019 BF \nDie Welt des Schwarzen Auges ist voller Mysterien, doch nicht immer müssen dafür tapfere Heldinnen und Hel­den in finsteren Kavernen, dunklen Wäldern oder schat­tigen Gassen auf die Suche gehen. Manche Geheimnisse kann man \nauch nur mit der Kraft des Geistes entschlüs­seln, im Spiel wie am Spieltisch. Wie bei Sprechenden Namen (siehe Seite 54) können Anagramme mehr über eine Person oder eine Sache verraten. Sie können die Lösung eines Rätsels sein, oder ganz neue Fragen aufwerfen. Damit ihr die Anagramme leichter erkennen könnt, haben wir \nsie im folgenden Text in Kapitälchen gesetzt. \nBei einem Anagramm wird aus den Buchstaben oder Sil­ben eines Wortes ein neues gebildet, wobei alle Buchsta­ben des Ausgangswortes (und üblicherweise nur diese) Verwendung finden. Ein ebenso schönes wie einfaches Beispiel hierfür ist DERE, die Welt des schwarzen Auges. Stellt man die Buchstaben um, erhält man das Wort ERDE.Blickt man \nauf die Landkarte A venturiens, so findet man einige solcher Wortspielereien. \n•Der Name der Erdriesin SuMu ist dem irdischen Hu­\nMvsentliehen, hat aber am Ende ein „H\" verloren. •Die  Insel ILTOKEN im tiefen Süden ist ein Anagrammvon ToLKIEN, dem Begründer der modernen Fantasyliteratur. •NEETHA im südlichen Horasreich ist eine Anspielung auf ATHEN, das Zentrum der griechischen Antike, dem hierfür jedoch ein zusätzliches „E\" spendiert wurde. •S1NODAauf Maraskan folgt ganz \nder maraskanischen  Philosophie von der Schönheit der Welt, denn ihr Name ist ebenfalls ein Anagramm. Stellt man die Buchstaben um, erhält man ADONIS, den Inbegriff der Schönheit in der griechischen Mythologie. \nUm seinen Spielern besonderen Knobelspaß zu bereiten, kann man auch Personennamen zu einem sogenann­ten Ananym, einem Namensanagramm, umstellen. Die ungekrönte Königin der Tarnidentitäten ist Nahema ai Tamerlein. Die jahrhundertealte Zauberin liebt \nes, ihre Identität zu verschleiern. So sind beispielsweise LAMERTI­\nEN, ETERNAMIL, TAMEI ERLANI, AIMAR EL1EINT oder NEIRA AL1TEIMumgestellte Varianten ihres Nachnamens (A1) TAMERLEIN.Auch wenn wir an dieser Stelle bereits einige davon ver­raten haben: Keine Sorge, ihr könnt im Spiel noch zahl­reiche weitere ihrer Identitäten lüften. \n•P ARDONA,die wohl berüchtigtste Hochelfe der Ge­schichte , ist fraglos der P ANDORA aus der griechischen Mythologie entlehnt. Sie hat ohnehin einiges mit ihrer Namensvetterin gemein, von der Erschaffung durch höhere Wesen bis hin zu ihrer Eigenschaft, Verderben über ihr Volk und die Welt zu bringen. •SATINAV steuert in Ketten das Schiff der Zeit durch die Sphären. Liest man seinen Namen rückwärts, er­hält man VANITAS (Latein: Eitelkeit, Vergänglichkeit, Scheitern), was mit einem Augenzwinkern auf seine Bestrafung wie auch auf die Vergänglichkeit allen Seins anspielt. \n•Lange wurde gemunkelt, Dexter Nemrod, ehemalsInquisitor und Reichsgroßgeheimrat, sei in Wahrheit der höchste Phexgeweihte Aventuriens. Was auf den ersten Blick absurd klingt, ergibt deutlich mehr Sinn, wenn man weiß, dass Phexens Auserwählter den Ti­tel „Mond\" trägt. Kürzt man Dexters Namen ab, wird daraus D. umgestellt M\n. •Der WaldmenscNEMROD, henname TornGI DER ist oNDeiner beliebtenSüßigkeit eines italienischen Herstellers entlehnt. \nAnagramme im Spiel Wenn du einen undurchsichtigen Auftraggeber oder wiederkehrenden Schurken in verschiedenen Rollen in euer Spiel einbinden willst, sind Anagramme eine schöne Möglichkeit dazu. Am einfachsten fällt die Um­stellung, wenn du den Namen in Großbuchstaben auf­schreibst, aus dem du ein Anagramm bilden willst. Nutzt du einen von ihnen zur Bildung des neuen Namens, streiche ihn durch. So siehst du am einfachsten, welche Buchstaben noch zu Verfügung stehen. Ein Blick auf die Namenslisten in diesem Buch kann dir dabei helfen, ei­nen neuen Namen zu finden, der regional typisch klingt, etwa tulamidisch oder albernisch. Aus der Edlen GoRRADA MoDESTA kann so DAGORRA DoMES­\nTA werden oder GRADORA ATDEMOS. Vielleicht gibt sie sich auch einfach als Mann aus, stellt Vor-und Nachnamen um, und nennt sich TsADEMO RAGAROD. Du kannst auch die Buchstaben von Vor-und Nachnamen bunt durch­mischen, sodass aus ALHINA SABA CttALID die mysteriöse \nBALLADINEs CttA1AHA wird oder der Teppichhändler HAsAE \nAL1BALDA CHIN. ABELMIR kann sich klangvoll BAELRIM nennen, oder EL'IMBAR, und der gesuchte Schurke ALRIK BIEGELER wird zu IRKAL EBERDIEL."
+  }
+}

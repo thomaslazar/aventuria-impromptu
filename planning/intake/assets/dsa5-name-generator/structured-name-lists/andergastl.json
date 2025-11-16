@@ -1,0 +1,564 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Andergast",
+    "key": "andergast",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "12 Ander gast",
+      "note": "Syllable boxes (Silbenbaukasten) captured as raw text; OCR lost explicit '//' separators."
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "noble_f",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "noble_m",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "common_m_place_aus",
+        "template": "{given_m} {generic_particle} {place}",
+        "usage": [
+          "common",
+          "toponymic"
+        ],
+        "allowed_generic_particles": [
+          "aus"
+        ]
+      },
+      {
+        "id": "common_f_place_aus",
+        "template": "{given_f} {generic_particle} {place}",
+        "usage": [
+          "common",
+          "toponymic"
+        ],
+        "allowed_generic_particles": [
+          "aus"
+        ]
+      },
+      {
+        "id": "common_m_place_vom",
+        "template": "{given_m} {generic_particle} {place}",
+        "usage": [
+          "common",
+          "toponymic"
+        ],
+        "allowed_generic_particles": [
+          "vom"
+        ]
+      },
+      {
+        "id": "common_f_place_vom",
+        "template": "{given_f} {generic_particle} {place}",
+        "usage": [
+          "common",
+          "toponymic"
+        ],
+        "allowed_generic_particles": [
+          "vom"
+        ]
+      },
+      {
+        "id": "married_f_surname_in",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common",
+          "married"
+        ],
+        "apply_married_suffix_to": [
+          "surname"
+        ]
+      },
+      {
+        "id": "syl_common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common",
+          "syllabic"
+        ],
+        "use_syllables_for": [
+          "given_f",
+          "surname"
+        ]
+      },
+      {
+        "id": "syl_common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common",
+          "syllabic"
+        ],
+        "use_syllables_for": [
+          "given_m",
+          "surname"
+        ]
+      },
+      {
+        "id": "syl_common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common",
+          "syllabic"
+        ],
+        "use_syllables_for": [
+          "given_f"
+        ]
+      },
+      {
+        "id": "syl_common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common",
+          "syllabic"
+        ],
+        "use_syllables_for": [
+          "given_m"
+        ]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_only": 3,
+      "common_m_only": 3,
+      "common_f_surname": 4,
+      "common_m_surname": 4,
+      "noble_f": 1,
+      "noble_m": 1,
+      "common_m_place_aus": 2,
+      "common_f_place_aus": 2,
+      "common_m_place_vom": 1,
+      "common_f_place_vom": 1,
+      "married_f_surname_in": 1,
+      "syl_common_f_surname": 1,
+      "syl_common_m_surname": 1,
+      "syl_common_f_only": 1,
+      "syl_common_m_only": 1
+    },
+    "particles": {
+      "noble": [
+        "von"
+      ],
+      "generic": [
+        "aus",
+        "vom"
+      ]
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "married_name": {
+        "female_suffix": "in"
+      }
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Andela",
+      "Andra",
+      "Arnhild",
+      "Asumudette",
+      "Berga",
+      "Birsel",
+      "Domela",
+      "Dorota",
+      "Erlgard",
+      "Farnlieb",
+      "Fira",
+      "Freilinde",
+      "Gerswide",
+      "Gundel",
+      "Hadwiga",
+      "Hilda",
+      "Holdtraude",
+      "Ifirngund",
+      "Ildaria",
+      "Irmela",
+      "Kascha",
+      "Kunhuta",
+      "Larja",
+      "Ludmila",
+      "Marmelunde",
+      "Mina",
+      "Mirnhild",
+      "Nia",
+      "Silvana",
+      "Sumiana",
+      "Suminella",
+      "Treshka",
+      "Trautgold",
+      "Traviane",
+      "Rusena",
+      "Varena",
+      "Waldegund",
+      "Wendeline"
+    ],
+    "given_m": [
+      "Andraus",
+      "Arnbold",
+      "Bogumil",
+      "Bogumislaus",
+      "Borkfried",
+      "Depold",
+      "Detter",
+      "Eichbald",
+      "Eichward",
+      "Erlmann",
+      "Eulrich",
+      "Firunislaus",
+      "Firunz",
+      "Gartwald",
+      "Gerwulf",
+      "Gilm",
+      "Gosthelm",
+      "Gwinnling",
+      "Havel",
+      "Holmar",
+      "Jagoslaus",
+      "Jindrich",
+      "Krusold",
+      "Ludewich",
+      "Marik",
+      "Mispert",
+      "Odoring",
+      "Ogo",
+      "Olderich",
+      "Osgar",
+      "Oswald",
+      "Seffl",
+      "Steinrich",
+      "Strammgert",
+      "Sumudan",
+      "Sumudor",
+      "Trogar",
+      "Ulfried",
+      "Urichslaus",
+      "Wendemar",
+      "Wendolyn",
+      "Wengelyn",
+      "Wenzeslaus",
+      "Zoltan"
+    ],
+    "surnames": [
+      "Alrikshuber",
+      "Birgelbaum",
+      "Bodiak",
+      "Borkmeister",
+      "Dreuber",
+      "Eichinger",
+      "Fassbender",
+      "Flößler",
+      "Haubeiler",
+      "Holzgut",
+      "Holzhauer",
+      "Joborner",
+      "Karden",
+      "Krück",
+      "Kuhbauer",
+      "Meeltheuer",
+      "Ochsenbrecht",
+      "Peutler",
+      "Roskop",
+      "Sattelhuber",
+      "Sehweinwirt",
+      "Seffelgruber",
+      "Seggenmund",
+      "Straub",
+      "Tannhauser",
+      "Wenzelin",
+      "Wulfen",
+      "Zibbelgruber"
+    ],
+    "bynames": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "noble_names": [
+      "Bärental",
+      "Billingen",
+      "Borkenquell",
+      "Buchenhain",
+      "Egeling",
+      "Kolburg",
+      "Langfurt",
+      "Leuengrund",
+      "Otternpfot",
+      "Reichenstieg",
+      "Rotbaum",
+      "Rothschild",
+      "Schönburg",
+      "Steineichenwacht",
+      "Tatzenhain",
+      "Tiefenklamm",
+      "Zitterfels",
+      "Zornbold Silben baukasten"
+    ],
+    "places": [
+      "Andrafall",
+      "dem Wald",
+      "Haubeilerhof"
+    ],
+    "syllables": {
+      "given_f": {
+        "prefix": [
+          "Adal-",
+          "Al-",
+          "A(r)n-",
+          "Dora-",
+          "Erd-",
+          "Erl-",
+          "Erm-",
+          "Far(n)-",
+          "Ger(s)-",
+          "Had-",
+          "Hild-",
+          "Hildi-",
+          "Hilm-",
+          "Hold-",
+          "Ifir(n)-",
+          "Ilda-",
+          "Immen-",
+          "In-",
+          "Inge-",
+          "Irmen-",
+          "Lud-",
+          "Kun-",
+          "Mim-",
+          "Ro(t)-",
+          "Ru-",
+          "Sil-",
+          "Sumu-",
+          "Trave-",
+          "Travi-",
+          "Va-",
+          "Wal(d)-",
+          "Wende-"
+        ],
+        "suffix": [
+          "ana",
+          "ane",
+          "dela",
+          "eria",
+          "gard(a)",
+          "gart",
+          "gret(e)",
+          "gund(e)",
+          "hild(e)",
+          "huta",
+          "lieb",
+          "lind(e)",
+          "line",
+          "mila",
+          "mine",
+          "neld(a)",
+          "purga",
+          "rada",
+          "rella",
+          "rena",
+          "ria",
+          "rike",
+          "sena",
+          "seni",
+          "ta",
+          "traud(e)",
+          "traut",
+          "trud(e)",
+          "vana",
+          "wena",
+          "wid(e)",
+          "wiga",
+          "wige",
+          "wind(e)"
+        ]
+      },
+      "given_m": {
+        "prefix": [
+          "Adal-",
+          "Al-",
+          "An(d)-",
+          "Ar(g)-",
+          "Arn-",
+          "Bar(n)-",
+          "Bär-",
+          "Bartis-",
+          "Bins-",
+          "Bir(n)-",
+          "Biro-",
+          "Blat-",
+          "Blathis-",
+          "Blatt-",
+          "Bogu-",
+          "Bork-",
+          "Boro-",
+          "De-",
+          "Die(t)-",
+          "Edel-",
+          "Eich-",
+          "El-",
+          "Emmer-",
+          "Erl-",
+          "Eul-",
+          "Firn-",
+          "Firunis-",
+          "Gas-",
+          "Ger-",
+          "Gilm-",
+          "Gis-",
+          "Gast-",
+          "Hart-",
+          "Hol-",
+          "Hos-",
+          "Jago(s)-",
+          "Jin(d)-",
+          "Jo-",
+          "Kru-",
+          "Ladis-",
+          "Lude-",
+          "Mar-",
+          "Mis-",
+          "Od(e)-",
+          "Odo-",
+          "Ol-",
+          "Olde-",
+          "Oldi-",
+          "Os-",
+          "Se-",
+          "Stanis-",
+          "Stein(is)-",
+          "Sumu-",
+          "Tro-",
+          "Uhl-",
+          "Ul(l)-",
+          "Uri-",
+          "Urich(s)-",
+          "Wald-",
+          "Wende(l)-",
+          "Wendo-",
+          "Wenge-",
+          "Wenze(s)-",
+          "Yarus-"
+        ],
+        "suffix": [
+          "bald",
+          "bart",
+          "bert",
+          "bold",
+          "bolf",
+          "brand",
+          "brecht",
+          "erich",
+          "fing",
+          "fr(i)ed",
+          "gar",
+          "ganz",
+          "gor",
+          "gös",
+          "grimm",
+          "hard",
+          "heim",
+          "laus",
+          "lin",
+          "lyn",
+          "mann",
+          "mar",
+          "mil",
+          "mislaus",
+          "pert",
+          "pold",
+          "ran",
+          "rat",
+          "r(a)us",
+          "rich",
+          "rik",
+          "ring",
+          "ruk",
+          "sold",
+          "wald",
+          "ward",
+          "We;in",
+          "wich",
+          "wulf"
+        ]
+      },
+      "surnames": {
+        "prefix": [
+          "Alriks-",
+          "Birgel-",
+          "Bork-",
+          "Eich-",
+          "Holz-",
+          "Kuh-",
+          "Ochsen-",
+          "Ros(s)-",
+          "Seff(e)l-",
+          "Segge(n)-",
+          "Tann-"
+        ],
+        "suffix": [
+          "bauer",
+          "baum",
+          "brecht",
+          "gruber",
+          "hauser",
+          "huber",
+          "inger",
+          "kop(p)",
+          "meister",
+          "mund",
+          "wald",
+          "wall"
+        ]
+      }
+    },
+    "raw_text": "u­daz, Zal(d)ahan \n\n12Ander gast \n-.»Das Königsturnier in Andergast, das müsst ihr\ngesehen haben, hoher Herr! Da reiten dann Ritter \nwie Bogumislaus ]indrich Bärental von Andrafall \noder Sumudan Rothschild von Thuransfenn in die \nSchranken.« \n-der Knappe Dietgar Krück zu einem Reisenden, \n. ,, -' neuzeitlich \n„,�_,..„,,.. \nBesonders beliebt sind in den Streitenden Königreichen althergebrachte Namen, die von fremden oft als sper­rig und umständlich belächelt werden. Statt Sohn oder Tochter nach dem aktuellen Herrscher oder gar einem fremden zu benennen, greift man hier lieber auf die Na­men von eigenen Ahnen zurück. Auch Namen mit Bezug zur Erdmutter Sumu sind bei Adel wie einfachem Volk beliebt. Im Alltag behelfen sich viele Andergaster mit liebevoll ersonnenen Koseformen und Abkürzungen. So wird aus Olderich auch schon mal Olde \noder aus Trautgold ein­fach Traute. Die einfachen Leute führen nur selten einen Nachna-men. Stattdessen nennen sie sich meist nach ihrem Herkunftsort: Os­gar aus Andrafall, Gerbald \naus dem Wald oder Holde vom Haubeilerhof. Freibauern und Städter hinge­gen tragen ihren Nachnamen ebenso mit Stolz wie die ad­ligen Familien. Besonders außerhalb der Städte ist es mancherorts üblich, dass Frauen den Fa­miliennamen ihres Mannes überneh­men und ihm ein \n-in anhängen. So wird aus Marik Ei­chingers Frau nach der Eheschließung Mila Eichingerin. \nHelden & Heilige: Andra Zornbold (Gemahlin des Landesvaters Argos, opfer­te sich zum Wohle der Be­wohner), Arbogast der Alte (mächtiger Druide und wei-ser Hüter des Waldes), Argos Zornbold (legendärer Landes­vater), Dorl�n (Heilige der Rahja­kirche, versöhnte die streitenden vor Joborn mit Rahjas Lie­beslicht), Wendelmir VI. Zornbold (König von Andergast) Vornamen (w): Andela, Andra, Arnhild, Asumudette, Berga, Birsel, Domela, Dorota, Erlgard, Farnlieb, Fira, Freilinde, Gerswide, Gundel, Hadwiga, Hilda, Holdtrau­de, Ifirngund, Ildaria, Irmela, Kascha, Kunhuta, Larja, Ludmila, Marmelunde, Mina, Mirnhild Nia, ,Silvana, Su­miana, Suminella, Treshka, Trautgold, Traviane, Ruse­na, Varena, W aldegund, W endeline \nVornamen (m): Andraus, Arnbold, Bogumil, Bogumis­laus, Borkfried, Depold, Detter, Eichbald, Eichward, Erl­mann, Eulrich, Firunislaus, Firunz, Gartwald, Gerwulf, Gilm, Gosthelm, Gwinnling, Havel, Holmar,Jagoslaus,Jin­drich, Krusold, Ludewich, Marik, Mispert, Odoring, Ogo, O!derich, Osgar, Oswald, Seff(e)l, Steinrich, Strammgert, Sumudan, Sumudor, Trogar, U!fried, Urichslaus, Wende­mar, Wendolyn, Wengelyn, Wenzeslaus, Zoltan \nFamiliennamen: Alrikshuber, Birgelbaum, Bodiak, Borkmeister, Dreuber, Eichinger, Fassbender, Flößler, Haubeiler, Holzgut, Holzhauer,Joborner, Karden, Krück, Kuhbauer, Meeltheuer, Ochsenbrecht, Peutler, Roskop, Sattelhuber, Sehweinwirt, Seffelgruber, Seggenmund, Straub, Tannhauser, Wenzelin, Wulfen, Zibbelgruber \nAdelsnamen: Bärental, Billingen, Borkenquell, Buchen­hain, Egeling, Kolburg, Langfurt, Leuengrund, Otternpfot, Reichenstieg, Rotbaum, Rothschild, Schönburg, Steinei­chenwacht, Tatzenhain, Tiefenklamm, Zitterfels, Zornbold \nSilben baukasten \nVornamen (w): Ada!-, Al-, A(r)n-, Dora-, Erd-, Erl-, Erm-, Far(n)-, Ger(s)-, Had-, Hild-, Hildi-, Hilm-, Hold-, Ifir(n)-, Ilda-, Immen-, In-, Inge-, Irmen-, Lud-, \nKun-, Mim-, Ro(t)-, Ru-, Si!-, Sumu-, Trave-, Travi-, Va-, Wal(d)-, Wende-11ana, ane, dela, eria, gard(a), gart, gret(e), gund(e), hild(e), huta, lieb, lind(e), line, mila, \nmine, neld(a), purga, rada, rella, rena, ria, rike, sena, seni, ta, traud(e), traut, trud(e), vana, wena, wid(e), wiga, wige, wind(e) \nVornamen (m): Ada!-, Al-, An(d)-, Ar(g)-, Arn-, Bar(n)-, Bär-, Bartis-, Bins-, Bir(n)-, Biro-, Blat-, Blathis-, Blatt-, Bogu-, Bork-, Boro-, De-, Die(t)-, Edel-, Eich-, EI-, Emmer-, Erl-, Eu!-, Firn-, Firunis-, Gas-, Ger-, Gilm-, Gis-, Gast-, Hart-, Hol-, Hos-, Jago(s)-, Jin(d)-, ]o-, Kru-, Ladis-, Lude-, Mar-, Mis-, Od(e)-, Odo-, 01-, Olde-, O!di-, Os-, Se-, Stanis-, Stein(is)-, Sumu-, Tro-, Uhl-, Ul(l)-, Uri-, Urich(s)-, Wald-, Wende(!)-, Wendo-, Wenge-, Wenze(s)-, Yarus-11 bald, bart, bert, bold, bolf, brand, brecht, erich, fing, fr(i)ed, gar, ganz, gor, g�s, grimm, hard, heim, laus, !in, lyn, mann, mar, mil, mislaus, pert, pold, ran, rat, r(a)us, rich, rik, ring, ruk, sold, wald, ward, WE;in, wich, wulf \nFamilienname: Alriks-, Birgel-, Bork-, Eich-, Holz-, Kuh-, Ochsen-, Ros(s)-, Seff(e)l-, Segge(n)-, Tann-11 bau­er, baum, brecht, gruber, hauser, huber, inger, kop(p), meister, mund, wald, wall \n\n"
+  }
+}
