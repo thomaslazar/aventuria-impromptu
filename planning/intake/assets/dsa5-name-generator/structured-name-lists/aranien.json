@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Aranien",
+    "key": "aranien",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "13 Aranien",
+      "note": ""
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "noble_f",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "noble_m",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "pat_m_ibn",
+        "template": "{given_m} {generic_particle} {given_m}",
+        "usage": [
+          "patronymic",
+          "common"
+        ],
+        "allowed_generic_particles": [
+          "ibn"
+        ]
+      },
+      {
+        "id": "pat_f_saba",
+        "template": "{given_f} {generic_particle} {given_m}",
+        "usage": [
+          "patronymic",
+          "common"
+        ],
+        "allowed_generic_particles": [
+          "saba"
+        ]
+      },
+      {
+        "id": "pat_f_sunni",
+        "template": "{given_f} {given_f}{matronymic_suffix}",
+        "usage": [
+          "patronymic",
+          "common"
+        ]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_surname": 4,
+      "common_m_surname": 4,
+      "common_f_only": 1,
+      "common_m_only": 1,
+      "noble_f": 1,
+      "noble_m": 1,
+      "pat_m_ibn": 2,
+      "pat_f_saba": 2,
+      "pat_f_sunni": 2
+    },
+    "particles": {
+      "noble": [
+        "von",
+        "ay",
+        "ai"
+      ],
+      "generic": [
+        "ibn",
+        "saba"
+      ]
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "matronymic_suffixes": [
+        "sunni",
+        "sunya"
+      ]
+    },
+    "patronymic": {
+      "enabled": true,
+      "male_patterns": [
+        "pat_m_ibn"
+      ],
+      "female_patterns": [
+        "pat_f_saba",
+        "pat_f_sunni"
+      ]
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Aischanka",
+      "Alisanya",
+      "Arjuna",
+      "Ashina",
+      "Asleika",
+      "Aylalind",
+      "Ayshira",
+      "Ayshulianne",
+      "Azizelis",
+      "Banazir",
+      "Belizath",
+      "Damara",
+      "Dassareth",
+      "Dilhabeth",
+      "Dunjanild",
+      "Elaisha",
+      "Eleonora",
+      "Emerbeth",
+      "Farissa",
+      "Fayrieke",
+      "Feruja",
+      "Feqzlind",
+      "Gazalinde",
+      "Halimyanis",
+      "Hamide",
+      "Hildebeth",
+      "Iphemia",
+      "Ishannah",
+      "Jashild",
+      "Jasina",
+      "Jushiberta",
+      "Kalashra",
+      "Khedrine",
+      "Khelbara",
+      "Khorena",
+      "Lailalinde",
+      "Leudira",
+      "Leushanya",
+      "Manjula",
+      "Merishja",
+      "Nedimsira",
+      "Neraidane",
+      "Perainibith",
+      "Peranshaya",
+      "Rahjadane",
+      "Rahjana",
+      "Rashpatane",
+      "Rhayadaque",
+      "Rondirai",
+      "Rondrayla",
+      "Shaya",
+      "Sherizeth",
+      "Shilaldara",
+      "Shulamunde",
+      "Shulinai",
+      "Sulajmaid",
+      "Sulamin",
+      "Sybia",
+      "Tsabine",
+      "Yathila",
+      "Yullabethild",
+      "Zulhaminai"
+    ],
+    "given_m": [
+      "Abdulon",
+      "Abdulrik",
+      "Abubrecht",
+      "Aliban",
+      "Amaryd",
+      "Amirwolf",
+      "Arkos",
+      "Arras",
+      "Assaban",
+      "Beyhelm",
+      "Djafardeon",
+      "Djemilassar",
+      "Dschadirfried",
+      "Dscheridan",
+      "Farukol",
+      "Hamarbald",
+      "Harunian",
+      "Hassanfried",
+      "Jashan",
+      "Jikhbald",
+      "Kashban",
+      "Korwan",
+      "Leomar",
+      "Leuhalla",
+      "Machmud",
+      "Marwamir",
+      "Melekhelm",
+      "Merkan",
+      "Muhalla",
+      "Mukarribald",
+      "Nabur",
+      "Narbold",
+      "Nezahet",
+      "Omjaralf",
+      "Peranjador",
+      "Rahjabert",
+      "Rahjadan",
+      "Rashdan",
+      "Rassan",
+      "Rasulan",
+      "Retoban",
+      "Rohaldor",
+      "Rondrador",
+      "Rondramir",
+      "Selimdor",
+      "Selimwar",
+      "Shabobert",
+      "Shafirio",
+      "Shamar",
+      "Sharondrio",
+      "Sulhamid",
+      "Sultanor",
+      "Taref",
+      "Tariq",
+      "Tuleffried",
+      "Wulftan",
+      "Yadail",
+      "Yassirman",
+      "Yorlak",
+      "Yus sufried"
+    ],
+    "surnames": [
+      "Aimaristani",
+      "ak'Shahbra",
+      "Alahjan",
+      "al'Akhdar",
+      "al'Awan",
+      "al'Barad",
+      "Alhazir",
+      "al'Keshal'Kharash",
+      "al'Kitab",
+      "as'Ahlan",
+      "as'Najaras",
+      "as'Sarjabaran",
+      "as'Sherchem",
+      "as'Tahan",
+      "Bishar",
+      "Elburumi",
+      "Elyeshinnah",
+      "Kahraman",
+      "Terekandi",
+      "Tiltenbrugger",
+      "Turshem",
+      "Zorgahani"
+    ],
+    "bynames": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "noble_names": [
+      "al'Nabab",
+      "Ankrabad",
+      "Awallakand",
+      "Bakrachal",
+      "Barbrück",
+      "Bensunni Dassareth",
+      "Farukand",
+      "Nasiradbad",
+      "Ras Abris",
+      "Ras Surya",
+      "Revennis",
+      "Tasilimpfort",
+      "Tebahan",
+      "Tebanfurt",
+      "Terchabbrück",
+      "Untersternheim",
+      "Veharis",
+      "Yakshabar",
+      "Yasirabad",
+      "Yerkesh"
+    ],
+    "raw_text": "13Aranien \n-»Dein Sohn ist ein Nichtsnut z, Marwamir. Warum\nnur konntest du mir nicht mehr'Töchter schenken? \nWenn er es selbst zu nichts bringt, müssen wir ihn \neben für unsere Zwecke einspannen. Ich hab's! Ver­\nheiraten wir \nihn doch an die Emira von Chalukand. \nDie soll im Alter immer weniger Wert auf kluge \n.' Männer legen, sagt man. Dann kann er wenigstens \nden Namen seiner Mutter nicht mehr entehren.« \n-aus dem Theaterstück Der Prinz von Chalukand, Zorgan, \n1010 BF \nIn Aranien treffen seit Jahrhunderten Einflüsse des Mit­telreiches und der Tulamiden aufeinander. Das sprich­wörtlich gewordene baburinische Sprachgewirr blieb auch nicht ohne Einfluss auf die Namensgebung, und so finden sich neben mittelreichischen Vornamen (Sei­te 26) im Norden und tulamidischen (Seite 58) im Sü­den auch zahlreiche Vermischungen wie Yussufried oder Lailalinde. Häufig sind außerdem Anleihen bei den Zwölfgöttern, besonders Peraine, Rahja, Phex (oft auch tulamidisch Feqz). Rondra ist als Namenspatin beson­ders bei Kämpfenden und dem hauptsächlich im Norden Araniens bis hoch nach Perricum verbreiteten Volks­stamm \nder Baburen beliebt. \nNachnamen sind vor allem bei Familien mittelreichi­scher Abkunft verbreitet, jedoch gibt es auch einige alte Sippennamen, die als solche genutzt werden. Be­liebt ist auch in manchen Gegenden, den Herkunftsort durch anhängen eines -i zum Nachnamen zu machen. Die meisten Aranier führen jedoch, ebenso wie die Tu­lamiden, statt eines Nachnamens Vater-bzw. Mutter­name. Da in Aranien ein Matriarchat herrscht, wählen jedoch ausschließlich Männer den Namen ihres Vaters und stellen ihn mit ibn (Sohn des) ihrem eigenen Namen nach. Abdulon heißt also nach seinem Vater Abdulon ibn Dscheridan. Frauen hingegen führen den Namen der Mutter, verhei­ratete Frauen den ihrer Schwiegermutter. Dieser wird entweder nach einem saba (Tochter der) genannt, oder aber sie stellen ihm -sun(n)i oder -sunya nach. Aylalind kann sich also, je nachdem, was in ihrer Familie üblich ist, auf drei Arten nach ihrer Mutter Dassareth nennen: entweder Aylalind Dassrethsunya, Aylalind Dassareth­sunni oder Alylind saba Dassareth. Adelsnamen werden je nach Familientradition und kul­turellem Hintergrund mit von oder mit der tulamidi­schen Entsprechung ay/ai angehängt. \nHelden & Heilige: Arkos von Zorgahan (Gemahl Königin Mygdonias, Mitbegründer des Theaterordens, Heiliger der Rondra), Arkos Shah II. (Herrscher Araniens), Ascan-� dear von Baburin (Steinmetz, Rahjaheiliger der Hinga­be), Dimiona von Zorgan (gefallene Prinzessin, Hexe und Belkelel-Paktiererin, bis zu ihrem Tod Heptarchin und Herrscherin Orons), Ele0nora Shahi (Herrscherin Araniens), Le.omar von Baburin (Rondraheiliger), Myg­donia I. (erste aranische Königin nach Bosparans Fall), Schukschum Turge (König der Diebe von Baburin, Phe­xens Liebling), Sybia al'Nabab (Herrscherin, die Aranien in die Unabhängigkeit führte, später Führerin der Mada Basari) \nVornamen (w): Aischanka, Alisanya, Arjun(n)a, As­hina, Asleika, Aylalind, Ayshira, Ayshulianne, Azize­lis, Banazir(a), Belizath, Damara, Dassareth, Dilhabeth, Dunjanild, Elaisha, Eleonora, Emerbeth, Farissa, Fayrie­ke, Feruja, Feqzlind(e), Gazalinde, Halimyanis, Hamide, Hildebeth, Iphemia, Ishannah, Jashild, Jasina, Jushiber­ta, Kalashra, Khedrine, Khelbara, Khorena, Lailalinde, Leudira, Leushanya, Manjula, Merishja, Nedimsira, Ne­raidane, Perainibith, Peranshaya, Rahjadane, Rahjana, Rashpatane, Rhayadaque, Rondirai, Rondrayla, Sha(n)­ya, Sherizeth, Shilaldara, Shulamunde, Shulinai, Sulaj­maid, \nSulamin, Sybia, Tsabine, Yathil(d)a, Yullabethild, Zulhaminai \nVornamen (m): Abdulon, Abdulrik, Abubrecht, Aliban, Amaryd, Amirwolf, Arkos, Arras, Assaban, Beyhelm, Djafardeon, Djemilassar, Dschadirfried, Dscheridan, Fa­rukol, Hamarbald, Harunian, Hassanfried, Jashan, Jikh­bald, Kashban, Korwan, Leomar, Leuhalla, Machmud, Marwamir, Melekhelm, Merkan, Muhalla, Mukarribald, Nabur, Nar(e)bold, Nezahet, Omjaralf, Peranjador, Rah­jabert, Rahjadan, Rashdan, Rassan, Rasulan, Retoban, Rohaldor, Rondrador, Rondramir, Selimdor, Selimwar, Shabobert, Shafirio, Shamar, Sharondrio, Sulhamid, Sul­tanor, Taref, Tariq, Tuleffried, Wulftan, Yadail, Yassir­man, Yorlak, Yus sufried \nFamiliennamen: Aimaristani, ak'Shahbra, Alahjan, al'Akhdar, al'Awan, al'Barad, Alhazir, al'Keshal'Kharash, al'Kitab, as'Ahlan, as'Najaras, as'Sarjabaran, as'Sher­chem, as'Tahan, Bishar, Elburumi, Elyeshinnah, Kahra­man, Terekandi, Tiltenbrugger, Turshem, Zorgahani \nAdelsnamen: al'Nabab, Ankrabad, Awallakand, Bak­rachal, Barbrück, Bensunni Dassareth, Farukand, Na­siradbad, Ras Abris, Ras Surya, Revennis, Tasilimpfort, Tebahan, Tebanfurt, Terchabbrück, Untersternheim, Veharis, Yakshabar, Yasirabad, Yerkesh \n\n14Bornland \n-»Hast du schon gehört, Yasinde? Die ]annerloffs \n„ haben ihre jüngste Nadschenka genannt. Ist ja ein \nniedliches Ding, noch keinen Mond alt. Aber das \nklingt irgendwie schon sehr ... norbardisch, muss ich \nsagen.« \n-die Krämerin Gari Grumpen zu einer Vertrauten, \nfestum 1037 BF \nIm \nBornland ist das Garethi mal mehr, mal weniger stark von fremden Begriffen durchsetzt, und so sind selbst nivesisch oder norbardisch anmutende Namen keine Seltenheit. üblicherweise trägt man Vor-und Zunamen, eine Ausnahme sind Leibeigene, die übli­cherweise keine Familiennamen tragen. Sie nennen sich meist nur nach ihrem Herkunftsort, wenn sie die­sen überhaupt einmal verlassen und eine genauere Be­zeichnung erforderlich wird. Abkürzungen oder kurze Rufnamen \nwie Danja, Thila, Elko, oder U go sind im Bornland beliebt. Darüber hinaus werden auch eigene Koseformen gebildet, indem der Name so verändert wird, dass er etwa auf -ja, -ka oder \n-scha endet. Aus Matajew wird z. B. Matje-scha, aus Maline wird Malischka und aus Elwine Elwinka oder Elwinje. Die Namen des Adels, der gern auch Dop­pelnamen wählt, schwanken zwischen hochtrabend, bedrohlich und lächer­lich. Jedoch sollte es besser nie­mand wagen, einen Bronnjaren zu verlachen, weil \ner Rondrian von Sjepengurken oder Leo­mar von Schissna-Krempe­low heißt. \nHelden & Heilige: Ans­hag von Glodenhof (letz­ter Marschall der The-aterritter), Festo von Aldyra (Drachentöter, Grün­der Festums und Neersands), Linjan von Elenau (Gewinner des Heiligengangs, Anführer der bornischen Truppen im Haffax-Feldzug), Nadjescha von Leufurten (amtierende Adelsmarschallin), Rondra-gabund von Riedemer (Thea­territterin, Rondras Schutzheilige der Waffen), Thesia von Ilmen­stein (ehemalige Adelsmarschal­lin und Heldin \nim Kampf gegen Borbarad), Urnislaw von Uspiau­nen (Erzmagier) Vornamen (w): Alinja, Alwinje, Baernja, Bernischa, Danja, Dorlin, Duna, Dunjascha, Eljascha, Elkwine, Elm­jescha, Firunja, Frinja, Gari, Geertja, Grimje, Gritten, Gudwinja, Helvja, Hesinja, Ifirnja, Ilmjescha, Irinja, Isid­ra,Jadvige,Janne,Jassia,Jedwinja,Jella, Karinja, Kundra, Leudara, Libussa, Luta, Lysminja, Maline, Marissja, Mar­ja, Moschane, Nadjescha, Nadschenka, Nessa, Nuschinja, Olja, Paale, Peraenja, Peranka, Rabescha, Rassia, Rihinja, Rowena, Rowinja, Rudwischa, Selwine, Sewjescha, Sulja, Tesbinja, Thesia, Thila, Tineke, Tjeika, Travjescha, Tu­riken, Ulmjescha, Urjelke, Vanjescha, Verisja, Vestissja, Warja, Winja, Wolpjane, Wulfjascha, Xinja, Yadwinja, Yasinde, Zidon je \nVornamen (m): Albin, Anshag, Arvid, Baerjan, Baerow, Berschin, Birjew, Bornjeff, Bosjew, Boutsen, Daanje, Dabbert, Damian, Danow, Duchjo, Dulgjew, Dunjew, Dunjoscha, Elkjow, Elko, Elkwin, Ertzel, Firnjan, Firun­jew, Fredo, Galjan, Goljew, Grimjan, Hane, Helmjew, Hurdo, Iber, Ilmin, Irjan, Ischtan, Jaakon, Jarlow, Jas­per, ]oost, Joschin, ]ucho, Kolkja, Larjan, Leomar, Lin­jan, Littjew, Ljasew, Ljubow, Maris, Matajew, Meljow, Mew, Miljan, Mjesko, Nasjan, Neerjan, Neesdan, Olko, Orschin, Oswin, Panek, Pedder, Peraenjow, Pettar, Pit­jow, Pjerow, Rowin, Rudjew, Semkin, Stane, Suschin, Tannjew, Thezmar, Tirulf, Torjin, Travin, Ugo, Ulmjan, UlmQ)ew, Uriel, Urnislaw, Vigo, Vito, Wassjew, \nWolpje, Wulfen, Wulfjew, Xebbert \nFamiliennamen: Alatzer, Alwinnen, Arauken, Baeren­sen, Baerow, Bornski, Brinnske, Dappersjen, Dobelsteen, Donsemkin, Drulgosch, Ebersen, Eelkinnen, Elkensen, Elmsjen, Firnske, Firunkis, Gartimpski, Gerbensen, Ger­berow, Grumpen, Hinske, Hollerow, Ilmensen, Ilumkis, Jannerloff, Jannske, Juchski, Karenkis, Karjensen, Kru­schin, Kunzke, Laikis, Larinow, Luminoff, Meskinske, Miljes, Muselken, Nagragski, Notjes, Ouvensen, Paren­kis, Peddersen, Peddersjepen, Perschoff, Puschinske, Puspersen, Rodensen, Ruderow, Salderken, Schorkin, Sewerski, Surjeloff, Siveling, Sjepensen, Stipkow, Stoer­rebrandt, Timpski, Tuljow, Turjeleff, Ulmensen, Ulmski, Walroder, Walsareff, Walsjakow, Wolpjes, Wulfski \nAdelsnamen: Aringen, Blütenfeld, Brinbaum, Dotzen, Elkauen, Erbarmen, Eschenfurt, Gradnochsjepe\nngur­ken, Hinzk, Ilmenstein, Kirschhausen, Krempelow, Lar­sach, Notmark, Plötzingen, Quelldunkel, Salderkeim, Schossko, Sjepengurken, Treie, Wosna \n"
+  }
+}

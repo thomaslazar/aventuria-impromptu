@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Freie Städte des Nordens & Dominium Donnerbach",
+    "key": "freie_staedte_norden_dominium_donnerbach",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Freie Städte des Nordens und das Dominium Donnerbach",
+      "note": "Textbasis: Abschnitt über die Siedlerstädte des Nordens und das Dominium Donnerbach."
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "noble_f",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      },
+      {
+        "id": "noble_m",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": [
+          "noble"
+        ]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_only": 3,
+      "common_m_only": 3,
+      "common_f_surname": 4,
+      "common_m_surname": 4,
+      "noble_f": 1,
+      "noble_m": 1
+    },
+    "particles": {
+      "noble": [
+        "von"
+      ],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      }
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Adilgunde",
+      "Adlanga",
+      "Aldare",
+      "Alfianna",
+      "Baerhild",
+      "Baernja",
+      "Bilhildis",
+      "Carissima",
+      "Damaris",
+      "Dorell",
+      "Elftraute",
+      "Elfwyn",
+      "Elkwine",
+      "Elslin",
+      "Farnlieb",
+      "Fianna",
+      "Firnwild",
+      "Gerlin",
+      "Griseldis",
+      "Heleona",
+      "Heronda",
+      "Holdtraude",
+      "Ifirnja",
+      "Ila",
+      "Jascham",
+      "Kajani",
+      "Leleth",
+      "Lidwina",
+      "Linnea",
+      "Lyncordia",
+      "Madagund",
+      "Mandlin",
+      "Minnegard",
+      "Nadjescha",
+      "Nanna",
+      "Nirka",
+      "Norgard",
+      "Olja",
+      "Riana",
+      "Rodegard",
+      "Rondrine",
+      "Rowena",
+      "Saari",
+      "Sibille",
+      "Svea",
+      "Swangard",
+      "Thalia",
+      "Tjeika",
+      "Ulfhild",
+      "Valariel",
+      "Valborga",
+      "Vanjescha",
+      "Waidgunde",
+      "Widogard",
+      "Wisgard",
+      "Wulfhild",
+      "Yrme"
+    ],
+    "given_m": [
+      "Adhelm",
+      "Adoran",
+      "Aeldereth",
+      "Alb(u)in",
+      "Anshag",
+      "Baerjan",
+      "Bosjew",
+      "Branwyn",
+      "Curathan",
+      "Dietrad",
+      "Dunarth",
+      "Ealdawin",
+      "Elfert",
+      "Elko",
+      "Enolf",
+      "Farnion",
+      "Firunjan",
+      "Firutin",
+      "Gerlin",
+      "Gerwulf",
+      "Grimjan",
+      "Hanko",
+      "Heleon",
+      "Herodan",
+      "Ifirnion",
+      "Imion",
+      "Isenbard",
+      "Jorinen",
+      "Lanthir",
+      "Leoderich",
+      "Lorion",
+      "Marnion",
+      "Mew",
+      "Nurian",
+      "Olean",
+      "Orschin",
+      "Ortwin",
+      "Oswin",
+      "Patril",
+      "Pettar",
+      "Rodegar",
+      "Rondril",
+      "Thalion",
+      "Thorolf",
+      "Tuljew",
+      "Waidhart",
+      "Wolforn"
+    ],
+    "surnames": [
+      "Arlin",
+      "Bergwacht",
+      "Bogner",
+      "Frantischek",
+      "Gerstenschröter",
+      "Grünfelde",
+      "Kolenbrander",
+      "Mandelaug",
+      "Rohtkop",
+      "Schmied",
+      "Sewerin",
+      "Stiewick",
+      "Waldner",
+      "Waidmann",
+      "Wangelwilder",
+      "Wolfhein"
+    ],
+    "bynames": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "noble_names": [
+      "Amselsprung",
+      "Ahorning",
+      "Birkenbach",
+      "Bjaldorn",
+      "Bruchau",
+      "Donnerbach",
+      "Lewenstein",
+      "Rennetal",
+      "Rüsterbach",
+      "Starkenfall",
+      "Waldeck",
+      "Wehrlau"
+    ],
+    "raw_text": "Freie Städte des Nordens und das Dominium Donnerbach (gekürzter Originaltext)."
+  }
+}

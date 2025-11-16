@@ -1,0 +1,266 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Fjarninger",
+    "key": "fjarninger",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "17 Fjarninger",
+      "note": "Includes honorific bynames and tribe (Leute) names."
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "common_f_only",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "common_m_only",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "hon_f_only",
+        "template": "{given_f} {honorific}",
+        "usage": [
+          "common",
+          "honorific"
+        ]
+      },
+      {
+        "id": "hon_m_only",
+        "template": "{given_m} {honorific}",
+        "usage": [
+          "common",
+          "honorific"
+        ]
+      },
+      {
+        "id": "tribal_f_von",
+        "template": "{given_f} {generic_particle} {tribe}",
+        "usage": [
+          "common",
+          "tribal"
+        ]
+      },
+      {
+        "id": "tribal_m_von",
+        "template": "{given_m} {generic_particle} {tribe}",
+        "usage": [
+          "common",
+          "tribal"
+        ]
+      },
+      {
+        "id": "tribal_hon_f_von",
+        "template": "{given_f} {honorific} {generic_particle} {tribe}",
+        "usage": [
+          "common",
+          "tribal",
+          "honorific"
+        ]
+      },
+      {
+        "id": "tribal_hon_m_von",
+        "template": "{given_m} {honorific} {generic_particle} {tribe}",
+        "usage": [
+          "common",
+          "tribal",
+          "honorific"
+        ]
+      },
+      {
+        "id": "tribe_only",
+        "template": "{tribe}",
+        "usage": [
+          "tribal",
+          "standalone"
+        ]
+      }
+    ],
+    "pattern_weights": {
+      "common_f_only": 3,
+      "common_m_only": 3,
+      "hon_f_only": 2,
+      "hon_m_only": 2,
+      "tribal_f_von": 3,
+      "tribal_m_von": 3,
+      "tribal_hon_f_von": 2,
+      "tribal_hon_m_von": 2,
+      "tribe_only": 1
+    },
+    "particles": {
+      "noble": [],
+      "generic": [
+        "von den"
+      ]
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      }
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Angveig",
+      "Arnthrud",
+      "Asgora",
+      "Baska",
+      "Björga",
+      "Blotaxa",
+      "Dandagard",
+      "Draumirga",
+      "Fenrissa",
+      "Frunvirga",
+      "Funudara",
+      "Fyrveig",
+      "Gimmahalra",
+      "Gunnlaug",
+      "• Halfga",
+      "Halstakkara",
+      "Hellgard",
+      "Hildur",
+      "Hoelgjirda",
+      "Ifnirga",
+      "Irngrid",
+      "Isjarda",
+      "Jaldrud",
+      "Karherga",
+      "Lotgara",
+      "Lykvuda",
+      "Lyrveig",
+      "Ordruna",
+      "Rangra",
+      "Rannveig",
+      "Sigrundra",
+      "Sirngrid",
+      "Sisnaveld",
+      "Skarda",
+      "Skirngard",
+      "Snorja",
+      "Svallveig",
+      "Svannlaug",
+      "Svellgra",
+      "Ulfgard",
+      "Varrag",
+      "Walgrid",
+      "Walgrimdra",
+      "Wyrmtrud",
+      "Ylwa",
+      "Yngheld"
+    ],
+    "given_m": [
+      "Angardur",
+      "Asgold",
+      "Askleivir",
+      "Balkur",
+      "Banibeorn",
+      "Bardagimur",
+      "Baskir",
+      "Blotgrim",
+      "Blotulfur",
+      "Bod-var",
+      "Darnlaugr",
+      "Darkir",
+      "Engur",
+      "Felldur",
+      "Fenrissir",
+      "Fjallgart",
+      "Frungrim",
+      "Frunibrandt",
+      "Frunobar",
+      "Frunwulf",
+      "Gjallur",
+      "Greimdrur",
+      "Harsthor",
+      "Havgrimur",
+      "Heffnard",
+      "Herfnir",
+      "Hjanir",
+      "Hjant",
+      "Hjort",
+      "Hjorvard",
+      "Ilkjart",
+      "Il-vnir",
+      "Isgrinur",
+      "Jölmi",
+      "Kargrim",
+      "Kladogant",
+      "Mjösgur",
+      "Pandur",
+      "Raluf",
+      "Sigrindur",
+      "Skarbeorn",
+      "Skjoldur",
+      "Snallnard",
+      "Snarkir",
+      "Songrimur",
+      "Steinthor",
+      "Surthor",
+      "Svartbanir",
+      "Tjuntart",
+      "Torgrim",
+      "Tronthor",
+      "Valbrand",
+      "Waleif"
+    ],
+    "surnames": [],
+    "bynames": [],
+    "tribes": [
+      "Bluttrinker-Leute",
+      "Doppelaxt-Leute",
+      "Eisbrecher-Leute",
+      "Eisfuchs-Leute",
+      "Firnklippen-Leute",
+      "Frostfeuer-Leute",
+      "Funkenglut-Leute",
+      "Grimmfrost-Leute",
+      "Schreiende-Schwerter-Leute",
+      "Sturmbrüller-Leute"
+    ],
+    "sippen": [],
+    "honorifics": [
+      "der Allesesser",
+      "Bärenzwinger",
+      "Bluträ. cherin",
+      "die Blutsäuferin",
+      "Donnerschrei",
+      "Eisenschwingerin",
+      "Eisläufer",
+      "Fellreißerin",
+      "Feuerbringer",
+      "Frostherz",
+      "Frostzunge",
+      "die Furchtlose",
+      "Grimmauge",
+      "Keulenbrecher",
+      "Schneeschleicher",
+      "Stoßzahnbrecherin",
+      "Todesaxt/-klinge/-pfeil/-faust",
+      "der Unbezwingbare",
+      "Vollstreckerin",
+      "der Wächter",
+      "Wildherz"
+    ],
+    "noble_names": [],
+    "raw_text": "17Fjarninger \n-»Ich bin Ylwa Wildherz von den Eisfuchs -Leuten.\nUnd du bist ein toter Mann!« \n-aus einem Expeditionstagebuch, gefunden zwi­\nschen mehreren Eisleichen, 1039 BF \nDie Namen der Fjarninger klingen oft ebenso hart und kalt wie der Wind in der Heimat der Nordlandbarbaren, der um die eisigen Klippen tost. Sie selbst nenen sich Frundegar, was übersetzt „Die unter Frunus Schutz stehen\" bedeutet. Die Verehrung des grimmen Wintergottes Frunu, aber auch der Feuer-und Schmiedegöttin Angara, schlägt sich manchmal auch in ihrer Namensgebung nieder. Nachnamen kennen die Fjarninger nicht, viele von ih­nen tragen jedoch klangvolle Ehrennamen und führen stolz den Namen ihrer Sippe. Aussprachehi lfe \nDas „Y\" wird wie ein „I\" ausgesproc hen, das „R\"\nrau und rollend wie in „Gurgel\".\nHelden & Heilige: Audur Eisenherz (legendärer Zau­berschmied), Corhidas der Ungbeugte (Held der Helden der Fjarninger), Fyrveig Doppelaxt (Zauberschmiedin der Doppelaxt-Le�te), Hjorvard der Wanderer (sagen­umwobener Mammut-Seher), Kladogant der Stampfer (Häuptling der Firnklippen-Leute), Lotgara Mammut­schreck \n(berüchtigte Großwildjägerin), Raluf der Kühne (Begleitete den König der Meere Phileasson auf seiner legendären Wettfahrt um die bekannte Welt), Savana­borg Kjartansdottir (führte die Vorfahren der Fjarnin­ger in Frunus Reich) \nVornamen (w): Angveig, Arnthrud(ir), Asgora, Bas­ka, Björga, Blot(s)axa, Dandagard, Draumirga, Fenrissa, Frunvirga, Funudara, Fyrveig, Gimmahalra, Gunnlaug, • Halfga, Halstakkara, Hellgard, Hildur, Hoelgjirda, If­nirga, Irngrid, Isjarda, Jaldrud, Karherga, Lotgara, Lyk­vuda, Lyrveig, Ordruna, Rangra, Rannveig, Sigrundra, Sirngrid, Sisnaveld, Skarda, Skirngard, Snorja, Svallveig, Svannlaug, Svellgra, Ulfgard, Varrag, Walgrid, Walgrim­dra, Wyrmtrud, Ylwa, Yngheld(ir) \nVornamen (m): Angardur, Asgold, Askleivir, Balkur, Ba­nibeorn, Bardagimur, Baskir, Blotgrim, Blotulfur, Bod-var, Darnlaugr, Darkir, Engur, Felldur, Fenrissir, Fjall­gart, Frungrim, Frunibrandt, Frunobar, Frunwulf, Gjallur, Greimdrur, Harsthor, Havgrimur, Heffnard, Herfnir, Hjanir, Hjant, Hjort, Hjorvard, Ilkjart, Il-vnir, Isgrinur, Jölmi, Kargrim, Kladogant, Mjös­gur, Pandur, Raluf, Sigrindur, \nSkarbeorn, Skjol­dur, Snallnard, Snarkir, Songrimur, Steinthor, Surthor, Svartbanir, Tjuntart, Torgrim, Tronthor, Valbrand(ar), Waleif \nEhrennamen: der Allesesser, Bärenzwinger, Bluträ­. cherin, die Blutsäuferin, Donnerschrei, Eisenschwin­gerin, Eisläufer, Fellreißerin, Feuerbringer, Frostherz, Frostzunge, die Furchtlose, Grimmauge, Keulenbre­cher(in), Schneeschleicher, Stoßzahnbrecherin, To­desaxt/-klinge/-pfeil/-faust, der Unbezwingbare, Vollstreckerin, der Wächter, Wildherz \nStammesnamen der Fjarninger: Bluttrin­ker-Leute, Doppelaxt-Leute, Eisbrecher-Leute, Eisfuchs-Leute, Firnklippen-Leute, Frostfeu­er-Leute, Funkenglut-Leute, Grimmfrost-Leute, Schreiende-Schwerter-Leute, Sturmbrüller-Leute \n"
+  }
+}
