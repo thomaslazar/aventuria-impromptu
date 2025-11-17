@@ -1,0 +1,23 @@
+Sirinelle
+MU 12 KL 13 IN 15 CH 15
+FF 12 GE 13 KO 13 KK 12
+LeP 31 AsP 33 INI 13+1W6
+SK 3 ZK 0 AW 7 GS 8
+Waffenlos: AT 13 PA 7 TP 1W6 RW kurz
+Dolch: AT 14 PA 8 TP 1W6+1 RW kurz
+RS/BE 0/0 (einfache Kleidung)
+Sonderfertigkeiten: Tradition (Elfen)
+Vorteile/Nachteile: Gutaussehend I, Herausragendes
+Gehör, Zauberer; Persönlichkeitsschwäche (Arroganz,
+Neid), Schlechte Eigenschaft (Aberglaube)
+Talente: Betören 5, Einschüchtern 1, Körperbeherr-
+schung 10, Kraftakt 2, Selbstbeherrschung 4, Sinnes-
+schärfe 12, Verbergen 9, Willenskraft 4
+Zauber: Armatrutz 7, Bannbaladin 4, Blitz dich find 7,
+Fulminictus 5
+Kampfverhalten: Sirinelle bevorzugt den Einsatz von
+Zaubern. Sie wird sich unter Umständen hasserfüllt
+auf den männlichen Helden stürzen, der sie aus ihrer
+Sicht abgelehnt hat (Seite 9).
+Flucht: nach Verlust von 50 % der LeP
+Schmerz +1 bei: 23 LeP, 15 LeP, 7 LeP, 5 LeP oder weniger

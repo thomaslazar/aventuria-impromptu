@@ -104,6 +104,13 @@ async function loadDataset(baseUrl: string) {
     liturgies: await readSection(findSectionFile(manifest, "liturgies")),
     blessings: await readSection(findSectionFile(manifest, "blessings")),
     equipment: await readSection(findSectionFile(manifest, "equipment")),
+    books: await readSection(findSectionFile(manifest, "books")),
+    blessedTraditions: await readSection(
+      findSectionFile(manifest, "blessedTraditions"),
+    ),
+    magicalTraditions: await readSection(
+      findSectionFile(manifest, "magicalTraditions"),
+    ),
   };
 
   cachedDataset = createDatasetLookups(dataset);

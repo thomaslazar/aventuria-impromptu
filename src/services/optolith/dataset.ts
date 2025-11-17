@@ -16,6 +16,9 @@ export interface OptolithDataset {
   readonly liturgies: readonly DerivedEntity[];
   readonly blessings: readonly DerivedEntity[];
   readonly equipment: readonly DerivedEntity[];
+  readonly books: readonly DerivedEntity[];
+  readonly blessedTraditions: readonly DerivedEntity[];
+  readonly magicalTraditions: readonly DerivedEntity[];
 }
 
 export interface DerivedLookup {
@@ -45,12 +48,16 @@ export interface OptolithDatasetLookups {
   readonly equipment: DerivedLookup;
   readonly languages: Map<string, SelectOptionReference>;
   readonly scripts: Map<string, SelectOptionReference>;
+  readonly citationPattern: RegExp | null;
+  readonly blessedTraditions: Map<string, DerivedEntity>;
+  readonly magicalTraditions: Map<string, DerivedEntity>;
 }
 
 export function createDatasetLookups(
   dataset: OptolithDataset,
 ): OptolithDatasetLookups {
   const specialAbilitiesLookup = buildLookup(dataset.specialAbilities);
+  const citationTokens = deriveCitationTokens(dataset.books);
   return {
     manifest: dataset.manifest,
     advantages: buildLookup(dataset.advantages),
@@ -65,6 +72,9 @@ export function createDatasetLookups(
     equipment: buildLookup(dataset.equipment),
     languages: buildLanguageLookup(dataset.specialAbilities, "SA_29"),
     scripts: buildLanguageLookup(dataset.specialAbilities, "SA_27"),
+    citationPattern: buildCitationPattern(citationTokens),
+    blessedTraditions: buildEntityMap(dataset.blessedTraditions),
+    magicalTraditions: buildEntityMap(dataset.magicalTraditions),
   };
 }
 
@@ -141,4 +151,57 @@ function buildLanguageLookup(
   }
 
   return lookup;
+}
+
+function buildEntityMap(
+  entries: readonly DerivedEntity[],
+): Map<string, DerivedEntity> {
+  const map = new Map<string, DerivedEntity>();
+  for (const entry of entries) {
+    map.set(entry.id, entry);
+  }
+  return map;
+}
+
+function deriveCitationTokens(
+  books: readonly DerivedEntity[],
+): readonly string[] {
+  const tokens = new Set<string>();
+  for (const book of books) {
+    const short = String(
+      (book.locale as Record<string, unknown>)?.short ?? "",
+    ).trim();
+    if (!short) {
+      continue;
+    }
+    const compact = short.replace(/\s+/g, "");
+    if (compact) {
+      tokens.add(compact);
+      let trimmed = compact;
+      while (
+        trimmed.length > 1 &&
+        /[IVXLCDM]$/i.test(trimmed.charAt(trimmed.length - 1))
+      ) {
+        trimmed = trimmed.slice(0, -1);
+        tokens.add(trimmed);
+      }
+    }
+  }
+  return [...tokens].sort((a, b) => b.length - a.length);
+}
+
+function buildCitationPattern(tokens: readonly string[]): RegExp | null {
+  if (tokens.length === 0) {
+    return null;
+  }
+  const escaped = tokens
+    .map((token) =>
+      token.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&"),
+    )
+    .filter((token) => token.length > 0);
+  if (escaped.length === 0) {
+    return null;
+  }
+  const pattern = `(?:${escaped.join("|")})\\s*-?\\s*\\d{1,4}`;
+  return new RegExp(pattern, "giu");
 }
