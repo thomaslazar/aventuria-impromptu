@@ -581,6 +581,10 @@ function resolveSection(
       }
     }
 
+    if (!rawOption && optionNameForLabel) {
+      rawOption = optionNameForLabel;
+    }
+
     let linkedOption:
       | {
           type: string;

@@ -426,6 +426,19 @@ function getAbilityLevel(
   return ability?.level ?? 0;
 }
 
+function extractPrincipleName(reference: {
+  rawOption?: string;
+  source?: string;
+}): string | undefined {
+  const raw = reference.rawOption?.trim();
+  if (raw && raw.length > 0) {
+    return raw;
+  }
+  const match = reference.source?.match(/\(([^)]+)\)/);
+  const extracted = match?.[1]?.trim();
+  return extracted && extracted.length > 0 ? extracted : undefined;
+}
+
 function buildActivatable(
   resolved: ResolutionResult,
 ): OptolithExport["activatable"] {
@@ -442,20 +455,39 @@ function buildActivatable(
   };
 
   const handleReference = (reference: {
-    match?: { id: string };
+    match?: { id: string; normalizedName?: string };
     selectOption?: { id: number };
     level?: number;
     rawOption?: string;
     source?: string;
+    linkedOption?: { type: string; value: number };
   }) => {
     if (!reference.match) {
       return;
     }
     const instance: Record<string, unknown> = {};
+    if (reference.match.normalizedName === "prinzipientreue") {
+      const principleName = extractPrincipleName(reference);
+      if (principleName) {
+        instance.sid = principleName;
+      }
+      if (reference.level) {
+        instance.tier = reference.level;
+      }
+      addInstance(reference.match.id, instance);
+      return;
+    }
     if (reference.selectOption) {
       instance.sid = reference.selectOption.id;
     }
-    if (reference.rawOption && reference.rawOption.trim()) {
+    if (reference.linkedOption) {
+      instance.options = [
+        {
+          type: "Predefined",
+          id: reference.linkedOption,
+        },
+      ];
+    } else if (reference.rawOption && reference.rawOption.trim()) {
       instance.options = [
         {
           type: "Custom",
