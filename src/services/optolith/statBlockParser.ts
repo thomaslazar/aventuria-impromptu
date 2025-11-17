@@ -80,6 +80,7 @@ const SECTION_NORMALIZATION_MAP: Record<
   kampfverhaltenundflucht: "notes",
   flucht: "notes",
   schmerz: "notes",
+  stabzauber: "specialAbilities",
   "vorteile/nachteile": "advantages-disadvantages",
   vorteilenachteile: "advantages-disadvantages",
 };
@@ -90,6 +91,8 @@ const TYPO_CORRECTIONS: Record<string, string> = {
   schnelladen: "Schnellladen",
   eigne: "Eigene",
   "schlechte eigenschaften": "Schlechte Eigenschaft",
+  "bindung des stabs": "Bindung des Stabes",
+  merkmalskenntnisse: "Merkmalskenntnis",
 };
 
 const ATTRIBUTE_ABBREVIATIONS: Record<string, string> = {
@@ -156,6 +159,9 @@ const EQUIPMENT_ENTRY_OVERRIDES: Record<string, string> = {
   seil: "Kletterseil, pro Schritt",
   "leichte shakagra platte": "Leichte Shakagra-Plattenrüstung",
   "shakara-hammer": "Kriegshammer",
+  "wildnispaket": "Wildnispaket",
+  "wildnis paket": "Wildnispaket",
+  "wildnis-paket": "Wildnispaket",
 };
 
 const LIST_BULLET_PATTERN = /[•●◦‣∙]/g;

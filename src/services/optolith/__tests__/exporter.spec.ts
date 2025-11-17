@@ -35,7 +35,7 @@ describe("exportToOptolithCharacter", () => {
   it("includes resolved weapons, armor, and equipment in belongings", async () => {
     const dataset = await loadDataset();
     const lookups = createDatasetLookups(dataset);
-    const raw = await loadSample("stammeskriegerin-napewanha");
+    const raw = await loadSample("stammeskriegerin-der-Napewanha");
     const parsed = parseStatBlock(raw);
     const resolved = resolveStatBlock(parsed.model, lookups);
 
@@ -177,5 +177,35 @@ Ausrüstung: 10 Schritt Seil
       (item) => (item as { template?: string }).template === "ITEMTPL_219",
     ) as { amount?: number } | undefined;
     expect(rope?.amount).toBe(10);
+  });
+
+  it("exports Prinzipientreue entries with string sid references", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Prinzipientreuer
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Nachteile: Prinzipientreue I (Völkerverständigung, Friedfertigkeit)
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.DISADV_34).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sid: "Völkerverständigung", tier: 1 }),
+        expect.objectContaining({ sid: "Friedfertigkeit", tier: 1 }),
+      ]),
+    );
   });
 });
