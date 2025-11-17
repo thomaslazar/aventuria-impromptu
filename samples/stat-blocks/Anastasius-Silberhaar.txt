@@ -1,0 +1,30 @@
+Anastasius Silberhaar
+MU 15 KL 16 IN 17 CH 17
+FF 12 GE 11 KO 10 KK 10
+LeP 28 AsP 54 KaP – INI 13+1W6
+AW 6 SK 3 ZK 0 GS 8
+Schips: 3
+Kampftechniken: Stangenwaffen 10
+Magierstab, lang: AT 13 PA 9 TP 1W6+2
+RW lang
+RS/BE: 0 / 0
+Sozialstatus: frei
+Vorteile: Zauberer
+Nachteile: Prinzipientreue I (Völkerverständigung, Friedfertigkeit), Schlechte Eigenschaft (Neugier)
+Sonderfertigkeiten: Tradition (Gildenmagier), Merkmalskenntnisse (Heilung und Telekinese)
+Sprachen: Asdharia II, Bosparano III, Garethi III, Goblinisch II, Isdira III, Rogolan III
+Schriften: Kusliker Zeichen, Asdharia- und Isdira-Zeichen
+Talente:
+Körper: Klettern 4, Körperbeherrschung 3, Schwimmen 4, Selbstbeherrschung 11, Sinnesschärfe 8, Verbergen 7
+Gesellschaft: Etikette 11, Menschenkenntnis 12, Willenskraft 13
+Natur: Fährtensuchen 5, Fischen & Angeln 8, Orientierung 8, Pflanzenkunde 15, Tierkunde 14, Wildnisleben 13
+Wissen: Geographie 15, Geschichtswissen 14, Götter & Kulte 12, Magiekunde 15, Rechnen 13, Rechtskunde 11, Sagen & Legenden 14, Sphärenkunde 11, Sternkunde 12
+Handwerk: Heilkunde Wunden 14, Holzbearbeitung 6, Lebensmittelbearbeitung 6, Lederbearbeitung 6, Malen & Zeichnen 8, Musizieren 10, Stoffbearbeitung 11
+Zaubertricks: Feuerfinger, Handwärmer, Lockruf, Trocken
+Zauber: Axxeleratus (Elfen) 14, Balsam Salabunde 16, Motoricus 15, Movimento 16, Transversalis 14
+Rituale: –
+Stabzauber: Bindung des Stabs, Ewige Flamme, Seil des Adepten, Stab-Apport
+Ausrüstung: Wildnis-Paket
+Kampfverhalten: versucht, Kämpfen aus dem Weg zu gehen
+Flucht: Verlust von 50 % der LeP
+Schmerz +1 bei: 21 LeP, 14 LeP, 7 LeP, 5 LeP oder weniger

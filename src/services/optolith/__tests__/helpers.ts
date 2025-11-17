@@ -46,6 +46,8 @@ export async function loadDataset(): Promise<OptolithDataset> {
     books,
     blessedTraditions,
     magicalTraditions,
+    properties,
+    equipmentPackages,
   ] = await Promise.all([
     readSection("advantages"),
     readSection("disadvantages"),
@@ -60,6 +62,8 @@ export async function loadDataset(): Promise<OptolithDataset> {
     readSection("books"),
     readSection("blessedTraditions"),
     readSection("magicalTraditions"),
+    readSection("properties"),
+    readSection("equipmentPackages"),
   ]);
 
   return {
@@ -77,5 +81,7 @@ export async function loadDataset(): Promise<OptolithDataset> {
     books,
     blessedTraditions,
     magicalTraditions,
+    properties,
+    equipmentPackages,
   };
 }

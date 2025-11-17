@@ -24,6 +24,10 @@ export interface ResolvedReference {
   readonly level?: number;
   readonly rawOption?: string;
   readonly quantityHint?: number;
+  readonly linkedOption?: {
+    readonly type: string;
+    readonly value: number;
+  };
 }
 
 export interface ResolvedLanguage extends ResolvedReference {
@@ -141,6 +145,7 @@ const SCRIPT_NAME_OVERRIDES: Record<string, string> = {
   asdharia: "Isdira- und Asdharia-Zeichen",
   "isdira und asdharia zeichen": "Isdira- und Asdharia-Zeichen",
   "isdiraund asdharia zeichen": "Isdira- und Asdharia-Zeichen",
+  "asdharia und isdira zeichen": "Isdira- und Asdharia-Zeichen",
   rogolan: "Rogolan-Runen",
 };
 
@@ -205,6 +210,46 @@ const NUMBER_WORDS = new Set(
     "zwölf",
   ].map((value) => value.toLowerCase()),
 );
+
+const MULTI_OPTION_ABILITIES = new Set([
+  "berufsgeheimnis",
+  "ortskenntnis",
+  "merkmalskenntnisse",
+  "merkmalskenntnis",
+]);
+
+const SELECT_OPTION_CATEGORY_MAP: Record<
+  string,
+  {
+    readonly type: string;
+    readonly lookup: (lookups: OptolithDatasetLookups) => DerivedLookup;
+  }
+> = {
+  BLESSINGS: {
+    type: "Blessing",
+    lookup: (lookups) => lookups.blessings,
+  },
+  CANTRIPS: {
+    type: "Cantrip",
+    lookup: (lookups) => lookups.cantrips,
+  },
+  LITURGICAL_CHANTS: {
+    type: "LiturgicalChant",
+    lookup: (lookups) => lookups.liturgies,
+  },
+  PROPERTIES: {
+    type: "Property",
+    lookup: (lookups) => lookups.properties,
+  },
+  SKILLS: {
+    type: "Skill",
+    lookup: (lookups) => lookups.skills,
+  },
+  SPELLS: {
+    type: "Spell",
+    lookup: (lookups) => lookups.spells,
+  },
+};
 
 const LENGTH_MEASUREMENT_PATTERN =
   /^(\d+)\s+(schritte?|schritt|meter|metern|m)\b\s*(.*)$/iu;
@@ -455,16 +500,36 @@ function resolveSection(
   const results: ResolvedReference[] = [];
 
   const processValue = (value: string, allowSplit: boolean): void => {
+    if (
+      section === "equipment" &&
+      tryExpandEquipmentPackage(value, context, processValue)
+    ) {
+      return;
+    }
     const components = parseEntryComponents(value);
-    let normalized = normalizeLabel(components.baseName);
+    const normalizedBaseName = normalizeLabel(components.baseName);
+    const shouldSplitOptions = shouldSplitMultiOptionEntry(
+      section,
+      normalizedBaseName,
+    );
+    const optionValues = shouldSplitOptions
+      ? splitOptionValues(components.options)
+      : components.options;
+    if (optionValues.length > 1 && shouldSplitOptions) {
+      for (const option of optionValues) {
+        processValue(`${components.baseName} (${option})`, false);
+      }
+      return;
+    }
+    let normalized = normalizedBaseName;
     let match = lookup.byName.get(normalized);
     let usedOptionForNormalization: string | undefined;
     let selectOption: { id: number; name: string } | undefined;
     let rawOption: string | undefined;
     let optionNameForLabel: string | undefined;
 
-    if (!match && components.options.length > 0) {
-      for (const candidate of components.options) {
+    if (!match && optionValues.length > 0) {
+      for (const candidate of optionValues) {
         const candidateName = `${components.baseName} (${candidate})`;
         const candidateNormalized = normalizeLabel(candidateName);
         const candidateMatch = lookup.byName.get(candidateNormalized);
@@ -477,8 +542,8 @@ function resolveSection(
       }
     }
 
-    if (match && hasSelectOptions(match) && components.options.length > 0) {
-      for (const candidate of components.options) {
+    if (match && hasSelectOptions(match) && optionValues.length > 0) {
+      for (const candidate of optionValues) {
         const option = findSelectOption(match, candidate);
         if (option) {
           selectOption = option;
@@ -489,12 +554,12 @@ function resolveSection(
           rawOption = candidate;
         }
       }
-    } else if (components.options.length > 0) {
-      optionNameForLabel = usedOptionForNormalization ?? components.options[0];
+    } else if (optionValues.length > 0) {
+      optionNameForLabel = usedOptionForNormalization ?? optionValues[0];
     }
 
-    if (!optionNameForLabel && components.options.length > 0) {
-      optionNameForLabel = usedOptionForNormalization ?? components.options[0];
+    if (!optionNameForLabel && optionValues.length > 0) {
+      optionNameForLabel = usedOptionForNormalization ?? optionValues[0];
     }
 
     if (!optionNameForLabel && usedOptionForNormalization) {
@@ -504,9 +569,9 @@ function resolveSection(
     if (
       match &&
       match.normalizedName === "begabung" &&
-      components.options.length > 0
+      optionValues.length > 0
     ) {
-      const targetDetail = components.options[0]!;
+      const targetDetail = optionValues[0]!;
       const resolvedTarget = resolveBegabungTarget(targetDetail, context);
       if (resolvedTarget) {
         rawOption = resolvedTarget.name;
@@ -516,12 +581,30 @@ function resolveSection(
       }
     }
 
+    let linkedOption:
+      | {
+          type: string;
+          value: number;
+        }
+      | undefined;
+    if (match && optionNameForLabel) {
+      const linked = resolveLinkedOption(
+        match,
+        optionNameForLabel,
+        context,
+      );
+      if (linked) {
+        linkedOption = linked.linkedOption;
+        optionNameForLabel = linked.label;
+      }
+    }
+
     if (!match && section === "equipment") {
       const fallbackMatch = resolveEquipmentFallbackMatch(
         value,
         "equipment",
         context,
-        components.options,
+        optionValues,
       );
       if (fallbackMatch) {
         match = fallbackMatch;
@@ -587,6 +670,7 @@ function resolveSection(
       level: components.level ?? undefined,
       rawOption,
       quantityHint: components.quantity,
+      linkedOption,
     });
     return;
   };
@@ -603,13 +687,25 @@ function resolveRatedSection(
 ): ResolvedRatedReference[] {
   const results: ResolvedRatedReference[] = [];
   for (const entry of entries) {
-    const sanitizedName = sanitizeResolvableValue(entry.name);
+    let sanitizedName = sanitizeResolvableValue(entry.name);
     if (!sanitizedName) {
       registerUnresolved(section, entry.name, context);
       continue;
     }
-    const normalized = normalizeLabel(sanitizedName);
-    const match = lookup.byName.get(normalized);
+    let normalized = normalizeLabel(sanitizedName);
+    let match = lookup.byName.get(normalized);
+    if (!match) {
+      const stripped = sanitizedName.replace(/\s*\([^)]*\)\s*$/, "").trim();
+      if (stripped && stripped !== sanitizedName) {
+        const strippedNormalized = normalizeLabel(stripped);
+        const strippedMatch = lookup.byName.get(strippedNormalized);
+        if (strippedMatch) {
+          sanitizedName = stripped;
+          normalized = strippedNormalized;
+          match = strippedMatch;
+        }
+      }
+    }
     if (!match) {
       registerUnresolved(section, sanitizedName, context);
     }
@@ -1093,6 +1189,132 @@ function buildResolvedLabel(
     return `${withLevel} (${option.trim()})`.trim();
   }
   return withLevel;
+}
+
+function shouldSplitMultiOptionEntry(
+  section: string,
+  normalizedBaseName: string,
+): boolean {
+  return (
+    section === "specialAbilities" &&
+    MULTI_OPTION_ABILITIES.has(normalizedBaseName)
+  );
+}
+
+function resolveLinkedOption(
+  match: DerivedEntity,
+  optionName: string,
+  context: ResolutionContext,
+):
+  | {
+      label: string;
+      linkedOption: { type: string; value: number };
+    }
+  | undefined {
+  const base = match.base as {
+    selectOptionCategories?: Array<{ category?: string }>;
+  };
+  const categories = Array.isArray(base?.selectOptionCategories)
+    ? base.selectOptionCategories
+    : [];
+  if (categories.length === 0) {
+    return undefined;
+  }
+  for (const entry of categories) {
+    const categoryName =
+      typeof entry?.category === "string" ? entry.category : undefined;
+    if (!categoryName) {
+      continue;
+    }
+    const mapping = SELECT_OPTION_CATEGORY_MAP[categoryName];
+    if (!mapping) {
+      continue;
+    }
+    const lookup = mapping.lookup(context.lookups);
+    const normalizedOption = normalizeLabel(optionName);
+    const target = lookup.byName.get(normalizedOption);
+    if (!target) {
+      continue;
+    }
+    const numericId = extractNumericId(target.id);
+    if (numericId === undefined) {
+      continue;
+    }
+    return {
+      label: target.name,
+      linkedOption: {
+        type: mapping.type,
+        value: numericId,
+      },
+    };
+  }
+  return undefined;
+}
+
+function extractNumericId(id: string): number | undefined {
+  const match = id.match(/_(\d+)$/);
+  if (!match) {
+    return undefined;
+  }
+  const value = Number.parseInt(match[1] ?? "", 10);
+  return Number.isNaN(value) ? undefined : value;
+}
+
+function tryExpandEquipmentPackage(
+  label: string,
+  context: ResolutionContext,
+  processValue: (value: string, allowSplit: boolean) => void,
+): boolean {
+  const packageEntry = context.lookups.equipmentPackages.get(
+    normalizeEquipmentPackageKey(label),
+  );
+  if (!packageEntry) {
+    return false;
+  }
+  pushWarning(
+    {
+      type: "split",
+      section: "equipment",
+      value: label,
+      message: `Ausrüstungspaket "${packageEntry.name}" wurde in einzelne Gegenstände zerlegt.`,
+    },
+    context,
+  );
+  for (const item of packageEntry.items) {
+    const template = context.lookups.equipment.byId.get(item.id);
+    if (!template) {
+      continue;
+    }
+    const prefix =
+      typeof item.amount === "number" && item.amount > 1
+        ? `${item.amount} `
+        : "";
+    processValue(`${prefix}${template.name}`, false);
+  }
+  return true;
+}
+
+function normalizeEquipmentPackageKey(value: string): string {
+  return normalizeLabel(value).replace(/\s+/g, "");
+}
+
+function splitOptionValues(values: readonly string[]): string[] {
+  const results: string[] = [];
+  for (const value of values) {
+    if (!value) {
+      continue;
+    }
+    const segments = value
+      .split(/(?:\bund\b|\boder\b|\/)/i)
+      .map((segment) => segment.trim())
+      .filter((segment) => segment.length > 0);
+    if (segments.length > 1) {
+      results.push(...segments);
+    } else {
+      results.push(value);
+    }
+  }
+  return results;
 }
 
 function normalizeTierToken(token: string): number | undefined {
@@ -1962,13 +2184,24 @@ function expandPrinzipientreueEntry(entry: string): string[] {
   if (!detailToken) {
     return [entry];
   }
-  const normalizedDetail = detailToken.trim().toLowerCase();
-  const override = MORALKODEX_OVERRIDES[normalizedDetail];
-  if (!override) {
+  const suffix = levelToken ? ` ${levelToken.trim()}` : "";
+  const details = detailToken
+    .split(/[,;]/)
+    .flatMap((segment) =>
+      segment
+        .split(/\bund\b/i)
+        .map((part) => part.trim())
+        .filter((part) => part.length > 0),
+    );
+  if (details.length === 0) {
     return [entry];
   }
-  const suffix = levelToken ? ` ${levelToken.trim()}` : "";
-  return [`Prinzipientreue (${override})${suffix}`.trim()];
+  return details.map((detail) => {
+    const normalized = detail.toLowerCase().replace(/\s+/g, "");
+    const override = MORALKODEX_OVERRIDES[normalized] ?? detail;
+    const prefix = `Prinzipientreue${suffix}`.trim();
+    return `${prefix} (${override})`.trim();
+  });
 }
 
 function expandVerpflichtungenEntry(entry: string): string[] {
