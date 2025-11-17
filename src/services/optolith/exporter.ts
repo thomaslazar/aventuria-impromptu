@@ -447,6 +447,7 @@ function buildActivatable(
     level?: number;
     rawOption?: string;
     source?: string;
+    linkedOption?: { type: string; value: number };
   }) => {
     if (!reference.match) {
       return;
@@ -455,7 +456,14 @@ function buildActivatable(
     if (reference.selectOption) {
       instance.sid = reference.selectOption.id;
     }
-    if (reference.rawOption && reference.rawOption.trim()) {
+    if (reference.linkedOption) {
+      instance.options = [
+        {
+          type: "Predefined",
+          id: reference.linkedOption,
+        },
+      ];
+    } else if (reference.rawOption && reference.rawOption.trim()) {
       instance.options = [
         {
           type: "Custom",

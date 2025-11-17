@@ -24,6 +24,10 @@ export interface ResolvedReference {
   readonly level?: number;
   readonly rawOption?: string;
   readonly quantityHint?: number;
+  readonly linkedOption?: {
+    readonly type: string;
+    readonly value: number;
+  };
 }
 
 export interface ResolvedLanguage extends ResolvedReference {
@@ -205,6 +209,40 @@ const NUMBER_WORDS = new Set(
     "zwölf",
   ].map((value) => value.toLowerCase()),
 );
+
+const MULTI_OPTION_ABILITIES = new Set([
+  "berufsgeheimnis",
+  "ortskenntnis",
+]);
+
+const SELECT_OPTION_CATEGORY_MAP: Record<
+  string,
+  {
+    readonly type: string;
+    readonly lookup: (lookups: OptolithDatasetLookups) => DerivedLookup;
+  }
+> = {
+  BLESSINGS: {
+    type: "Blessing",
+    lookup: (lookups) => lookups.blessings,
+  },
+  CANTRIPS: {
+    type: "Cantrip",
+    lookup: (lookups) => lookups.cantrips,
+  },
+  LITURGICAL_CHANTS: {
+    type: "LiturgicalChant",
+    lookup: (lookups) => lookups.liturgies,
+  },
+  SKILLS: {
+    type: "Skill",
+    lookup: (lookups) => lookups.skills,
+  },
+  SPELLS: {
+    type: "Spell",
+    lookup: (lookups) => lookups.spells,
+  },
+};
 
 const LENGTH_MEASUREMENT_PATTERN =
   /^(\d+)\s+(schritte?|schritt|meter|metern|m)\b\s*(.*)$/iu;
@@ -456,7 +494,17 @@ function resolveSection(
 
   const processValue = (value: string, allowSplit: boolean): void => {
     const components = parseEntryComponents(value);
-    let normalized = normalizeLabel(components.baseName);
+    const normalizedBaseName = normalizeLabel(components.baseName);
+    if (
+      components.options.length > 1 &&
+      shouldSplitMultiOptionEntry(section, normalizedBaseName)
+    ) {
+      for (const option of components.options) {
+        processValue(`${components.baseName} (${option})`, false);
+      }
+      return;
+    }
+    let normalized = normalizedBaseName;
     let match = lookup.byName.get(normalized);
     let usedOptionForNormalization: string | undefined;
     let selectOption: { id: number; name: string } | undefined;
@@ -528,6 +576,24 @@ function resolveSection(
       }
     }
 
+    let linkedOption:
+      | {
+          type: string;
+          value: number;
+        }
+      | undefined;
+    if (match && optionNameForLabel) {
+      const linked = resolveLinkedOption(
+        match,
+        optionNameForLabel,
+        context,
+      );
+      if (linked) {
+        linkedOption = linked.linkedOption;
+        optionNameForLabel = linked.label;
+      }
+    }
+
     let sourceLabel = buildResolvedLabel(
       components.baseName,
       components.level,
@@ -587,6 +653,7 @@ function resolveSection(
       level: components.level ?? undefined,
       rawOption,
       quantityHint: components.quantity,
+      linkedOption,
     });
     return;
   };
@@ -1093,6 +1160,75 @@ function buildResolvedLabel(
     return `${withLevel} (${option.trim()})`.trim();
   }
   return withLevel;
+}
+
+function shouldSplitMultiOptionEntry(
+  section: string,
+  normalizedBaseName: string,
+): boolean {
+  return (
+    section === "specialAbilities" &&
+    MULTI_OPTION_ABILITIES.has(normalizedBaseName)
+  );
+}
+
+function resolveLinkedOption(
+  match: DerivedEntity,
+  optionName: string,
+  context: ResolutionContext,
+):
+  | {
+      label: string;
+      linkedOption: { type: string; value: number };
+    }
+  | undefined {
+  const base = match.base as {
+    selectOptionCategories?: Array<{ category?: string }>;
+  };
+  const categories = Array.isArray(base?.selectOptionCategories)
+    ? base.selectOptionCategories
+    : [];
+  if (categories.length === 0) {
+    return undefined;
+  }
+  for (const entry of categories) {
+    const categoryName =
+      typeof entry?.category === "string" ? entry.category : undefined;
+    if (!categoryName) {
+      continue;
+    }
+    const mapping = SELECT_OPTION_CATEGORY_MAP[categoryName];
+    if (!mapping) {
+      continue;
+    }
+    const lookup = mapping.lookup(context.lookups);
+    const normalizedOption = normalizeLabel(optionName);
+    const target = lookup.byName.get(normalizedOption);
+    if (!target) {
+      continue;
+    }
+    const numericId = extractNumericId(target.id);
+    if (numericId === undefined) {
+      continue;
+    }
+    return {
+      label: target.name,
+      linkedOption: {
+        type: mapping.type,
+        value: numericId,
+      },
+    };
+  }
+  return undefined;
+}
+
+function extractNumericId(id: string): number | undefined {
+  const match = id.match(/_(\d+)$/);
+  if (!match) {
+    return undefined;
+  }
+  const value = Number.parseInt(match[1] ?? "", 10);
+  return Number.isNaN(value) ? undefined : value;
 }
 
 function normalizeTierToken(token: string): number | undefined {

@@ -773,6 +773,47 @@ describe("resolveStatBlock", () => {
     expect(grossschild?.normalizedSource).toBe("shakagra langschild");
   });
 
+  it("splits multi-option abilities and links liturgical references", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: [
+        "Berufsgeheimnis (Antidot, Heiltrank, Sunsura)",
+        "Ortskenntnis (Dracoras, Altstadt und Hafenviertel in Vinsalt, Neustadt in Havena, Sulhaminiah in Zorgan)",
+        "Lieblingsliturgie (Maske)",
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const tradeSecrets = resolved.specialAbilities.filter((entry) =>
+      entry.source.startsWith("Berufsgeheimnis"),
+    );
+    expect(tradeSecrets).toHaveLength(3);
+    expect(
+      tradeSecrets.map((entry) => entry.selectOption?.name),
+    ).toEqual(
+      expect.arrayContaining(["Antidot", "Heiltrank", "Sunsura"]),
+    );
+
+    const localKnowledge = resolved.specialAbilities.filter((entry) =>
+      entry.source.startsWith("Ortskenntnis"),
+    );
+    expect(localKnowledge).toHaveLength(4);
+    expect(localKnowledge.map((entry) => entry.source)).toEqual(
+      expect.arrayContaining([
+        "Ortskenntnis (Dracoras)",
+        "Ortskenntnis (Altstadt und Hafenviertel in Vinsalt)",
+        "Ortskenntnis (Neustadt in Havena)",
+        "Ortskenntnis (Sulhaminiah in Zorgan)",
+      ]),
+    );
+
+    const favoriteLiturgy = resolved.specialAbilities.find((entry) =>
+      entry.source.startsWith("Lieblingsliturgie"),
+    );
+    expect(favoriteLiturgy?.linkedOption?.type).toBe("LiturgicalChant");
+    expect(favoriteLiturgy?.linkedOption?.value).toBe(97);
+  });
+
   it("resolves Zaubertricks via the cantrip lookup", () => {
     const statBlock = createStatBlock({
       cantrips: ["Schlangenhände", "Trocken"],
