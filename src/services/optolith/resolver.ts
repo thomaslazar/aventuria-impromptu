@@ -213,6 +213,8 @@ const TALENT_NAME_OVERRIDES: Record<string, string> = {
   lebensmittelverarbeitung: "Lebensmittelbearbeitung",
 };
 
+let activeCitationPattern: RegExp | null = null;
+
 export interface ResolutionResult {
   readonly name: string;
   readonly advantages: readonly ResolvedReference[];
@@ -245,181 +247,187 @@ export function resolveStatBlock(
   statBlock: ParsedStatBlock,
   lookups: OptolithDatasetLookups,
 ): ResolutionResult {
-  const context: ResolutionContext = {
-    lookups,
-    warnings: [],
-    unresolved: new Map(),
-    warningKeys: new Set(),
-  };
+  const previousPattern = activeCitationPattern;
+  activeCitationPattern = cloneRegExp(lookups.citationPattern);
+  try {
+    const context: ResolutionContext = {
+      lookups,
+      warnings: [],
+      unresolved: new Map(),
+      warningKeys: new Set(),
+    };
 
-  const normalizedAdvDisadv = normalizeAdvantageDisadvantageLists(
-    statBlock,
-    lookups,
-  );
-  const languageAccumulator = new Set(normalizedAdvDisadv.languages);
-  const scriptAccumulator = new Set<string>();
+    const normalizedAdvDisadv = normalizeAdvantageDisadvantageLists(
+      statBlock,
+      lookups,
+    );
+    const languageAccumulator = new Set(normalizedAdvDisadv.languages);
+    const scriptAccumulator = new Set<string>();
 
-  const specialAbilityEntries = extractLanguageEntries(
-    [
-      ...statBlock.specialAbilities,
-      ...extractSpecialAbilitiesFromNotes(statBlock.notes),
-    ],
-    languageAccumulator,
-    scriptAccumulator,
-    lookups,
-  );
-  const combatSpecialAbilityEntries = extractLanguageEntries(
-    statBlock.combatSpecialAbilities,
-    languageAccumulator,
-    scriptAccumulator,
-    lookups,
-  );
+    const specialAbilityEntries = extractLanguageEntries(
+      [
+        ...statBlock.specialAbilities,
+        ...extractSpecialAbilitiesFromNotes(statBlock.notes),
+      ],
+      languageAccumulator,
+      scriptAccumulator,
+      lookups,
+    );
+    const combatSpecialAbilityEntries = extractLanguageEntries(
+      statBlock.combatSpecialAbilities,
+      languageAccumulator,
+      scriptAccumulator,
+      lookups,
+    );
 
-  const advantages = resolveSection(
-    normalizedAdvDisadv.advantages,
-    "advantages",
-    context.lookups.advantages,
-    context,
-  );
-  const disadvantages = resolveSection(
-    normalizedAdvDisadv.disadvantages,
-    "disadvantages",
-    context.lookups.disadvantages,
-    context,
-  );
-
-  const specialAbilities = resolveSection(
-    specialAbilityEntries,
-    "specialAbilities",
-    context.lookups.specialAbilities,
-    context,
-  );
-  const combatSpecialAbilities = resolveSection(
-    combatSpecialAbilityEntries,
-    "combatSpecialAbilities",
-    context.lookups.specialAbilities,
-    context,
-  );
-
-  const allLanguages = [...statBlock.languages, ...languageAccumulator];
-  const allScripts = [...statBlock.scripts, ...scriptAccumulator];
-  const languages = resolveLanguages(allLanguages, context);
-  const scripts = resolveScripts(allScripts, context);
-
-  const talents = resolveTalents(statBlock.talents, context);
-  const spells = resolveRatedSection(
-    statBlock.spells,
-    "spells",
-    context.lookups.spells,
-    context,
-  );
-  const cantrips = resolveSection(
-    statBlock.cantrips,
-    "cantrips",
-    context.lookups.cantrips,
-    context,
-  );
-  const liturgies = resolveRatedSection(
-    statBlock.liturgies,
-    "liturgies",
-    context.lookups.liturgies,
-    context,
-  );
-  const rituals = resolveRatedSection(
-    statBlock.rituals,
-    "rituals",
-    context.lookups.spells,
-    context,
-  );
-  const blessings = resolveSection(
-    statBlock.blessings,
-    "blessings",
-    context.lookups.blessings,
-    context,
-  );
-  const equipment = resolveSection(
-    statBlock.equipment,
-    "equipment",
-    context.lookups.equipment,
-    context,
-  );
-
-  const loadAdaptationLevel = getLoadAdaptationLevel(specialAbilities);
-  const weapons = resolveWeapons(statBlock.weapons, context);
-  const armor = resolveArmor(
-    statBlock.armor ?? null,
-    context,
-    loadAdaptationLevel,
-  );
-
-  const unresolvedRecord: Record<string, readonly string[]> = {};
-  for (const [section, values] of context.unresolved.entries()) {
-    unresolvedRecord[section] = Array.from(values.values());
-  }
-
-  const hasZaubererAdvantage = advantages.some(
-    (entry) =>
-      entry.match?.normalizedName === "zauberer" ||
-      entry.normalizedSource === "zauberer",
-  );
-  const hasAsp =
-    typeof statBlock.pools.asp === "number" && statBlock.pools.asp > 0;
-  const hasTradition = specialAbilities.some((entry) =>
-    entry.match?.normalizedName?.startsWith("tradition"),
-  );
-  if ((hasZaubererAdvantage || hasAsp) && !hasTradition) {
-    pushWarning(
-      {
-        type: "unresolved",
-        section: "specialAbilities",
-        value: "Tradition",
-        message:
-          "Statblock weist AsP/Zauberer auf, aber keine Tradition. Bitte Tradition manuell ergänzen.",
-      },
+    const advantages = resolveSection(
+      normalizedAdvDisadv.advantages,
+      "advantages",
+      context.lookups.advantages,
       context,
     );
-  }
-
-  const hasKap =
-    typeof statBlock.pools.kap === "number" && statBlock.pools.kap > 0;
-  const hasGeweihterAdvantage = advantages.some(
-    (entry) =>
-      entry.match?.normalizedName === "geweihter" ||
-      entry.normalizedSource === "geweihter",
-  );
-  if (hasKap && !hasTradition && !hasGeweihterAdvantage) {
-    pushWarning(
-      {
-        type: "unresolved",
-        section: "specialAbilities",
-        value: "Tradition",
-        message:
-          "Statblock weist KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil. Bitte Tradition manuell ergänzen.",
-      },
+    const disadvantages = resolveSection(
+      normalizedAdvDisadv.disadvantages,
+      "disadvantages",
+      context.lookups.disadvantages,
       context,
     );
-  }
 
-  return {
-    name: statBlock.name,
-    advantages,
-    disadvantages,
-    specialAbilities,
-    combatSpecialAbilities,
-    languages,
-    scripts,
-    talents,
-    spells,
-    cantrips,
-    liturgies,
-    rituals,
-    blessings,
-    equipment,
-    weapons,
-    armor,
-    unresolved: unresolvedRecord,
-    warnings: context.warnings,
-  };
+    const specialAbilities = resolveSection(
+      specialAbilityEntries,
+      "specialAbilities",
+      context.lookups.specialAbilities,
+      context,
+    );
+    const combatSpecialAbilities = resolveSection(
+      combatSpecialAbilityEntries,
+      "combatSpecialAbilities",
+      context.lookups.specialAbilities,
+      context,
+    );
+
+    const allLanguages = [...statBlock.languages, ...languageAccumulator];
+    const allScripts = [...statBlock.scripts, ...scriptAccumulator];
+    const languages = resolveLanguages(allLanguages, context);
+    const scripts = resolveScripts(allScripts, context);
+
+    const talents = resolveTalents(statBlock.talents, context);
+    const spells = resolveRatedSection(
+      statBlock.spells,
+      "spells",
+      context.lookups.spells,
+      context,
+    );
+    const cantrips = resolveSection(
+      statBlock.cantrips,
+      "cantrips",
+      context.lookups.cantrips,
+      context,
+    );
+    const liturgies = resolveRatedSection(
+      statBlock.liturgies,
+      "liturgies",
+      context.lookups.liturgies,
+      context,
+    );
+    const rituals = resolveRatedSection(
+      statBlock.rituals,
+      "rituals",
+      context.lookups.spells,
+      context,
+    );
+    const blessings = resolveSection(
+      statBlock.blessings,
+      "blessings",
+      context.lookups.blessings,
+      context,
+    );
+    const equipment = resolveSection(
+      statBlock.equipment,
+      "equipment",
+      context.lookups.equipment,
+      context,
+    );
+
+    const loadAdaptationLevel = getLoadAdaptationLevel(specialAbilities);
+    const weapons = resolveWeapons(statBlock.weapons, context);
+    const armor = resolveArmor(
+      statBlock.armor ?? null,
+      context,
+      loadAdaptationLevel,
+    );
+
+    const unresolvedRecord: Record<string, readonly string[]> = {};
+    for (const [section, values] of context.unresolved.entries()) {
+      unresolvedRecord[section] = Array.from(values.values());
+    }
+
+    const hasZaubererAdvantage = advantages.some(
+      (entry) =>
+        entry.match?.normalizedName === "zauberer" ||
+        entry.normalizedSource === "zauberer",
+    );
+    const hasAsp =
+      typeof statBlock.pools.asp === "number" && statBlock.pools.asp > 0;
+    const hasTradition = specialAbilities.some((entry) =>
+      entry.match?.normalizedName?.startsWith("tradition"),
+    );
+    if ((hasZaubererAdvantage || hasAsp) && !hasTradition) {
+      pushWarning(
+        {
+          type: "unresolved",
+          section: "specialAbilities",
+          value: "Tradition",
+          message:
+            "Statblock weist AsP/Zauberer auf, aber keine Tradition. Bitte Tradition manuell ergänzen.",
+        },
+        context,
+      );
+    }
+
+    const hasKap =
+      typeof statBlock.pools.kap === "number" && statBlock.pools.kap > 0;
+    const hasGeweihterAdvantage = advantages.some(
+      (entry) =>
+        entry.match?.normalizedName === "geweihter" ||
+        entry.normalizedSource === "geweihter",
+    );
+    if (hasKap && !hasTradition && !hasGeweihterAdvantage) {
+      pushWarning(
+        {
+          type: "unresolved",
+          section: "specialAbilities",
+          value: "Tradition",
+          message:
+            "Statblock weist KaP auf, aber keine geweihte Tradition oder Geweihter-Vorteil. Bitte Tradition manuell ergänzen.",
+        },
+        context,
+      );
+    }
+
+    return {
+      name: statBlock.name,
+      advantages,
+      disadvantages,
+      specialAbilities,
+      combatSpecialAbilities,
+      languages,
+      scripts,
+      talents,
+      spells,
+      cantrips,
+      liturgies,
+      rituals,
+      blessings,
+      equipment,
+      weapons,
+      armor,
+      unresolved: unresolvedRecord,
+      warnings: context.warnings,
+    };
+  } finally {
+    activeCitationPattern = previousPattern;
+  }
 }
 
 function resolveSection(
@@ -1435,7 +1443,7 @@ function sanitizeResolvableValue(value: string): string {
   if (!value) {
     return value;
   }
-  const withoutCitations = value.replace(CITATION_PATTERN, " ");
+  const withoutCitations = stripCitationReferences(value);
   const withoutEmptyParens = withoutCitations.replace(/\(\s*\)/g, "");
   const normalizedPlus = withoutEmptyParens.replace(/\s*\+\s*/g, "+");
   const collapsedWhitespace = normalizedPlus.replace(/\s+/g, " ").trim();
@@ -1445,6 +1453,16 @@ function sanitizeResolvableValue(value: string): string {
   return applyLabelOverrides(
     normalizeTraditionLabels(withoutTrailingDelimiters),
   );
+}
+
+function stripCitationReferences(value: string): string {
+  if (!activeCitationPattern) {
+    return value;
+  }
+  activeCitationPattern.lastIndex = 0;
+  const result = value.replace(activeCitationPattern, " ");
+  activeCitationPattern.lastIndex = 0;
+  return result;
 }
 
 function normalizeTraditionLabels(label: string): string {
@@ -2177,4 +2195,11 @@ function classifyAdvDisadvantageHint(
     return "disadvantage";
   }
   return "unknown";
+}
+
+function cloneRegExp(pattern: RegExp | null): RegExp | null {
+  if (!pattern) {
+    return null;
+  }
+  return new RegExp(pattern.source, pattern.flags);
 }

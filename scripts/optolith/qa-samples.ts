@@ -129,6 +129,9 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
     liturgies: await readSection("liturgies"),
     blessings: await readSection("blessings"),
     equipment: await readSection("equipment"),
+    books: await readSection("books"),
+    blessedTraditions: await readSection("blessedTraditions"),
+    magicalTraditions: await readSection("magicalTraditions"),
   };
 }
 

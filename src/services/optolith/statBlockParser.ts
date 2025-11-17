@@ -89,6 +89,7 @@ const TYPO_CORRECTIONS: Record<string, string> = {
   "angriff verbessern": "Attacke verbessern",
   schnelladen: "Schnellladen",
   eigne: "Eigene",
+  "schlechte eigenschaften": "Schlechte Eigenschaft",
 };
 
 const ATTRIBUTE_ABBREVIATIONS: Record<string, string> = {
@@ -379,6 +380,17 @@ export function parseStatBlock(raw: string): ParseResult {
         break;
     }
   }
+
+  extractInlineLanguageEntries(
+    sectionBuckets.specialAbilities,
+    sectionBuckets.languages,
+    sectionBuckets.scripts,
+  );
+  extractInlineLanguageEntries(
+    sectionBuckets.combatSpecialAbilities,
+    sectionBuckets.languages,
+    sectionBuckets.scripts,
+  );
 
   if (sectionBuckets.talents.length > 0) {
     seenSections.add("talents");
@@ -774,7 +786,11 @@ function normalizeHeading(
   if (sanitized === "kampfverhaltenflucht") {
     return "notes";
   }
-  return SECTION_NORMALIZATION_MAP[sanitized] ?? null;
+  return (
+    SECTION_NORMALIZATION_MAP[sanitized] ??
+    inferHeadingFromLabel(heading) ??
+    null
+  );
 }
 
 function appendList(target: string[], content: string): void {
@@ -876,6 +892,112 @@ function mergeRelativeClauses(entries: string[]): string[] {
     }
   }
   return result;
+}
+
+function extractInlineLanguageEntries(
+  source: string[],
+  languages: string[],
+  scripts: string[],
+): void {
+  if (source.length === 0) {
+    return;
+  }
+  const remaining: string[] = [];
+  let activeTarget: "languages" | "scripts" | null = null;
+  for (const entry of source) {
+    const languageMatch = entry.match(
+      /^(sprachen?|sprachkenntnisse)\s*:\s*(.+)$/i,
+    );
+    if (languageMatch) {
+      appendList(languages, languageMatch[2]);
+      activeTarget = "languages";
+      continue;
+    }
+    const scriptMatch = entry.match(/^(schriften?|schrift)\s*:\s*(.+)$/i);
+    if (scriptMatch) {
+      appendList(scripts, scriptMatch[2]);
+      activeTarget = "scripts";
+      continue;
+    }
+    if (
+      activeTarget === "languages" &&
+      isInlineLanguageContinuation(entry)
+    ) {
+      languages.push(entry);
+      continue;
+    }
+    if (activeTarget === "scripts" && isInlineScriptContinuation(entry)) {
+      scripts.push(entry);
+      continue;
+    }
+    activeTarget = null;
+    remaining.push(entry);
+  }
+  source.length = 0;
+  source.push(...remaining);
+}
+
+function inferHeadingFromLabel(
+  label: string,
+): SectionKey | "advantages-disadvantages" | null {
+  const normalized = label.toLowerCase();
+  if (normalized.includes("sonderfert")) {
+    if (normalized.includes("kampf")) {
+      return "combatSpecialAbilities";
+    }
+    return "specialAbilities";
+  }
+  if (normalized.includes("talent")) {
+    return "talents";
+  }
+  if (normalized.includes("kampftechnik")) {
+    return "combatTechniques";
+  }
+  if (normalized.includes("sprache")) {
+    return "languages";
+  }
+  if (normalized.includes("schrift")) {
+    return "scripts";
+  }
+  if (normalized.includes("liturgie")) {
+    return "liturgies";
+  }
+  if (normalized.includes("ritual")) {
+    return "rituals";
+  }
+  if (normalized.includes("segnung")) {
+    return "blessings";
+  }
+  if (normalized.includes("zaubertrick") || normalized.includes("cantrip")) {
+    return "cantrips";
+  }
+  if (normalized.includes("zauber")) {
+    return "spells";
+  }
+  if (normalized.includes("ausrüstung") || normalized.includes("inventar")) {
+    return "equipment";
+  }
+  if (normalized.includes("vorteil") && normalized.includes("nachteil")) {
+    return "advantages-disadvantages";
+  }
+  if (normalized.includes("vorteil")) {
+    return "advantages";
+  }
+  if (normalized.includes("nachteil")) {
+    return "disadvantages";
+  }
+  if (normalized.includes("rs/be") || normalized.includes("rüst")) {
+    return "armor";
+  }
+  return null;
+}
+
+function isInlineLanguageContinuation(entry: string): boolean {
+  return /\b[IVXLCDM]+\b/i.test(entry) || /^muttersprache\b/i.test(entry);
+}
+
+function isInlineScriptContinuation(entry: string): boolean {
+  return /zeichen|runen|glyph|schrift|piktogramm|alphabet|zhayad/i.test(entry);
 }
 
 function sanitizeEquipmentList(values: string[]): string[] {

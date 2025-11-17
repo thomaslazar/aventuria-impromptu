@@ -125,7 +125,7 @@ describe("parseStatBlock", () => {
   });
 
   it("normalizes common typos in talents", async () => {
-    const raw = await loadSample("stammeskriegerin-napewanha");
+    const raw = await loadSample("stammeskriegerin-der-napewanha");
     const result = parseStatBlock(raw);
 
     const senseTalent = result.model.talents.find(
@@ -212,6 +212,45 @@ Schriften: nein
       "Finte I (Dolch)",
     ]);
     expect(result.model.scripts).toHaveLength(0);
+  });
+
+  it("extracts inline languages and scripts from ability sections", () => {
+    const raw = `Inline Linguist
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Sonderfertigkeiten: Sprachen: Garethi, Tulamidya II, Schriften: Kusliker Zeichen, Tulamidya-Zeichen
+Talente: Klettern 5
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.languages).toEqual(["Garethi", "Tulamidya II"]);
+    expect(result.model.scripts).toEqual([
+      "Kusliker Zeichen",
+      "Tulamidya-Zeichen",
+    ]);
+    expect(result.model.specialAbilities).toHaveLength(0);
+  });
+
+  it("classifies ad-hoc Sonderfertigkeiten sections as special abilities", () => {
+    const raw = `Improviser
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Liturgiestilsonderfertigkeiten: Anhänger des Güldenen, Guter Handel, Lieblingsliturgie (Maske), Tradition (Namenloser Kult)
+`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.specialAbilities).toEqual([
+      "Anhänger des Güldenen",
+      "Guter Handel",
+      "Lieblingsliturgie (Maske)",
+      "Tradition (Namenloser Kult)",
+    ]);
   });
 
   it("parses talents with missing spacing and attribute annotations", () => {

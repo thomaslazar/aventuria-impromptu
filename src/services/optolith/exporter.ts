@@ -1,6 +1,6 @@
 import type { OptolithDatasetLookups, SelectOptionReference } from "./dataset";
 import type { DerivedEntity } from "../../types/optolith/manifest";
-import type { ResolutionResult } from "./resolver";
+import type { ResolutionResult, ResolvedReference } from "./resolver";
 import type {
   AttributeKey,
   ParseResult,
@@ -37,6 +37,20 @@ const ATTRIBUTE_ID_MAP: Readonly<Record<string, string>> = {
   KO: "ATTR_7",
   KK: "ATTR_8",
 };
+
+const ATTRIBUTE_ID_TO_KEY: Readonly<Record<string, AttributeKey>> = Object.fromEntries(
+  Object.entries(ATTRIBUTE_ID_MAP).map(([key, id]) => [id, key as AttributeKey]),
+) as Readonly<Record<string, AttributeKey>>;
+
+const GEWEIHTER_ADVANTAGE_ID = "ADV_12";
+const ZAUBERER_ADVANTAGE_ID = "ADV_50";
+const HOHE_WEIHE_ABILITY_ID = "SA_563";
+const GROSSE_MEDITATION_ABILITY_ID = "SA_772";
+const HOHE_KARMALKRAFT_ADVANTAGE_ID = "ADV_24";
+const HOHE_ASTRALKRAFT_ADVANTAGE_ID = "ADV_23";
+const NIEDRIGE_KARMALKRAFT_DISADVANTAGE_ID = "DISADV_27";
+const NIEDRIGE_ASTRALKRAFT_DISADVANTAGE_ID = "DISADV_26";
+const ENERGY_PER_SPECIAL_ABILITY_LEVEL = 6;
 
 interface PermanentEnergy {
   readonly lost: number;
@@ -138,7 +152,7 @@ export function exportToOptolithCharacter({
   const now = new Date().toISOString();
   const id = generateHeroId();
 
-  const attributes = buildAttributes(parsed);
+  const attributes = buildAttributes(parsed, resolved, dataset);
   const activatable = buildActivatable(resolved);
   const talents = buildTalentRatings(resolved);
   const spells = buildRatedMap(resolved.spells);
@@ -221,7 +235,11 @@ function inferSex(parsed: ParseResult): string {
   return DEFAULT_SEX;
 }
 
-function buildAttributes(parsed: ParseResult): OptolithExport["attr"] {
+function buildAttributes(
+  parsed: ParseResult,
+  resolved: ResolutionResult,
+  dataset: OptolithDatasetLookups,
+): OptolithExport["attr"] {
   const values = (
     Object.entries(ATTRIBUTE_ID_MAP) as Array<[AttributeKey, string]>
   )
@@ -232,16 +250,180 @@ function buildAttributes(parsed: ParseResult): OptolithExport["attr"] {
     })
     .sort((left, right) => left.id.localeCompare(right.id));
 
+  const extraKarma = computeAdditionalKarmaEnergy(parsed, resolved, dataset);
+  const extraAstral = computeAdditionalAstralEnergy(parsed, resolved, dataset);
+
   return {
     values,
     attributeAdjustmentSelected: "ATTR_4",
-    ae: 0,
-    kp: 0,
+    ae: extraAstral,
+    kp: extraKarma,
     lp: 0,
     permanentAE: { lost: 0, redeemed: 0 },
     permanentKP: { lost: 0, redeemed: 0 },
     permanentLP: { lost: 0 },
   };
+}
+
+function computeAdditionalKarmaEnergy(
+  parsed: ParseResult,
+  resolved: ResolutionResult,
+  dataset: OptolithDatasetLookups,
+): number {
+  const poolValue = parsed.model.pools.kap;
+  if (typeof poolValue !== "number" || poolValue <= 0) {
+    return 0;
+  }
+  if (!hasAdvantage(resolved, GEWEIHTER_ADVANTAGE_ID)) {
+    return 0;
+  }
+  const tradition = findTraditionEntry(
+    resolved,
+    dataset.blessedTraditions,
+  );
+  if (!tradition) {
+    return 0;
+  }
+  const primaryAttributeId = getPrimaryAttributeId(tradition);
+  const primaryValue = getAttributeValueFromId(parsed, primaryAttributeId);
+  if (primaryValue === null) {
+    return 0;
+  }
+  const hoheWeiheLevel = getAbilityLevel(
+    resolved.specialAbilities,
+    HOHE_WEIHE_ABILITY_ID,
+  );
+  const hoheKarmaLevel = getAdvantageLevel(
+    resolved.advantages,
+    HOHE_KARMALKRAFT_ADVANTAGE_ID,
+  );
+  const niedrigeKarmaLevel = getDisadvantageLevel(
+    resolved.disadvantages,
+    NIEDRIGE_KARMALKRAFT_DISADVANTAGE_ID,
+  );
+  const base =
+    20 +
+    primaryValue +
+    hoheWeiheLevel * ENERGY_PER_SPECIAL_ABILITY_LEVEL +
+    hoheKarmaLevel -
+    niedrigeKarmaLevel;
+  const extra = poolValue - base;
+  return extra > 0 ? extra : 0;
+}
+
+function computeAdditionalAstralEnergy(
+  parsed: ParseResult,
+  resolved: ResolutionResult,
+  dataset: OptolithDatasetLookups,
+): number {
+  const poolValue = parsed.model.pools.asp;
+  if (typeof poolValue !== "number" || poolValue <= 0) {
+    return 0;
+  }
+  if (!hasAdvantage(resolved, ZAUBERER_ADVANTAGE_ID)) {
+    return 0;
+  }
+  const tradition = findTraditionEntry(
+    resolved,
+    dataset.magicalTraditions,
+  );
+  if (!tradition) {
+    return 0;
+  }
+  const primaryAttributeId = getPrimaryAttributeId(tradition);
+  const primaryValue = getAttributeValueFromId(parsed, primaryAttributeId);
+  if (primaryValue === null) {
+    return 0;
+  }
+  const meditationLevel = getAbilityLevel(
+    resolved.specialAbilities,
+    GROSSE_MEDITATION_ABILITY_ID,
+  );
+  const hoheAstralLevel = getAdvantageLevel(
+    resolved.advantages,
+    HOHE_ASTRALKRAFT_ADVANTAGE_ID,
+  );
+  const niedrigeAstralLevel = getDisadvantageLevel(
+    resolved.disadvantages,
+    NIEDRIGE_ASTRALKRAFT_DISADVANTAGE_ID,
+  );
+  const base =
+    20 +
+    primaryValue +
+    meditationLevel * ENERGY_PER_SPECIAL_ABILITY_LEVEL +
+    hoheAstralLevel -
+    niedrigeAstralLevel;
+  const extra = poolValue - base;
+  return extra > 0 ? extra : 0;
+}
+
+function hasAdvantage(
+  resolved: ResolutionResult,
+  advantageId: string,
+): boolean {
+  return resolved.advantages.some((entry) => entry.match?.id === advantageId);
+}
+
+function getAdvantageLevel(
+  entries: readonly ResolvedReference[],
+  advantageId: string,
+): number {
+  const entry = entries.find((candidate) => candidate.match?.id === advantageId);
+  return entry?.level ?? 0;
+}
+
+function getDisadvantageLevel(
+  entries: readonly ResolvedReference[],
+  disadvantageId: string,
+): number {
+  const entry = entries.find(
+    (candidate) => candidate.match?.id === disadvantageId,
+  );
+  return entry?.level ?? 0;
+}
+
+function findTraditionEntry(
+  resolved: ResolutionResult,
+  traditions: Map<string, DerivedEntity>,
+): DerivedEntity | undefined {
+  for (const entry of resolved.specialAbilities) {
+    const match = entry.match;
+    if (match && traditions.has(match.id)) {
+      return traditions.get(match.id);
+    }
+  }
+  return undefined;
+}
+
+function getPrimaryAttributeId(entry?: DerivedEntity): string | undefined {
+  if (!entry) {
+    return undefined;
+  }
+  const base = entry.base as { primary?: string } | undefined;
+  return typeof base?.primary === "string" ? base.primary : undefined;
+}
+
+function getAttributeValueFromId(
+  parsed: ParseResult,
+  attributeId?: string,
+): number | null {
+  if (!attributeId) {
+    return null;
+  }
+  const attributeKey = ATTRIBUTE_ID_TO_KEY[attributeId];
+  if (!attributeKey) {
+    return null;
+  }
+  const value = parsed.model.attributes[attributeKey];
+  return typeof value === "number" ? value : null;
+}
+
+function getAbilityLevel(
+  entries: readonly { match?: DerivedEntity; level?: number }[],
+  abilityId: string,
+): number {
+  const ability = entries.find((entry) => entry.match?.id === abilityId);
+  return ability?.level ?? 0;
 }
 
 function buildActivatable(
