@@ -35,7 +35,7 @@ describe("exportToOptolithCharacter", () => {
   it("includes resolved weapons, armor, and equipment in belongings", async () => {
     const dataset = await loadDataset();
     const lookups = createDatasetLookups(dataset);
-    const raw = await loadSample("stammeskriegerin-napewanha");
+    const raw = await loadSample("stammeskriegerin-der-Napewanha");
     const parsed = parseStatBlock(raw);
     const resolved = resolveStatBlock(parsed.model, lookups);
 
