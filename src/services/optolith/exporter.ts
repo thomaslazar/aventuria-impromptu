@@ -426,6 +426,19 @@ function getAbilityLevel(
   return ability?.level ?? 0;
 }
 
+function extractDetailLabel(reference: {
+  rawOption?: string;
+  source?: string;
+}): string | undefined {
+  const raw = reference.rawOption?.trim();
+  if (raw && raw.length > 0) {
+    return raw;
+  }
+  const match = reference.source?.match(/\(([^)]+)\)/);
+  const extracted = match?.[1]?.trim();
+  return extracted && extracted.length > 0 ? extracted : undefined;
+}
+
 function buildActivatable(
   resolved: ResolutionResult,
 ): OptolithExport["activatable"] {
@@ -442,7 +455,7 @@ function buildActivatable(
   };
 
   const handleReference = (reference: {
-    match?: { id: string };
+    match?: DerivedEntity;
     selectOption?: { id: number };
     level?: number;
     rawOption?: string;
@@ -453,6 +466,22 @@ function buildActivatable(
       return;
     }
     const instance: Record<string, unknown> = {};
+    const normalizedName = reference.match.normalizedName;
+    if (
+      normalizedName === "korperliche auffalligkeit" ||
+      normalizedName === "schlechte angewohnheit" ||
+      normalizedName === "prinzipientreue"
+    ) {
+      const detail = extractDetailLabel(reference);
+      if (detail) {
+        instance.sid = detail;
+      }
+      if (reference.level) {
+        instance.tier = reference.level;
+      }
+      addInstance(reference.match.id, instance);
+      return;
+    }
     if (reference.selectOption) {
       instance.sid = reference.selectOption.id;
     }
