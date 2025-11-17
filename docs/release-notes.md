@@ -2,6 +2,11 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.5 — Optolith Stat Block Fidelity (2025-11-16)
+
+- Stat blocks can now tuck `Sprachen:`/`Schriften:` or extra Sonderfertigkeiten under arbitrary headings and still have the converter capture the languages and abilities correctly, so messy appendices with ad-hoc labels no longer get lost.
+- Optolith exports honor purchased KaP/AsP beyond the baseline by comparing the parsed pools against tradition primaries plus Hohe/Niedrige Kraft, Hohe Weihe, and Große Meditation, filling `attr.kp`/`attr.ae` with the correct deltas instead of dropping those extra points on the floor.
+
 ## 0.4.4 — Loot UI Consolidation (2025-11-11)
 
 - Consolidated the separate "Loot: NPC" and "Loot: Treasure" navigation tabs into a single "Loot" tab with sub-tabs for NPC and Treasure loot, streamlining the navigation experience while preserving all existing functionality.
