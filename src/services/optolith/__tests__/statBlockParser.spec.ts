@@ -253,6 +253,23 @@ Liturgiestilsonderfertigkeiten: Anhänger des Güldenen, Guter Handel, Lieblings
     ]);
   });
 
+  it("parses Stabzauber sections and normalizes binding names", () => {
+    const raw = `Stabträger
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Stabzauber: Bindung des Stabs, Ewige Flamme, Seil des Adepten`;
+
+    const result = parseStatBlock(raw);
+
+    expect(result.model.specialAbilities).toEqual([
+      "Bindung des Stabes",
+      "Ewige Flamme",
+      "Seil des Adepten",
+    ]);
+  });
+
   it("parses talents with missing spacing and attribute annotations", () => {
     const raw = `Madalieb
 MU 12 KL 12 IN 12 CH 12

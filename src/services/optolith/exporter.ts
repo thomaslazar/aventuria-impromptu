@@ -1,4 +1,8 @@
-import type { OptolithDatasetLookups, SelectOptionReference } from "./dataset";
+import type {
+  DerivedLookup,
+  OptolithDatasetLookups,
+  SelectOptionReference,
+} from "./dataset";
 import type { DerivedEntity } from "../../types/optolith/manifest";
 import type { ResolutionResult, ResolvedReference } from "./resolver";
 import type {
@@ -6,6 +10,7 @@ import type {
   ParseResult,
 } from "../../types/optolith/stat-block";
 import { deriveCombatTechniques } from "./combatTechniques";
+import { normalizeLabel } from "../../utils/optolith/normalizer";
 
 const DEFAULT_CLIENT_VERSION = "1.5.1";
 const DEFAULT_PHASE = 3;
@@ -51,6 +56,27 @@ const HOHE_ASTRALKRAFT_ADVANTAGE_ID = "ADV_23";
 const NIEDRIGE_KARMALKRAFT_DISADVANTAGE_ID = "DISADV_27";
 const NIEDRIGE_ASTRALKRAFT_DISADVANTAGE_ID = "DISADV_26";
 const ENERGY_PER_SPECIAL_ABILITY_LEVEL = 6;
+
+const LINKED_OPTION_LOOKUP_RESOLVERS: Record<
+  string,
+  (dataset: OptolithDatasetLookups) => DerivedLookup
+> = {
+  Blessing: (dataset) => dataset.blessings,
+  Cantrip: (dataset) => dataset.cantrips,
+  LiturgicalChant: (dataset) => dataset.liturgies,
+  Property: (dataset) => dataset.properties,
+  Skill: (dataset) => dataset.skills,
+  Spell: (dataset) => dataset.spells,
+};
+
+const LINKED_OPTION_PREFIX_MAP: Record<string, string> = {
+  Blessing: "BLESSING",
+  Cantrip: "CANTRIP",
+  LiturgicalChant: "LITURGY",
+  Property: "PROPERTY",
+  Skill: "TAL",
+  Spell: "SPELL",
+};
 
 interface PermanentEnergy {
   readonly lost: number;
@@ -153,7 +179,7 @@ export function exportToOptolithCharacter({
   const id = generateHeroId();
 
   const attributes = buildAttributes(parsed, resolved, dataset);
-  const activatable = buildActivatable(resolved);
+  const activatable = buildActivatable(resolved, dataset);
   const talents = buildTalentRatings(resolved);
   const spells = buildRatedMap(resolved.spells);
   const liturgies = buildRatedMap(resolved.liturgies);
@@ -426,8 +452,233 @@ function getAbilityLevel(
   return ability?.level ?? 0;
 }
 
+function extractDetailLabel(reference: {
+  rawOption?: string;
+  source?: string;
+}): string | undefined {
+  const raw = reference.rawOption?.trim();
+  if (raw && raw.length > 0) {
+    return raw;
+  }
+  const match = reference.source?.match(/\(([^)]+)\)/);
+  const extracted = match?.[1]?.trim();
+  return extracted && extracted.length > 0 ? extracted : undefined;
+}
+
+function buildSpecialActivatableInstance(
+  reference: {
+    match?: DerivedEntity;
+    level?: number;
+    rawOption?: string;
+    source?: string;
+    linkedOption?: { type: string; value: number };
+  },
+  dataset: OptolithDatasetLookups,
+): Record<string, unknown> | undefined {
+  if (!reference.match) {
+    return undefined;
+  }
+  const normalizedName = reference.match.normalizedName;
+  const detail = extractDetailLabel(reference);
+
+  if (
+    normalizedName === "korperliche auffalligkeit" ||
+    normalizedName === "schlechte angewohnheit" ||
+    normalizedName === "prinzipientreue"
+  ) {
+    const instance: Record<string, unknown> = {
+      ...(detail ? { sid: detail } : {}),
+    };
+    if (reference.level) {
+      instance.tier = reference.level;
+    }
+    return instance;
+  }
+
+  if (normalizedName === "ortskenntnis" && detail) {
+    const instance: Record<string, unknown> = { sid: detail };
+    if (reference.level) {
+      instance.tier = reference.level;
+    }
+    return instance;
+  }
+
+  if (normalizedName === "fertigkeitsspezialisierung") {
+    const specialization = buildSkillSpecializationInstance(
+      detail,
+      reference.level,
+      dataset,
+    );
+    if (specialization) {
+      return specialization;
+    }
+  }
+
+  if (
+    normalizedName === "lieblingsliturgie" &&
+    reference.linkedOption
+  ) {
+    const sid = mapLinkedOptionToSid(reference.linkedOption, dataset);
+    if (sid) {
+      const instance: Record<string, unknown> = { sid };
+      if (reference.level) {
+        instance.tier = reference.level;
+      }
+      return instance;
+    }
+  }
+
+  return undefined;
+}
+
+function buildSkillSpecializationInstance(
+  detail: string | undefined,
+  level: number | undefined,
+  dataset: OptolithDatasetLookups,
+): Record<string, unknown> | undefined {
+  if (!detail) {
+    return undefined;
+  }
+  const specialization = parseSkillSpecializationDetail(detail);
+  if (!specialization?.skillName) {
+    return undefined;
+  }
+  const normalizedSkill = normalizeLabel(specialization.skillName);
+  if (!normalizedSkill) {
+    return undefined;
+  }
+  const skill = dataset.skills.byName.get(normalizedSkill);
+  if (!skill) {
+    return undefined;
+  }
+  const instance: Record<string, unknown> = {
+    sid: skill.id,
+  };
+  if (specialization.applicationName) {
+    const applicationId = findSkillApplicationId(
+      skill,
+      specialization.applicationName,
+    );
+    if (applicationId !== undefined) {
+      instance.sid2 = applicationId;
+    }
+  }
+  if (level) {
+    instance.tier = level;
+  }
+  return instance;
+}
+
+function parseSkillSpecializationDetail(detail: string): {
+  skillName: string;
+  applicationName?: string;
+} | undefined {
+  const normalizedDetail = detail.trim();
+  if (!normalizedDetail) {
+    return undefined;
+  }
+  const colonIndex = normalizedDetail.indexOf(":");
+  if (colonIndex >= 0) {
+    return {
+      skillName: normalizedDetail.slice(0, colonIndex).trim(),
+      applicationName: normalizedDetail.slice(colonIndex + 1).trim(),
+    };
+  }
+  const dashMatch = normalizedDetail.match(/^(.*?)\s*[–-]\s*(.+)$/u);
+  if (dashMatch && dashMatch[1] && dashMatch[2]) {
+    return {
+      skillName: dashMatch[1].trim(),
+      applicationName: dashMatch[2].trim(),
+    };
+  }
+  const parenMatch = normalizedDetail.match(/^(.*?)\s*\((.+)\)$/u);
+  if (parenMatch && parenMatch[1]) {
+    return {
+      skillName: parenMatch[1].trim(),
+      applicationName: parenMatch[2]?.trim(),
+    };
+  }
+  return {
+    skillName: normalizedDetail,
+  };
+}
+
+function findSkillApplicationId(
+  skill: DerivedEntity,
+  applicationName: string,
+): number | undefined {
+  const locale = skill.locale as {
+    applications?: ReadonlyArray<{ id?: number; name?: string }>;
+  };
+  const applications = Array.isArray(locale?.applications)
+    ? locale!.applications
+    : [];
+  const normalizedApplication = normalizeLabel(applicationName);
+  if (!normalizedApplication) {
+    return undefined;
+  }
+  for (const entry of applications) {
+    if (typeof entry?.id !== "number" || typeof entry?.name !== "string") {
+      continue;
+    }
+    const normalized = normalizeLabel(entry.name);
+    if (normalized && normalized === normalizedApplication) {
+      return entry.id;
+    }
+  }
+  return undefined;
+}
+
+function mapLinkedOptionToSid(
+  linkedOption: { type: string; value: number },
+  dataset: OptolithDatasetLookups,
+): string | undefined {
+  const resolver = LINKED_OPTION_LOOKUP_RESOLVERS[linkedOption.type];
+  if (!resolver) {
+    return undefined;
+  }
+  const lookup = resolver(dataset);
+  const prefix = LINKED_OPTION_PREFIX_MAP[linkedOption.type];
+  if (prefix) {
+    const candidateId = `${prefix}_${linkedOption.value}`;
+    const direct = lookup.byId.get(candidateId);
+    if (direct) {
+      return direct.id;
+    }
+  }
+  for (const entry of lookup.byId.values()) {
+    if (extractNumericId(entry.id) === linkedOption.value) {
+      return entry.id;
+    }
+  }
+  return undefined;
+}
+
+function extractNumericId(id: string): number | undefined {
+  const match = id.match(/_(\d+)$/);
+  if (!match) {
+    return undefined;
+  }
+  const value = Number.parseInt(match[1] ?? "", 10);
+  return Number.isNaN(value) ? undefined : value;
+}
+
+function extractPrincipleName(reference: {
+  rawOption?: string;
+  source?: string;
+}): string | undefined {
+  const raw = reference.rawOption?.trim();
+  if (raw && raw.length > 0) {
+    return raw;
+  }
+  const match = reference.source?.match(/\(([^)]+)\)/);
+  const extracted = match?.[1]?.trim();
+  return extracted && extracted.length > 0 ? extracted : undefined;
+}
+
 function buildActivatable(
   resolved: ResolutionResult,
+  dataset: OptolithDatasetLookups,
 ): OptolithExport["activatable"] {
   const entries: Record<string, Array<Record<string, unknown>>> = {};
 
@@ -442,20 +693,49 @@ function buildActivatable(
   };
 
   const handleReference = (reference: {
-    match?: { id: string };
+    match?: DerivedEntity;
     selectOption?: { id: number };
     level?: number;
     rawOption?: string;
     source?: string;
+    linkedOption?: { type: string; value: number };
   }) => {
     if (!reference.match) {
       return;
     }
+
+    const specialInstance = buildSpecialActivatableInstance(
+      reference,
+      dataset,
+    );
+    if (specialInstance) {
+      addInstance(reference.match.id, specialInstance);
+      return;
+    }
+
     const instance: Record<string, unknown> = {};
+    if (reference.match.normalizedName === "prinzipientreue") {
+      const principleName = extractPrincipleName(reference);
+      if (principleName) {
+        instance.sid = principleName;
+      }
+      if (reference.level) {
+        instance.tier = reference.level;
+      }
+      addInstance(reference.match.id, instance);
+      return;
+    }
     if (reference.selectOption) {
       instance.sid = reference.selectOption.id;
     }
-    if (reference.rawOption && reference.rawOption.trim()) {
+    if (reference.linkedOption) {
+      instance.options = [
+        {
+          type: "Predefined",
+          id: reference.linkedOption,
+        },
+      ];
+    } else if (reference.rawOption && reference.rawOption.trim()) {
       instance.options = [
         {
           type: "Custom",

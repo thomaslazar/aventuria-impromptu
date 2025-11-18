@@ -37,11 +37,13 @@ function resolveReportPath(): string {
 
 interface SampleBlock {
   readonly name: string;
+  readonly fileName: string;
   readonly text: string;
 }
 
 interface SampleReport {
   readonly sample: SampleBlock;
+  readonly heroName: string;
   readonly result: ConversionResultPayload;
   readonly combatTechniques: ReturnType<typeof deriveCombatTechniques>;
 }
@@ -73,6 +75,7 @@ async function main(): Promise<void> {
 
       reports.push({
         sample,
+        heroName: parsed.model.name?.trim() || sample.name,
         result: {
           exported: hero,
           exportedWarnings,
@@ -132,6 +135,8 @@ async function loadDataset(rootDir: string): Promise<OptolithDataset> {
     books: await readSection("books"),
     blessedTraditions: await readSection("blessedTraditions"),
     magicalTraditions: await readSection("magicalTraditions"),
+    properties: await readSection("properties"),
+    equipmentPackages: await readSection("equipmentPackages"),
   };
 }
 
@@ -144,7 +149,7 @@ async function loadSamples(dirPath: string): Promise<SampleBlock[]> {
     const filePath = path.join(dirPath, file);
     const text = await fs.readFile(filePath, "utf8");
     const name = file.replace(/\.txt$/, "");
-    samples.push({ name, text });
+    samples.push({ name, text, fileName: file });
   }
 
   return samples;
@@ -206,14 +211,17 @@ async function writeReport(
     lines.push("## Conversion Errors");
     lines.push("");
     for (const failure of failures) {
-      lines.push(`- **${failure.sample.name}** — ${failure.error}`);
+      lines.push(
+        `- **${failure.sample.name}** (${failure.sample.fileName}) — ${failure.error}`,
+      );
     }
     lines.push("");
   }
 
   for (const report of reports) {
-    const { sample, result, combatTechniques } = report;
-    lines.push(`## ${sample.name}`);
+    const { sample, result, combatTechniques, heroName } = report;
+    lines.push(`## ${heroName}`);
+    lines.push(`file: ${sample.fileName}`);
     lines.push("");
     lines.push("### Parser Warnings");
     lines.push(

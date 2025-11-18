@@ -35,7 +35,7 @@ describe("exportToOptolithCharacter", () => {
   it("includes resolved weapons, armor, and equipment in belongings", async () => {
     const dataset = await loadDataset();
     const lookups = createDatasetLookups(dataset);
-    const raw = await loadSample("stammeskriegerin-napewanha");
+    const raw = await loadSample("stammeskriegerin-der-Napewanha");
     const parsed = parseStatBlock(raw);
     const resolved = resolveStatBlock(parsed.model, lookups);
 
@@ -177,5 +177,149 @@ Ausrüstung: 10 Schritt Seil
       (item) => (item as { template?: string }).template === "ITEMTPL_219",
     ) as { amount?: number } | undefined;
     expect(rope?.amount).toBe(10);
+  });
+
+  it("exports Prinzipientreue entries with string sid references", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Prinzipientreuer
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Nachteile: Prinzipientreue I (Völkerverständigung, Friedfertigkeit)
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.DISADV_34).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sid: "Völkerverständigung", tier: 1 }),
+        expect.objectContaining({ sid: "Friedfertigkeit", tier: 1 }),
+      ]),
+    );
+  });
+
+  it("exports Ortskenntnis entries with sid values", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Ortskundiger
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – GS 8
+Sonderfertigkeiten: Ortskenntnis (Dracoras, Sulhaminiah in Zorgan)
+Talente: Klettern 5
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.SA_22).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sid: "Dracoras" }),
+        expect.objectContaining({ sid: "Sulhaminiah in Zorgan" }),
+      ]),
+    );
+  });
+
+  it("exports Fertigkeitsspezialisierung with skill and application ids", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Spezialist
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – GS 8
+Sonderfertigkeiten: Fertigkeitsspezialisierung (Verbergen: Gegenstände verbergen)
+Talente: Verbergen 8
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.SA_9).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          sid: "TAL_13",
+          sid2: 1,
+        }),
+      ]),
+    );
+  });
+
+  it("exports Lieblingsliturgie entries with liturgy sids", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Geweihter
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 KaP 30 AsP – GS 8
+Sonderfertigkeiten: Tradition (Namenloser Kult), Lieblingsliturgie (Maske)
+Liturgien: Maske 8
+Vorteile: Geweihter
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.SA_569).toEqual(
+      expect.arrayContaining([expect.objectContaining({ sid: "LITURGY_97" })]),
+    );
+  });
+
+  it("exports Prinzipientreue entries with string sid references", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Prinzipientreuer
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Nachteile: Prinzipientreue I (Völkerverständigung, Friedfertigkeit)
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.DISADV_34).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sid: "Völkerverständigung", tier: 1 }),
+        expect.objectContaining({ sid: "Friedfertigkeit", tier: 1 }),
+      ]),
+    );
   });
 });

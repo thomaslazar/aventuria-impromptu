@@ -111,6 +111,10 @@ async function loadDataset(baseUrl: string) {
     magicalTraditions: await readSection(
       findSectionFile(manifest, "magicalTraditions"),
     ),
+    properties: await readSection(findSectionFile(manifest, "properties")),
+    equipmentPackages: await readSection(
+      findSectionFile(manifest, "equipmentPackages"),
+    ),
   };
 
   cachedDataset = createDatasetLookups(dataset);
