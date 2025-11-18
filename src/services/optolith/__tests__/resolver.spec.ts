@@ -836,6 +836,14 @@ describe("resolveStatBlock", () => {
         entry.source.includes("Kletterseil"),
       ),
     ).toBe(true);
+    const rope = resolved.equipment.find(
+      (entry) => entry.match?.id === "ITEMTPL_219",
+    );
+    expect(rope?.quantityHint).toBe(10);
+    const provisions = resolved.equipment.find(
+      (entry) => entry.match?.id === "ITEMTPL_181",
+    );
+    expect(provisions?.quantityHint).toBe(5);
     expect(
       resolved.warnings.some(
         (warning) =>
