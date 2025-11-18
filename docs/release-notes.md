@@ -5,8 +5,8 @@ Curated highlights of the most significant feature drops. Minor fixes, copy twea
 ## 0.4.6 — Optolith Ability & Package Fidelity (2025-11-18)
 
 - Multi-option Sonderfertigkeiten such as Berufsgeheimnis, Ortskenntnis, Merkmalskenntnis, Lieblingsliturgie, and detail-driven disadvantages now split automatically and export their canonical Optolith IDs, so imports stop showing anonymous “Custom” labels.
-- The converter can digest gnarly stat blocks like Anastasius Silberhaar—including Stabzauber sections, Prinzipientreue variants, and appended notes—while QA samples retain their original formatting for side-by-side verification.
-- Equipment packages now expand into the correct quantities thanks to improved number parsing (e.g., the Wildnispaket yields ten steps of rope and five days of rations), keeping Optolith belongings in sync with the printed bundle contents.
+- The parser copes with stat blocks that move Sonderfertigkeiten, Sprachen/Schriften, or Traditionsinfos into arbitrary headings, keeping appended notes and add-ons aligned with the correct Optolith sections without asking users to rename anything.
+- Equipment packages now expand into the correct quantities thanks to improved number parsing, keeping Optolith belongings in sync with the printed bundle contents.
 
 ## 0.4.5 — Optolith Stat Block Fidelity (2025-11-16)
 
