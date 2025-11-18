@@ -663,6 +663,19 @@ function extractNumericId(id: string): number | undefined {
   return Number.isNaN(value) ? undefined : value;
 }
 
+function extractPrincipleName(reference: {
+  rawOption?: string;
+  source?: string;
+}): string | undefined {
+  const raw = reference.rawOption?.trim();
+  if (raw && raw.length > 0) {
+    return raw;
+  }
+  const match = reference.source?.match(/\(([^)]+)\)/);
+  const extracted = match?.[1]?.trim();
+  return extracted && extracted.length > 0 ? extracted : undefined;
+}
+
 function buildActivatable(
   resolved: ResolutionResult,
   dataset: OptolithDatasetLookups,
@@ -701,6 +714,17 @@ function buildActivatable(
     }
 
     const instance: Record<string, unknown> = {};
+    if (reference.match.normalizedName === "prinzipientreue") {
+      const principleName = extractPrincipleName(reference);
+      if (principleName) {
+        instance.sid = principleName;
+      }
+      if (reference.level) {
+        instance.tier = reference.level;
+      }
+      addInstance(reference.match.id, instance);
+      return;
+    }
     if (reference.selectOption) {
       instance.sid = reference.selectOption.id;
     }

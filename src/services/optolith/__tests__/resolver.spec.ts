@@ -872,6 +872,63 @@ describe("resolveStatBlock", () => {
     );
   });
 
+  it("splits Merkmalskenntnisse entries into individual selections", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: ["Merkmalskenntnis (Heilung und Telekinese)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const entries = resolved.specialAbilities.filter((entry) =>
+      entry.source.startsWith("Merkmalskenntnis"),
+    );
+    expect(entries).toHaveLength(2);
+    expect(
+      entries.map((entry) => entry.selectOption?.name),
+    ).toEqual(expect.arrayContaining(["Heilung", "Telekinese"]));
+  });
+
+  it("expands equipment packages into individual items", () => {
+    const statBlock = createStatBlock({
+      equipment: ["Wildnis-Paket"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.equipment.length).toBeGreaterThan(1);
+    expect(
+      resolved.equipment.some((entry) =>
+        entry.source.includes("Kletterseil"),
+      ),
+    ).toBe(true);
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "equipment" &&
+          warning.message.includes("Ausrüstungspaket"),
+      ),
+    ).toBe(true);
+  });
+
+  it("splits Prinzipientreue entries per principle", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Prinzipientreue I (Völkerverständigung, Friedfertigkeit)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const entries = resolved.disadvantages.filter((entry) =>
+      entry.source.startsWith("Prinzipientreue"),
+    );
+    expect(entries).toHaveLength(2);
+    expect(entries.map((entry) => entry.source)).toEqual(
+      expect.arrayContaining([
+        "Prinzipientreue I (Völkerverständigung)",
+        "Prinzipientreue I (Friedfertigkeit)",
+      ]),
+    );
+  });
+
   it("resolves Zaubertricks via the cantrip lookup", () => {
     const statBlock = createStatBlock({
       cantrips: ["Schlangenhände", "Trocken"],

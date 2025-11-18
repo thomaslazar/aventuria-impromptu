@@ -292,4 +292,34 @@ Vorteile: Geweihter
       expect.arrayContaining([expect.objectContaining({ sid: "LITURGY_97" })]),
     );
   });
+
+  it("exports Prinzipientreue entries with string sid references", async () => {
+    const dataset = await loadDataset();
+    const lookups = createDatasetLookups(dataset);
+    const raw = `Prinzipientreuer
+MU 12 KL 12 IN 12 CH 12
+FF 12 GE 12 KO 12 KK 12
+LeP 30 AsP – KaP – INI 12+1W6
+AW 5 SK 0 ZK 0 GS 8
+Nachteile: Prinzipientreue I (Völkerverständigung, Friedfertigkeit)
+Sonderfertigkeiten: keine
+Talente: Klettern 5
+`;
+
+    const parsed = parseStatBlock(raw);
+    const resolved = resolveStatBlock(parsed.model, lookups);
+
+    const { hero } = exportToOptolithCharacter({
+      dataset: lookups,
+      parsed,
+      resolved,
+    });
+
+    expect(hero.activatable.DISADV_34).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sid: "Völkerverständigung", tier: 1 }),
+        expect.objectContaining({ sid: "Friedfertigkeit", tier: 1 }),
+      ]),
+    );
+  });
 });
