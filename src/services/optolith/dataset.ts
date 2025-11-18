@@ -19,6 +19,8 @@ export interface OptolithDataset {
   readonly books: readonly DerivedEntity[];
   readonly blessedTraditions: readonly DerivedEntity[];
   readonly magicalTraditions: readonly DerivedEntity[];
+  readonly properties: readonly DerivedEntity[];
+  readonly equipmentPackages: readonly DerivedEntity[];
 }
 
 export interface DerivedLookup {
@@ -51,6 +53,8 @@ export interface OptolithDatasetLookups {
   readonly citationPattern: RegExp | null;
   readonly blessedTraditions: Map<string, DerivedEntity>;
   readonly magicalTraditions: Map<string, DerivedEntity>;
+  readonly properties: DerivedLookup;
+  readonly equipmentPackages: Map<string, EquipmentPackageEntry>;
 }
 
 export function createDatasetLookups(
@@ -75,6 +79,8 @@ export function createDatasetLookups(
     citationPattern: buildCitationPattern(citationTokens),
     blessedTraditions: buildEntityMap(dataset.blessedTraditions),
     magicalTraditions: buildEntityMap(dataset.magicalTraditions),
+    properties: buildLookup(dataset.properties),
+    equipmentPackages: buildEquipmentPackageLookup(dataset.equipmentPackages),
   };
 }
 
@@ -161,6 +167,56 @@ function buildEntityMap(
     map.set(entry.id, entry);
   }
   return map;
+}
+
+interface EquipmentPackageEntry {
+  readonly name: string;
+  readonly items: ReadonlyArray<{ id: string; amount?: number }>;
+}
+
+function buildEquipmentPackageLookup(
+  packages: readonly DerivedEntity[],
+): Map<string, EquipmentPackageEntry> {
+  const map = new Map<string, EquipmentPackageEntry>();
+  const register = (key: string, pkg: EquipmentPackageEntry) => {
+    if (!map.has(key)) {
+      map.set(key, pkg);
+    }
+  };
+
+  for (const pkg of packages) {
+    const items = Array.isArray(
+      (pkg.base as { items?: ReadonlyArray<{ id?: string; amount?: number }> })
+        ?.items,
+    )
+      ? (
+          (pkg.base as {
+            items?: ReadonlyArray<{ id?: string; amount?: number }>;
+          }).items ?? []
+        ).filter(
+          (item): item is { id: string; amount?: number } =>
+            typeof item?.id === "string",
+        )
+      : [];
+    const entry: EquipmentPackageEntry = {
+      name: pkg.name,
+      items,
+    };
+    const canonicalKey = normalizePackageKey(pkg.name);
+    register(canonicalKey, entry);
+    for (const synonym of pkg.synonyms ?? []) {
+      if (typeof synonym !== "string" || synonym.length === 0) {
+        continue;
+      }
+      register(normalizePackageKey(synonym), entry);
+    }
+  }
+
+  return map;
+}
+
+function normalizePackageKey(label: string): string {
+  return normalizeLabel(label).replace(/\s+/g, "");
 }
 
 function deriveCitationTokens(

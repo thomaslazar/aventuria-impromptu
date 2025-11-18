@@ -145,6 +145,7 @@ const SCRIPT_NAME_OVERRIDES: Record<string, string> = {
   asdharia: "Isdira- und Asdharia-Zeichen",
   "isdira und asdharia zeichen": "Isdira- und Asdharia-Zeichen",
   "isdiraund asdharia zeichen": "Isdira- und Asdharia-Zeichen",
+  "asdharia und isdira zeichen": "Isdira- und Asdharia-Zeichen",
   rogolan: "Rogolan-Runen",
 };
 
@@ -213,6 +214,8 @@ const NUMBER_WORDS = new Set(
 const MULTI_OPTION_ABILITIES = new Set([
   "berufsgeheimnis",
   "ortskenntnis",
+  "merkmalskenntnisse",
+  "merkmalskenntnis",
 ]);
 
 const SELECT_OPTION_CATEGORY_MAP: Record<
@@ -233,6 +236,10 @@ const SELECT_OPTION_CATEGORY_MAP: Record<
   LITURGICAL_CHANTS: {
     type: "LiturgicalChant",
     lookup: (lookups) => lookups.liturgies,
+  },
+  PROPERTIES: {
+    type: "Property",
+    lookup: (lookups) => lookups.properties,
   },
   SKILLS: {
     type: "Skill",
@@ -493,13 +500,24 @@ function resolveSection(
   const results: ResolvedReference[] = [];
 
   const processValue = (value: string, allowSplit: boolean): void => {
+    if (
+      section === "equipment" &&
+      tryExpandEquipmentPackage(value, context, processValue)
+    ) {
+      return;
+    }
     const components = parseEntryComponents(value);
     const normalizedBaseName = normalizeLabel(components.baseName);
-    if (
-      components.options.length > 1 &&
-      shouldSplitMultiOptionEntry(section, normalizedBaseName)
-    ) {
-      for (const option of components.options) {
+    const shouldSplitOptions = shouldSplitMultiOptionEntry(
+      section,
+      normalizedBaseName,
+    );
+    const optionValues =
+      shouldSplitOptions && allowSplit
+        ? splitOptionValues(components.options)
+        : components.options;
+    if (optionValues.length > 1 && shouldSplitOptions) {
+      for (const option of optionValues) {
         processValue(`${components.baseName} (${option})`, false);
       }
       return;
@@ -511,8 +529,8 @@ function resolveSection(
     let rawOption: string | undefined;
     let optionNameForLabel: string | undefined;
 
-    if (!match && components.options.length > 0) {
-      for (const candidate of components.options) {
+    if (!match && optionValues.length > 0) {
+      for (const candidate of optionValues) {
         const candidateName = `${components.baseName} (${candidate})`;
         const candidateNormalized = normalizeLabel(candidateName);
         const candidateMatch = lookup.byName.get(candidateNormalized);
@@ -525,8 +543,8 @@ function resolveSection(
       }
     }
 
-    if (match && hasSelectOptions(match) && components.options.length > 0) {
-      for (const candidate of components.options) {
+    if (match && hasSelectOptions(match) && optionValues.length > 0) {
+      for (const candidate of optionValues) {
         const option = findSelectOption(match, candidate);
         if (option) {
           selectOption = option;
@@ -537,12 +555,12 @@ function resolveSection(
           rawOption = candidate;
         }
       }
-    } else if (components.options.length > 0) {
-      optionNameForLabel = usedOptionForNormalization ?? components.options[0];
+    } else if (optionValues.length > 0) {
+      optionNameForLabel = usedOptionForNormalization ?? optionValues[0];
     }
 
-    if (!optionNameForLabel && components.options.length > 0) {
-      optionNameForLabel = usedOptionForNormalization ?? components.options[0];
+    if (!optionNameForLabel && optionValues.length > 0) {
+      optionNameForLabel = usedOptionForNormalization ?? optionValues[0];
     }
 
     if (!optionNameForLabel && usedOptionForNormalization) {
@@ -552,9 +570,9 @@ function resolveSection(
     if (
       match &&
       match.normalizedName === "begabung" &&
-      components.options.length > 0
+      optionValues.length > 0
     ) {
-      const targetDetail = components.options[0]!;
+      const targetDetail = optionValues[0]!;
       const resolvedTarget = resolveBegabungTarget(targetDetail, context);
       if (resolvedTarget) {
         rawOption = resolvedTarget.name;
@@ -564,12 +582,16 @@ function resolveSection(
       }
     }
 
+    if (!rawOption && optionNameForLabel) {
+      rawOption = optionNameForLabel;
+    }
+
     if (!match && section === "equipment") {
       const fallbackMatch = resolveEquipmentFallbackMatch(
         value,
         "equipment",
         context,
-        components.options,
+        optionValues,
       );
       if (fallbackMatch) {
         match = fallbackMatch;
@@ -670,13 +692,25 @@ function resolveRatedSection(
 ): ResolvedRatedReference[] {
   const results: ResolvedRatedReference[] = [];
   for (const entry of entries) {
-    const sanitizedName = sanitizeResolvableValue(entry.name);
+    let sanitizedName = sanitizeResolvableValue(entry.name);
     if (!sanitizedName) {
       registerUnresolved(section, entry.name, context);
       continue;
     }
-    const normalized = normalizeLabel(sanitizedName);
-    const match = lookup.byName.get(normalized);
+    let normalized = normalizeLabel(sanitizedName);
+    let match = lookup.byName.get(normalized);
+    if (!match) {
+      const stripped = sanitizedName.replace(/\s*\([^)]*\)\s*$/, "").trim();
+      if (stripped && stripped !== sanitizedName) {
+        const strippedNormalized = normalizeLabel(stripped);
+        const strippedMatch = lookup.byName.get(strippedNormalized);
+        if (strippedMatch) {
+          sanitizedName = stripped;
+          normalized = strippedNormalized;
+          match = strippedMatch;
+        }
+      }
+    }
     if (!match) {
       registerUnresolved(section, sanitizedName, context);
     }
@@ -1231,6 +1265,65 @@ function extractNumericId(id: string): number | undefined {
   return Number.isNaN(value) ? undefined : value;
 }
 
+function tryExpandEquipmentPackage(
+  label: string,
+  context: ResolutionContext,
+  processValue: (value: string, allowSplit: boolean) => void,
+): boolean {
+  const packageEntry = context.lookups.equipmentPackages.get(
+    normalizeEquipmentPackageKey(label),
+  );
+  if (!packageEntry) {
+    return false;
+  }
+  pushWarning(
+    {
+      type: "split",
+      section: "equipment",
+      value: label,
+      message: `Ausrüstungspaket "${packageEntry.name}" wurde in einzelne Gegenstände zerlegt.`,
+    },
+    context,
+  );
+  for (const item of packageEntry.items) {
+    const template = context.lookups.equipment.byId.get(item.id);
+    if (!template) {
+      continue;
+    }
+    const prefix =
+      typeof item.amount === "number" && item.amount > 1
+        ? `${item.amount} `
+        : "";
+    processValue(`${prefix}${template.name}`, false);
+  }
+  return true;
+}
+
+function normalizeEquipmentPackageKey(value: string): string {
+  return normalizeLabel(value).replace(/\s+/g, "");
+}
+
+function splitOptionValues(values: readonly string[]): string[] {
+  if (values.length <= 1) {
+    const results: string[] = [];
+    for (const value of values) {
+      if (!value) {
+        continue;
+      }
+      const segments = value
+        .split(/(?:\bund\b|\boder\b|\/)/i)
+        .map((segment) => segment.trim())
+        .filter((segment) => segment.length > 0);
+      if (segments.length > 1) {
+        results.push(...segments);
+      } else {
+        results.push(value);
+      }
+    }
+    return results;
+  }
+  return values.filter((value): value is string => Boolean(value));
+}
 function normalizeTierToken(token: string): number | undefined {
   const parts = token
     .split("+")
@@ -2098,13 +2191,24 @@ function expandPrinzipientreueEntry(entry: string): string[] {
   if (!detailToken) {
     return [entry];
   }
-  const normalizedDetail = detailToken.trim().toLowerCase();
-  const override = MORALKODEX_OVERRIDES[normalizedDetail];
-  if (!override) {
+  const suffix = levelToken ? ` ${levelToken.trim()}` : "";
+  const details = detailToken
+    .split(/[,;]/)
+    .flatMap((segment) =>
+      segment
+        .split(/\bund\b/i)
+        .map((part) => part.trim())
+        .filter((part) => part.length > 0),
+    );
+  if (details.length === 0) {
     return [entry];
   }
-  const suffix = levelToken ? ` ${levelToken.trim()}` : "";
-  return [`Prinzipientreue (${override})${suffix}`.trim()];
+  return details.map((detail) => {
+    const normalized = detail.toLowerCase().replace(/\s+/g, "");
+    const override = MORALKODEX_OVERRIDES[normalized] ?? detail;
+    const prefix = `Prinzipientreue${suffix}`.trim();
+    return `${prefix} (${override})`.trim();
+  });
 }
 
 function expandVerpflichtungenEntry(entry: string): string[] {
