@@ -2,6 +2,12 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.6 — Optolith Ability & Package Fidelity (2025-11-18)
+
+- Multi-option Sonderfertigkeiten such as Berufsgeheimnis, Ortskenntnis, Merkmalskenntnis, Lieblingsliturgie, and detail-driven disadvantages now split automatically and export their canonical Optolith IDs, so imports stop showing anonymous “Custom” labels.
+- The converter can digest gnarly stat blocks like Anastasius Silberhaar—including Stabzauber sections, Prinzipientreue variants, and appended notes—while QA samples retain their original formatting for side-by-side verification.
+- Equipment packages now expand into the correct quantities thanks to improved number parsing (e.g., the Wildnispaket yields ten steps of rope and five days of rations), keeping Optolith belongings in sync with the printed bundle contents.
+
 ## 0.4.5 — Optolith Stat Block Fidelity (2025-11-16)
 
 - Stat blocks can now tuck `Sprachen:`/`Schriften:` or extra Sonderfertigkeiten under arbitrary headings and still have the converter capture the languages and abilities correctly, so messy appendices with ad-hoc labels no longer get lost.
