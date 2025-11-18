@@ -189,27 +189,27 @@ const PERSONALITY_WEAKNESS_OPTIONS = [
   "Stimmungsschwankungen",
 ];
 
-const NUMBER_WORDS = new Set(
-  [
-    "ein",
-    "eine",
-    "einen",
-    "einem",
-    "einer",
-    "eins",
-    "zwei",
-    "drei",
-    "vier",
-    "fünf",
-    "sechs",
-    "sieben",
-    "acht",
-    "neun",
-    "zehn",
-    "elf",
-    "zwölf",
-  ].map((value) => value.toLowerCase()),
-);
+const NUMBER_WORD_VALUE_MAP: Record<string, number> = {
+  ein: 1,
+  eine: 1,
+  einen: 1,
+  einem: 1,
+  einer: 1,
+  eins: 1,
+  zwei: 2,
+  drei: 3,
+  vier: 4,
+  fünf: 5,
+  sechs: 6,
+  sieben: 7,
+  acht: 8,
+  neun: 9,
+  zehn: 10,
+  elf: 11,
+  zwölf: 12,
+};
+
+const NUMBER_WORDS = new Set(Object.keys(NUMBER_WORD_VALUE_MAP));
 
 const MULTI_OPTION_ABILITIES = new Set([
   "berufsgeheimnis",
@@ -512,9 +512,10 @@ function resolveSection(
       section,
       normalizedBaseName,
     );
-    const optionValues = shouldSplitOptions
-      ? splitOptionValues(components.options)
-      : components.options;
+    const optionValues =
+      shouldSplitOptions && allowSplit
+        ? splitOptionValues(components.options)
+        : components.options;
     if (optionValues.length > 1 && shouldSplitOptions) {
       for (const option of optionValues) {
         processValue(`${components.baseName} (${option})`, false);
@@ -585,6 +586,18 @@ function resolveSection(
       rawOption = optionNameForLabel;
     }
 
+    if (!match && section === "equipment") {
+      const fallbackMatch = resolveEquipmentFallbackMatch(
+        value,
+        "equipment",
+        context,
+        optionValues,
+      );
+      if (fallbackMatch) {
+        match = fallbackMatch;
+      }
+    }
+
     let linkedOption:
       | {
           type: string;
@@ -600,18 +613,6 @@ function resolveSection(
       if (linked) {
         linkedOption = linked.linkedOption;
         optionNameForLabel = linked.label;
-      }
-    }
-
-    if (!match && section === "equipment") {
-      const fallbackMatch = resolveEquipmentFallbackMatch(
-        value,
-        "equipment",
-        context,
-        optionValues,
-      );
-      if (fallbackMatch) {
-        match = fallbackMatch;
       }
     }
 
@@ -1303,24 +1304,26 @@ function normalizeEquipmentPackageKey(value: string): string {
 }
 
 function splitOptionValues(values: readonly string[]): string[] {
-  const results: string[] = [];
-  for (const value of values) {
-    if (!value) {
-      continue;
+  if (values.length <= 1) {
+    const results: string[] = [];
+    for (const value of values) {
+      if (!value) {
+        continue;
+      }
+      const segments = value
+        .split(/(?:\bund\b|\boder\b|\/)/i)
+        .map((segment) => segment.trim())
+        .filter((segment) => segment.length > 0);
+      if (segments.length > 1) {
+        results.push(...segments);
+      } else {
+        results.push(value);
+      }
     }
-    const segments = value
-      .split(/(?:\bund\b|\boder\b|\/)/i)
-      .map((segment) => segment.trim())
-      .filter((segment) => segment.length > 0);
-    if (segments.length > 1) {
-      results.push(...segments);
-    } else {
-      results.push(value);
-    }
+    return results;
   }
-  return results;
+  return values.filter((value): value is string => Boolean(value));
 }
-
 function normalizeTierToken(token: string): number | undefined {
   const parts = token
     .split("+")
@@ -1717,25 +1720,48 @@ function applyLabelOverrides(label: string): string {
 }
 
 function stripLeadingQuantityToken(value: string): string {
-  const working = value.trim();
+  return extractLeadingQuantityInfo(value).remainder;
+}
+
+function extractLeadingQuantityInfo(
+  value: string,
+): { remainder: string; quantity?: number } {
+  let working = value.trim();
+  if (!working) {
+    return { remainder: working };
+  }
   const measurementMatch = working.match(LENGTH_MEASUREMENT_PATTERN);
   if (measurementMatch && measurementMatch[3]) {
-    return measurementMatch[3].trim();
+    const numeric = Number.parseInt(measurementMatch[1] ?? "", 10);
+    return {
+      remainder: measurementMatch[3].trim(),
+      quantity: Number.isNaN(numeric) ? undefined : numeric,
+    };
   }
   const numericMatch = working.match(/^(\d+)\s+(.*)$/u);
   if (numericMatch && numericMatch[2]) {
-    return numericMatch[2].trim();
+    const numeric = Number.parseInt(numericMatch[1] ?? "", 10);
+    return {
+      remainder: numericMatch[2].trim(),
+      quantity: Number.isNaN(numeric) ? undefined : numeric,
+    };
   }
 
   const wordMatch = working.match(/^([A-Za-zÄÖÜäöüß]+)\s+(.*)$/u);
   if (wordMatch && wordMatch[2]) {
     const word = wordMatch[1]?.toLowerCase();
-    if (word && NUMBER_WORDS.has(word)) {
-      return wordMatch[2].trim();
+    if (word) {
+      const numeric = NUMBER_WORD_VALUE_MAP[word];
+      if (numeric !== undefined) {
+        return {
+          remainder: wordMatch[2].trim(),
+          quantity: numeric,
+        };
+      }
     }
   }
 
-  return working;
+  return { remainder: working };
 }
 
 function stripTrailingQuantityToken(value: string): string {
@@ -1753,20 +1779,29 @@ function parseEntryComponents(value: string): {
   quantityToken?: string;
 } {
   let working = value.trim();
+  let quantityToken: string | undefined;
+  let quantityValue: number | undefined;
+
+  const leadingQuantity = extractLeadingQuantityInfo(working);
+  working = leadingQuantity.remainder;
+  if (leadingQuantity.quantity !== undefined) {
+    quantityValue = leadingQuantity.quantity;
+  }
+
   const quantityMatch = working.match(
     /\((\d+)\s*(m|meter|metern|schritte?|schritt)\s*\)\s*$/iu,
   );
-  let quantityToken: string | undefined;
-  let quantityValue: number | undefined;
   if (quantityMatch?.[0]) {
     quantityToken = quantityMatch[0].trim();
     const numericSource = quantityMatch[1];
     if (numericSource) {
       const numeric = Number.parseInt(numericSource, 10);
-      quantityValue = Number.isNaN(numeric) ? undefined : numeric;
+      if (!Number.isNaN(numeric)) {
+        quantityValue = numeric;
+      }
     }
   }
-  working = stripTrailingQuantityToken(stripLeadingQuantityToken(working));
+  working = stripTrailingQuantityToken(working);
   working = working.replace(/([IVX]+)\s*-\s*([IVX]+)/gi, "$1+$2");
   let levelToken: string | undefined;
   const options: string[] = [];

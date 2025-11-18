@@ -773,6 +773,105 @@ describe("resolveStatBlock", () => {
     expect(grossschild?.normalizedSource).toBe("shakagra langschild");
   });
 
+  it("splits multi-option abilities and links liturgical references", () => {
+    const statBlock = createStatBlock({
+      specialAbilities: [
+        "Berufsgeheimnis (Antidot, Heiltrank, Sunsura)",
+        "Ortskenntnis (Dracoras, Altstadt und Hafenviertel in Vinsalt, Neustadt in Havena, Sulhaminiah in Zorgan)",
+        "Lieblingsliturgie (Maske)",
+        "Merkmalskenntnis (Heilung und Telekinese)",
+      ],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const tradeSecrets = resolved.specialAbilities.filter((entry) =>
+      entry.source.startsWith("Berufsgeheimnis"),
+    );
+    expect(tradeSecrets).toHaveLength(3);
+    expect(
+      tradeSecrets.map((entry) => entry.selectOption?.name),
+    ).toEqual(
+      expect.arrayContaining(["Antidot", "Heiltrank", "Sunsura"]),
+    );
+
+    const localKnowledge = resolved.specialAbilities.filter((entry) =>
+      entry.source.startsWith("Ortskenntnis"),
+    );
+    expect(localKnowledge).toHaveLength(4);
+    expect(localKnowledge.map((entry) => entry.source)).toEqual(
+      expect.arrayContaining([
+        "Ortskenntnis (Dracoras)",
+        "Ortskenntnis (Altstadt und Hafenviertel in Vinsalt)",
+        "Ortskenntnis (Neustadt in Havena)",
+        "Ortskenntnis (Sulhaminiah in Zorgan)",
+      ]),
+    );
+
+    const favoriteLiturgy = resolved.specialAbilities.find((entry) =>
+      entry.source.startsWith("Lieblingsliturgie"),
+    );
+    expect(favoriteLiturgy?.linkedOption?.type).toBe("LiturgicalChant");
+    expect(favoriteLiturgy?.linkedOption?.value).toBe(97);
+
+    const knowledgeEntries = resolved.specialAbilities.filter((entry) =>
+      entry.source.startsWith("Merkmalskenntnis"),
+    );
+    expect(knowledgeEntries).toHaveLength(2);
+    expect(
+      knowledgeEntries.map((entry) => entry.selectOption?.name),
+    ).toEqual(expect.arrayContaining(["Heilung", "Telekinese"]));
+  });
+
+  it("expands equipment packages into individual items", () => {
+    const statBlock = createStatBlock({
+      equipment: ["Wildnis-Paket"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    expect(resolved.equipment.length).toBeGreaterThan(1);
+    expect(
+      resolved.equipment.some((entry) =>
+        entry.source.includes("Kletterseil"),
+      ),
+    ).toBe(true);
+    const rope = resolved.equipment.find(
+      (entry) => entry.match?.id === "ITEMTPL_219",
+    );
+    expect(rope?.quantityHint).toBe(10);
+    const provisions = resolved.equipment.find(
+      (entry) => entry.match?.id === "ITEMTPL_181",
+    );
+    expect(provisions?.quantityHint).toBe(5);
+    expect(
+      resolved.warnings.some(
+        (warning) =>
+          warning.section === "equipment" &&
+          warning.message.includes("Ausrüstungspaket"),
+      ),
+    ).toBe(true);
+  });
+
+  it("splits Prinzipientreue entries per principle", () => {
+    const statBlock = createStatBlock({
+      disadvantages: ["Prinzipientreue I (Völkerverständigung, Friedfertigkeit)"],
+    });
+
+    const resolved = resolveStatBlock(statBlock, lookups);
+
+    const entries = resolved.disadvantages.filter((entry) =>
+      entry.source.startsWith("Prinzipientreue"),
+    );
+    expect(entries).toHaveLength(2);
+    expect(entries.map((entry) => entry.source)).toEqual(
+      expect.arrayContaining([
+        "Prinzipientreue I (Völkerverständigung)",
+        "Prinzipientreue I (Friedfertigkeit)",
+      ]),
+    );
+  });
+
   it("splits Merkmalskenntnisse entries into individual selections", () => {
     const statBlock = createStatBlock({
       specialAbilities: ["Merkmalskenntnis (Heilung und Telekinese)"],
