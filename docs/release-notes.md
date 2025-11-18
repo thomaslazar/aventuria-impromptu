@@ -2,6 +2,12 @@
 
 Curated highlights of the most significant feature drops. Minor fixes, copy tweaks, and build housekeeping are intentionally omitted so this document stays focused on capabilities that change what the app can do.
 
+## 0.4.6 — Optolith Ability & Package Fidelity (2025-11-18)
+
+- Multi-option Sonderfertigkeiten such as Berufsgeheimnis, Ortskenntnis, Merkmalskenntnis, Lieblingsliturgie, and detail-driven disadvantages now split automatically and export their canonical Optolith IDs, so imports stop showing anonymous “Custom” labels.
+- The parser copes with stat blocks that move Sonderfertigkeiten, Sprachen/Schriften, or Traditionsinfos into arbitrary headings, keeping appended notes and add-ons aligned with the correct Optolith sections without asking users to rename anything.
+- Equipment packages now expand into the correct quantities thanks to improved number parsing, keeping Optolith belongings in sync with the printed bundle contents.
+
 ## 0.4.5 — Optolith Stat Block Fidelity (2025-11-16)
 
 - Stat blocks can now tuck `Sprachen:`/`Schriften:` or extra Sonderfertigkeiten under arbitrary headings and still have the converter capture the languages and abilities correctly, so messy appendices with ad-hoc labels no longer get lost.
