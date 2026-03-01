@@ -17,6 +17,9 @@ RUN apt-get update \
 # Install Codex CLI globally for the container.
 RUN npm install -g @openai/codex@latest
 
+# Install Claude Code CLI via the official native installer.
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 # Install cline CLI globally for the container.
 RUN npm install -g cline
 

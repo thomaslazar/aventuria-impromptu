@@ -23,7 +23,8 @@
         "github.vscode-pull-request-github",
         "mhutchie.git-graph",
         "openai.chatgpt",
-        "saoudrizwan.claude-dev"
+        "saoudrizwan.claude-dev",
+        "anthropic.claude-code"
       ]
     }
   },
