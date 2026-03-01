@@ -42,6 +42,7 @@ This document is your fast-start checklist for working on **Aventuria Impromptu*
   tsconfig.*.json      # TS project references (app, vitest, vite config)
   package.json         # Scripts + dependency manifest
   .codex/              # Codex CLI automation (leave untouched)
+  .claude/             # Claude Code project settings
   .devcontainer/       # Dev container definition
   .github/             # GitHub workflows
   .vscode/             # Shared editor settings
