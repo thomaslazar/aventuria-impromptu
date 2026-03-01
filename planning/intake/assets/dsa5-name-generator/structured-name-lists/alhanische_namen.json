@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Alhanisches Königinnenreich",
+    "key": "alhanische_namen",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Historische Kultur der Alhani östlich von Schwarzer Sichel und Trollzacken; Vorfahren der Norbarden",
+      "note": "Namen basieren auf den Abschnitten 'Alhanische Namen' inkl. Beispielen im Fließtext. Nachnamen unbekannt; Mutternamen (suni/omer) und Herkunft mit char werden als Muster abgebildet."
+    }
+  },
+  "rules": {
+    "gender_modes": [
+      "female",
+      "male"
+    ],
+    "name_patterns": [
+      {
+        "id": "alhan_f_simple",
+        "template": "{given_f}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "alhan_m_simple",
+        "template": "{given_m}",
+        "usage": [
+          "common"
+        ]
+      },
+      {
+        "id": "alhan_f_matronymic",
+        "template": "{given_f} {generic_particle} {given_f}",
+        "usage": [
+          "patronymic",
+          "common"
+        ],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": [
+          "suni"
+        ]
+      },
+      {
+        "id": "alhan_m_matronymic",
+        "template": "{given_m} {generic_particle} {given_f}",
+        "usage": [
+          "patronymic",
+          "common"
+        ],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": [
+          "omer"
+        ]
+      },
+      {
+        "id": "alhan_f_origin",
+        "template": "{given_f} {regional_particle} {place}",
+        "usage": [
+          "origin",
+          "common"
+        ],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [
+          "char"
+        ],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      },
+      {
+        "id": "alhan_m_origin",
+        "template": "{given_m} {regional_particle} {place}",
+        "usage": [
+          "origin",
+          "common"
+        ],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [
+          "char"
+        ],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      }
+    ],
+    "pattern_weights": {
+      "alhan_f_simple": 6,
+      "alhan_m_simple": 6,
+      "alhan_f_matronymic": 3,
+      "alhan_m_matronymic": 3,
+      "alhan_f_origin": 2,
+      "alhan_m_origin": 2
+    },
+    "particles": {
+      "noble": [],
+      "pseudo_noble": [],
+      "regional": [
+        "char"
+      ],
+      "patrician": [],
+      "generic": [
+        "suni",
+        "omer"
+      ]
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [
+          "ja",
+          "ni",
+          "kis"
+        ],
+        "male_suffixes": [
+          "dir",
+          "din",
+          "jar",
+          "jan",
+          "yan"
+        ]
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": true,
+      "male_patterns": [
+        "{given_m} {generic_particle} {given_f}"
+      ],
+      "female_patterns": [
+        "{given_f} {generic_particle} {given_f}"
+      ]
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Agnitha",
+      "Aluzah",
+      "Bilkis",
+      "Bitescha",
+      "Dalkeshja",
+      "Danutja",
+      "Gama",
+      "Hanija",
+      "Harandra",
+      "Harandru",
+      "Ibrani",
+      "Kosha",
+      "Merishja",
+      "Nurja",
+      "Orinakis",
+      "Rasescha",
+      "Shashinja",
+      "Shinja",
+      "Shinani",
+      "Shinakis",
+      "Surja",
+      "Thesija",
+      "Yilbakis",
+      "Zibilkis"
+    ],
+    "given_m": [
+      "Amadin",
+      "Amagomer",
+      "Druidin",
+      "Fedaji",
+      "Hamakil",
+      "Haniri",
+      "Kargemil",
+      "Keshmir",
+      "Laromir",
+      "Lorsijan",
+      "Mermadin",
+      "Mikail",
+      "Okjan",
+      "Reshgijan",
+      "Sildroyan",
+      "Tatjan",
+      "Thajan",
+      "Tharon",
+      "Zhuljar"
+    ],
+    "surnames": [],
+    "places": [
+      "Al'zul",
+      "Bey-el-Unukh",
+      "El'Sur",
+      "Lors-Hunk",
+      "Sard'Husk",
+      "Shamâlhamma",
+      "War-Hunk",
+      "Ysil'elah"
+    ],
+    "patrician_names": [],
+    "noble_names": [],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "raw_text": "Das Königinnenreich der Alhani erstreckte sich einst östlich von Schwarzer Sichel und Trollzacken bis zur Ostküste Aventuriens und wurde schließlich von Bosparan unterworfen. Alhanische Namen wurden meist nach Prophezeiung und Orakeln gewählt; viele Namen tragen bedeutungstragende Endungen. Für Frauen und Männer gab es geschlechtsspezifische Endungen, die sich im Lauf des Lebens ändern konnten (z. B. Shinani → Shinja → Shinakis). Nachnamen waren unbekannt, stattdessen wurden Mutternamen mit suni (Tochter der) oder omer (Sohn der) nachgestellt, z. B. Bitescha suni Bilkis, Keshmir omer Bilkis. Für Herkunftsangaben wurde char (von) vor den Ortsnamen verwendet, z. B. Mikail char Bey-el-Unukh. Typische weibliche Endungen: -dra/-dru (zaubermächtig), -ja (weibliche Endung), -kis (alt, weise), -ni (jung, klein), -ris (herrschend), -scha/-tha (furchtlos). Typische männliche Endungen: -dir/-din (kämpfend), -i/-il (jung, klein), -jar/-jan/-yan (männliche Endung), -mir/-mer (Sohn), -on (ernst, weise), -ri (geboren, lebendig). Vornamen (w) mit übersetzter Bedeutung: Agnitha (furchtloses Mädchen), Aluzah (die Mächtige), Bilkis (weise Träumerin), Bitescha (im Tempel Herrschende), Dalkeshja (die das Heim Segnende), Danutja (die Gerechte), Gama (die Zweiflerin), Hanija (Siebte, Glückliche), Harandra (edle Zauberin), Harandru (die durch Zauberei Herrschende), Ibrani (Junge Erhabene), Kosha (die Biene), Merishja (die lebende Nachfahrin), Nurja (die Leuchtende), Orinakis (weise Herren des Windes), Rasescha (die mit dem Kopf Herrschende), Shashinja (Erleuchtete Herrscherin), Shinja (Schlange, Erleuchtete), Surja (die Strahlende), Thesija (die Fordernde), Yilbakis (die alte Weise), Zibilkis (Weise Traumseherin). Vornamen (m): Amadin (rächender Kämpfer), Amagomer (rächender Sohn), Druidin (Zauberkämpfer), Fedaji (der Kriegsführende), Hamakil (der Hitzige), Haniri (der glücklich Geborene), Kargemil (der Weitgereiste), Keshmir (der daheimgebliebene Sohn), Laromir (der Nachgeborne), Lorsijan (Bewahrer), Mermadin (der für den Sohn Kämpfende), Mikail (der Fragende), Okjan (der aus der Wildnis Stammende), Reshgijan (der Besonnene), Sildroyan (der Undurchsichtige), Tatjan (der Vater), Thajan (der Furchtlose), Zhuljar (der Blutige)."
+  }
+}

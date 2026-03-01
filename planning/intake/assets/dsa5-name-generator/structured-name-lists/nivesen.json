@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Nivesen",
+    "key": "norden_nivesen",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Nivesische Hirten- und Jägerkultur, sehr einfache Namensgebung, Sippen- und Stammeszugehörigkeit",
+      "note": "Nivesen führen gewöhnlich nur einen Vornamen und zusätzlich einen Sippen-/Stammesnamen. Wolfsnamen existieren, werden aber nicht im Alltag verwendet."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      {
+        "id": "nivesen_f_single",
+        "template": "{given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "nivesen_m_single",
+        "template": "{given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "nivesen_f_sippe",
+        "template": "{given_f} aus der Sippe {sippe}",
+        "usage": ["sippe", "common"],
+        "allowed_regional_particles": ["aus"]
+      },
+      {
+        "id": "nivesen_m_sippe",
+        "template": "{given_m} aus der Sippe {sippe}",
+        "usage": ["sippe", "common"],
+        "allowed_regional_particles": ["aus"]
+      }
+    ],
+    "pattern_weights": {
+      "nivesen_f_single": 7,
+      "nivesen_m_single": 7,
+      "nivesen_f_sippe": 3,
+      "nivesen_m_sippe": 3
+    },
+    "particles": {
+      "noble": [],
+      "pseudo_noble": [],
+      "regional": ["aus"],
+      "patrician": [],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Aikku","Airiksela","Amuri","Auka","Baituri","Beri","Bjanju","Dakauju","Dana","Duri","Eikaju","Emela","Eskola",
+      "Falkja","Guaäna","Hallvi","Hauka","Helja","Hikia","Janaha","Jokela","Jonuri","Kajani","Kantala","Karenju",
+      "Kelva","Kisa","Kuopi","Lauka","Leenja","Lieskaju","Lojmaa","Mido","Murula","Myrra","Naäni","Naij","Näljavena",
+      "Neli","Nirka","Nivilaukaju","Ojakalla","Olu","Peltju","Pori","Rauma","Roika","Saari","Taiini","Terhi","Tiali",
+      "Tiensu","Tolsa","Ulu","Usi","Valla","Viala","Vieki","Ylista","Zurti"
+    ],
+    "given_m": [
+      "Aatto","Abjo","Adjok","Altanan","Arjuk","Banuk","Beranen","Berko","Binjok","Danjuk","Ebnan","Eikaljok","Eiko",
+      "Eirkir","Enan","Enko","Enuk","Erm Sen","Finjhon","Garnuk","Genko","Gurjinen","Hanko","Hautanan","Heimanuk",
+      "Hietanen","Honuk","Horganan","Iivarr","Janjuk","Jasu","Jorinen","Jurtanan","Kaikanuk","Karuukijo","Kauno",
+      "Keinjo","Kervo","Kiamu","Kilhujo","Kinajo","Kintanan","Kylänjak","Lanan","Latu","Lieto","Lieto","Loschim",
+      "Madanan","Maenan","Miko","Neajo","Nejhan","Nurmjo","Poukai","Rakjo","Rasjuk","Rikiju","Seinuk","Toljok",
+      "Uljok","Valen","Valjok","Zeino"
+    ],
+    "surnames": [],
+    "places": [],
+    "patrician_names": [],
+    "noble_names": [],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "sippen": [
+      "Auka-Lie","Hokke","Kaiku","Kaiyakuu-Lie","Kettu-Lie","Kylänjak","Lieska-Jaärna","Lieska-Kangerluk",
+      "Lieska-Leddu","Lieska-Lie","Lieska-Madukju","Majava-Lie","Navalauki","Rika-Lie","Takku","Toivoa","Uusipauki",
+      "Villikauka"
+    ],
+    "tribes": [],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "honorifics": [],
+    "raw_text": "Nivesen besitzen meist nur einen Vornamen und nennen zur Vorstellung häufig ihre Sippe. Wolfsnamen existieren, werden aber selten verwendet. Doppelvokale werden doppelt gesprochen. Quelle enthält vollständige Vor- und Sippennamen."
+  }
+}

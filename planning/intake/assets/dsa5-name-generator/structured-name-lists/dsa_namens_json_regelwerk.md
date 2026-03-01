@@ -1,18 +1,28 @@
-# 📘 DSA Namens-JSON Parsing-Regelwerk (Finale Version)
+# 📘 DSA Namens-JSON Parsing-Regelwerk (Aktuelle Version)
 
-> **Dieses Regelwerk beschreibt vollständig, wie ChatGPT neue DSA-Namensregionen in dein JSON-Schema konvertieren muss.  
-> Es basiert auf ALLEN bisher erstellten JSON-Dateien und gleicht alle Unterschiede an.**
+> **Dieses Regelwerk beschreibt vollständig, wie ChatGPT neue DSA-Namensregionen in dein JSON-System konvertieren muss.**  
+> Es konsolidiert die bisherigen Erkenntnisse und Korrekturen aus allen bis jetzt erstellten JSONs (u. a. Splitting für Adel, Silbenbaukasten, Bühnen-/Künstlernamen, flexible Schema-Erweiterungen nach Rücksprache, Beiname-Splitting bei Maraskan).
 
 ---
 
 ## #️⃣ 1. Ziel
-Wenn ich dir einen Textabschnitt aus *Aventurische Namen* gebe, sollst du daraus eine **komplette JSON-Datei** im folgenden Schema erzeugen — **ohne Hardcoding**, mit **generischen Platzhaltern**, **Suffix- und Partikel-Systemen**, und **allen abgeleiteten Namensregeln**.
+
+Wenn ich dir einen Textabschnitt aus *Aventurische Namen* (oder die relevanten PDF-Seiten) gebe, erzeugst du daraus **eine komplette JSON-Datei** nach diesem Regelwerk:
+
+- **kein Hardcoding**
+- **generische Platzhalter**
+- **Partikel- & Suffix-System**
+- **vollständige Lexikon-Extraktion**
+- **realistische `pattern_weights`**
+- **Silbenbaukasten** (wenn vorhanden) wird extrahiert **und** in Patterns nutzbar gemacht
+- Spezialfälle (z. B. Adel-Vornamen, Bühnen-/Künstlernamen) werden **separat** abgebildet, nicht „normalisiert“.
 
 ---
 
-## #️⃣ 2. JSON-Hauptschema
+## #️⃣ 2. JSON-Hauptschema (Basis)
 
-Jede Datei folgt dieser Struktur, das Schema sollte eingehalten werden, wenn es aber zu rigide ist, dann kann es, nach Rücksprache, erweitert werden:
+Jede Datei folgt grundsätzlich dieser Struktur.  
+**Wichtig:** Das Schema soll eingehalten werden. Wenn es **zu rigide** ist, darf es **nur nach expliziter Rücksprache** erweitert werden. (Kleinere Erweiterungen als „Spezialfälle“ sind zulässig, wenn sie zwingend sind, aber müssen in `meta.extraction.note` dokumentiert werden.)
 
 ```json
 {
@@ -84,20 +94,73 @@ Jede Datei folgt dieser Struktur, das Schema sollte eingehalten werden, wenn es 
 
 ---
 
+## #️⃣ 2.1 Erlaubte, dokumentierte Erweiterungen (nur wenn nötig)
+
+### A) Adel-spezifische Vornamen / Zweitnamen (Splitting)
+Wenn der Text zwischen „gewöhnlichen“ und „adeligen“ Vor-/Zweitnamen unterscheidet oder die adelige Namensbildung sonst nicht korrekt funktioniert, werden zusätzliche Lexikon-Felder genutzt:
+
+- `noble_given_f`, `noble_given_m` (adelige Vornamen)
+- `noble_middle_f`, `noble_middle_m` (adelige Zweitnamen)
+
+**Regel:**  
+- Normale Leute → `given_*` + `surnames`  
+- Adel → `noble_given_*` / `noble_middle_*` + `noble_names` / `noble_cores`  
+- Niemals alle Namen stumpf in `given_*` packen, wenn dadurch adelige Patterns kaputtgehen.
+
+> Diese Felder sind eine „Spezialfall-Erweiterung“. Wenn verwendet, muss in `meta.extraction.note` stehen, dass diese Felder genutzt wurden.
+
+### B) Silbenbaukasten / Syllables
+Wenn im Text ein Silbenbaukasten vorhanden ist, wird er als `lexicon.syllables` ergänzt (analog zum bestehenden System in `andergast.json`):
+
+```json
+"syllables": {
+  "given_f": { "prefix": [], "suffix": [] },
+  "given_m": { "prefix": [], "suffix": [] },
+  "surnames": { "prefix": [], "suffix": [] }
+}
+```
+
+(Je nach Quelle können nur Teile existieren, z. B. nur `surnames`.)
+
+**Wichtig:**  
+- Silben werden vollständig extrahiert.  
+- Silbenbaukasten wird zusätzlich in `name_patterns` integriert (siehe Abschnitt 9.12).
+
+### C) Bühnen- & Künstlernamen: Stage-System (Option K3)
+Wenn ein Abschnitt explizit Bühnen-/Künstlernamen beschreibt, wird ein zusätzlicher Block genutzt:
+
+```json
+"stage": {
+  "prefixes": [],
+  "suffixes": [],
+  "connectors": []
+}
+```
+
+- `connectors` nur, wenn im Text ausdrücklich Verbindungswörter/Zeichen vorkommen (z. B. Bindestrich-Logik, „der/die“, „von“, etc. – niemals hardcoden, siehe Hardcoding-Regeln).
+- Epitheta können weiterhin als `bynames` laufen, sofern es echte Beinamen sind.
+
+### D) Beinamen nach Genus (z. B. Maraskan)
+Wenn Beinamen im Text explizit nach Geschlechtern/Neutralformen getrennt sind oder eine Normalisierung grammatikalisch unhandlich wäre:
+
+- `bynames_f`, `bynames_m`, `bynames_n`  
+Statt einem einzigen `bynames`.
+
+**Regel:** Nicht normalisieren, wenn dadurch deutsche Grammatik implodiert.  
+Wenn trotzdem `bynames` genutzt wird, müssen weibliche und männliche Formen klar unterscheidbar bleiben.
+
+---
+
 ## #️⃣ 3. Grundprinzip: KEIN HARDCODING
 
-Du darfst **niemals** feste Wörter wie:
+Du darfst **niemals** feste Wörter oder Endungen direkt in Templates schreiben, wenn sie als Partikel/Suffix systemisch abbildbar sind.
 
-- „von“
-- „ya“
-- „di“
-- „us“
-- „a“
-- „-ius“
-- „von den“
-- „…Leute“
+Beispiele für verbotene Hardcodings im Template:
 
-direkt in ein Template schreiben.
+- Partikel: „von“, „ya“, „di“, „ter“, „von den“
+- Suffixe: „-us“, „-a“, „-ius“, Plural „-n“, „-ier“
+- formelhafte Patronymik-Partikel (ibn, saba, bren, brai, dur)
+- Herkunftspartikel, wenn sie als Partikel geführt werden (z. B. „Ni“, „char“, „aus“)
 
 **Verboten (falsch):**
 
@@ -120,7 +183,8 @@ direkt in ein Template schreiben.
 }
 ```
 
-Feste Wortteile wie „von“, „ya“, „ter“, Suffixe wie „-us“, „-a“ oder Plurale wie „-n“, „-ier“ werden **immer** über `particles` und `transforms` gesteuert, nie direkt im Template.
+**Ausnahme:**  
+In sehr wenigen Fällen sind feste Wörter Teil einer **sprachlich unvermeidbaren Konstruktion**, die nicht als Partikel/Suffix modelliert werden kann. Dann ist Rücksprache erforderlich.
 
 ---
 
@@ -128,15 +192,15 @@ Feste Wortteile wie „von“, „ya“, „ter“, Suffixe wie „-us“, „-a
 
 Du verwendest IMMER diese Kategorien:
 
-| Kategorie       | Beispiele                  | Verwendung                  |
-|-----------------|---------------------------|-----------------------------|
-| **noble**       | von, ya                   | echter Adel                 |
-| **pseudo_noble**| di, da, de, della, ay, ash| bürgerlich-dekorativ        |
-| **regional**    | ter                       | regionale Varianten         |
-| **patrician**   | von den                   | bosparanische Geschlechter  |
-| **generic**     | ibn, saba, brai, bren, dur| patronymisch, schamanisch   |
+| Kategorie        | Beispiele                          | Verwendung |
+|-----------------|------------------------------------|-----------|
+| **noble**        | von, ya, zu, vom                   | echter Adel |
+| **pseudo_noble** | di, da, de, della, ay, ash         | bürgerlich-dekorativ |
+| **regional**     | ter, aus, Ni, char                 | regionale Varianten / Herkunftsmarker |
+| **patrician**    | von den                            | bosparanische Geschlechter |
+| **generic**      | ibn, saba, bren, brai, dur, iban   | patronymisch, schamanisch |
 
-Alle diese Partikel liegen in:
+Alle Partikel liegen in:
 
 ```json
 "particles": {
@@ -148,7 +212,7 @@ Alle diese Partikel liegen in:
 }
 ```
 
-Wenn ein Pattern eine bestimmte Partikelart nutzt, definierst du:
+Wenn ein Pattern eine Partikelart nutzt, definierst du die zulässigen Partikel:
 
 ```json
 "allowed_noble_particles": [],
@@ -158,7 +222,7 @@ Wenn ein Pattern eine bestimmte Partikelart nutzt, definierst du:
 "allowed_generic_particles": []
 ```
 
-Beispiele:
+Beispiel:
 
 ```json
 {
@@ -169,53 +233,33 @@ Beispiele:
 }
 ```
 
-```json
-{
-  "id": "pseudo_common_m",
-  "template": "{given_m} {pseudo_noble_particle} {surname}",
-  "usage": ["common", "pseudo_noble"],
-  "allowed_pseudo_noble_particles": ["di", "de", "da", "della", "delli", "ash", "ay"]
-}
-```
-
 ---
 
 ## #️⃣ 5. Transformations-System
 
-### 5.1 Diminutives
+### 5.1 Diminutives / Kosenamen
+Wenn der Text Kurzformen nennt:
 
-Wenn im Text Kurzformen / Kosenamen erwähnt werden, z. B.:
-
-> Asmodena (Asma), Celissa (Lissa)
-
-Dann:
-
-- `transforms.diminutives.female_suffixes` / `male_suffixes` können generelle Kose-Suffixe enthalten (falls im Text explicit genannt)
-- Konkrete Kurzformen kommen nach:
+- Allgemeine Kose-Suffixe (nur wenn explizit genannt) → `transforms.diminutives.*_suffixes`
+- Konkrete Zuordnungen → `lexicon.given_diminutives_*`
 
 ```json
 "given_diminutives_f": {
-  "Asmodena": ["Asma"],
-  "Celissa": ["Lissa"]
+  "Asmodena": ["Asma"]
 }
 ```
 
----
-
-### 5.2 Herkunftssuffixe („aus X“ → Xus/Xa)
-
-Wenn der Text beschreibt, dass Herkunftsnamen mit Suffixen gebildet werden (z. B. Bosparan → Bosparanius / Ragathium → Ragathia), dann:
+### 5.2 Herkunftssuffixe (Suffix-basiert, z. B. Xus/Xa)
+Wenn der Text Herkunftsnamen über Suffixe bildet:
 
 ```json
-"transforms": {
-  "origin": {
-    "male_suffixes": ["us", "ius"],
-    "female_suffixes": ["a", "ia"]
-  }
+"origin": {
+  "male_suffixes": ["us", "ius"],
+  "female_suffixes": ["a", "ia"]
 }
 ```
 
-Patterns verwenden diese Suffixe NICHT hart, sondern via Platzhalter:
+Pattern:
 
 ```json
 {
@@ -225,19 +269,8 @@ Patterns verwenden diese Suffixe NICHT hart, sondern via Platzhalter:
 }
 ```
 
-```json
-{
-  "id": "origin_f",
-  "template": "{given_f} {place}{origin_suffix_f}",
-  "usage": ["origin", "common"]
-}
-```
-
----
-
 ### 5.3 Bosparanisierung
-
-Wenn im Text steht, dass Namen „bosparanisiert“ werden können, z. B. durch typische Endungen:
+Wenn im Text „bosparanisiert“:
 
 ```json
 "bosparanization": {
@@ -246,7 +279,7 @@ Wenn im Text steht, dass Namen „bosparanisiert“ werden können, z. B. durc
 }
 ```
 
-Dann verwendest du:
+Pattern:
 
 ```json
 {
@@ -256,25 +289,14 @@ Dann verwendest du:
 }
 ```
 
-```json
-{
-  "id": "bosparanized_f",
-  "template": "{given_f}{bosparan_suffix_f}",
-  "usage": ["bosparanized", "common"]
-}
-```
-
----
-
 ### 5.4 Patrizierpluralsuffix
-
-Für Geschlechter wie „Cervilier“ → „von den Cerviliern“:
+Wenn Geschlechter pluralisiert werden (z. B. -n):
 
 ```json
 "patrician_plural_suffix": "n"
 ```
 
-Und das Pattern nutzt es so:
+Pattern:
 
 ```json
 {
@@ -291,32 +313,11 @@ Und das Pattern nutzt es so:
 
 Patronymik wird NUR aktiviert, wenn der Text sie explizit beschreibt.
 
-**Beispiele:**
+- Aktivierung über `rules.patronymic.enabled = true`
+- Partikel gehören in `particles.generic`
+- Patterns definieren `allowed_generic_particles`
 
-### Aranien
-- männlich: `{given_m} ibn {given_m}`
-- weiblich: `{given_f} saba {given_f}` oder `{given_f} {given_f}{matronymic_suffix}` (z. B. „-sunni“, „-sunya“)
-
-### Ferkina
-- männlich: `{given_m} iban {given_m}`
-- weiblich: `{given_f} sabu {given_m}` (immer Vater als namensgebende Bezugsperson)
-
-### Gjalsker
-- männlich: `{given_m} bren {given_m}` (Sohn des)
-- weiblich: `{given_f} brai {given_f}` (Tochter der)
-
-### Schamanen (Gjalsker)
-- `{given} dur {given}` (Hüter des Geistes von …)
-
-Diese Partikel liegen im JSON unter:
-
-```json
-"particles": {
-  "generic": ["iban", "sabu", "bren", "brai", "dur"]
-}
-```
-
-Patterns definieren den erlaubten Partikel:
+Beispiele:
 
 ```json
 {
@@ -336,160 +337,106 @@ Patterns definieren den erlaubten Partikel:
 }
 ```
 
-```json
-{
-  "id": "shaman_dur",
-  "template": "{given_m} {generic_particle} {given_m}",
-  "usage": ["shaman", "common"],
-  "allowed_generic_particles": ["dur"]
-}
-```
+---
+
+## #️⃣ 7. `name_patterns`: IDs, Usage und Konsistenz
+
+JEDES Pattern hat:
+
+- eindeutige `id`
+- `template`
+- `usage` (Array von Tags)
+
+Typische `usage`-Tags:
+
+- `"common"`, `"noble"`, `"pseudo_noble"`, `"regional"`, `"origin"`, `"bosparanized"`,
+  `"patrician"`, `"byname"`, `"tribal"`, `"sippe"`, `"patronymic"`, `"shaman"`, `"stage"`
 
 ---
 
-## #️⃣ 7. `name_patterns`: IDs & Usage
+## #️⃣ 8. `pattern_weights`
 
-JEDES Pattern in `name_patterns` hat:
-
-- eine **eindeutige `id`** (String)
-- ein **`template`**
-- ein **`usage`-Array** mit einem oder mehreren Tags wie z. B.:
-  - `"common"`, `"noble"`, `"pseudo_noble"`, `"regional"`,  
-    `"origin"`, `"bosparanized"`, `"patrician"`, `"byname"`, `"tribal"`, `"patronymic"`, `"shaman"`
-
-Beispiel:
-
-```json
-{
-  "id": "common_f_1",
-  "template": "{given_f}",
-  "usage": ["common"]
-}
-```
-
-```json
-{
-  "id": "noble_m_core",
-  "template": "{given_m} {noble_particle} {noble_core}",
-  "usage": ["noble"],
-  "allowed_noble_particles": ["ya"]
-}
-```
-
-```json
-{
-  "id": "byname_m",
-  "template": "{given_m} {byname_article_m} {byname}",
-  "usage": ["byname", "common"]
-}
-```
+- Schlüssel sind immer Pattern-IDs
+- idealerweise hat jedes Pattern ein Gewicht
+- realistische Häufigkeit:
+  - häufig: 5–8
+  - regulär: 3–4
+  - selten: 1–2
 
 ---
 
-## #️⃣ 8. `pattern_weights`: IDs referenzieren
-
-Im Objekt `pattern_weights` verwendest du IMMER die `id` der Pattern als Schlüssel.
-
-Beispiel:
-
-```json
-"pattern_weights": {
-  "common_f_1": 6,
-  "common_f_2": 3,
-  "common_f_3": 1,
-  "common_m_1": 6,
-  "common_m_2": 3,
-  "common_m_3": 1,
-  "common_f_surname": 4,
-  "common_m_surname": 4,
-  "origin_f": 3,
-  "origin_m": 3,
-  "byname_f": 2,
-  "byname_m": 2
-}
-```
-
-- **Jedes Pattern in `name_patterns` sollte idealerweise einen Eintrag im `pattern_weights` haben.**
-- Die Gewichte steuern die relative Häufigkeit.
-
----
-
-## #️⃣ 9. Namensmuster (wichtige Standard-Patterns)
-
-Mindestens diese Namensarten solltest du modellieren, wenn sie zur Region passen:
+## #️⃣ 9. Standard-Patterns (wenn passend)
 
 ### 9.1 Einfache Namen
-
 ```json
-{ "id": "common_f_1", "template": "{given_f}", "usage": ["common"] }
-{ "id": "common_m_1", "template": "{given_m}", "usage": ["common"] }
+{ "id": "common_f_single", "template": "{given_f}", "usage": ["common"] }
+{ "id": "common_m_single", "template": "{given_m}", "usage": ["common"] }
 ```
 
-### 9.2 Mehrere Vornamen
-
+### 9.2 Mehrere Vornamen (nur wenn Kultur es plausibel nutzt)
 ```json
-{ "id": "common_f_2", "template": "{given_f} {given_f}", "usage": ["common"] }
-{ "id": "common_f_3", "template": "{given_f} {given_f} {given_f}", "usage": ["common"] }
+{ "id": "common_f_double", "template": "{given_f} {given_f}", "usage": ["common"] }
+{ "id": "common_m_double", "template": "{given_m} {given_m}", "usage": ["common"] }
 ```
 
-### 9.3 Mit Nachnamen
-
+### 9.3 Mit Familiennamen
 ```json
 { "id": "common_f_surname", "template": "{given_f} {surname}", "usage": ["common"] }
 { "id": "common_m_surname", "template": "{given_m} {surname}", "usage": ["common"] }
 ```
 
-### 9.4 Adel ohne Partikel
-
-```json
-{ "id": "noble_f_name", "template": "{given_f} {noble_name}", "usage": ["noble"] }
-```
-
-### 9.5 Adel mit Partikel
-
+### 9.4 Adel (mit Partikel)
 ```json
 {
-  "id": "noble_m_core",
-  "template": "{given_m} {noble_particle} {noble_core}",
+  "id": "noble_f",
+  "template": "{noble_given_f} {noble_particle} {noble_name}",
   "usage": ["noble"],
-  "allowed_noble_particles": ["ya", "von"]
+  "allowed_noble_particles": ["von", "vom", "zu"]
 }
 ```
 
-### 9.6 Pseudo-adelige Bürger
-
 ```json
 {
-  "id": "pseudo_common_m",
+  "id": "noble_m",
+  "template": "{noble_given_m} {noble_particle} {noble_name}",
+  "usage": ["noble"],
+  "allowed_noble_particles": ["von", "vom", "zu"]
+}
+```
+
+> Falls `noble_given_*` nicht genutzt wird (weil nicht nötig), dann `{given_*}` verwenden.
+
+### 9.5 Pseudo-Adel
+```json
+{
+  "id": "pseudo_m",
   "template": "{given_m} {pseudo_noble_particle} {surname}",
   "usage": ["pseudo_noble", "common"],
-  "allowed_pseudo_noble_particles": ["di", "de", "da", "della", "delli"]
+  "allowed_pseudo_noble_particles": ["di", "de", "da", "della", "delli", "ash", "ay"]
 }
 ```
 
-### 9.7 Regionale Partikel
-
+### 9.6 Regionale Partikel / Herkunftsmarker
+Beispiel (z. B. „aus“, „Ni“, „char“ – je nach Kultur):
 ```json
 {
-  "id": "regional_ter_m",
-  "template": "{given_m} {regional_particle} {surname}",
-  "usage": ["regional", "common"],
-  "allowed_regional_particles": ["ter"]
+  "id": "regional_origin_m",
+  "template": "{given_m} {regional_particle} {place}",
+  "usage": ["origin", "common"],
+  "allowed_regional_particles": ["aus"]
 }
 ```
 
-### 9.8 Herkunftsnamen
-
+### 9.7 Herkunftssuffix (Suffix-basiert)
 ```json
 {
-  "id": "origin_m",
+  "id": "origin_suffix_m",
   "template": "{given_m} {place}{origin_suffix_m}",
   "usage": ["origin", "common"]
 }
 ```
 
-### 9.9 Bosparanisierung (optional)
-
+### 9.8 Bosparanisierung
 ```json
 {
   "id": "bosparanized_m",
@@ -498,54 +445,98 @@ Mindestens diese Namensarten solltest du modellieren, wenn sie zur Region passen
 }
 ```
 
-### 9.10 Beinamen
-
+### 9.9 Beinamen (klassisch)
 ```json
 {
-  "id": "byname_m",
-  "template": "{given_m} {byname_article_m} {byname}",
+  "id": "byname_f",
+  "template": "{given_f} {byname_article_f} {byname}",
   "usage": ["byname", "common"]
 }
 ```
 
-### 9.11 Stammesnamen (falls vorhanden)
+### 9.10 Sippen-Formel (wenn im Text explizit)
+Wenn die Kultur Formeln wie „X aus Y Sippe“ nutzt, muss dies als Pattern modelliert werden, ohne Hardcoding der Partikel:
 
 ```json
 {
-  "id": "tribal_m",
-  "template": "{given_m} {tribe}",
-  "usage": ["tribal", "common"]
+  "id": "sippe_m",
+  "template": "{given_m} {regional_particle} der Sippe {sippe}",
+  "usage": ["sippe", "common"],
+  "allowed_regional_particles": ["aus"]
 }
 ```
 
+> Wenn „der Sippe“ als feste sprachliche Fügung nicht sauber partikelisierbar ist, ist das eine der seltenen Ausnahmen. Dann in `meta.extraction.note` dokumentieren.
+
+### 9.11 Bühnen-/Künstlernamen (Option K3)
+Wenn `lexicon.stage` vorhanden ist:
+
+```json
+{
+  "id": "stage_f",
+  "template": "{stage_prefix}{given_f}{stage_suffix}",
+  "usage": ["stage", "common"]
+}
+```
+
+Optional mit Connectors, wenn im Text explizit:
+
+```json
+{
+  "id": "stage_m_connector",
+  "template": "{stage_prefix}{given_m}{stage_connector}{stage_suffix}",
+  "usage": ["stage", "common"]
+}
+```
+
+### 9.12 Silbenbaukasten in Patterns integrieren
+Wenn ein Silbenbaukasten für Familiennamen existiert:
+
+```json
+{
+  "id": "common_m_syllabic_surname",
+  "template": "{given_m} {surname_prefix}{surname_suffix}",
+  "usage": ["common", "syllabic"]
+}
+```
+
+Analog für weiblich.
+
+**Wichtig:** Der Silbenbaukasten ersetzt nicht echte `surnames`, sondern ergänzt sie. Beide Patternarten sind zulässig.
+
 ---
 
-## #️⃣ 10. Lexikon-Auswertung
+## #️⃣ 10. Lexikon-Auswertung (vollständig)
 
-Alle im Text gelisteten Inhalte müssen extrahiert werden:
+Alles, was im Text gelistet ist, muss extrahiert werden – ohne Erfindungen, ohne Umformungen, ohne Kürzen.
 
-- `given_f`: alle weiblichen Vornamen
-- `given_m`: alle männlichen Vornamen
-- `surnames`: Familiennamen / Nachnamen
-- `noble_names`: vollständige Adelsnamen (inkl. Partikel, falls im Fließtext)
-- `noble_cores`: Nur der Kernteil (z. B. „Costermana“, ohne „ya“)
-- `patrician_names`: z. B. „Cervilier“
-- `places`: Ortsnamen (für Herkunftsnamen)
-- `bynames`: Beinamen ohne Artikel (z. B. „Stolze“, „Kurze“)
-- `byname_articles_f/m`: z. B. `["die"]`, `["der"]`
-- `given_diminutives_*`: Mapping Vollname → Kurzform(en)
-- `status_suffix_*`: z. B. „Maior“, „Minor“, „Maiora“, „Minora“
-- `tribes`, `sippen`, `honorifics`: falls im Text vorkommend
-- `raw_text`: Kurzbeschreibung oder Originalzusammenfassung
+- `given_f`, `given_m`: normale Vornamen
+- `surnames`: Familiennamen (bei Kulturen ohne Familiennamen bleibt leer)
+- `places`: Orte (für Herkunft)
+- `noble_names`: Adelsgeschlechter / Adelsnamen
+- `noble_cores`: Kernteile für Partikel-Adel
+- `patrician_names`: patrizische Geschlechter
+- `bynames`: Beinamen **ohne Artikel**
+- `byname_articles_f/m`: Artikel getrennt
+- `given_diminutives_*`: konkrete Kurzformen
+- `status_suffix_*`: Status-/Rangzusätze
+- `tribes`, `sippen`, `honorifics`: falls vorhanden
+- `raw_text`: kurze Zusammenfassung + ggf. relevante Sprachhinweise
+
+**Spezialfälle:**
+- Adel-Splitting: `noble_given_*`, `noble_middle_*`
+- Bühnen-/Künstler: `stage.*`
+- Silbenbaukasten: `syllables.*`
+- Beiname-Splitting: `bynames_f/m/n` (wenn nötig)
 
 ---
 
 ## #️⃣ 11. Ausgabeformat
 
-- Gib **immer genau eine vollständige JSON-Struktur** zurück.
-- Nutze einen ` ```json `-Codeblock.
-- Keine zusätzlichen Kommentare oder Erklärungen im gleichen Codeblock.
-- Erklärungen (falls nötig) NUR außerhalb des Codeblocks.
+- pro Kultur genau **ein vollständiges JSON** im ` ```json ` Codeblock
+- zusätzlich immer den **Dateinamen** in Klartext (außerhalb des Codeblocks)
+- keine Kommentare im JSON
+- Erklärungen (wenn nötig) nur außerhalb des JSON
 
 ---
 
@@ -553,36 +544,30 @@ Alle im Text gelisteten Inhalte müssen extrahiert werden:
 
 ❌ Partikel hart in Templates einbauen  
 ❌ Suffixe hart in Templates einbauen  
-❌ Namen erfinden oder verändern  
-❌ Listen kürzen  
-❌ Struktur des JSON-Schemas verändern  
-❌ IDs in `pattern_weights` verwenden, die es in `name_patterns` nicht gibt (oder umgekehrt)
+❌ Namen erfinden, „korrigieren“ oder normalisieren, wenn es die Quelle nicht hergibt  
+❌ Listen kürzen oder zusammenfassen  
+❌ Schema ohne Rücksprache ändern (Ausnahmen nur als dokumentierte Spezialfälle)  
+❌ `pattern_weights`-IDs ohne dazugehörige Patterns (oder umgekehrt)  
+❌ männliche/weibliche Beiname-Formen „glattziehen“, wenn Grammatik dadurch kompliziert wird (z. B. Maraskan)
 
 ---
 
 ## #️⃣ 13. Was du IMMER tun musst
 
-✔ generische Platzhalter (`{…}`) für Partikel und Suffixe verwenden  
-✔ Suffixe und Plurale ausschließlich über `transforms` steuern  
-✔ Partikel ausschließlich über `particles` + `allowed_*`-Felder nutzen  
-✔ JEDES Pattern mit `id`, `template`, `usage` anlegen  
-✔ `pattern_weights`-Schlüssel entsprechen **immer** Pattern-IDs  
-✔ alle Namen und Listen vollständig übernehmen  
-✔ `raw_text` mit einer kurzen Zusammenfassung befüllen  
+✔ generische Platzhalter (`{...}`) für Partikel und Suffixe verwenden  
+✔ Partikel ausschließlich über `particles` + `allowed_*`  
+✔ Suffixe/Plural ausschließlich über `transforms`  
+✔ Patterns so wählen, dass sie **realistisch klingende Namen** erzeugen  
+✔ Adel-spezifische Vornamen getrennt behandeln, wenn sonst Patterns nicht funktionieren  
+✔ Silbenbaukasten vollständig extrahieren und **in Patterns nutzbar machen**  
+✔ alle im Text gelisteten Namen vollständig übernehmen  
+✔ `raw_text` befüllen und Besonderheiten der Namensbildung dokumentieren  
+✔ Dateiname immer mitliefern
 
 ---
 
-## 🧪 Beispiel: Vollständiges JSON für eine fiktive Kultur
-
-Das folgende Beispiel zeigt eine **vollständig ausgearbeitete** JSON-Datei für eine fiktive Kultur `"Beispielreich"`.  
-Sie demonstriert:
-
-- `name_patterns` mit `id`, `template`, `usage`
-- `pattern_weights`, die sich auf diese IDs beziehen
-- Partikel-Kategorien
-- Herkunftssuffixe
-- Beinamen mit Artikeln
-- Diminutiv-Mappings
+## 🧪 Beispiel (Kurzbeispiel – nur zur Illustration)
+Dieses Beispiel ist nur zur Demonstration des Mechanismus (Partikel, Suffixe, Silben, Gewichte) – nicht als harte Vorlage.
 
 ```json
 {
@@ -594,158 +579,64 @@ Sie demonstriert:
     "extraction": {
       "kind": "chapter",
       "hint": "Fiktives Beispielkapitel",
-      "note": "Dieses JSON dient als Demonstration des Schemas."
+      "note": "Demonstration für Pattern/Weights/Particles/Transforms/Syllables."
     }
   },
   "rules": {
     "gender_modes": ["female", "male"],
     "name_patterns": [
-      {
-        "id": "common_f_1",
-        "template": "{given_f}",
-        "usage": ["common"]
-      },
-      {
-        "id": "common_f_surname",
-        "template": "{given_f} {surname}",
-        "usage": ["common"]
-      },
-      {
-        "id": "common_m_1",
-        "template": "{given_m}",
-        "usage": ["common"]
-      },
-      {
-        "id": "common_m_surname",
-        "template": "{given_m} {surname}",
-        "usage": ["common"]
-      },
-      {
-        "id": "origin_f",
-        "template": "{given_f} {place}{origin_suffix_f}",
-        "usage": ["origin", "common"]
-      },
-      {
-        "id": "origin_m",
-        "template": "{given_m} {place}{origin_suffix_m}",
-        "usage": ["origin", "common"]
-      },
-      {
-        "id": "byname_f",
-        "template": "{given_f} {byname_article_f} {byname}",
-        "usage": ["byname", "common"]
-      },
-      {
-        "id": "byname_m",
-        "template": "{given_m} {byname_article_m} {byname}",
-        "usage": ["byname", "common"]
-      },
-      {
-        "id": "noble_m_core",
-        "template": "{given_m} {noble_particle} {noble_core}",
-        "usage": ["noble"],
-        "allowed_noble_particles": ["von"]
-      }
+      { "id": "common_f_single", "template": "{given_f}", "usage": ["common"] },
+      { "id": "common_m_single", "template": "{given_m}", "usage": ["common"] },
+      { "id": "common_f_surname", "template": "{given_f} {surname}", "usage": ["common"] },
+      { "id": "common_m_surname", "template": "{given_m} {surname}", "usage": ["common"] },
+      { "id": "common_m_syllabic_surname", "template": "{given_m} {surname_prefix}{surname_suffix}", "usage": ["common", "syllabic"] },
+      { "id": "noble_m", "template": "{noble_given_m} {noble_particle} {noble_name}", "usage": ["noble"], "allowed_noble_particles": ["von"] }
     ],
     "pattern_weights": {
-      "common_f_1": 6,
-      "common_f_surname": 4,
-      "common_m_1": 6,
-      "common_m_surname": 4,
-      "origin_f": 2,
-      "origin_m": 2,
-      "byname_f": 1,
-      "byname_m": 1,
-      "noble_m_core": 1
+      "common_f_single": 3,
+      "common_m_single": 3,
+      "common_f_surname": 6,
+      "common_m_surname": 6,
+      "common_m_syllabic_surname": 3,
+      "noble_m": 2
     },
     "particles": {
-      "noble": [
-        "von"
-      ],
+      "noble": ["von"],
       "pseudo_noble": [],
       "regional": [],
       "patrician": [],
       "generic": []
     },
     "transforms": {
-      "diminutives": {
-        "female_suffixes": [],
-        "male_suffixes": []
-      },
-      "origin": {
-        "male_suffixes": ["us"],
-        "female_suffixes": ["a"]
-      },
-      "bosparanization": {
-        "male_suffixes": [],
-        "female_suffixes": []
-      },
+      "diminutives": { "female_suffixes": [], "male_suffixes": [] },
+      "origin": { "male_suffixes": ["us"], "female_suffixes": ["a"] },
+      "bosparanization": { "male_suffixes": [], "female_suffixes": [] },
       "patrician_plural_suffix": ""
     },
-    "patronymic": {
-      "enabled": false,
-      "male_patterns": [],
-      "female_patterns": []
-    }
+    "patronymic": { "enabled": false, "male_patterns": [], "female_patterns": [] }
   },
   "lexicon": {
-    "given_f": [
-      "Alviera",
-      "Bellana",
-      "Cirella"
-    ],
-    "given_m": [
-      "Alvian",
-      "Bellinor",
-      "Cirodan"
-    ],
-    "surnames": [
-      "Eichenthal",
-      "Falkenstrohm",
-      "Greifenfurt"
-    ],
-    "places": [
-      "Beispel",
-      "Testoria"
-    ],
+    "given_f": ["Alviera"],
+    "given_m": ["Cirodan"],
+    "surnames": ["Eichenthal"],
+    "places": ["Testoria"],
     "patrician_names": [],
-    "noble_names": [],
-    "noble_cores": [
-      "Testenberg"
-    ],
-    "bynames": [
-      "Stolze",
-      "Kluge",
-      "Raue"
-    ],
-    "byname_articles_f": [
-      "die"
-    ],
-    "byname_articles_m": [
-      "der"
-    ],
-    "given_diminutives_f": {
-      "Alviera": [
-        "Alvi"
-      ]
-    },
-    "given_diminutives_m": {
-      "Cirodan": [
-        "Ciro"
-      ]
-    },
+    "noble_names": ["Testenberg"],
+    "noble_cores": ["Testenberg"],
+    "bynames": [],
+    "byname_articles_f": ["die"],
+    "byname_articles_m": ["der"],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
     "status_suffix_f": [],
     "status_suffix_m": [],
     "tribes": [],
     "sippen": [],
     "honorifics": [],
-    "raw_text": "Fiktive Beispielregion mit einfachen Vornamen, Familiennamen, Herkunftsnamen und Beinamen."
+    "syllables": {
+      "surnames": { "prefix": ["Eich"], "suffix": ["thal"] }
+    },
+    "raw_text": "Fiktive Beispielregion zur Demonstration."
   }
 }
 ```
-
----
-
-## ✔️ Fertig.
-Dieses Regelwerk ist vollständig und bereit für Copy/Paste in einen neuen Chat.  
-Wenn du mir im neuen Chat einen Abschnitt aus *Aventurische Namen* gibst, wende ich GENAU diese Regeln an und liefere dir ein JSON nach diesem Schema. 

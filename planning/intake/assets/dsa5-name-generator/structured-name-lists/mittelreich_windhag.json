@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Mittelreich: Windhag",
+    "key": "mittelreich_windhag",
+    "extraction": {
+      "kind": "subchapter",
+      "hint": "Mittelreich – Windhag",
+      "note": "Windhager Namen mit zwölfgöttlicher Prägung, aber starkem Sippen- und Grenzromantik-Einschlag; Sippennamen explizit genannt."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      {
+        "id": "windhag_f_single",
+        "gender_mode": "female",
+        "template": "{given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "windhag_m_single",
+        "gender_mode": "male",
+        "template": "{given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "windhag_f_surname",
+        "gender_mode": "female",
+        "template": "{given_f} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "windhag_m_surname",
+          "gender_mode": "male",
+          "template": "{given_m} {surname}",
+          "usage": ["common"]
+      },
+      {
+        "id": "windhag_f_noble",
+        "gender_mode": "female",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": ["noble"],
+        "allowed_noble_particles": ["von"],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      },
+      {
+        "id": "windhag_m_noble",
+        "gender_mode": "male",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": ["noble"],
+        "allowed_noble_particles": ["von"],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      },
+      {
+        "id": "windhag_m_sippe_full",
+        "gender_mode": "male",
+        "template": "{given_m} {surname} {regional_particle} {sippe}s Sippe",
+        "usage": ["sippe", "common"],
+        "allowed_noble_particles": [],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": ["aus"],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      }
+    ],
+    "pattern_weights": {
+      "windhag_f_single": 2,
+      "windhag_m_single": 2,
+      "windhag_f_surname": 5,
+      "windhag_m_surname": 5,
+      "windhag_f_noble": 1,
+      "windhag_m_noble": 1,
+      "windhag_m_sippe_full": 2
+    },
+    "particles": {
+      "noble": ["von"],
+      "pseudo_noble": [],
+      "regional": ["aus"],
+      "patrician": [],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Adelena",
+      "Alvian",
+      "Annelotte",
+      "Anstas",
+      "Aure",
+      "Betisa",
+      "Dergada",
+      "Elmarie",
+      "Elvion",
+      "Erenwip",
+      "Fennja",
+      "Finne",
+      "Fraide",
+      "Gertruda",
+      "Glorinde",
+      "Henis",
+      "Jette",
+      "Lilethe",
+      "Lisyl",
+      "Ludis",
+      "Mardindis",
+      "Neegina",
+      "Petrana",
+      "Rauke",
+      "Roswipa",
+      "Teweli",
+      "Thikla",
+      "Uda",
+      "Wandris"
+    ],
+    "given_m": [
+      "Adran",
+      "Alta",
+      "Arbald",
+      "Attolf",
+      "Berenow",
+      "Cordoban",
+      "Dragosch",
+      "Eikulf",
+      "Ferdan",
+      "Ferdixen",
+      "Fernwart",
+      "Flaxon",
+      "Gaddo",
+      "Gerdan",
+      "Gestid",
+      "Gorasch",
+      "Helixar",
+      "Huro",
+      "Jaslin",
+      "Karnos",
+      "Krauwn",
+      "Madboldt",
+      "Mertijn",
+      "Narnolt",
+      "Ornulf",
+      "Petrifex",
+      "Salix",
+      "Stuaic",
+      "Tarnfried",
+      "Trichter",
+      "Ucarios",
+      "Westulf",
+      "Windald"
+    ],
+    "surnames": [
+      "Arsinger",
+      "Bachenbrecht",
+      "Bergner",
+      "Bock",
+      "Dernheim",
+      "Drachenschlag",
+      "Eisenblatt",
+      "Engstrand",
+      "Flusswieser",
+      "Grubrech",
+      "Halbach",
+      "Harbener",
+      "Holzer",
+      "Lausinger",
+      "Kleibock",
+      "Klippstein",
+      "Kratosmann",
+      "Kyndocher",
+      "Marag",
+      "Outerich",
+      "Salzbruck",
+      "Schollbrecher",
+      "Sturmtrutzer",
+      "Unfreund",
+      "Windrufer"
+    ],
+    "places": [
+      "Aichhain",
+      "Drachenwacht",
+      "Greifenklamm",
+      "Grötz",
+      "Osthagen",
+      "Schattengrund",
+      "Trutzburg",
+      "Westwind",
+      "Windock",
+      "Windisch",
+      "Widdernhall"
+    ],
+    "patrician_names": [],
+    "noble_names": [
+      "Aichhain",
+      "Drachenwacht",
+      "Greifenklamm",
+      "Grötz",
+      "Osthagen",
+      "Schattengrund",
+      "Trutzburg",
+      "Westwind",
+      "Windock",
+      "Windisch",
+      "Widdernhall"
+    ],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "tribes": [],
+    "sippen": [
+      "Borgrun",
+      "Cortak",
+      "Garan",
+      "Gerfin",
+      "Hellron",
+      "Peukin",
+      "Tauron",
+      "Udaman"
+    ],
+    "honorifics": [],
+    "raw_text": "Im windumtosten Fürstentum Windhag, an der östlichen Grenze des Mittelreichs, mischen sich mittelreichische und bornländische Einflüsse. Die Bevölkerung ist fromm und hart, Sippennamen spielen eine Rolle, etwa bei Formeln wie „Stuaic Kleibock aus Udamans Sippe“. \nVornamen (w): Adelena, Alvian, Annelotte, Anstas, Aure, Betisa, Dergada, Elmarie, Elvion, Erenwip, Fennja, Finne, Fraide, Gertruda, Glorinde, Henis, Jette, Lilethe, Lisyl, Ludis, Mardindis, Neegina, Petrana, Rauke, Roswipa, Teweli, Thikla, Uda, Wandris.\nVornamen (m): Adran, Alta, Arbald, Attolf, Berenow, Cordoban, Dragosch, Eikulf, Ferdan, Ferdixen, Fernwart, Flaxon, Gaddo, Gerdan, Gestid, Gorasch, Helixar, Huro, Jaslin, Karnos, KrauWn, Madboldt, Mertijn, Narnolt, Ornulf, Petrifex, Salix, Stuaic, Tarnfried, Trichter, Ucarios, Westulf, Windald.\nFamiliennamen: Arsinger, Bachenbrecht, Bergner, Bock, Dernheim, Drachenschlag, Eisenblatt, Engstrand, Flusswieser, Grubrech, Halbach, Harbener, Holzer, Lausinger, Kleibock, Klippstein, Kratosmann, Kyndocher, Marag, Outerich, Salzbruck, Schollbrecher, Sturmtrutzer, Unfreund, Windrufer.\nAdelsnamen: Aichhain, Drachenwacht, Greifenklamm, Grötz, Osthagen, Schattengrund, Trutzburg, Westwind, Windock, Windisch, Widdernhall.\nSippennamen der Windhager: Borgrun, Cortak, Garan, Gerfin, Hellron, Peukin, Tauron, Udaman."
+  }
+}

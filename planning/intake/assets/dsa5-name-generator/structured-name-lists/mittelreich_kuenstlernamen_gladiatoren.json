@@ -1,0 +1,304 @@
+{
+    "meta": {
+        "version": "1.0",
+        "source": "VS6 - Aventurische Namen.pdf",
+        "culture": "Mittelreich: Gladiatoren & Schaukämpfer",
+        "key": "mittelreich_kuenstlernamen_gladiatoren",
+        "extraction": {
+            "kind": "chapter",
+            "hint": "Bühnen- & Künstlernamen – Gladiatoren und Schaukämpfer im Mittelreich",
+            "note": "Enthält Vornamen und eine eigene Liste von Bei- und Künstlernamen für Gladiatorinnen, Gladiatoren und Schaukämpfer."
+        }
+    },
+    "rules": {
+        "gender_modes": [
+            "female",
+            "male"
+        ],
+        "name_patterns": [
+            {
+                "id": "glad_f_core",
+                "template": "{given_f}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "glad_m_core",
+                "template": "{given_m}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "glad_f_byname",
+                "template": "{given_f} {byname}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "glad_m_byname",
+                "template": "{given_m} {byname}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "glad_byname_only",
+                "template": "{byname}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "glad_f_attr_prefix_byname",
+                "template": "{stage_prefix} {given_f} {byname}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "glad_m_attr_prefix_byname",
+                "template": "{stage_prefix} {given_m} {byname}",
+                "usage": [
+                    "stage"
+                ]
+            }
+        ],
+        "pattern_weights": {
+            "glad_f_core": 1,
+            "glad_m_core": 1,
+            "glad_f_byname": 6,
+            "glad_m_byname": 6,
+            "glad_byname_only": 3,
+            "glad_f_attr_prefix_byname": 3,
+            "glad_m_attr_prefix_byname": 3
+        },
+        "particles": {
+            "noble": [],
+            "pseudo_noble": [],
+            "regional": [],
+            "patrician": [],
+            "generic": []
+        },
+        "transforms": {
+            "diminutives": {
+                "female_suffixes": [],
+                "male_suffixes": []
+            },
+            "origin": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "bosparanization": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "patrician_plural_suffix": ""
+        },
+        "patronymic": {
+            "enabled": false,
+            "male_patterns": [],
+            "female_patterns": []
+        }
+    },
+    "lexicon": {
+        "given_f": [
+            "Arva",
+            "Azila",
+            "Barbaria",
+            "Boron(a)ike",
+            "Korianna",
+            "Taka-He",
+            "Venenia",
+            "Victoria",
+            "Zylva"
+        ],
+        "given_m": [
+            "Baltrunos",
+            "Blutbart",
+            "Boronides",
+            "Boronssohn",
+            "Coragon",
+            "Khalid",
+            "Korrenio",
+            "Mengbilar",
+            "Omar",
+            "Spektakulos",
+            "Takate",
+            "Tridon",
+            "Utharion",
+            "Viktor"
+        ],
+        "surnames": [],
+        "places": [],
+        "patrician_names": [],
+        "noble_names": [],
+        "noble_cores": [],
+        "bynames": [
+            "al'Kira",
+            "al'Sayif",
+            "al'Zuul",
+            "der Angroscho",
+            "die Bestie",
+            "Blutaxt",
+            "Blutsäufer",
+            "der Barbar",
+            "der Basilisk",
+            "der Berg",
+            "Dreizack",
+            "die Echse",
+            "Elfenschlächter",
+            "Eisherz",
+            "die Flinke",
+            "die Geißel",
+            "der Geisterrufer",
+            "Gifthauch",
+            "Hammerfaust",
+            "die Hetfrau",
+            "Ingerimmhammer",
+            "Jaguarklaue",
+            "der Ketzer",
+            "die Khoramsbestie",
+            "der Koloss",
+            "die Listige",
+            "Menschenfresser",
+            "der Mercenario",
+            "der Norbade",
+            "der Oger",
+            "Ogerklinge",
+            "Pantherkralle",
+            "der Schlinger",
+            "der almadanische Stier",
+            "die Schlange",
+            "die Schwarze",
+            "der Troll",
+            "die Wudu",
+            "Wildfang",
+            "Zwergentot"
+        ],
+        "byname_articles_f": [],
+        "byname_articles_m": [],
+        "given_diminutives_f": {},
+        "given_diminutives_m": {},
+        "status_suffix_f": [],
+        "status_suffix_m": [],
+        "tribes": [],
+        "sippen": [],
+        "honorifics": [],
+        "stage": {
+            "prefixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ],
+            "suffixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ]
+        },
+        "raw_text": "Gladiatoren- und Schaukämpfernamen im Mittelreich. Enthält männliche Vornamen wie Baltrunos, Blutbart, Boronides, Korrenio, Mengbilar, Spektakulos oder Utharion sowie weibliche Vornamen wie Arva, Azila, Barbaria, Boron(a)ike, Korianna, Taka-He, Venenia, Victoria oder Zylva. Dazu kommt eine Liste von Bei- und Künstlernamen wie al'Kira, die Bestie, Blutaxt, der Barbar, die Geißel, Hammerfaust, Jaguarklaue, die Khoramsbestie, der Koloss, der Mercenario, Ogerklinge, Pantherkralle, der almadanische Stier, die Schwarze, die Wudu, Wildfang oder Zwergentot, die mit den Vornamen kombiniert werden."
+    }
+}

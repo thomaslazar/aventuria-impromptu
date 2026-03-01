@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Mittelreich: Perricum",
+    "key": "mittelreich_perricum",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Markgrafschaft Perricum mit nebachotisch/tulamidischem Einschlag und starkem Rondra-/Kor-Bezug",
+      "note": "Basierend auf dem Abschnitt 'Mittelreich: Perricum'; typisch mittelreichische Namen (Seite 26) werden hier nicht erneut aufgeführt, nur die explizit gelisteten regionalen Namen."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      {
+        "id": "common_f_single",
+        "template": "{given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_single",
+        "template": "{given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "common_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "noble_f_simple",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": ["noble"],
+        "allowed_noble_particles": ["von", "vom", "zu"],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      },
+      {
+        "id": "noble_m_simple",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": ["noble"],
+        "allowed_noble_particles": ["von", "vom", "zu"],
+        "allowed_pseudo_noble_particles": [],
+        "allowed_regional_particles": [],
+        "allowed_patrician_particles": [],
+        "allowed_generic_particles": []
+      }
+    ],
+    "pattern_weights": {
+      "common_f_single": 3,
+      "common_m_single": 3,
+      "common_f_surname": 6,
+      "common_m_surname": 6,
+      "noble_f_simple": 2,
+      "noble_m_simple": 2
+    },
+    "particles": {
+      "noble": ["von", "vom", "zu"],
+      "pseudo_noble": [],
+      "regional": [],
+      "patrician": [],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Alhina",
+      "Al'khora",
+      "Ayla",
+      "Chal'andra",
+      "Dassareth",
+      "Emer",
+      "Koraline",
+      "Korianna",
+      "Lah'eila",
+      "Leudane",
+      "Mir'bane",
+      "Nurhan",
+      "Rondara",
+      "Svelinya",
+      "Yezhabel"
+    ],
+    "given_m": [
+      "Al'irik",
+      "Al'irikh",
+      "Al'khor",
+      "Arve",
+      "Ash'ivin",
+      "Aslan",
+      "Chadim",
+      "Dalman",
+      "Eslam",
+      "Hal",
+      "Hamir",
+      "Koradin",
+      "Kordan",
+      "Kor'hamid",
+      "Korobar",
+      "Korresh",
+      "Leomar",
+      "Makil",
+      "Mu'ammar",
+      "Muk'hadin",
+      "Okam",
+      "Rahul",
+      "Reto",
+      "Rondrigan",
+      "Ronwulf",
+      "Sanin",
+      "Simold",
+      "Yakorban"
+    ],
+    "surnames": [
+      "Belgor",
+      "Darpater",
+      "Dengler",
+      "Ehrwald",
+      "Ehrwalden",
+      "Felswegen",
+      "Leinfahrer",
+      "Leuentreu",
+      "Netzfischer",
+      "Rebenlieb",
+      "Rosstreiber",
+      "Trollzack",
+      "Turmen",
+      "Weihenwacht",
+      "Weinacker",
+      "Wintherlich"
+    ],
+    "places": [
+      "Perricum",
+      "Nebachot",
+      "Sultanat Nebachot"
+    ],
+    "patrician_names": [],
+    "noble_names": [
+      "Bergthann",
+      "Brendiltal",
+      "Darpatbrück",
+      "Dergelmund",
+      "Firunslicht",
+      "Gluckenhang",
+      "Gnitzenkuhl",
+      "Haselhain",
+      "Leuentreu",
+      "Paligan",
+      "Pfiffenstock",
+      "Sturmfels",
+      "Trollforst",
+      "Wasserburg",
+      "Weidenhang"
+    ],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "raw_text": "In Perricum sind typisch mittelreichische Namen verbreitet, oft mit Bezug zu Rondra, Praios sowie großen Kämpfern und Feldherren. Durch die eingegliederten Teile des ehemaligen Sultanats Nebachot treten vor allem im Süden tulamidisch gefärbte und retulamidisierte Namen auf (Apostrophe, verschluckte Silben). Einige Nebachoten verehren Kor als Rondrasohn. Diese Datei enthält die explizit gelisteten lokalen Vor- und Familiennamen sowie Adelsgeschlechter."
+  }
+}

@@ -1,0 +1,268 @@
+{
+    "meta": {
+        "version": "1.0",
+        "source": "VS6 - Aventurische Namen.pdf",
+        "culture": "Mittelreich: Quacksalber",
+        "key": "mittelreich_kuenstlernamen_quacksalber",
+        "extraction": {
+            "kind": "chapter",
+            "hint": "Bühnen- & Künstlernamen – Quacksalber im Mittelreich",
+            "note": "Heil- und alchemiebezogene Vornamen und Zunamen, die oft als lautmalerische oder sprechende Heiler- und Scharlatan-Namen dienen."
+        }
+    },
+    "rules": {
+        "gender_modes": [
+            "female",
+            "male"
+        ],
+        "name_patterns": [
+            {
+                "id": "quack_f_core",
+                "template": "{given_f} {surname}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "quack_m_core",
+                "template": "{given_m} {surname}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "quack_surname_only",
+                "template": "{surname}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "quack_surname_prefix",
+                "template": "{stage_prefix} {surname}",
+                "usage": [
+                    "stage"
+                ]
+            }
+        ],
+        "pattern_weights": {
+            "quack_f_core": 5,
+            "quack_m_core": 5,
+            "quack_surname_only": 3,
+            "quack_surname_prefix": 3
+        },
+        "particles": {
+            "noble": [],
+            "pseudo_noble": [],
+            "regional": [],
+            "patrician": [],
+            "generic": []
+        },
+        "transforms": {
+            "diminutives": {
+                "female_suffixes": [],
+                "male_suffixes": []
+            },
+            "origin": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "bosparanization": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "patrician_plural_suffix": ""
+        },
+        "patronymic": {
+            "enabled": false,
+            "male_patterns": [],
+            "female_patterns": []
+        }
+    },
+    "lexicon": {
+        "given_f": [
+            "Brauberta",
+            "Hakim",
+            "Heidrun",
+            "Heilgrit",
+            "Hexlind",
+            "Tinctura",
+            "Tsalind",
+            "Wehfriede"
+        ],
+        "given_m": [
+            "Alchimico",
+            "Hakima",
+            "Hexander",
+            "Laborix",
+            "Perainfried",
+            "Tincturos",
+            "Zurbaran"
+        ],
+        "surnames": [
+            "Agricola",
+            "Alchimicus",
+            "al'Hakim(a)",
+            "al'Kimiya",
+            "Antidot",
+            "Balsam(o)",
+            "Giftmischer",
+            "Goldregen",
+            "Guttrunk",
+            "Heilarius",
+            "Heilmacher",
+            "Heilsalb",
+            "Horuschenkern",
+            "Koschbasalt",
+            "Kupfertrunck",
+            "Lotoshauch",
+            "Nothelfer",
+            "Olginsud",
+            "Perainehilf",
+            "Perainetreu",
+            "Pestspor",
+            "Quecksilber",
+            "Salbarius",
+            "Schmerz(stiller)",
+            "Tarneles",
+            "Tausendwasser",
+            "Tiefschluck",
+            "Tonicum",
+            "Tsahilf",
+            "Warzenfein(d)",
+            "Wehmacher",
+            "Wirselgruber",
+            "Wunderlich",
+            "Wundersam",
+            "Wundheiler",
+            "Zauberhand"
+        ],
+        "places": [],
+        "patrician_names": [],
+        "noble_names": [],
+        "noble_cores": [],
+        "bynames": [],
+        "byname_articles_f": [],
+        "byname_articles_m": [],
+        "given_diminutives_f": {},
+        "given_diminutives_m": {},
+        "status_suffix_f": [],
+        "status_suffix_m": [],
+        "tribes": [],
+        "sippen": [],
+        "honorifics": [],
+        "stage": {
+            "prefixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ],
+            "suffixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ]
+        },
+        "raw_text": "Quacksalber- und Scharlatannamen im Mittelreich. Enthält Vornamen wie Brauberta, Heilgrit, Hexlind, Alchimico, Hexander oder Zurbaran sowie lautmalerische und heilkundige Zunamen wie Alchimicus, Antidot, Giftmischer, Goldregen, Heilmacher, Koschbasalt, Nothelfer, Perainehilf, Quecksilber, Wundersam oder Wundheiler. Die allgemeinen Bühnenattribute können zur zusätzlichen Ausschmückung der Quacksalbernamen verwendet werden."
+    }
+}

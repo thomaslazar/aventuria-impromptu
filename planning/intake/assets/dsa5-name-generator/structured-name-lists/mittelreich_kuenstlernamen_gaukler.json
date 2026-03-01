@@ -1,0 +1,279 @@
+{
+    "meta": {
+        "version": "1.0",
+        "source": "VS6 - Aventurische Namen.pdf",
+        "culture": "Mittelreich: Gaukler & Possenreißer",
+        "key": "mittelreich_kuenstlernamen_gaukler",
+        "extraction": {
+            "kind": "chapter",
+            "hint": "Bühnen- & Künstlernamen – Gaukler und Possenreißer im Mittelreich",
+            "note": "Vornamen und Zunamen für fahrende Gaukler und Possenreißer, oft mit sprechenden, komischen Familiennamen; nutzt die allgemeinen Bühnenattribute als Stage-Prefixe."
+        }
+    },
+    "rules": {
+        "gender_modes": [
+            "female",
+            "male"
+        ],
+        "name_patterns": [
+            {
+                "id": "gaukler_f_core",
+                "template": "{given_f} {surname}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "gaukler_m_core",
+                "template": "{given_m} {surname}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "gaukler_f_short",
+                "template": "{given_f}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "gaukler_m_short",
+                "template": "{given_m}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "gaukler_f_attr_prefix",
+                "template": "{stage_prefix} {given_f} {surname}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "gaukler_m_attr_prefix",
+                "template": "{stage_prefix} {given_m} {surname}",
+                "usage": [
+                    "stage"
+                ]
+            }
+        ],
+        "pattern_weights": {
+            "gaukler_f_core": 6,
+            "gaukler_m_core": 6,
+            "gaukler_f_short": 2,
+            "gaukler_m_short": 2,
+            "gaukler_f_attr_prefix": 3,
+            "gaukler_m_attr_prefix": 3
+        },
+        "particles": {
+            "noble": [],
+            "pseudo_noble": [],
+            "regional": [],
+            "patrician": [],
+            "generic": []
+        },
+        "transforms": {
+            "diminutives": {
+                "female_suffixes": [],
+                "male_suffixes": []
+            },
+            "origin": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "bosparanization": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "patrician_plural_suffix": ""
+        },
+        "patronymic": {
+            "enabled": false,
+            "male_patterns": [],
+            "female_patterns": []
+        }
+    },
+    "lexicon": {
+        "given_f": [
+            "Aliria",
+            "Brumberta",
+            "Esmeralda",
+            "Grimgund",
+            "Kladdis",
+            "Mirja",
+            "Nuntia",
+            "Phexlin(d)",
+            "Thissa",
+            "Zarpa"
+        ],
+        "given_m": [
+            "Amir",
+            "Bjarni",
+            "Eisenhard",
+            "Graciano",
+            "Gunnar",
+            "Phexario(n)",
+            "Starkward",
+            "Torxes",
+            "Wilbur"
+        ],
+        "surnames": [
+            "Bärenführer",
+            "Boltanass",
+            "Donnerhau",
+            "Feenfreund",
+            "Flinkfinger",
+            "Gaukelei",
+            "Immerpfeil",
+            "Inrahleger",
+            "Kinderschreck",
+            "Koboldkind",
+            "Lächerlich",
+            "Langenase",
+            "Lautstimm",
+            "Nimmerfehl",
+            "Nimmertot",
+            "Phexensglück",
+            "Possenreißer",
+            "Schaumschläger",
+            "Schreckensfratz",
+            "Starkarm",
+            "Sternfänger",
+            "Taschenspieler",
+            "Tausendsassa",
+            "Tausendmesser",
+            "Tigertanz",
+            "Witzbold",
+            "Zweigesicht"
+        ],
+        "places": [],
+        "patrician_names": [],
+        "noble_names": [],
+        "noble_cores": [],
+        "bynames": [],
+        "byname_articles_f": [],
+        "byname_articles_m": [],
+        "given_diminutives_f": {},
+        "given_diminutives_m": {},
+        "status_suffix_f": [],
+        "status_suffix_m": [],
+        "tribes": [],
+        "sippen": [],
+        "honorifics": [],
+        "stage": {
+            "prefixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ],
+            "suffixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ]
+        },
+        "raw_text": "Gaukler- und Possenreißernamen im Mittelreich. Enthält Vornamen wie Aliria, Brumberta, Esmeralda, Bjarni, Graciano oder Torxes sowie sprechende Zunamen wie Bärenführer, Feenfreund, Kinderschreck, Nimmerfehl, Phexensglück, Schaumschläger oder Tigertanz. Bühnenattribute wie „legendär\" oder „bombastisch\" können als schmückende Zusätze vor den vollständigen Namen gesetzt werden, etwa „der grandiose Bjarni Bärenführer\"."
+    }
+}

@@ -1,0 +1,527 @@
+{
+    "meta": {
+        "version": "1.0",
+        "source": "VS6 - Aventurische Namen.pdf",
+        "culture": "Mittelreich: Kosch",
+        "key": "mittelreich_kosch",
+        "extraction": {
+            "kind": "chapter",
+            "hint": "Mittelreich: Kosch – starke Nähe zu Hügelzwergen, kauzige Familiennamen, starke Naming-Traditionen",
+            "note": "Silbenbaukasten vollständig übernommen (präfix/suffix). Zwergenähnliche Namen enthalten. Herkunfts- oder Adelsstrukturen entsprechen dem Text (nur klassischer Adel)."
+        }
+    },
+    "rules": {
+        "gender_modes": [
+            "female",
+            "male"
+        ],
+        "name_patterns": [
+            {
+                "id": "common_f_single",
+                "template": "{given_f}",
+                "usage": [
+                    "common"
+                ]
+            },
+            {
+                "id": "common_m_single",
+                "template": "{given_m}",
+                "usage": [
+                    "common"
+                ]
+            },
+            {
+                "id": "common_f_surname",
+                "template": "{given_f} {surname}",
+                "usage": [
+                    "common"
+                ]
+            },
+            {
+                "id": "common_m_surname",
+                "template": "{given_m} {surname}",
+                "usage": [
+                    "common"
+                ]
+            },
+            {
+                "id": "common_f_syllabic_surname",
+                "template": "{given_f} {surname_prefix}{surname_suffix}",
+                "usage": [
+                    "common",
+                    "syllabic"
+                ]
+            },
+            {
+                "id": "common_m_syllabic_surname",
+                "template": "{given_m} {surname_prefix}{surname_suffix}",
+                "usage": [
+                    "common",
+                    "syllabic"
+                ]
+            },
+            {
+                "id": "noble_f",
+                "template": "{given_f} {noble_particle} {noble_name}",
+                "usage": [
+                    "noble"
+                ],
+                "allowed_noble_particles": [
+                    "von",
+                    "vom",
+                    "zu"
+                ]
+            },
+            {
+                "id": "noble_m",
+                "template": "{noble_given_m} {noble_particle} {noble_name}",
+                "usage": [
+                    "noble"
+                ],
+                "allowed_noble_particles": [
+                    "von",
+                    "vom",
+                    "zu"
+                ]
+            }
+        ],
+        "pattern_weights": {
+            "common_f_single": 3,
+            "common_m_single": 3,
+            "common_f_surname": 7,
+            "common_m_surname": 7,
+            "common_f_syllabic_surname": 4,
+            "common_m_syllabic_surname": 4,
+            "noble_f": 2,
+            "noble_m": 2
+        },
+        "particles": {
+            "noble": [
+                "von",
+                "vom",
+                "zu"
+            ],
+            "pseudo_noble": [],
+            "regional": [],
+            "patrician": [],
+            "generic": []
+        },
+        "transforms": {
+            "diminutives": {
+                "female_suffixes": [
+                    "le",
+                    "la"
+                ],
+                "male_suffixes": [
+                    "el",
+                    "erl",
+                    "le",
+                    "l"
+                ]
+            },
+            "origin": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "bosparanization": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "patrician_plural_suffix": ""
+        },
+        "patronymic": {
+            "enabled": false,
+            "male_patterns": [],
+            "female_patterns": []
+        }
+    },
+    "lexicon": {
+        "given_f": [
+            "Algarte",
+            "Alma",
+            "Alvide",
+            "Anglinde",
+            "Angunde",
+            "Bachede",
+            "Balbine",
+            "Barine",
+            "Birsel",
+            "Belisa",
+            "Boltsa",
+            "Celissa",
+            "Doride",
+            "Elida",
+            "Firuna",
+            "Gidiane",
+            "Gunelde",
+            "Hamwiede",
+            "Harika",
+            "Hesine",
+            "Ifirnia",
+            "Ilma",
+            "Ingrimma",
+            "Iralda",
+            "Isida",
+            "Jadwine",
+            "Janne",
+            "Jasina",
+            "Jette",
+            "Josmene",
+            "Lana",
+            "Lorine",
+            "Losiane",
+            "Leta",
+            "Madane",
+            "Maline",
+            "Matissa",
+            "Maula",
+            "Mechtessa",
+            "Morena",
+            "Nale",
+            "Nane",
+            "Neralda",
+            "Niam",
+            "Padora",
+            "Palina",
+            "Perdita",
+            "Rahjalieb",
+            "Rahjane",
+            "Rena",
+            "Selissa",
+            "Sephira",
+            "Thalessia",
+            "Travine",
+            "Ulide",
+            "Ulmia",
+            "Utsinde",
+            "Vana",
+            "Vieska",
+            "Wina",
+            "Winelda",
+            "Zekla"
+        ],
+        "given_m": [
+            "Alerich",
+            "Alphak",
+            "Ambros",
+            "Angbart",
+            "Angwart",
+            "Angfold",
+            "Anshold",
+            "Arbel",
+            "Ardan",
+            "Baduar",
+            "Balinor",
+            "Bardo",
+            "Belch",
+            "Berndrich",
+            "Berwin",
+            "Binsbart",
+            "Blasius",
+            "Bogumil",
+            "Bolzer",
+            "Bork",
+            "Bosper",
+            "Brauwin",
+            "Brin",
+            "Brunhold",
+            "Cordo",
+            "Dappert",
+            "Darian",
+            "Dingel",
+            "Eberhalm",
+            "Edelbrecht",
+            "Eichbart",
+            "Enno",
+            "Erlan",
+            "Erzian",
+            "Ettel",
+            "Eulrich",
+            "Falk",
+            "Ferling",
+            "Ferk",
+            "Firundal",
+            "Firutin",
+            "Fork",
+            "Garubald",
+            "Gelphart",
+            "Gero",
+            "Gobrom",
+            "Grambold",
+            "Grantel",
+            "Grimm",
+            "Growin",
+            "Hal",
+            "Halmar",
+            "Halmdahl",
+            "Hasmut",
+            "Helkor",
+            "Holdwin",
+            "Hummel",
+            "Ibrom",
+            "Idamil",
+            "Jakus",
+            "Jallik",
+            "Jalosch",
+            "Jargold",
+            "Kalmun",
+            "Kerling",
+            "Knurrbold",
+            "Korbrandt",
+            "Kordan",
+            "Kunhag",
+            "Leubold",
+            "Leumar",
+            "Linnert",
+            "Malzan",
+            "Melcher",
+            "Nandel",
+            "Nirwulf",
+            "Nottel",
+            "Ontho",
+            "Pergrin",
+            "Perval",
+            "Polter",
+            "Rank",
+            "Reto",
+            "Roban",
+            "Rumpel",
+            "Rumpo",
+            "Runkel",
+            "Salm",
+            "Sindar",
+            "Stitus",
+            "Tann",
+            "Tarosch",
+            "Tradan",
+            "Trest",
+            "Ulfing",
+            "Ulfried",
+            "Umme",
+            "Valpo",
+            "Vitus",
+            "Wengel",
+            "Wilbur",
+            "Wilfing",
+            "Wolfhardt"
+        ],
+        "noble_given_f": [],
+        "noble_given_m": [
+            "Baduar",
+            "Blasius",
+            "Garubald",
+            "Gelphart",
+            "Grambold",
+            "Wengenholm"
+        ],
+        "noble_middle_f": [],
+        "noble_middle_m": [],
+        "surnames": [
+            "Ackerknecht",
+            "Algerein",
+            "Alrauninger",
+            "Altschuh",
+            "Apfelbrandt",
+            "Appelstrunk",
+            "Ballenbinder",
+            "Beinhauer",
+            "Bienenbusch",
+            "Bierbrodt",
+            "Bockfold",
+            "Bösbold",
+            "Buchenschlag",
+            "Diegeler",
+            "Dinkelkorn",
+            "Dumpfbrodt",
+            "Eicherich",
+            "Einsäckler",
+            "Findeisen",
+            "Funkenschein",
+            "Garnelsaum",
+            "Glockenschlag",
+            "Gscheidtner",
+            "Hasenfuß",
+            "Heimbürger",
+            "Heuhufer",
+            "Kannenbäcker",
+            "Klinghammer",
+            "Leitgeb",
+            "Markwardt",
+            "Mohnsack",
+            "Moorstein",
+            "Pfeifenbold",
+            "Rappenstein",
+            "Rechenmacher",
+            "Saueringer",
+            "Schotterbier",
+            "Sindelsaum",
+            "Zwirnbusch"
+        ],
+        "noble_names": [
+            "Angenfurt",
+            "Angwartshof",
+            "Appelauen",
+            "Auersbrück",
+            "Auersfurt",
+            "Bärenklamm",
+            "Bardostein",
+            "Birnbrosch",
+            "Borking",
+            "Dunkelforst",
+            "Eberstamm",
+            "Falkenhag",
+            "Garnelhaun",
+            "Herbonia",
+            "Koschfurt",
+            "Koschtal",
+            "Lanzendorf",
+            "Möhrfelden",
+            "Nadoret",
+            "Niederborking",
+            "Riedenbusch",
+            "Salmingen",
+            "Schotterfels",
+            "vom See",
+            "Steinhag",
+            "Stippwitz",
+            "Uztrutz",
+            "Wengenholm"
+        ],
+        "noble_cores": [],
+        "places": [
+            "Kosch"
+        ],
+        "bynames": [],
+        "byname_articles_f": [],
+        "byname_articles_m": [],
+        "given_diminutives_f": {
+            "Celissa": [
+                "Cella"
+            ],
+            "Hamwiede": [
+                "Hamme",
+                "Wiede"
+            ],
+            "Ifirnia": [
+                "Firnia"
+            ],
+            "Ingrimma": [
+                "Grimma"
+            ],
+            "Josmene": [
+                "Jossele"
+            ],
+            "Sephira": [
+                "Sepha"
+            ],
+            "Thalessia": [
+                "Thalia"
+            ],
+            "Travine": [
+                "Trave"
+            ],
+            "Winelda": [
+                "Nelda"
+            ]
+        },
+        "given_diminutives_m": {
+            "Bogumil": [
+                "Bomil"
+            ],
+            "Firundal": [
+                "Firndal"
+            ],
+            "Eichbart": [
+                "Eichert"
+            ],
+            "Ardan": [
+                "Ardo"
+            ],
+            "Leubold": [
+                "Leubo"
+            ],
+            "Vitus": [
+                "Vittel"
+            ],
+            "Nottel": [
+                "Nöttel"
+            ],
+            "Brauwin": [
+                "Win"
+            ]
+        },
+        "status_suffix_f": [],
+        "status_suffix_m": [],
+        "tribes": [],
+        "sippen": [],
+        "honorifics": [],
+        "syllables": {
+            "surnames": {
+                "prefix": [
+                    "Appel",
+                    "Bach",
+                    "Bachen",
+                    "Bacher",
+                    "Bart",
+                    "Baum",
+                    "Baumel",
+                    "Beutel",
+                    "Bien",
+                    "Bienen",
+                    "Bier",
+                    "Birn",
+                    "Blum",
+                    "Blumer",
+                    "Bock",
+                    "Bös",
+                    "Bösen",
+                    "Butter",
+                    "Eich",
+                    "Garnel",
+                    "Grobb",
+                    "Halm",
+                    "Hang",
+                    "Hangen",
+                    "Has",
+                    "Hasen",
+                    "Holz",
+                    "Hügel",
+                    "Kauz",
+                    "Kauzen",
+                    "Lieb",
+                    "Lieben",
+                    "Moor",
+                    "Pflög",
+                    "Rüben",
+                    "Sack",
+                    "Sau",
+                    "Sauer",
+                    "Stein",
+                    "Strunk",
+                    "Süß",
+                    "Topf",
+                    "Wacker",
+                    "Zwiebel"
+                ],
+                "suffix": [
+                    "anger",
+                    "bier",
+                    "bold",
+                    "brodt",
+                    "busch",
+                    "erich",
+                    "fold",
+                    "haun",
+                    "inger",
+                    "klos",
+                    "korn",
+                    "ler",
+                    "sack",
+                    "saum",
+                    "stein"
+                ]
+            }
+        },
+        "raw_text": "Koscher Namen orientieren sich stark an der Nähe zu den Hügelzwergen, vielen Familien- und Sippentraditionen, althergebrachten Eheschließungsritualen ('Namenwiegen'). Haupteigenschaften: kauzige, volkstümliche Familiennamen, zahlreiche Diminutivformen, zwergisch klingende männliche Namen und starke landschaftliche Verwurzelung. Quelle Seite 38."
+    }
+}

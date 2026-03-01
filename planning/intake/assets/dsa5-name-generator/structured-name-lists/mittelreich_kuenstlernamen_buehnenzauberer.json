@@ -1,0 +1,251 @@
+{
+    "meta": {
+        "version": "1.0",
+        "source": "VS6 - Aventurische Namen.pdf",
+        "culture": "Mittelreich: Bühnenzauberer",
+        "key": "mittelreich_kuenstlernamen_buehnenzauberer",
+        "extraction": {
+            "kind": "chapter",
+            "hint": "Bühnen- & Künstlernamen – Bühnenzauberer im Mittelreich",
+            "note": "Enthält vor allem kunstvolle, magisch klingende Einzelbühnennamen für Zauberer sowie die allgemeine Attributliste für Bühnen- & Künstlernamen."
+        }
+    },
+    "rules": {
+        "gender_modes": [
+            "female",
+            "male"
+        ],
+        "name_patterns": [
+            {
+                "id": "stage_f_core",
+                "template": "{given_f}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "stage_m_core",
+                "template": "{given_m}",
+                "usage": [
+                    "stage",
+                    "common"
+                ]
+            },
+            {
+                "id": "stage_f_attr_prefix",
+                "template": "{stage_prefix} {given_f}",
+                "usage": [
+                    "stage"
+                ]
+            },
+            {
+                "id": "stage_m_attr_prefix",
+                "template": "{stage_prefix} {given_m}",
+                "usage": [
+                    "stage"
+                ]
+            }
+        ],
+        "pattern_weights": {
+            "stage_f_core": 6,
+            "stage_m_core": 6,
+            "stage_f_attr_prefix": 3,
+            "stage_m_attr_prefix": 3
+        },
+        "particles": {
+            "noble": [],
+            "pseudo_noble": [],
+            "regional": [],
+            "patrician": [],
+            "generic": []
+        },
+        "transforms": {
+            "diminutives": {
+                "female_suffixes": [],
+                "male_suffixes": []
+            },
+            "origin": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "bosparanization": {
+                "male_suffixes": [],
+                "female_suffixes": []
+            },
+            "patrician_plural_suffix": ""
+        },
+        "patronymic": {
+            "enabled": false,
+            "male_patterns": [],
+            "female_patterns": []
+        }
+    },
+    "lexicon": {
+        "given_f": [
+            "Ashtarra",
+            "Astralaria",
+            "Astralia",
+            "Bombasta",
+            "Feenholde",
+            "Magir(i)a",
+            "Magnifica",
+            "Methelessa",
+            "Miracula(e)",
+            "Nanduria",
+            "Prima",
+            "Rohalia",
+            "Saphira",
+            "Spectacula",
+            "Xeledonie",
+            "Zhayade"
+        ],
+        "given_m": [
+            "Assarbad",
+            "Astralo",
+            "Astralion",
+            "Astralus",
+            "Bastrabun",
+            "Bombastos",
+            "Diamanto",
+            "El'U(n)dini",
+            "Feenhold",
+            "Hocus",
+            "Madaion",
+            "Magnifico",
+            "Magurion",
+            "Mandragor(ia)n",
+            "Marvelli",
+            "Miraculo",
+            "Rohal(l)",
+            "Rohaldor",
+            "Theatralo"
+        ],
+        "surnames": [],
+        "places": [],
+        "patrician_names": [],
+        "noble_names": [],
+        "noble_cores": [],
+        "bynames": [],
+        "byname_articles_f": [],
+        "byname_articles_m": [],
+        "given_diminutives_f": {},
+        "given_diminutives_m": {},
+        "status_suffix_f": [],
+        "status_suffix_m": [],
+        "tribes": [],
+        "sippen": [],
+        "honorifics": [],
+        "stage": {
+            "prefixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ],
+            "suffixes": [
+                "arkan",
+                "athletisch",
+                "außerordentlich",
+                "beachtlich",
+                "beispiellos",
+                "berühmt",
+                "blendend",
+                "bombastisch",
+                "brillant",
+                "ehrenhaft",
+                "ehrwürdig",
+                "einmalig",
+                "exzellent",
+                "fabelhaft",
+                "flink",
+                "furios",
+                "geistreich",
+                "gewaltig",
+                "glanzvoll",
+                "glorreich",
+                "grandios",
+                "groß",
+                "großartig",
+                "hesindial",
+                "imposant",
+                "kolossal",
+                "laut",
+                "legendär",
+                "leibhaftig",
+                "magisch",
+                "märchenhaft",
+                "meisterlich",
+                "mysteriös",
+                "nebulös",
+                "originell",
+                "phantasmagorisch",
+                "phantastisch",
+                "prächtig",
+                "ruhmvoll",
+                "sphärenhaft",
+                "stark",
+                "stimmgewaltig",
+                "talentiert",
+                "traumhaft",
+                "unbezwingbar",
+                "unerreicht",
+                "unglaublich",
+                "untadelig",
+                "unvergleichlich",
+                "vortrefflich",
+                "wundersam",
+                "zauberhaft"
+            ]
+        },
+        "raw_text": "Bühnen- und Künstlernamen für Bühnenzauberer im Mittelreich. Enthält vornehmlich kunstvolle Einzelbühnennamen wie Ashtarra, Astralaria, Miraculo oder Theatralo. Allgemeine Attribute für die Ausschmückung von Bühnennamen sind z. B. arkan, bombastisch, brillant, legendär, magisch, meisterlich, mysteriös oder zauberhaft; sie können vor- oder nachgestellt werden, um Formen wie „der mysteriöse Miraculo\" oder „Miraculo der Mysteröse\" zu bilden."
+    }
+}

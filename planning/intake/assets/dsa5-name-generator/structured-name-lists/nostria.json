@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "version": "1.0",
+    "source": "VS6 - Aventurische Namen.pdf",
+    "culture": "Nostria",
+    "key": "nostria",
+    "extraction": {
+      "kind": "chapter",
+      "hint": "Kleines Königreich am Meer der Sieben Winde; altertümliche Namen, protziger Adel, Herkunfts- und Berufsbezeichnungen bei einfachen Leuten.",
+      "note": "Vollständige Extraktion aus Seite 50; Silbenbaukasten integriert."
+    }
+  },
+  "rules": {
+    "gender_modes": ["female", "male"],
+    "name_patterns": [
+      {
+        "id": "nostria_f_simple",
+        "template": "{given_f}",
+        "usage": ["common"]
+      },
+      {
+        "id": "nostria_m_simple",
+        "template": "{given_m}",
+        "usage": ["common"]
+      },
+      {
+        "id": "nostria_f_surname",
+        "template": "{given_f} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "nostria_m_surname",
+        "template": "{given_m} {surname}",
+        "usage": ["common"]
+      },
+      {
+        "id": "nostria_f_origin",
+        "template": "{given_f} {regional_particle} {place}",
+        "usage": ["origin", "common"],
+        "allowed_regional_particles": ["aus"]
+      },
+      {
+        "id": "nostria_m_origin",
+        "template": "{given_m} {regional_particle} {place}",
+        "usage": ["origin", "common"],
+        "allowed_regional_particles": ["aus"]
+      },
+      {
+        "id": "nostria_f_noble",
+        "template": "{given_f} {noble_particle} {noble_name}",
+        "usage": ["noble"],
+        "allowed_noble_particles": ["von", "vom", "zu"]
+      },
+      {
+        "id": "nostria_m_noble",
+        "template": "{given_m} {noble_particle} {noble_name}",
+        "usage": ["noble"],
+        "allowed_noble_particles": ["von", "vom", "zu"]
+      }
+    ],
+    "pattern_weights": {
+      "nostria_f_simple": 4,
+      "nostria_m_simple": 4,
+      "nostria_f_surname": 6,
+      "nostria_m_surname": 6,
+      "nostria_f_origin": 2,
+      "nostria_m_origin": 2,
+      "nostria_f_noble": 2,
+      "nostria_m_noble": 2
+    },
+    "particles": {
+      "noble": ["von", "vom", "zu"],
+      "pseudo_noble": [],
+      "regional": ["aus"],
+      "patrician": [],
+      "generic": []
+    },
+    "transforms": {
+      "diminutives": {
+        "female_suffixes": [],
+        "male_suffixes": []
+      },
+      "origin": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "bosparanization": {
+        "male_suffixes": [],
+        "female_suffixes": []
+      },
+      "patrician_plural_suffix": ""
+    },
+    "patronymic": {
+      "enabled": false,
+      "male_patterns": [],
+      "female_patterns": []
+    }
+  },
+  "lexicon": {
+    "given_f": [
+      "Aaraloth","Andariane","Asmodette","Belenoleth","Brealetha","Caristhea","Delusia","Elida","Elysmine","Elysthea",
+      "Firunette","Franiane","Helasine","Ingvaline","Islavia","Jelspeth","Jolantha","Kasmyra","Linai","Lynia","Noraletha",
+      "Nostriane","Ronaya","Satuwina","Selma","Senebiane","Thalania","Tommeliane","Triumfina","Urmeline","Yasmina","Zanya"
+    ],
+    "given_m": [
+      "Ablasion","Alriklas","Andaryn","Basilio","Bosper","Dolferius","Droderon","Esindio","Franio","Frenglion","Fringlas",
+      "Gasparyn","Haldoryn","Halvorion","Ingvalion","Jasper","Karmo","Kasimir","Kasparbald","Linnerian","Linneweber",
+      "Murro","Niobald","Ornibian","Orasilas","Pipo","Polter","Praineryn","Salvyron","Sapertyn","Toran","Travino","Urfaran",
+      "Waldmiryn"
+    ],
+    "surnames": [
+      "Altgewander","Brachinger","Bramhusen","Damme","Darbhork","Deichbauer","Deickmoler","Elgeryn","Fangeysen",
+      "Garsinger","Halliger","Hugendam","Ingvaler","Kirschner","Köpenvind","Koyner","Krennelsiek","Liekenstek",
+      "Linneweber","Nietendeeler","Notfink","Onderbruk","Oskin","Pernstyn","Riedner","Riethard","Rikvard","Salzerin",
+      "Schlachtrössler","Siebenackern","Styper","Theuermeel","Tryming","Turmer","Viskoppen","Visserad","Wilmhold","Wirth"
+    ],
+    "places": [
+      "Dyckmoor","Salza","Ingvalsrohden","Warftburg","Meer der Sieben Winde"
+    ],
+    "patrician_names": [],
+    "noble_names": [
+      "Ansfinion","Baumbach","Eichenschlag","Fennling","Gischtreyter","Hyttenhau","Ingvalsrohden","Moorweiden","Ornibian",
+      "Rheideryan","Salis","Sappenstiel","Tiefenbach","Tommelfurt","Vestwind","Warftburg","Wyrmbluth"
+    ],
+    "noble_cores": [],
+    "bynames": [],
+    "byname_articles_f": [],
+    "byname_articles_m": [],
+    "syllables": {
+      "given_f_prefixes": [
+        "Ada","Ala","Amen","Ara","Asmo","Bal","Bele","Brin","Caris","Dali","Delu","Effer","Eli","Elys","Fenn","Finn","Firn",
+        "Fran","Gert","Gir","Hara","Hela","Ingva","Isla","Jels","Jo","Kasmy","Lys","Mar","Misa","Nora","Nori","Nostri","Nuri",
+        "Pera","Ro","Sel","Sene","Thala","Tomme","Travi","Trium","Urme","Wili","Yan","Yas","Yn"
+      ],
+      "given_f_suffixes": [
+        "ai","ane","beth","da","dette","dis","fine","ike","je","lais","landa","lantha","letha","lia","liane","linde","lindia",
+        "linke","loth","ke","mai","mina","mine","naia","nia","nette","nk(e)","peth","rai","rike","sia","sine","thea","tje","tris",
+        "vina"
+      ],
+      "given_m_prefixes": [
+        "Abla","Alrik","Anda","Ans","Arn","Beleno","Bla","Bös","Cordo","Deich","Dro","El","Fenn","Ferdi","Freng","Fring",
+        "Gaspa","Haldo","Ingva","Kar","Kasi","Kaspar","Linne","Mo","Nio","Oras","Orni","Per","Perain","Rig","Rode","Rude",
+        "Salvy","Saper","To","Tomme","Travi","Urfa","Valto","Wald"
+      ],
+      "given_m_suffixes": [
+        "bald","bian","bion","eryn","fidin","nion","no","rick","grimm","rigion","las","lian","rion","lion","ryn","miryn",
+        "silas","sion","mo","sius","tyn","val","vert","win"
+      ],
+      "surname_prefixes": [
+        "Brach","Bram","Darb","Deick","Elge","Gars","Hugen","Krennel","Lieken","Riet","Rik","Try","Wilm"
+      ],
+      "surname_suffixes": [
+        "damm","hart","holt","hork","husen","inger","ming","moler","ryn","siek","stek","vard","vind","wind"
+      ]
+    },
+    "given_diminutives_f": {},
+    "given_diminutives_m": {},
+    "status_suffix_f": [],
+    "status_suffix_m": [],
+    "tribes": [],
+    "sippen": [],
+    "honorifics": [],
+    "raw_text": "Nostria verwendet altertümliche Namen ähnlich Andergast. Der Adel bevorzugt übertrieben klingende Namen. Nachnamen existieren vor allem in Städten; in ländlichen Küstengebieten nutzt man Herkunfts- und Berufsbezeichnungen. Silbenbaukasten laut Seite 50 vollständig integriert."
+  }
+}
